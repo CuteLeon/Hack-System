@@ -351,12 +351,9 @@ Public Class SystemWorkStation
             AddHandler MySpeechRecognitionEngine.AudioLevelUpdated, AddressOf SpeechRecognitionEngine_AudioLevelUpdated
             AddHandler MySpeechRecognitionEngine.SpeechRecognized, AddressOf SpeechRecognitionEngine_SpeechRecognized
             'AddHandler MySpeechRecognitionEngine.AudioStateChanged, AddressOf SpeechRecognitionEngine_AudioStateChanged
-            '开启语音识别引擎
-            MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
         Catch ex As Exception
             '开启语音室备引擎失败，善后处理
             VoiceLevelBar.Value = 0
-            SpeechRecognitionMode = False
             SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_Off
             MySpeechRecognitionEngine.Dispose()
         End Try

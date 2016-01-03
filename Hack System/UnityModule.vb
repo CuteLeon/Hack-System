@@ -169,7 +169,7 @@ Public Module UnityModule
     ''' <summary>
     ''' 语音识别引擎的状态
     ''' </summary>
-    Public SpeechRecognitionMode As Boolean = True
+    Public SpeechRecognitionMode As Boolean = False
 #End Region
 
 #Region "全局函数"

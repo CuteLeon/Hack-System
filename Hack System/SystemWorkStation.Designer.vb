@@ -335,7 +335,7 @@ Partial Class SystemWorkStation
         Me.SpeechButtonControl.BackColor = System.Drawing.Color.Transparent
         Me.SpeechButtonControl.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.SpeechButton_0
         Me.SpeechButtonControl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.SpeechButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.MicroPhone_On
+        Me.SpeechButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.MicroPhone_Off
         Me.SpeechButtonControl.Location = New System.Drawing.Point(363, 413)
         Me.SpeechButtonControl.Name = "SpeechButtonControl"
         Me.SpeechButtonControl.Size = New System.Drawing.Size(66, 78)
