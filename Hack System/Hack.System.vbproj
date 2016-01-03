@@ -112,6 +112,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="LeonTextBox.Designer.vb">
+      <DependentUpon>LeonTextBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LeonTextBox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="LockSplitForm.Designer.vb">
       <DependentUpon>LockSplitForm.vb</DependentUpon>
     </Compile>
@@ -125,6 +131,7 @@
       <DependentUpon>LoginAndLockUI.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MemoryNodeClass.vb" />
     <Compile Include="MineSweeperAssets.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -205,6 +212,18 @@
       <DependentUpon>TipsRes.resx</DependentUpon>
     </Compile>
     <Compile Include="UnityModule.vb" />
+    <Compile Include="UnityResource.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnityResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="VMMainForm.Designer.vb">
+      <DependentUpon>VMMainForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VMMainForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VMProcessClass.vb" />
     <Compile Include="WindowsTemplates.Designer.vb">
       <DependentUpon>WindowsTemplates.vb</DependentUpon>
     </Compile>
@@ -246,6 +265,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GameResource.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LeonTextBox.resx">
+      <DependentUpon>LeonTextBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LockSplitForm.resx">
       <DependentUpon>LockSplitForm.vb</DependentUpon>
@@ -300,6 +322,14 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TipsRes.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UnityResource.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UnityResource.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VMMainForm.resx">
+      <DependentUpon>VMMainForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsTemplates.resx">
       <DependentUpon>WindowsTemplates.vb</DependentUpon>
@@ -375,6 +405,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\BGI.jpg" />
+    <None Include="Resources\SegmentPage.png" />
+    <None Include="Resources\Relocate.png" />
+    <None Include="Resources\Min_2.png" />
+    <None Include="Resources\Min_1.png" />
+    <None Include="Resources\Min_0.png" />
+    <None Include="Resources\DisposeProcess.png" />
+    <None Include="Resources\CreateJobList.png" />
+    <None Include="Resources\Close_2.png" />
+    <None Include="Resources\Close_1.png" />
+    <None Include="Resources\Close_0.png" />
+    <None Include="Resources\AddProcess.png" />
+    <None Include="Resources\VMSystemICON.ico" />
     <None Include="Resources\DownloadButton_2.png" />
     <None Include="Resources\DownloadButton_1.png" />
     <None Include="Resources\DownloadButton_0.png" />

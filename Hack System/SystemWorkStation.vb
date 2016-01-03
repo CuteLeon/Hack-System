@@ -179,7 +179,9 @@ Public Class SystemWorkStation
         XYBrowserButtonControl.Location = New Point(SettingButtonControl.Left - IntervalDistance - XYBrowserButtonControl.Width, SettingButtonControl.Top)
         XYMailButtonControl.Location = New Point(XYBrowserButtonControl.Left - IntervalDistance - XYMailButtonControl.Width, XYBrowserButtonControl.Top)
         ConsoleButtonControl.Location = New Point(XYMailButtonControl.Left - IntervalDistance - ConsoleButtonControl.Width, XYMailButtonControl.Top)
-        SpeechButtonControl.Location = New Point(ConsoleButtonControl.Left - IntervalDistance - SpeechButtonControl.Width, ConsoleButtonControl.Top)
+        VPButton.Location = New Point(ConsoleButtonControl.Left - IntervalDistance - SpeechButtonControl.Width, ConsoleButtonControl.Top)
+        VMButton.Location = New Point(VPButton.Left - IntervalDistance - SpeechButtonControl.Width, ConsoleButtonControl.Top)
+        SpeechButtonControl.Location = New Point(VMButton.Left - IntervalDistance - SpeechButtonControl.Width, ConsoleButtonControl.Top)
         VoiceLevelBar.Location = New Point(5, SpeechButtonControl.Height - 12)
         '把IP和地址的鼠标设置为"手"的形状，提示用户可以点击
         IPLabel.Cursor = Cursors.Hand
@@ -840,6 +842,10 @@ Public Class SystemWorkStation
         '显示/隐藏发送邮件窗体
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         If XYMail.Visible Then XYMail.Hide() Else XYMail.Show(Me)
+    End Sub
+
+    Private Sub VMButton_Click(sender As Object, e As EventArgs) Handles VMButton.Click
+        VMMainForm.Show(Me)
     End Sub
 
 #End Region

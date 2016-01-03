@@ -73,6 +73,8 @@ Partial Class SystemWorkStation
         Me.BatteryStatusLabel = New System.Windows.Forms.Label()
         Me.BatteryPercentLabel = New System.Windows.Forms.Label()
         Me.PowerLineLabel = New System.Windows.Forms.Label()
+        Me.VMButton = New System.Windows.Forms.Label()
+        Me.VPButton = New System.Windows.Forms.Label()
         Me.DesktopMenuStrip.SuspendLayout()
         Me.IconMenuStrip.SuspendLayout()
         CType(Me.SpeechButtonControl, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -494,6 +496,36 @@ Partial Class SystemWorkStation
         Me.PowerLineLabel.Text = "Online"
         Me.PowerLineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'VMButton
+        '
+        Me.VMButton.BackColor = System.Drawing.Color.Transparent
+        Me.VMButton.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.VMButton.ForeColor = System.Drawing.Color.MediumSpringGreen
+        Me.VMButton.Image = CType(resources.GetObject("VMButton.Image"), System.Drawing.Image)
+        Me.VMButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.VMButton.Location = New System.Drawing.Point(580, 408)
+        Me.VMButton.Name = "VMButton"
+        Me.VMButton.Size = New System.Drawing.Size(66, 80)
+        Me.VMButton.TabIndex = 29
+        Me.VMButton.Tag = ""
+        Me.VMButton.Text = "内存管理"
+        Me.VMButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        '
+        'VPButton
+        '
+        Me.VPButton.BackColor = System.Drawing.Color.Transparent
+        Me.VPButton.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.VPButton.ForeColor = System.Drawing.Color.MediumSpringGreen
+        Me.VPButton.Image = CType(resources.GetObject("VPButton.Image"), System.Drawing.Image)
+        Me.VPButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.VPButton.Location = New System.Drawing.Point(666, 397)
+        Me.VPButton.Name = "VPButton"
+        Me.VPButton.Size = New System.Drawing.Size(66, 80)
+        Me.VPButton.TabIndex = 30
+        Me.VPButton.Tag = ""
+        Me.VPButton.Text = "作业调度"
+        Me.VPButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        '
         'SystemWorkStation
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -503,6 +535,8 @@ Partial Class SystemWorkStation
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(874, 387)
         Me.ContextMenuStrip = Me.DesktopMenuStrip
+        Me.Controls.Add(Me.VPButton)
+        Me.Controls.Add(Me.VMButton)
         Me.Controls.Add(Me.PowerLineLabel)
         Me.Controls.Add(Me.BatteryPercentLabel)
         Me.Controls.Add(Me.BatteryStatusLabel)
@@ -579,4 +613,6 @@ Partial Class SystemWorkStation
     Friend WithEvents BatteryStatusLabel As Label
     Friend WithEvents BatteryPercentLabel As Label
     Friend WithEvents PowerLineLabel As Label
+    Friend WithEvents VMButton As Label
+    Friend WithEvents VPButton As Label
 End Class
