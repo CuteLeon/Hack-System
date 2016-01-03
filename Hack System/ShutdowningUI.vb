@@ -79,6 +79,7 @@ Public Class ShutdowningUI
         If XYMail.Visible Then XYMail.Hide()
         If AboutMeForm.Visible Then AboutMeForm.Hide()
         If VMMainForm.Visible Then VMMainForm.Hide()
+        If VPMainForm.Visible Then VPMainForm.Hide()
         If MineSweeperForm.Visible Then MineSweeperForm.Hide()
         If Game1010Form.Visible Then Game1010Form.Hide()
         If Game2048Form.Visible Then Game2048Form.Hide()

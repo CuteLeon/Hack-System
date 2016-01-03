@@ -133,6 +133,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="JobClass.vb" />
     <Compile Include="LeonTextBox.Designer.vb">
       <DependentUpon>LeonTextBox.vb</DependentUpon>
     </Compile>
@@ -245,6 +246,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="VMProcessClass.vb" />
+    <Compile Include="VPMainForm.Designer.vb">
+      <DependentUpon>VPMainForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VPMainForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WindowsTemplates.Designer.vb">
       <DependentUpon>WindowsTemplates.vb</DependentUpon>
     </Compile>
@@ -352,6 +359,9 @@
     <EmbeddedResource Include="VMMainForm.resx">
       <DependentUpon>VMMainForm.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VPMainForm.resx">
+      <DependentUpon>VPMainForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WindowsTemplates.resx">
       <DependentUpon>WindowsTemplates.vb</DependentUpon>
     </EmbeddedResource>
@@ -426,6 +436,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\VPSystemICON.ico" />
+    <None Include="Resources\SystemICON.ico" />
+    <None Include="Resources\TimeLine.png" />
+    <None Include="Resources\SpeedUp.png" />
+    <None Include="Resources\SpeedDown.png" />
+    <None Include="Resources\Play.png" />
+    <None Include="Resources\Pause.png" />
     <None Include="Resources\BGI.jpg" />
     <None Include="Resources\SegmentPage.png" />
     <None Include="Resources\Relocate.png" />

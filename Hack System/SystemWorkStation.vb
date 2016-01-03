@@ -845,6 +845,10 @@ Public Class SystemWorkStation
         VMMainForm.Show(Me)
     End Sub
 
+    Private Sub VPButton_Click(sender As Object, e As EventArgs) Handles VPButton.Click
+        VPMainForm.Show(Me)
+    End Sub
+
 #End Region
 
 #Region "右下角图标动态效果"
