@@ -1011,16 +1011,18 @@ Public Class VPMainForm
     Private Sub CheckJobArriveMFQ()
         Dim JIDs As String = vbNullString
         Dim Index As Integer = 0, ListCount As Integer = AllJobList.Count
+        Dim HasBreak As Boolean = False
         Do While Index < ListCount
             If AllJobList(Index).StartTime = SystemClock Then
-                '作业到达，队列指示器回到队首
-                PriorityListSubscript = 0
                 JIDs &= AllJobList(Index).ID & " 和 "
                 If PriorityListSubscript > 0 Then
                     '当前执行队列不是首队列时发生抢!断!
+                    HasBreak = True
                     NextJobSubscript = 0
                     ExecuteTimeSlice = 0
                 End If
+                '作业到达，队列指示器回到队首
+                PriorityListSubscript = 0
                 '作业添加至首队列，并从所有作业列表里移除
                 PriorityList(0).Add(AllJobList(Index))
                 AllJobList.RemoveAt(Index)
@@ -1033,7 +1035,7 @@ Public Class VPMainForm
         Loop
         If JIDs <> vbNullString Then
             '有作业到达
-            LogLabel.TextBox.Text &= String.Format("系统时间：{0}  ||  作业-{1} 加入最高优先级执行队列！", SystemClock, JIDs.Remove(JIDs.Length - 3)) & vbCrLf
+            LogLabel.TextBox.Text &= String.Format("系统时间：{0}  ||  作业-{1} 加入最高优先级执行队列！", SystemClock, JIDs.Remove(JIDs.Length - 3)) & vbCrLf & IIf(HasBreak, "    触发抢断！" & vbCrLf, vbNullString)
         End If
     End Sub
 
