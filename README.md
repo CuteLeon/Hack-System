@@ -49,4 +49,5 @@
 * HackSystem 检查更新。
 ![image](./Screenshot/thumb/CuteLeon.Hack-System.S13.jpg)
 
+使用遵循 [<u>《知识共享署名-非商业性使用 4.0 国际许可协议》<u/>](https://creativecommons.org/licenses/by-nc/4.0/) 许可
 > __BY: Leon.ID@QQ.COM__
