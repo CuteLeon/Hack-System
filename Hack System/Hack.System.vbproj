@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{56DAD6C4-0F5C-4DD4-99FC-5F2F6AF4D986}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>HackSystem.My.MyApplication</StartupObject>
+    <RootNamespace>HackSystem</RootNamespace>
+    <AssemblyName>Hack System</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Hack System.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Hack System.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>HackSystem.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommandConsole.Designer.vb">
+      <DependentUpon>CommandConsole.vb</DependentUpon>
+    </Compile>
+    <Compile Include="CommandConsole.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LockUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LockUI.Designer.vb">
+      <DependentUpon>LockUI.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MouseDragForm.Designer.vb">
+      <DependentUpon>MouseDragForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MouseDragForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="AboutMeForm.Designer.vb">
+      <DependentUpon>AboutMeForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AboutMeForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScreenMelt.vb" />
+    <Compile Include="ShutdowningUI.Designer.vb">
+      <DependentUpon>ShutdowningUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ShutdowningUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShutdownWindow.Designer.vb">
+      <DependentUpon>ShutdownWindow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ShutdownWindow.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartingUpUI.Designer.vb">
+      <DependentUpon>StartingUpUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="StartingUpUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SystemAssets.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SystemAssets.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SystemWorkStation.Designer.vb">
+      <DependentUpon>SystemWorkStation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SystemWorkStation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsTemplates.Designer.vb">
+      <DependentUpon>WindowsTemplates.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsTemplates.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XYBrowser.designer.vb">
+      <DependentUpon>XYBrowser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="XYBrowser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XYBrowserRes.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XYBrowserRes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="XYMail.designer.vb">
+      <DependentUpon>XYMail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="XYMail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CommandConsole.resx">
+      <DependentUpon>CommandConsole.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LockUI.resx">
+      <DependentUpon>LockUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MouseDragForm.resx">
+      <DependentUpon>MouseDragForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AboutMeForm.resx">
+      <DependentUpon>AboutMeForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShutdowningUI.resx">
+      <DependentUpon>ShutdowningUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShutdownWindow.resx">
+      <DependentUpon>ShutdownWindow.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StartingUpUI.resx">
+      <DependentUpon>StartingUpUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SystemAssets.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>SystemAssets.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SystemWorkStation.resx">
+      <DependentUpon>SystemWorkStation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsTemplates.resx">
+      <DependentUpon>WindowsTemplates.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XYBrowser.resx">
+      <DependentUpon>XYBrowser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XYBrowserRes.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>XYBrowserRes.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XYMail.resx">
+      <DependentUpon>XYMail.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemWallpaper_01.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemWallpaper_02.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemWallpaper_03.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemWallpaper_04.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemWallpaper_05.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemWallpaper_06.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemWallpaper_07.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemWallpaper_08.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemWallpaper_09.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemWallpaper_11.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LoginArea.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LoginButton_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LoginButton_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LoginButton_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemWallpaper_10.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemWallpaper_00.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HackSystem.ico" />
+    <Content Include="HackSystem.txt" />
+    <None Include="Resources\HackSystemLogo.png" />
+    <None Include="Resources\ShutdownWindow_2.png" />
+    <None Include="Resources\ShutdownWindow_1.png" />
+    <None Include="Resources\ShutdownWindow_0.png" />
+    <None Include="Resources\SettingButton_0.png" />
+    <None Include="Resources\XYBrowserIcon2.png" />
+    <None Include="Resources\XYBrowserIcon1.png" />
+    <None Include="Resources\XYBrowserIcon0.png" />
+    <None Include="Resources\Console_2.png" />
+    <None Include="Resources\Console_1.png" />
+    <None Include="Resources\Console_0.png" />
+    <None Include="Resources\SendBtn_2.png" />
+    <None Include="Resources\SendBtn_1.png" />
+    <None Include="Resources\SendBtn_0.png" />
+    <None Include="Resources\MailBackgroundImage.png" />
+    <None Include="Resources\XYBrowser.png" />
+    <None Include="Resources\XYBrowser.ico" />
+    <None Include="Resources\Search.png" />
+    <None Include="Resources\Restore_N.png" />
+    <None Include="Resources\Restore_E.png" />
+    <None Include="Resources\Restore_D.png" />
+    <None Include="Resources\Refresh.png" />
+    <None Include="Resources\NowStop.png" />
+    <None Include="Resources\Min_N.png" />
+    <None Include="Resources\Min_E.png" />
+    <None Include="Resources\Min_D.png" />
+    <None Include="Resources\Max_N.png" />
+    <None Include="Resources\Max_E.png" />
+    <None Include="Resources\Max_D.png" />
+    <None Include="Resources\Home.png" />
+    <None Include="Resources\GoNavigate.png" />
+    <None Include="Resources\GoForward.png" />
+    <None Include="Resources\GoBack.png" />
+    <None Include="Resources\FullScreen_N.png" />
+    <None Include="Resources\FullScreen_E.png" />
+    <None Include="Resources\FullScreen_D.png" />
+    <None Include="Resources\DragBlock.png" />
+    <None Include="Resources\Close_N.png" />
+    <None Include="Resources\Close_E.png" />
+    <None Include="Resources\Close_D.png" />
+    <None Include="Resources\ShutdownBGI.png" />
+    <None Include="Resources\SplitLine.png" />
+    <None Include="Resources\CommandTipBGI.png" />
+    <None Include="Resources\ShowConsole.wav" />
+    <None Include="Resources\HideConsole.wav" />
+    <None Include="Resources\OKButton.png" />
+    <None Include="Resources\AboutMe.png" />
+    <None Include="Resources\MouseCursor.png" />
+    <None Include="Resources\SettingButton_2.png" />
+    <None Include="Resources\SettingButton_1.png" />
+    <None Include="Resources\LoginDesktop.wav" />
+    <None Include="Resources\LockUIBGM.wav" />
+    <None Include="Resources\Shutdown.wav" />
+    <None Include="Resources\ShutdownButton_3.png" />
+    <None Include="Resources\ShutdownButton_2.png" />
+    <None Include="Resources\ShutdownButton_1.png" />
+    <None Include="Resources\ShutdownArea.png" />
+    <None Include="Resources\CancelButton_3.png" />
+    <None Include="Resources\CancelButton_2.png" />
+    <None Include="Resources\CancelButton_1.png" />
+    <None Include="Resources\MouseClick.wav" />
+    <None Include="Resources\Tips.wav" />
+    <None Include="Resources\ScriptStoped.wav" />
+    <None Include="Resources\ScriptStarting.wav" />
+    <None Include="Resources\StartedUp.wav" />
+    <None Include="Resources\MouseEnter.png" />
+    <None Include="Resources\MouseDown.png" />
+    <None Include="Resources\ScriptIcon_22.png" />
+    <None Include="Resources\ScriptIcon_21.png" />
+    <None Include="Resources\ScriptIcon_20.png" />
+    <None Include="Resources\ScriptIcon_19.png" />
+    <None Include="Resources\ScriptIcon_18.png" />
+    <None Include="Resources\ScriptIcon_17.png" />
+    <None Include="Resources\ScriptIcon_16.png" />
+    <None Include="Resources\ScriptIcon_15.png" />
+    <None Include="Resources\ScriptIcon_14.png" />
+    <None Include="Resources\ScriptIcon_13.png" />
+    <None Include="Resources\ScriptIcon_12.png" />
+    <None Include="Resources\ScriptIcon_11.png" />
+    <None Include="Resources\ScriptIcon_10.png" />
+    <None Include="Resources\ScriptIcon_09.png" />
+    <None Include="Resources\ScriptIcon_08.png" />
+    <None Include="Resources\ScriptIcon_07.png" />
+    <None Include="Resources\ScriptIcon_06.png" />
+    <None Include="Resources\ScriptIcon_05.png" />
+    <None Include="Resources\ScriptIcon_04.png" />
+    <None Include="Resources\ScriptIcon_03.png" />
+    <None Include="Resources\ScriptIcon_02.png" />
+    <None Include="Resources\ScriptIcon_01.png" />
+    <None Include="Resources\ScriptIcon_00.png" />
+    <None Include="Resources\HackScript_22.gif" />
+    <None Include="Resources\HackScript_21.gif" />
+    <None Include="Resources\HackScript_20.gif" />
+    <None Include="Resources\HackScript_19.gif" />
+    <None Include="Resources\HackScript_18.gif" />
+    <None Include="Resources\HackScript_17.gif" />
+    <None Include="Resources\HackScript_16.gif" />
+    <None Include="Resources\HackScript_15.gif" />
+    <None Include="Resources\HackScript_14.gif" />
+    <None Include="Resources\HackScript_13.gif" />
+    <None Include="Resources\HackScript_12.gif" />
+    <None Include="Resources\HackScript_11.gif" />
+    <None Include="Resources\HackScript_10.gif" />
+    <None Include="Resources\HackScript_09.gif" />
+    <None Include="Resources\HackScript_08.gif" />
+    <None Include="Resources\HackScript_07.gif" />
+    <None Include="Resources\HackScript_06.gif" />
+    <None Include="Resources\HackScript_05.gif" />
+    <None Include="Resources\HackScript_04.gif" />
+    <None Include="Resources\HackScript_03.gif" />
+    <None Include="Resources\HackScript_02.gif" />
+    <None Include="Resources\HackScript_01.gif" />
+    <None Include="Resources\StartingUIWallpaper.jpg" />
+    <None Include="Resources\StartingUp.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
