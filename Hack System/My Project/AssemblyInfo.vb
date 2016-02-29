@@ -14,7 +14,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyCompany("Leon.ID@QQ.COM")>
 <Assembly: AssemblyProduct("Hack System")>
 <Assembly: AssemblyCopyright("Copyright ©  2016")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTrademark("CuteLeon.GitHub")>
 
 <Assembly: ComVisible(False)>
 
@@ -32,6 +32,6 @@ Imports System.Runtime.InteropServices
 ' 方法是按如下所示使用“*”: :
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("4.0.3.60126")>
-<Assembly: AssemblyFileVersion("4.0.3.60126")>
+<Assembly: AssemblyVersion("5.0.1.0")>
+<Assembly: AssemblyFileVersion("5.0.1.0")>
 <Assembly: NeutralResourcesLanguage("zh-Hans")>
