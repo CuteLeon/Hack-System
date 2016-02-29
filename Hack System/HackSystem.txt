@@ -29,8 +29,11 @@ Esc关机提示
   speak [字符串]                                //使用语音引擎朗读字符串
   shutdown                                      //显示关机提示框
   shell 脚本标识                                //运行数字对应的脚本
+  melt											   //开始/停止屏幕融化
   weather [CityID/CityName]           //显示最近天气[城市默认为郑州(101180101)]
   lock                                              //显示锁屏界面
   about                                           //显示关于界面
+  browser										  //打开内置浏览器
+  mail											  //发送邮件
 
 还有数十个影响稳定性的小BUG

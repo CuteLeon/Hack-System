@@ -38,9 +38,9 @@ Partial Class XYMail
         Me.Txt_ToAddress.BackColor = System.Drawing.Color.FromArgb(CType(CType(225, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(200, Byte), Integer))
         Me.Txt_ToAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Txt_ToAddress.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Txt_ToAddress.Location = New System.Drawing.Point(38, 46)
+        Me.Txt_ToAddress.Location = New System.Drawing.Point(76, 41)
         Me.Txt_ToAddress.Name = "Txt_ToAddress"
-        Me.Txt_ToAddress.Size = New System.Drawing.Size(168, 23)
+        Me.Txt_ToAddress.Size = New System.Drawing.Size(133, 23)
         Me.Txt_ToAddress.TabIndex = 0
         Me.Txt_ToAddress.Text = "Leon.ID@QQ.COM"
         Me.Txt_ToAddress.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -54,18 +54,18 @@ Partial Class XYMail
         Me.Txt_MailTitle.Name = "Txt_MailTitle"
         Me.Txt_MailTitle.Size = New System.Drawing.Size(270, 23)
         Me.Txt_MailTitle.TabIndex = 1
-        Me.Txt_MailTitle.Text = "来自 Hack System 的邮件"
+        Me.Txt_MailTitle.Text = "@ Form Hack System"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label1.Location = New System.Drawing.Point(34, 23)
+        Me.Label1.Location = New System.Drawing.Point(36, 42)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(65, 20)
+        Me.Label1.Size = New System.Drawing.Size(40, 20)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "收信人："
+        Me.Label1.Text = "To："
         '
         'Label2
         '
@@ -74,9 +74,9 @@ Partial Class XYMail
         Me.Label2.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Label2.Location = New System.Drawing.Point(21, 88)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(51, 20)
+        Me.Label2.Size = New System.Drawing.Size(73, 20)
         Me.Label2.TabIndex = 3
-        Me.Label2.Text = "标题："
+        Me.Label2.Text = "Subject："
         '
         'Label3
         '
@@ -85,9 +85,9 @@ Partial Class XYMail
         Me.Label3.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Label3.Location = New System.Drawing.Point(21, 137)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(231, 20)
+        Me.Label3.Size = New System.Drawing.Size(77, 20)
         Me.Label3.TabIndex = 5
-        Me.Label3.Text = "正文：（可输入HTML超文本语言）"
+        Me.Label3.Text = "Content："
         '
         'Txt_MailBody
         '
@@ -99,7 +99,7 @@ Partial Class XYMail
         Me.Txt_MailBody.Name = "Txt_MailBody"
         Me.Txt_MailBody.Size = New System.Drawing.Size(270, 123)
         Me.Txt_MailBody.TabIndex = 4
-        Me.Txt_MailBody.Text = "<h1>  欢迎使用 Hack System.</h1>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<i><h2>  祝您生活愉快！</h2></i>"
+        Me.Txt_MailBody.Text = "<h1>  Welcome to Hack System.</h1>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<i><h2>  Have a nice day！</h2></i>"
         '
         'Btn_Send
         '

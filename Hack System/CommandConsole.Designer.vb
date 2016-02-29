@@ -38,7 +38,7 @@ Partial Class CommandConsole
         Me.CommandInputBox.Name = "CommandInputBox"
         Me.CommandInputBox.Size = New System.Drawing.Size(336, 27)
         Me.CommandInputBox.TabIndex = 2
-        Me.CommandInputBox.Text = "请输入指令..."
+        Me.CommandInputBox.Text = "Please input command..."
         '
         'CommandTip
         '

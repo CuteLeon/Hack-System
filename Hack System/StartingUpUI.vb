@@ -35,7 +35,7 @@ Public Class StartingUpUI
         StartingUpControl.Image = My.Resources.SystemAssets.StartingUp.Clone(New Rectangle(0, FrameIndex * 200, 200, 200), Imaging.PixelFormat.Format32bppArgb)
         FrameIndex += 1
 
-        StartingUpLable.Text = "Hack System (" & 2 * FrameIndex & "%)"
+        StartingUpLable.Text = "Hack System Loading... (" & 2 * FrameIndex & "%)"
         'Exchange UI after the 50th frame.
         If FrameIndex = 50 Then
             StartingUpTimer.Enabled = False

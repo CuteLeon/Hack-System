@@ -103,7 +103,7 @@ Partial Class XYBrowser
         Me.SearchTextBox.Name = "SearchTextBox"
         Me.SearchTextBox.Size = New System.Drawing.Size(150, 23)
         Me.SearchTextBox.TabIndex = 26
-        Me.SearchTextBox.Text = "点此搜索..."
+        Me.SearchTextBox.Text = "Search..."
         '
         'Btn_Max
         '

@@ -116,7 +116,7 @@ Public Class CommandConsole
                     SystemWorkStation.ShowShutdownWindow()
                     'Show message and set message color.
                     CommandTip.Text = "Plan to Shudtown"
-                    CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Plan to shuttdown")
+                    CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Plan to shutdown")
                     SetLastCommandColor(True)
                 Case "shell" 'Show script window.
                     'Remove spaces around parameter.

@@ -242,7 +242,7 @@ Public Class XYBrowser
 
     '百度搜索功能
     Private Sub Btn_Search_Click(sender As Object, e As EventArgs) Handles Btn_Search.Click
-        MainWebBrowser.Navigate("http://www.baidu.com/s?wd=" & IIf(SearchTextBox.Text = "点此搜索...", vbNullString, SearchTextBox.Text))
+        MainWebBrowser.Navigate("http://www.baidu.com/s?wd=" & IIf(SearchTextBox.Text = "Search...", vbNullString, SearchTextBox.Text))
     End Sub
 
     Private Sub SearchTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles SearchTextBox.KeyPress
@@ -253,11 +253,11 @@ Public Class XYBrowser
 #Region "搜索框个性化提示"
     Private Sub SearchTextBox_LostFocus(sender As Object, e As EventArgs) Handles SearchTextBox.LostFocus
         SearchTextBox.ForeColor = Color.DimGray
-        If SearchTextBox.Text = vbNullString Then SearchTextBox.Text = "点此搜索..."
+        If SearchTextBox.Text = vbNullString Then SearchTextBox.Text = "Search..."
     End Sub
     Private Sub SearchTextBox_GotFocus(sender As Object, e As EventArgs) Handles SearchTextBox.GotFocus
         SearchTextBox.ForeColor = Color.Black
-        If SearchTextBox.Text = "点此搜索..." Then SearchTextBox.Text = vbNullString
+        If SearchTextBox.Text = "Search..." Then SearchTextBox.Text = vbNullString
     End Sub
 #End Region
 

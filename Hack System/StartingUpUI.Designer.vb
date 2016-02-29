@@ -51,7 +51,7 @@ Partial Class StartingUpUI
         Me.StartingUpLable.Name = "StartingUpLable"
         Me.StartingUpLable.Size = New System.Drawing.Size(400, 32)
         Me.StartingUpLable.TabIndex = 2
-        Me.StartingUpLable.Text = "Hack System (0%)"
+        Me.StartingUpLable.Text = "Hack System Loading... (0%)"
         Me.StartingUpLable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'StartingUpControl
