@@ -4,7 +4,7 @@
 > __Here are some Screenshots :__
 
 * Hack System Starting Up.
-![image](./Screenshot/thumb/thumb/CuteLeon.Hack-System.S01.jpg)
+![image](./Screenshot/thumb/CuteLeon.Hack-System.S01.jpg)
 ___
 * User Login.(You can login in whatever your password is ,just press [Enter].)
 ![image](./Screenshot/thumb/CuteLeon.Hack-System.S02.jpg)
