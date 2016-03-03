@@ -67,25 +67,25 @@ Partial Class SystemWorkStation
         '
         Me.DesktopMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuLastWallpaper, Me.MenuNextWallpaper, Me.ToolStripSeparator1, Me.MenuTopMost, Me.ToolStripSeparator2, Me.MenuShutdown})
         Me.DesktopMenuStrip.Name = "SystemMenuStrip"
-        Me.DesktopMenuStrip.Size = New System.Drawing.Size(137, 104)
+        Me.DesktopMenuStrip.Size = New System.Drawing.Size(168, 104)
         Me.DesktopMenuStrip.Text = "系统菜单"
         '
         'MenuLastWallpaper
         '
         Me.MenuLastWallpaper.Name = "MenuLastWallpaper"
-        Me.MenuLastWallpaper.Size = New System.Drawing.Size(136, 22)
-        Me.MenuLastWallpaper.Text = "上一张壁纸"
+        Me.MenuLastWallpaper.Size = New System.Drawing.Size(167, 22)
+        Me.MenuLastWallpaper.Text = "Last Wallpaper"
         '
         'MenuNextWallpaper
         '
         Me.MenuNextWallpaper.Name = "MenuNextWallpaper"
-        Me.MenuNextWallpaper.Size = New System.Drawing.Size(136, 22)
-        Me.MenuNextWallpaper.Text = "下一张壁纸"
+        Me.MenuNextWallpaper.Size = New System.Drawing.Size(167, 22)
+        Me.MenuNextWallpaper.Text = "Next Wallpaper"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(133, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(164, 6)
         '
         'MenuTopMost
         '
@@ -93,19 +93,19 @@ Partial Class SystemWorkStation
         Me.MenuTopMost.CheckOnClick = True
         Me.MenuTopMost.CheckState = System.Windows.Forms.CheckState.Checked
         Me.MenuTopMost.Name = "MenuTopMost"
-        Me.MenuTopMost.Size = New System.Drawing.Size(136, 22)
-        Me.MenuTopMost.Text = "桌面置顶"
+        Me.MenuTopMost.Size = New System.Drawing.Size(167, 22)
+        Me.MenuTopMost.Text = "Topmost"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(133, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(164, 6)
         '
         'MenuShutdown
         '
         Me.MenuShutdown.Name = "MenuShutdown"
-        Me.MenuShutdown.Size = New System.Drawing.Size(136, 22)
-        Me.MenuShutdown.Text = "关机"
+        Me.MenuShutdown.Size = New System.Drawing.Size(167, 22)
+        Me.MenuShutdown.Text = "Shutdown"
         '
         'ShutdownButtonControl
         '
@@ -135,24 +135,24 @@ Partial Class SystemWorkStation
         '
         Me.IconMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuSetToWallpaper, Me.ToolStripSeparator4, Me.MenuCloseScript})
         Me.IconMenuStrip.Name = "IconMenuStrip"
-        Me.IconMenuStrip.Size = New System.Drawing.Size(173, 54)
+        Me.IconMenuStrip.Size = New System.Drawing.Size(180, 54)
         '
         'MenuSetToWallpaper
         '
         Me.MenuSetToWallpaper.Name = "MenuSetToWallpaper"
-        Me.MenuSetToWallpaper.Size = New System.Drawing.Size(172, 22)
-        Me.MenuSetToWallpaper.Text = "将脚本设置为壁纸"
+        Me.MenuSetToWallpaper.Size = New System.Drawing.Size(179, 22)
+        Me.MenuSetToWallpaper.Text = "Set To Wallpaper"
         '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(169, 6)
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(176, 6)
         '
         'MenuCloseScript
         '
         Me.MenuCloseScript.Name = "MenuCloseScript"
-        Me.MenuCloseScript.Size = New System.Drawing.Size(172, 22)
-        Me.MenuCloseScript.Text = "关闭       ALT+F4"
+        Me.MenuCloseScript.Size = New System.Drawing.Size(179, 22)
+        Me.MenuCloseScript.Text = "Close       ALT+F4"
         '
         'PerformanceCounterTimer
         '
@@ -174,12 +174,12 @@ Partial Class SystemWorkStation
         '
         Me.XYMailButtonControl.BackColor = System.Drawing.Color.Transparent
         Me.XYMailButtonControl.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.XYMailButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.SendBtn_0
+        Me.XYMailButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.Mailcon_0
         Me.XYMailButtonControl.Location = New System.Drawing.Point(895, 478)
         Me.XYMailButtonControl.Name = "XYMailButtonControl"
         Me.XYMailButtonControl.Size = New System.Drawing.Size(64, 64)
         Me.XYMailButtonControl.TabIndex = 7
-        Me.XYMailButtonControl.Tag = "SendBtn_"
+        Me.XYMailButtonControl.Tag = "Mailcon_"
         Me.XYMailButtonControl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'ConsoleButtonControl
@@ -197,7 +197,7 @@ Partial Class SystemWorkStation
         'InfoData
         '
         Me.InfoData.BackColor = System.Drawing.Color.Transparent
-        Me.InfoData.Cursor = System.Windows.Forms.Cursors.SizeAll
+        Me.InfoData.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.InfoData.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.InfoData.ForeColor = System.Drawing.Color.White
         Me.InfoData.Location = New System.Drawing.Point(1080, 9)
@@ -210,7 +210,7 @@ Partial Class SystemWorkStation
         'InfoTitle
         '
         Me.InfoTitle.BackColor = System.Drawing.Color.Transparent
-        Me.InfoTitle.Cursor = System.Windows.Forms.Cursors.SizeAll
+        Me.InfoTitle.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.InfoTitle.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.InfoTitle.ForeColor = System.Drawing.Color.White
         Me.InfoTitle.Location = New System.Drawing.Point(987, 9)

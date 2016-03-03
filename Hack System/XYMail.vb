@@ -1,12 +1,16 @@
 ﻿Public Class XYMail
+    Dim NormalColor As Color = Color.FromArgb(19, 132, 205)
+    Dim FailColor As Color = Color.FromArgb(248, 97, 97)
 
     Private Sub Btn_Send_Click(sender As Object, e As EventArgs) Handles Btn_Send.Click
         On Error GoTo MyERR
+        ReturnInfo.ForeColor = NormalColor
+        ReturnInfo.Text = "Mail Sending ..."
         '创建SMTP连接和MAIL对象
-        Dim Smtp As New System.Net.Mail.SmtpClient("smtp.***.com", 25)
-        Smtp.Credentials = New System.Net.NetworkCredential("******", "******")
+        Dim Smtp As New System.Net.Mail.SmtpClient("smtp.163.com", 25)
+        Smtp.Credentials = New System.Net.NetworkCredential("liuzichaohack", "fasongduan")
         Dim Mail As New System.Net.Mail.MailMessage()
-        Mail.From = New System.Net.Mail.MailAddress("******@***.COM")
+        Mail.From = New System.Net.Mail.MailAddress("15824734237@163.com")
         Mail.To.Add(Txt_ToAddress.Text)
         Mail.SubjectEncoding = System.Text.Encoding.GetEncoding("GB2312")
         Mail.BodyEncoding = System.Text.Encoding.GetEncoding("GB2312")
@@ -15,17 +19,18 @@
         '邮件内容支持HTML格式
         Mail.IsBodyHtml = True
         'HTML格式需要改变换行符vbCrLf为<br>
-        Mail.Body = Replace(Txt_MailBody.Text, vbCrLf, "<br>") & "<br><br><i><small>    ——来自：Hack System (V " & Application.ProductVersion & ")</small></i>"
+        Mail.Body = Replace(Txt_MailBody.Text, vbCrLf, "<br>") & "<br><br><i><small>    ——Form：Hack System (V " & Application.ProductVersion & ")</small></i>"
         '发送邮件
         Smtp.Send(Mail)
         Mail.Dispose()
-        Me.Hide()
-        SystemWorkStation.Focus()
+        ReturnInfo.Text = "Sent Successfully"
         Exit Sub
 
 MyERR:
-        '捕获到异常时，把错误信息显示在发信地址栏里
-        Txt_ToAddress.Text = Err.Description
+        '捕获到异常
+        Beep()
+        ReturnInfo.ForeColor = FailColor
+        ReturnInfo.Text = "Failed! Error: " & Err.Number
     End Sub
 
     Private Sub MoveWindow(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
@@ -81,6 +86,13 @@ MyERR:
 
     Private Sub Btn_Close_MouseUp(sender As Object, e As MouseEventArgs) Handles Btn_Close.MouseUp
         Btn_Close.Image = My.Resources.XYBrowserRes.Close_E
+    End Sub
+
+    Private Sub XYMail_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+        If Me.Visible Then
+            ReturnInfo.ForeColor = NormalColor
+            ReturnInfo.Text = "Mail function is ready."
+        End If
     End Sub
 #End Region
 

@@ -78,7 +78,9 @@ Public Class SystemWorkStation
         ConsoleButtonControl.Location = New Point(XYMailButtonControl.Left - IntervalDistance - ConsoleButtonControl.Width, XYMailButtonControl.Top)
 
         Me.Cursor = StartingUpUI.SystemCursor
-        
+        InfoTitle.Cursor = StartingUpUI.SystemCursor
+        InfoData.Cursor = StartingUpUI.SystemCursor
+
         CommandConsole.Show(Me)
         CommandConsole.Height = My.Computer.Screen.Bounds.Height
         CommandConsole.Location = New Point(My.Computer.Screen.Bounds.Width, 0)

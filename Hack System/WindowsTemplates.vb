@@ -111,15 +111,15 @@ Public Class WindowsTemplates
         Do While Me.Opacity > 0
             '降低透明度
             Me.Opacity -= 0.1
-            '窗体向桌面图标移动
-            Me.Left -= EachXDis
-            Me.Top -= EachYDis
             '缩小GIF控件
             GIFControl.Width -= EachWidthDis
             GIFControl.Height -= EachHeightDis
             '缩小自身窗体
             Me.Width -= EachWidthDis
             Me.Height -= EachHeightDis
+            '窗体向桌面图标移动
+            Me.Left -= EachXDis
+            Me.Top -= EachYDis
             '关闭按钮向左移动
             CloseButtonControl.Left = Me.Width - CloseButtonControl.Width
             '线程暂停30毫秒

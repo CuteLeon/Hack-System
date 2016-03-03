@@ -31,14 +31,15 @@ Partial Class XYMail
         Me.Txt_MailBody = New System.Windows.Forms.TextBox()
         Me.Btn_Send = New System.Windows.Forms.Label()
         Me.Btn_Close = New System.Windows.Forms.Label()
+        Me.ReturnInfo = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Txt_ToAddress
         '
-        Me.Txt_ToAddress.BackColor = System.Drawing.Color.FromArgb(CType(CType(225, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(200, Byte), Integer))
+        Me.Txt_ToAddress.BackColor = System.Drawing.Color.Snow
         Me.Txt_ToAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Txt_ToAddress.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Txt_ToAddress.Location = New System.Drawing.Point(76, 41)
+        Me.Txt_ToAddress.Location = New System.Drawing.Point(67, 25)
         Me.Txt_ToAddress.Name = "Txt_ToAddress"
         Me.Txt_ToAddress.Size = New System.Drawing.Size(133, 23)
         Me.Txt_ToAddress.TabIndex = 0
@@ -47,25 +48,25 @@ Partial Class XYMail
         '
         'Txt_MailTitle
         '
-        Me.Txt_MailTitle.BackColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(235, Byte), Integer), CType(CType(228, Byte), Integer))
+        Me.Txt_MailTitle.BackColor = System.Drawing.Color.Snow
         Me.Txt_MailTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Txt_MailTitle.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Txt_MailTitle.Location = New System.Drawing.Point(25, 111)
         Me.Txt_MailTitle.Name = "Txt_MailTitle"
         Me.Txt_MailTitle.Size = New System.Drawing.Size(270, 23)
         Me.Txt_MailTitle.TabIndex = 1
-        Me.Txt_MailTitle.Text = "@ Form Hack System"
+        Me.Txt_MailTitle.Text = "Form Hack System"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label1.Location = New System.Drawing.Point(36, 42)
+        Me.Label1.Location = New System.Drawing.Point(33, 26)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(40, 20)
+        Me.Label1.Size = New System.Drawing.Size(33, 20)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "To："
+        Me.Label1.Text = "To :"
         '
         'Label2
         '
@@ -91,7 +92,7 @@ Partial Class XYMail
         '
         'Txt_MailBody
         '
-        Me.Txt_MailBody.BackColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(235, Byte), Integer), CType(CType(228, Byte), Integer))
+        Me.Txt_MailBody.BackColor = System.Drawing.Color.Snow
         Me.Txt_MailBody.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Txt_MailBody.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Txt_MailBody.Location = New System.Drawing.Point(25, 160)
@@ -99,15 +100,17 @@ Partial Class XYMail
         Me.Txt_MailBody.Name = "Txt_MailBody"
         Me.Txt_MailBody.Size = New System.Drawing.Size(270, 123)
         Me.Txt_MailBody.TabIndex = 4
-        Me.Txt_MailBody.Text = "<h1>  Welcome to Hack System.</h1>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<i><h2>  Have a nice day！</h2></i>"
+        Me.Txt_MailBody.Text = "<h1>  Welcome to Hack System.</h1>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<a href=""http://www.hacksystem.icoc.in/"" targ" &
+    "et=""_blank"">访问PC端官方网站</a>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<a href=""http://m.hacksystem.icoc.in/index.jsp" &
+    """ target=""_blank"">访问手机端官方网站</a>"
         '
         'Btn_Send
         '
         Me.Btn_Send.BackColor = System.Drawing.Color.Transparent
         Me.Btn_Send.Image = Global.HackSystem.My.Resources.SystemAssets.SendBtn_0
-        Me.Btn_Send.Location = New System.Drawing.Point(219, 28)
+        Me.Btn_Send.Location = New System.Drawing.Point(205, 31)
         Me.Btn_Send.Name = "Btn_Send"
-        Me.Btn_Send.Size = New System.Drawing.Size(65, 51)
+        Me.Btn_Send.Size = New System.Drawing.Size(105, 44)
         Me.Btn_Send.TabIndex = 6
         '
         'Btn_Close
@@ -120,6 +123,18 @@ Partial Class XYMail
         Me.Btn_Close.TabIndex = 22
         Me.Btn_Close.Tag = "Close"
         '
+        'ReturnInfo
+        '
+        Me.ReturnInfo.BackColor = System.Drawing.Color.Transparent
+        Me.ReturnInfo.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.ReturnInfo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(205, Byte), Integer))
+        Me.ReturnInfo.Location = New System.Drawing.Point(35, 51)
+        Me.ReturnInfo.Name = "ReturnInfo"
+        Me.ReturnInfo.Size = New System.Drawing.Size(165, 24)
+        Me.ReturnInfo.TabIndex = 23
+        Me.ReturnInfo.Text = "Mail function is ready."
+        Me.ReturnInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'XYMail
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -127,6 +142,7 @@ Partial Class XYMail
         Me.BackColor = System.Drawing.Color.Aqua
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.MailBackgroundImage
         Me.ClientSize = New System.Drawing.Size(320, 295)
+        Me.Controls.Add(Me.ReturnInfo)
         Me.Controls.Add(Me.Btn_Close)
         Me.Controls.Add(Me.Btn_Send)
         Me.Controls.Add(Me.Label3)
@@ -160,4 +176,5 @@ Partial Class XYMail
     Friend WithEvents Txt_MailBody As TextBox
     Friend WithEvents Btn_Send As Label
     Friend WithEvents Btn_Close As Label
+    Friend WithEvents ReturnInfo As Label
 End Class

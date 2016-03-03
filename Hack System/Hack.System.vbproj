@@ -288,7 +288,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
-    <Content Include="HackSystem.txt" />
+    <None Include="Resources\Mailcon_2.png" />
+    <None Include="Resources\Mailcon_1.png" />
+    <None Include="Resources\Mailcon_0.png" />
     <None Include="Resources\HackSystemLogo.png" />
     <None Include="Resources\ShutdownWindow_2.png" />
     <None Include="Resources\ShutdownWindow_1.png" />
@@ -404,8 +406,20 @@
     <None Include="Resources\StartingUIWallpaper.jpg" />
     <None Include="Resources\StartingUp.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

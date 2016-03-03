@@ -125,7 +125,6 @@ Public Class XYBrowser
                 Btn_Restore.Visible = False
                 Me.WindowState = FormWindowState.Normal
             Case "FullScreen"
-                Btn_FullScreen.Image = My.Resources.XYBrowserRes.FullScreen_N
                 If FullScreenMode Then '退出全屏
                     Me.WindowState = FormWindowState.Normal
                     Btn_FullScreen.Parent = TopPanel
@@ -142,6 +141,7 @@ Public Class XYBrowser
                     MainWebBrowser.Size = Me.Size
                     Btn_FullScreen.BringToFront()
                 End If
+                Btn_FullScreen.Image = My.Resources.XYBrowserRes.FullScreen_N
                 FullScreenMode = Not FullScreenMode
             Case "Close" '关闭
                 CloseBrowser()
@@ -211,6 +211,9 @@ Public Class XYBrowser
 
     Private Sub TitleButton_MouseUp(sender As Object, e As MouseEventArgs) Handles Btn_Max.MouseUp, Btn_Restore.MouseUp, Btn_Close.MouseUp, Btn_FullScreen.MouseUp
         NowButton = CType(sender, Label)
+        If NowButton.Tag = "FullScreen" Then
+            If Not RectangleToScreen(NowButton.ClientRectangle).Contains(MousePosition) Then Exit Sub
+        End If
         NowButton.Image = My.Resources.XYBrowserRes.ResourceManager.GetObject(NowButton.Tag & "_E")
     End Sub
 #End Region

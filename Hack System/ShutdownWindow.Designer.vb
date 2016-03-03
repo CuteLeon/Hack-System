@@ -49,7 +49,7 @@ Partial Class ShutdownWindow
         Me.ShutdownButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.ShutdownButton_1
         Me.ShutdownButtonControl.Location = New System.Drawing.Point(507, 47)
         Me.ShutdownButtonControl.Name = "ShutdownButtonControl"
-        Me.ShutdownButtonControl.Size = New System.Drawing.Size(94, 95)
+        Me.ShutdownButtonControl.Size = New System.Drawing.Size(94, 94)
         Me.ShutdownButtonControl.TabIndex = 7
         Me.ShutdownButtonControl.TabStop = False
         '
@@ -60,7 +60,7 @@ Partial Class ShutdownWindow
         Me.CancelButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.CancelButton_1
         Me.CancelButtonControl.Location = New System.Drawing.Point(42, 47)
         Me.CancelButtonControl.Name = "CancelButtonControl"
-        Me.CancelButtonControl.Size = New System.Drawing.Size(94, 95)
+        Me.CancelButtonControl.Size = New System.Drawing.Size(94, 94)
         Me.CancelButtonControl.TabIndex = 8
         Me.CancelButtonControl.TabStop = False
         '
