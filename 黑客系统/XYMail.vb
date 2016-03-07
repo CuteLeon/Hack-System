@@ -7,10 +7,10 @@
         ReturnInfo.ForeColor = NormalColor
         ReturnInfo.Text = "Mail Sending ..."
         '创建SMTP连接和MAIL对象
-        Dim Smtp As New System.Net.Mail.SmtpClient("smtp.163.com", 25)
-        Smtp.Credentials = New System.Net.NetworkCredential("liuzichaohack", "fasongduan")
+        Dim Smtp As New System.Net.Mail.SmtpClient("smtp.***.com", 25)
+        Smtp.Credentials = New System.Net.NetworkCredential("*********", "******")
         Dim Mail As New System.Net.Mail.MailMessage()
-        Mail.From = New System.Net.Mail.MailAddress("15824734237@163.com")
+        Mail.From = New System.Net.Mail.MailAddress("******@***.com")
         Mail.To.Add(Txt_ToAddress.Text)
         Mail.SubjectEncoding = System.Text.Encoding.GetEncoding("GB2312")
         Mail.BodyEncoding = System.Text.Encoding.GetEncoding("GB2312")
