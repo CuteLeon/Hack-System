@@ -85,11 +85,23 @@
     <Compile Include="CommandConsole.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="DrawImageModule.vb" />
     <Compile Include="LockUI.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LockUI.Designer.vb">
       <DependentUpon>LockUI.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MineSweeperAssets.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MineSweeperAssets.resx</DependentUpon>
+    </Compile>
+    <Compile Include="MineSweeperForm.designer.vb">
+      <DependentUpon>MineSweeperForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MineSweeperForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MouseDragForm.Designer.vb">
@@ -179,6 +191,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LockUI.resx">
       <DependentUpon>LockUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MineSweeperAssets.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MineSweeperAssets.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MineSweeperForm.resx">
+      <DependentUpon>MineSweeperForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MouseDragForm.resx">
       <DependentUpon>MouseDragForm.vb</DependentUpon>
@@ -288,6 +309,31 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\MineClose_D.png" />
+    <None Include="Resources\MineClose_E.png" />
+    <None Include="Resources\MineClose_N.png" />
+    <None Include="Resources\Close_D.png" />
+    <None Include="Resources\Close_E.png" />
+    <None Include="Resources\Close_N.png" />
+    <None Include="Resources\Win.png" />
+    <None Include="Resources\Unknown.png" />
+    <None Include="Resources\TheCursor.png" />
+    <None Include="Resources\Right.png" />
+    <None Include="Resources\NoMine_8.png" />
+    <None Include="Resources\NoMine_7.png" />
+    <None Include="Resources\NoMine_6.png" />
+    <None Include="Resources\NoMine_5.png" />
+    <None Include="Resources\NoMine_4.png" />
+    <None Include="Resources\NoMine_3.png" />
+    <None Include="Resources\NoMine_2.png" />
+    <None Include="Resources\NoMine_1.png" />
+    <None Include="Resources\NoMine_0.png" />
+    <None Include="Resources\Mine.png" />
+    <None Include="Resources\Mark.png" />
+    <None Include="Resources\Lost.png" />
+    <None Include="Resources\HighLight_Mark.png" />
+    <None Include="Resources\HighLight.png" />
+    <None Include="Resources\Background.png" />
     <None Include="Resources\Mailcon_2.png" />
     <None Include="Resources\Mailcon_1.png" />
     <None Include="Resources\Mailcon_0.png" />
@@ -328,9 +374,6 @@
     <None Include="Resources\FullScreen_E.png" />
     <None Include="Resources\FullScreen_D.png" />
     <None Include="Resources\DragBlock.png" />
-    <None Include="Resources\Close_N.png" />
-    <None Include="Resources\Close_E.png" />
-    <None Include="Resources\Close_D.png" />
     <None Include="Resources\ShutdownBGI.png" />
     <None Include="Resources\SplitLine.png" />
     <None Include="Resources\CommandTipBGI.png" />

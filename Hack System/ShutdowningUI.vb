@@ -25,26 +25,27 @@ Public Class ShutdowningUI
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Shutdown"), AudioPlayMode.WaitToComplete)
             If XYMail.Visible Then XYMail.Hide()
             If AboutMeForm.Visible Then AboutMeForm.Hide()
+            If MineSweeperForm.Visible Then MineSweeperForm.Hide()
             'Close scripts.
             For Each ChildForm As Form In SystemWorkStation.ScriptForm
-                If Not (ChildForm Is Nothing) Then
-                    ChildForm.Close()
-                End If
-            Next
-            'Close browsers.
-            For Each BrowserForm In SystemWorkStation.BrowserForms
-                CType(BrowserForm, XYBrowser).GoingToExit = True
-                CType(BrowserForm, XYBrowser).Close()
-            Next
-            'Hide desktop.
-            SystemWorkStation.Hide()
+                    If Not (ChildForm Is Nothing) Then
+                        ChildForm.Close()
+                    End If
+                Next
+                'Close browsers.
+                For Each BrowserForm In SystemWorkStation.BrowserForms
+                    CType(BrowserForm, XYBrowser).GoingToExit = True
+                    CType(BrowserForm, XYBrowser).Close()
+                Next
+                'Hide desktop.
+                SystemWorkStation.Hide()
 
-            ThreadHideMe = New Thread(AddressOf HideMe)
-            ThreadHideMe.Start(True)
-            ThreadHideMe.Join()
+                ThreadHideMe = New Thread(AddressOf HideMe)
+                ThreadHideMe.Start(True)
+                ThreadHideMe.Join()
 
-            End
-        End If
+                End
+            End If
     End Sub
 
     Private Sub ShowMe()

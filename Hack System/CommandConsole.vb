@@ -164,6 +164,9 @@ Public Class CommandConsole
                         CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load.")
                         SetLastCommandColor(False)
                     End If
+                Case "mine" 'Game: Mine Sweeper
+										If Not MineSweeperForm.Visible Then MineSweeperForm.Show(systemworkstation)
+                    MineSweeperForm.Focus()
                 Case "browser" 'Run browser.
                     SystemWorkStation.LoadNewBrowser()
                 Case "mail" 'Run mail.
@@ -210,7 +213,7 @@ Public Class CommandConsole
                     CommandInputBox.SelectAll()
                     SetLastCommandColor(False)
                     'Print commands be supported.
-                    CommandPast.AppendText(vbCrLf & "    Supported：" & vbCrLf & "      Speak、Shutdown、Shell、" & vbCrLf & "      About、Weather、Lock、Melt" & vbCrLf & "      Mail、Browser")
+                    CommandPast.AppendText(vbCrLf & "    Supported：" & vbCrLf & "      Speak、Shutdown、Shell、" & vbCrLf & "      About、Weather、Lock、Melt" & vbCrLf & "      Mail、Browser、Mine")
             End Select
         End If
     End Sub
