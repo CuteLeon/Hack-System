@@ -44,6 +44,7 @@ Partial Class SystemWorkStation
         Me.ConsoleButtonControl = New System.Windows.Forms.Label()
         Me.InfoData = New System.Windows.Forms.Label()
         Me.InfoTitle = New System.Windows.Forms.Label()
+        Me.MenuBreath = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.WorkStationWallpaperControl, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.DesktopMenuStrip.SuspendLayout()
         Me.IconMenuStrip.SuspendLayout()
@@ -133,9 +134,9 @@ Partial Class SystemWorkStation
         '
         'IconMenuStrip
         '
-        Me.IconMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuSetToWallpaper, Me.ToolStripSeparator4, Me.MenuCloseScript})
+        Me.IconMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuSetToWallpaper, Me.MenuBreath, Me.ToolStripSeparator4, Me.MenuCloseScript})
         Me.IconMenuStrip.Name = "IconMenuStrip"
-        Me.IconMenuStrip.Size = New System.Drawing.Size(180, 54)
+        Me.IconMenuStrip.Size = New System.Drawing.Size(180, 98)
         '
         'MenuSetToWallpaper
         '
@@ -220,6 +221,12 @@ Partial Class SystemWorkStation
         Me.InfoTitle.Text = "CPU：" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "RAM：" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "DiskRead：" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "DiskWrite：" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Upload：" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Download："
         Me.InfoTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
+        'MenuBreath
+        '
+        Me.MenuBreath.Name = "MenuBreath"
+        Me.MenuBreath.Size = New System.Drawing.Size(179, 22)
+        Me.MenuBreath.Text = "Start/Stop Breath"
+        '
         'SystemWorkStation
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -265,4 +272,5 @@ Partial Class SystemWorkStation
     Friend WithEvents ConsoleButtonControl As Label
     Friend WithEvents InfoTitle As Label
     Friend WithEvents InfoData As Label
+    Friend WithEvents MenuBreath As ToolStripMenuItem
 End Class

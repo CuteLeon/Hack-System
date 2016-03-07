@@ -7,11 +7,11 @@
     Private Declare Function SelectObject Lib "gdi32" (ByVal hdc As Integer, ByVal hObject As Integer) As Integer
     Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Integer, ByVal x As Integer, ByVal y As Integer, ByVal nWidth As Integer, ByVal nHeight As Integer, ByVal hSrcDC As Integer, ByVal xSrc As Integer, ByVal ySrc As Integer, ByVal dwRop As Integer) As Integer
     Private Declare Sub InvalidateRect Lib "user32" (ByVal hwnd As Integer, lpRect As IntPtr, ByVal bErase As Integer)
-    Private Const FragmentWidth = 30
-    Private Const FragmentHeight = 30
+    Private Const FragmentWidth = 32
+    Private Const FragmentHeight = 32
     Private Const Excursion = 1
     Private Const SRCCOPY = &HCC0020
-    Public Melting As Boolean 'Statu
+    Public Melting As Boolean 'state
     Dim X As Integer, Y As Integer
     Dim FragmentHDC， FragmentBitmap As Integer
     Dim DesktopHDC As Integer

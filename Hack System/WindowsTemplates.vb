@@ -9,7 +9,7 @@ Public Class WindowsTemplates
     '常量
     Private Const TitleHeight As Integer = 25 '上边界多出的标题栏高度
     Private Const BorderWidth As Integer = 2 'GIF控件与窗体的基本边界距离
-    Public Const NegativeOpacity As Double = 0.8 '窗体失活时的透明度
+    Public Const NegativeOpacity As Double = 0.8 '窗体失活时的透明度（需要考虑{停止呼吸}里的Me.Opacity保留小数点的位数）
     '变量
     Dim TitleTextBrush As Brush = Brushes.White '标题文本颜色
     Dim BoundaryPen As Pen = Pens.Red '窗体边界线条的颜色
@@ -70,6 +70,9 @@ Public Class WindowsTemplates
         IconControl = SystemWorkStation.ScriptIcon(MyScriptIndex)
         '记录脚本状态
         SystemWorkStation.ScriptFormVisible(MyScriptIndex) = False
+        '关闭呼吸
+        BreathTimer.Stop()
+        UnBreathTimer.Stop()
         '播放提示音
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ScriptStoped"), AudioPlayMode.Background)
         '遍历脚本窗体，将焦点交给下一个标识的脚本窗体
@@ -210,5 +213,28 @@ Public Class WindowsTemplates
     Private Sub WindowsTemplates_Activated(sender As Object, e As EventArgs) Handles Me.Activated
         '激活窗体，判断窗体是否需要置后显示
         If SystemWorkStation.ShowMeBehind Then SystemWorkStation.SetWindowPos(SystemWorkStation.Handle, 1, 0, 0, 0, 0, &H10 Or &H40 Or &H2 Or &H1)
+    End Sub
+
+    '呼吸
+    Public Sub Breath()
+        If BreathTimer.Enabled Then
+            BreathTimer.Stop()
+            UnBreathTimer.Start()
+        Else '开始呼吸
+            UnBreathTimer.Stop()
+            BreathTimer.Start()
+        End If
+    End Sub
+
+    Private Sub BreathTimer_Tick(sender As Object, e As EventArgs) Handles BreathTimer.Tick
+        Static Difference As Single = 0.05
+        If Me.Opacity = 0 Or Me.Opacity = 1 Then Difference = -Difference
+        Me.Opacity += Difference
+    End Sub
+
+    Private Sub UnBreathTimer_Tick(sender As Object, e As EventArgs) Handles UnBreathTimer.Tick
+        Static EndOpacity As Double = IIf(ActiveForm Is Me, 1, NegativeOpacity)
+        Me.Opacity += IIf(Me.Opacity > EndOpacity, -0.05, 0.05)
+        If Math.Round(Me.Opacity, 1) = EndOpacity Then UnBreathTimer.Stop()
     End Sub
 End Class

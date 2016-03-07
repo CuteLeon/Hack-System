@@ -22,8 +22,11 @@ Partial Class WindowsTemplates
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.GIFControl = New System.Windows.Forms.PictureBox()
         Me.CloseButtonControl = New System.Windows.Forms.Label()
+        Me.BreathTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.UnBreathTimer = New System.Windows.Forms.Timer(Me.components)
         CType(Me.GIFControl, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -48,6 +51,14 @@ Partial Class WindowsTemplates
         Me.CloseButtonControl.Size = New System.Drawing.Size(27, 27)
         Me.CloseButtonControl.TabIndex = 1
         '
+        'BreathTimer
+        '
+        Me.BreathTimer.Interval = 50
+        '
+        'UnBreathTimer
+        '
+        Me.UnBreathTimer.Interval = 50
+        '
         'WindowsTemplates
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -70,4 +81,6 @@ Partial Class WindowsTemplates
 
     Friend WithEvents GIFControl As PictureBox
     Friend WithEvents CloseButtonControl As Label
+    Friend WithEvents BreathTimer As Timer
+    Friend WithEvents UnBreathTimer As Timer
 End Class

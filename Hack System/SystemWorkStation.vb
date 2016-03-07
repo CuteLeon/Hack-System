@@ -21,7 +21,7 @@ Public Class SystemWorkStation
         "3D Map", "Ballistic Missile", "Missile Deployment", "Action Indication", "Zone Isolation", "Waiting Connection",
         "Life Sustaining", "Agent Info.", "Round Oscilloscope", "Face 3DModeling", "Driving System", "Thinking Export",
         "Augmented Reality", "Combat Deployment", "UAV Camera", "NOVA 6", "Near-Earth Satellite", "Stream Decryption"}
-    Public AeroPeekModel As Boolean 'AeroPeek model statu.
+    Public AeroPeekModel As Boolean 'AeroPeek model state.
     Public ScriptForm(ScriptUpperBound) As WindowsTemplates 'Scripts
     Public BrowserForms As New ArrayList  'Browsers.
     Public ScriptFormVisible(ScriptUpperBound) As Boolean 'Scripts' visible.（Diffrent with Form.Visible）
@@ -139,6 +139,7 @@ Public Class SystemWorkStation
             '图标右键菜单项设为可用
             MenuCloseScript.Enabled = True
             MenuSetToWallpaper.Enabled = True
+            MenuBreath.Enabled = True
             '激活脚本窗体
             ScriptForm(ScriptIndex).Focus()
             '如果系统弹出框显示，则应置前显示系统弹出框
@@ -163,6 +164,7 @@ Public Class SystemWorkStation
         '设置图标右键菜单项可用
         MenuCloseScript.Enabled = ScriptFormVisible(NowIconIndex)
         MenuSetToWallpaper.Enabled = ScriptFormVisible(NowIconIndex)
+        MenuBreath.Enabled = ScriptFormVisible(NowIconIndex)
     End Sub
 
     Private Sub IconTemplates_MouseLeave(sender As Object, e As EventArgs)
@@ -297,6 +299,11 @@ Public Class SystemWorkStation
         '桌面图标菜单之将脚本设置为桌面壁纸
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         WorkStationWallpaperControl.Image = My.Resources.SystemAssets.ResourceManager.GetObject("HackScript_" & NowIconIndex.ToString("00"))
+    End Sub
+
+    Private Sub MenuBreath_Click(sender As Object, e As EventArgs) Handles MenuBreath.Click
+        '呼吸
+        ScriptForm(NowIconIndex).Breath()
     End Sub
 
     Private Sub MenuCloseScript_Click(sender As Object, e As EventArgs) Handles MenuCloseScript.Click
@@ -475,4 +482,5 @@ Public Class SystemWorkStation
         NowButton.Image = My.Resources.SystemAssets.ResourceManager.GetObject(NowButton.Tag & "2")
     End Sub
 #End Region
+
 End Class

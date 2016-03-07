@@ -33,7 +33,7 @@ Public Class XYBrowser
         MainWebBrowser.Navigate(BrowserAddress.Text)
     End Sub
 
-    Private Sub XYBrowserMouseMove(sender As Object, e As MouseEventArgs) Handles BrowserStatus.MouseDown, BrowserTitle.MouseDown
+    Private Sub XYBrowserMouseMove(sender As Object, e As MouseEventArgs) Handles BrowserState.MouseDown, BrowserTitle.MouseDown
         Call ReleaseCapture() '鼠标拖动
         Call SendMessageA(Me.Handle, &HA1, 2, 0&)
         If MousePosition.Y = 0 Then Me.WindowState = FormWindowState.Maximized
@@ -70,7 +70,7 @@ Public Class XYBrowser
 
     Private Sub MainWebBrowser_StatusTextChanged(sender As Object, e As EventArgs) Handles MainWebBrowser.StatusTextChanged
         '网页加载状态改变
-        BrowserStatus.Text = MainWebBrowser.StatusText
+        BrowserState.Text = MainWebBrowser.StatusText
         Application.DoEvents()
     End Sub
 
@@ -131,7 +131,7 @@ Public Class XYBrowser
                     Btn_FullScreen.BorderStyle = BorderStyle.None
                     Btn_FullScreen.Location = New Point(TopPanel.Width - 3 * Btn_FullScreen.Width, 0)
                     MainWebBrowser.Location = New Point(BorderWidth, TopPanel.Bottom)
-                    MainWebBrowser.Size = New Point(Me.Width - 2 * BorderWidth, BrowserStatus.Top - TopPanel.Bottom)
+                    MainWebBrowser.Size = New Point(Me.Width - 2 * BorderWidth, BrowserState.Top - TopPanel.Bottom)
                 Else
                     Me.WindowState = FormWindowState.Maximized
                     Btn_FullScreen.Parent = MainWebBrowser
@@ -236,11 +236,11 @@ Public Class XYBrowser
         SearchTextBox.Left = Btn_GoNavigate.Right
         SearchTextBox.Width = Btn_Search.Left - SearchTextBox.Left
 
-        BrowserStatus.Location = New Point(BorderWidth, Me.Height - BrowserStatus.Height - BorderWidth)
-        BrowserStatus.Width = TopPanel.Width - Btn_DragBlock.Width
+        BrowserState.Location = New Point(BorderWidth, Me.Height - BrowserState.Height - BorderWidth)
+        BrowserState.Width = TopPanel.Width - Btn_DragBlock.Width
         Btn_DragBlock.Location = New Point(Me.Width - Btn_DragBlock.Width - BorderWidth, Me.Height - Btn_DragBlock.Height - BorderWidth)
         MainWebBrowser.Location = New Point(BorderWidth, TopPanel.Bottom)
-        MainWebBrowser.Size = New Point(Me.Width - 2 * BorderWidth, BrowserStatus.Top - TopPanel.Bottom)
+        MainWebBrowser.Size = New Point(Me.Width - 2 * BorderWidth, BrowserState.Top - TopPanel.Bottom)
     End Sub
 
     '百度搜索功能

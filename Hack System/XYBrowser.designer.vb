@@ -23,7 +23,7 @@ Partial Class XYBrowser
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.MainWebBrowser = New System.Windows.Forms.WebBrowser()
-        Me.BrowserStatus = New System.Windows.Forms.Label()
+        Me.BrowserState = New System.Windows.Forms.Label()
         Me.TopPanel = New System.Windows.Forms.Panel()
         Me.Btn_FullScreen = New System.Windows.Forms.Label()
         Me.SearchTextBox = New System.Windows.Forms.TextBox()
@@ -52,15 +52,15 @@ Partial Class XYBrowser
         Me.MainWebBrowser.Size = New System.Drawing.Size(798, 524)
         Me.MainWebBrowser.TabIndex = 0
         '
-        'BrowserStatus
+        'BrowserState
         '
-        Me.BrowserStatus.BackColor = System.Drawing.Color.White
-        Me.BrowserStatus.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.BrowserStatus.Location = New System.Drawing.Point(1, 581)
-        Me.BrowserStatus.Name = "BrowserStatus"
-        Me.BrowserStatus.Size = New System.Drawing.Size(780, 18)
-        Me.BrowserStatus.TabIndex = 9
-        Me.BrowserStatus.Text = "XY Browser"
+        Me.BrowserState.BackColor = System.Drawing.Color.White
+        Me.BrowserState.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.BrowserState.Location = New System.Drawing.Point(1, 581)
+        Me.BrowserState.Name = "BrowserState"
+        Me.BrowserState.Size = New System.Drawing.Size(780, 18)
+        Me.BrowserState.TabIndex = 9
+        Me.BrowserState.Text = "XY Browser"
         '
         'TopPanel
         '
@@ -243,7 +243,7 @@ Partial Class XYBrowser
         Me.ClientSize = New System.Drawing.Size(800, 600)
         Me.Controls.Add(Me.MainWebBrowser)
         Me.Controls.Add(Me.Btn_DragBlock)
-        Me.Controls.Add(Me.BrowserStatus)
+        Me.Controls.Add(Me.BrowserState)
         Me.Controls.Add(Me.TopPanel)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "XYBrowser"
@@ -258,7 +258,7 @@ Partial Class XYBrowser
     End Sub
 
     Friend WithEvents MainWebBrowser As WebBrowser
-    Friend WithEvents BrowserStatus As Label
+    Friend WithEvents BrowserState As Label
     Friend WithEvents TopPanel As Panel
     Friend WithEvents Btn_NowStop As Label
     Friend WithEvents Btn_Max As Label
