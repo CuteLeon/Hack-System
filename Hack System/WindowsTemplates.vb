@@ -15,7 +15,7 @@ Public Class WindowsTemplates
     Dim BoundaryPen As Pen = Pens.Red '窗体边界线条的颜色
     Dim BorderColor_Active As Color = Color.DarkSlateGray '窗体激活时边框颜色
     Dim BorderColor_Negative As Color = Color.Black '窗体失活时边框颜色
-    Dim ScriptIndex As Integer '自己对应的脚本标识
+    Dim MyScriptIndex As Integer '自己对应的脚本标识
     Dim IconLocation As Point '与自己对应的图标在桌面上的位置
     Dim IconImage As Image '图标图像
     Dim IconControl As Label '在桌面环境里对应的图标控件
@@ -23,6 +23,7 @@ Public Class WindowsTemplates
     Private Sub WindowsTemplates_Load(sender As Object, e As EventArgs) Handles Me.Load
         '允许多线程访问UI
         System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
+        MyScriptIndex = Int(Me.Tag)
         '设置GIF控件左距离和图像
         With GIFControl
             .Left = BorderWidth
@@ -63,22 +64,21 @@ Public Class WindowsTemplates
 
     Private Sub CloseScript() '关闭脚本过程
         '读取自身的脚本标识和需要的在桌面环境里的数据
-        ScriptIndex = Int(Me.Tag)
-        IconLocation.X = SystemWorkStation.ScriptIcon(ScriptIndex).Left
-        IconLocation.Y = SystemWorkStation.ScriptIcon(ScriptIndex).Top
+        IconLocation.X = SystemWorkStation.ScriptIcon(MyScriptIndex).Left
+        IconLocation.Y = SystemWorkStation.ScriptIcon(MyScriptIndex).Top
         IconImage = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & Me.Tag)
-        IconControl = SystemWorkStation.ScriptIcon(ScriptIndex)
+        IconControl = SystemWorkStation.ScriptIcon(MyScriptIndex)
         '记录脚本状态
-        SystemWorkStation.ScriptFormVisible(ScriptIndex) = False
+        SystemWorkStation.ScriptFormVisible(MyScriptIndex) = False
         '播放提示音
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ScriptStoped"), AudioPlayMode.Background)
         '遍历脚本窗体，将焦点交给下一个标识的脚本窗体
-        For ScriptIndex = SystemWorkStation.ScriptUpperBound To 0 Step -1
+        For ScriptIndex As Integer = SystemWorkStation.ScriptUpperBound To 0 Step -1
             If SystemWorkStation.ScriptFormVisible(ScriptIndex) Then
                 '找到了，激活下一个标识的脚本窗体
                 SystemWorkStation.ScriptForm(ScriptIndex).Focus()
                 '如果当前窗口正在被AeroPeek模式高亮显示，关闭后应退出AeroPeek模式
-                If SystemWorkStation.AeroPeekModel And SystemWorkStation.NowIconIndex = Int(Me.Tag) Then
+                If SystemWorkStation.AeroPeekModel And SystemWorkStation.NowIconIndex = MyScriptIndex Then
                     '遍历脚本窗体
                     For TempScriptIndex As Integer = 0 To SystemWorkStation.ScriptUpperBound
                         '还原在AeroPeek模式下被隐藏的窗体的透明度
@@ -186,9 +186,9 @@ Public Class WindowsTemplates
     Private Sub WindowsTemplates_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
         If SystemWorkStation.ShowMeBehind Then SystemWorkStation.SetWindowPos(SystemWorkStation.Handle, 1, 0, 0, 0, 0, &H10 Or &H40 Or &H2 Or &H1)
         '防止在显示动态关闭特效时被激活
-        If Not SystemWorkStation.ScriptFormVisible(Int(Me.Tag)) Then Exit Sub
+        If Not SystemWorkStation.ScriptFormVisible(MyScriptIndex) Then Exit Sub
         '判断AeroPeek模式状态和当前脚本标识，设置窗体透明度
-        Me.Opacity = IIf(SystemWorkStation.AeroPeekModel And SystemWorkStation.NowIconIndex <> Int(Me.Tag), SystemWorkStation.AeroPeekOpacity, 1)
+        Me.Opacity = IIf(SystemWorkStation.AeroPeekModel And SystemWorkStation.NowIconIndex <> MyScriptIndex, SystemWorkStation.AeroPeekOpacity, 1)
         '改变背景色
         Me.BackColor = BorderColor_Active
         '优先显示系统弹出框

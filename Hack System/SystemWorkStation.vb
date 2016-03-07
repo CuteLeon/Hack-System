@@ -26,7 +26,7 @@ Public Class SystemWorkStation
     Public BrowserForms As New ArrayList  'Browsers.
     Public ScriptFormVisible(ScriptUpperBound) As Boolean 'Scripts' visible.（Diffrent with Form.Visible）
     Public ScriptIcon(ScriptUpperBound) As Label
-    Public NowIconIndex As Integer 'Icon under mouse.
+    Public NowIconIndex As Integer = -1 'Icon under mouse.
     Public RightestLoction As Integer 'The rightest icon's right location.
     Public ApplicationClosing As Boolean 'Application is going to exit.
     Public ShowMeBehind As Boolean
@@ -36,7 +36,8 @@ Public Class SystemWorkStation
     Dim ColumnIconCount As Integer = Int(My.Computer.Screen.Bounds.Height / IconHeight) - 1
     Dim IntervalDistance As Integer = (My.Computer.Screen.Bounds.Height - ColumnIconCount * IconHeight) / (ColumnIconCount + 1) 'Distance between icons.
     Dim WallpaperIndex As Integer = 9 'Default wallpaper's ID.
-    Dim IconBitmap As Bitmap
+    Dim HighLightIcon(ScriptUpperBound) As Bitmap
+    Dim MouseDownIcon(ScriptUpperBound) As Bitmap
     Dim IconGraphics As Graphics
     Dim SenderControl As Label
     Dim NowButton As Label
@@ -122,16 +123,19 @@ Public Class SystemWorkStation
         If Not (ScriptForm(ScriptIndex).Visible) And Not (ScriptFormVisible(ScriptIndex)) Then
             '高亮显示脚本对应桌面图标
             SenderControl = ScriptIcon(ScriptIndex)
-            IconBitmap = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
-            IconGraphics = Graphics.FromImage(IconBitmap)
-            IconGraphics.DrawImage(My.Resources.SystemAssets.MouseEnter, 0, 0)
-            SenderControl.Image = IconBitmap
+            If HighLightIcon(ScriptIndex) Is Nothing Then
+                HighLightIcon(ScriptIndex) = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
+                IconGraphics = Graphics.FromImage(HighLightIcon(ScriptIndex))
+                IconGraphics.DrawImage(My.Resources.SystemAssets.MouseEnter, 0, 0)
+                IconGraphics.Dispose()
+            End If
+            SenderControl.Image = HighLightIcon(ScriptIndex)
             '显示脚本窗体并记录
             ScriptFormVisible(ScriptIndex) = True
-            ScriptForm(ScriptIndex).Show(Me)
-        End If
-        '脚本在打开状态
-        If ScriptForm(ScriptIndex).Visible And ScriptFormVisible(ScriptIndex) Then
+                ScriptForm(ScriptIndex).Show(Me)
+            End If
+            '脚本在打开状态
+            If ScriptForm(ScriptIndex).Visible And ScriptFormVisible(ScriptIndex) Then
             '图标右键菜单项设为可用
             MenuCloseScript.Enabled = True
             MenuSetToWallpaper.Enabled = True
@@ -146,10 +150,14 @@ Public Class SystemWorkStation
     Private Sub IconTemplates_MouseEnter(sender As Object, e As EventArgs)
         '鼠标进入桌面图标，高亮显示图标
         SenderControl = CType(sender, Label)
-        IconBitmap = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
-        IconGraphics = Graphics.FromImage(IconBitmap)
-        IconGraphics.DrawImage(My.Resources.SystemAssets.MouseEnter, 0, 0)
-        SenderControl.Image = IconBitmap
+        Dim ScriptIndex As Integer = Int(CType(sender, Label).Tag)
+        If HighLightIcon(ScriptIndex) Is Nothing Then
+            HighLightIcon(ScriptIndex) = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
+            IconGraphics = Graphics.FromImage(HighLightIcon(ScriptIndex))
+            IconGraphics.DrawImage(My.Resources.SystemAssets.MouseEnter, 0, 0)
+            IconGraphics.Dispose()
+        End If
+        SenderControl.Image = HighLightIcon(ScriptIndex)
         '记录鼠标下图标的标识
         NowIconIndex = Int(SenderControl.Tag)
         '设置图标右键菜单项可用
@@ -160,6 +168,7 @@ Public Class SystemWorkStation
     Private Sub IconTemplates_MouseLeave(sender As Object, e As EventArgs)
         '鼠标离开图标时，如果脚本在关闭状态就取消高亮显示图标
         Dim ScriptIndex As Integer = Int(CType(sender, Label).Tag)
+        'NowIconIndex = -1
         If Not (ScriptFormVisible(ScriptIndex)) Then SenderControl.Image = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
         If AeroPeekModel Then
             '遍历脚本窗体
@@ -177,10 +186,14 @@ Public Class SystemWorkStation
     Private Sub IconTemplates_MouseUp(sender As Object, e As MouseEventArgs)
         '鼠标抬起
         SenderControl = CType(sender, Label)
-        IconBitmap = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
-        IconGraphics = Graphics.FromImage(IconBitmap)
-        IconGraphics.DrawImage(My.Resources.SystemAssets.MouseEnter, 0, 0)
-        SenderControl.Image = IconBitmap
+        Dim ScriptIndex As Integer = Int(CType(sender, Label).Tag)
+        If HighLightIcon(ScriptIndex) Is Nothing Then
+            HighLightIcon(ScriptIndex) = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
+            IconGraphics = Graphics.FromImage(HighLightIcon(ScriptIndex))
+            IconGraphics.DrawImage(My.Resources.SystemAssets.MouseEnter, 0, 0)
+            IconGraphics.Dispose()
+        End If
+        SenderControl.Image = HighLightIcon(ScriptIndex)
     End Sub
     Private Sub IconTemplates_MouseHover(sender As Object, e As EventArgs)
         '鼠标悬停时显示AeroPeek视图
@@ -204,10 +217,14 @@ Public Class SystemWorkStation
     Private Sub IconTemplates_MouseDown(sender As Object, e As MouseEventArgs)
         '鼠标按下，再次改变图标样式
         SenderControl = CType(sender, Label)
-        IconBitmap = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
-        IconGraphics = Graphics.FromImage(IconBitmap)
-        IconGraphics.DrawImage(My.Resources.SystemAssets.MouseDown, 0, 0)
-        SenderControl.Image = IconBitmap
+        Dim ScriptIndex As Integer = Int(CType(sender, Label).Tag)
+        If MouseDownIcon(ScriptIndex) Is Nothing Then
+            MouseDownIcon(ScriptIndex) = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
+            IconGraphics = Graphics.FromImage(MouseDownIcon(ScriptIndex))
+            IconGraphics.DrawImage(My.Resources.SystemAssets.MouseDown, 0, 0)
+            IconGraphics.Dispose()
+        End If
+        SenderControl.Image = MouseDownIcon(ScriptIndex)
     End Sub
 
     Private Sub ShutdownButtonControl_Click(sender As Object, e As EventArgs) Handles ShutdownButtonControl.Click
