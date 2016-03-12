@@ -407,15 +407,6 @@ Namespace My.Resources
         '''<summary>
         '''  查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
         '''</summary>
-        Friend Shared ReadOnly Property HideConsole() As System.IO.UnmanagedMemoryStream
-            Get
-                Return ResourceManager.GetStream("HideConsole", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
-        '''</summary>
         Friend Shared ReadOnly Property LockUIBGM() As System.IO.UnmanagedMemoryStream
             Get
                 Return ResourceManager.GetStream("LockUIBGM", resourceCulture)
@@ -507,6 +498,26 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Mailcon_2() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Mailcon_2", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
+        Friend Shared ReadOnly Property MicroPhone_Off() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("MicroPhone_Off", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
+        Friend Shared ReadOnly Property MicroPhone_On() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("MicroPhone_On", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -962,6 +973,36 @@ Namespace My.Resources
         Friend Shared ReadOnly Property ShutdownWindow_2() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ShutdownWindow_2", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
+        Friend Shared ReadOnly Property SpeechButton_0() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("SpeechButton_0", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
+        Friend Shared ReadOnly Property SpeechButton_1() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("SpeechButton_1", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
+        Friend Shared ReadOnly Property SpeechButton_2() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("SpeechButton_2", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

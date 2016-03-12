@@ -376,9 +376,6 @@
   <data name="OKButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\OKButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="HideConsole" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\HideConsole.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="ShowConsole" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ShowConsole.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -450,5 +447,20 @@
   </data>
   <data name="Mailcon_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Mailcon_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MicroPhone_Off" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\MicroPhone_Off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MicroPhone_On" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\MicroPhone_On.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SpeechButton_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SpeechButton_0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SpeechButton_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SpeechButton_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SpeechButton_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SpeechButton_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

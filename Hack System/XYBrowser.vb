@@ -316,9 +316,4 @@ Public Class XYBrowser
     End Sub
 #End Region
 
-    Private Sub XYBrowser_Activated(sender As Object, e As EventArgs) Handles Me.Activated
-        '激活窗体时，如果置后开关开启，置后显示
-        If SystemWorkStation.ShowMeBehind Then SystemWorkStation.SetWindowPos(SystemWorkStation.Handle, 1, 0, 0, 0, 0, &H10 Or &H40 Or &H2 Or &H1)
-    End Sub
-
 End Class

@@ -18,7 +18,7 @@
     Dim MinefieldGraphics As Graphics '雷区画笔
     Dim MinefieldRectangle As Rectangle = New Rectangle(10, 27, 320, 320) '雷区位置
 
-    Dim MineCount As Int16 = 20 '地雷总数
+    Dim MineCount As Int16 = 15 '地雷总数
     Dim MineState(9, 9) As Boolean '布雷位置
     Dim CellState(9, 9) As Int16  '地雷状态(0：未知；1：标记；2：无雷；3：高亮；4：高亮_标记)
     Dim CellAroundCount(9, 9) As Int16 '周围地雷数
@@ -293,6 +293,7 @@
     Private Sub MineSweeperForm_MouseClick(sender As Object, e As MouseEventArgs) Handles Me.MouseClick
         '点击关闭按钮，退出程序
         If CloseRectangle.Contains(e.X, e.Y) Then Me.Close()
+        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
     Private Sub MinefieldPanel_MouseDoubleClick(sender As Object, e As MouseEventArgs)

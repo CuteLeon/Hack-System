@@ -19,8 +19,9 @@ Public Class CommandConsole
         SystemWorkStation.XYBrowserButtonControl.Visible = False
         SystemWorkStation.ShutdownButtonControl.Visible = False
         SystemWorkStation.SettingButtonControl.Visible = False
+        SystemWorkStation.SpeechButtonControl.Visible = False
         'Set focus and play audio.
-        Me.Focus()
+        SystemWorkStation.SetForegroundWindow(Me.Handle)
         CommandInputBox.Focus()
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ShowConsole"), AudioPlayMode.Background)
         'Start thread
@@ -37,8 +38,9 @@ Public Class CommandConsole
         SystemWorkStation.XYBrowserButtonControl.Visible = True
         SystemWorkStation.ShutdownButtonControl.Visible = True
         SystemWorkStation.SettingButtonControl.Visible = True
+        SystemWorkStation.SpeechButtonControl.Visible = True
         'Play audio
-        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("HideConsole"), AudioPlayMode.Background)
+        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
         'Start thread
         ConsoleHiding = True
         If ConsoleShowing Then ThreadShowConsole.Abort() : ConsoleShowing = False
@@ -75,7 +77,7 @@ Public Class CommandConsole
         Dim KeyAscii As Integer = Asc(e.KeyChar)
         If KeyAscii = 96 Or KeyAscii = -24156 Or KeyAscii = 27 Then
             e.KeyChar = vbNullChar
-            SystemWorkStation.Focus() 'Active other windows will make me deactive and hide me.
+            SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle) 'Active other windows will make me deactive and hide me.
         ElseIf KeyAscii = 13 Then
             '[Enter] to run command.
             CommandInputBox.Text = CommandInputBox.Text.TrimStart
@@ -165,15 +167,16 @@ Public Class CommandConsole
                         SetLastCommandColor(False)
                     End If
                 Case "mine" 'Game: Mine Sweeper
-										If Not MineSweeperForm.Visible Then MineSweeperForm.Show(systemworkstation)
-                    MineSweeperForm.Focus()
+                    If Not MineSweeperForm.Visible Then MineSweeperForm.Show(SystemWorkStation)
+                    SystemWorkStation.SetForegroundWindow(MineSweeperForm.Handle)
+                    MineSweeperForm.TopMost = False
                 Case "browser" 'Run browser.
                     SystemWorkStation.LoadNewBrowser()
                 Case "mail" 'Run mail.
                     If XYMail.Visible Then XYMail.Hide() Else XYMail.Show(SystemWorkStation)
                 Case "about" 'Show AboutMe.
                     If Not (AboutMeForm.Visible) Then AboutMeForm.Show(SystemWorkStation)
-                    AboutMeForm.Focus()
+                    SystemWorkStation.SetForegroundWindow(AboutMeForm.Handle)
                 Case "weather" 'Get weather from Internet.
                     If Trim(CommandParameter) = vbNullString Then Exit Sub
                     'Dont creat thread again.
@@ -187,7 +190,7 @@ Public Class CommandConsole
                     ShutdowningUI.Opacity = 0
                     ShutdowningUI.Show(SystemWorkStation)
                     ShutdowningUI.ShowShutdownForm()
-                    ShutdowningUI.Focus()
+                    SystemWorkStation.SetForegroundWindow(ShutdowningUI.Handle)
                     'Show message and set color.
                     CommandTip.Text = "Lock Screen"
                     CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Lock Screen")
@@ -398,7 +401,7 @@ Public Class CommandConsole
     Private Sub CommandConsole_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         'Dont close the console window,but put it out of the screen.
         e.Cancel = True
-        SystemWorkStation.Focus()
+        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
 #Region "Tips"
@@ -445,7 +448,7 @@ Public Class CommandConsole
         'Press [~] or [Esc] to hide console.
         If KeyAscii = 96 Or KeyAscii = -24156 Or KeyAscii = 27 Then
             e.KeyChar = vbNullChar
-            SystemWorkStation.Focus()
+            SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
         Else
             'Others key to active CommandInputBox.
             CommandInputBox.Focus()

@@ -58,6 +58,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -309,6 +310,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\MicroPhone_Off.png" />
+    <None Include="Resources\MicroPhone_On.png" />
+    <None Include="Resources\SpeechButton_0.png" />
+    <None Include="Resources\SpeechButton_1.png" />
+    <None Include="Resources\SpeechButton_2.png" />
     <None Include="Resources\MineClose_D.png" />
     <None Include="Resources\MineClose_E.png" />
     <None Include="Resources\MineClose_N.png" />
@@ -317,7 +323,6 @@
     <None Include="Resources\Close_N.png" />
     <None Include="Resources\Win.png" />
     <None Include="Resources\Unknown.png" />
-    <None Include="Resources\TheCursor.png" />
     <None Include="Resources\Right.png" />
     <None Include="Resources\NoMine_8.png" />
     <None Include="Resources\NoMine_7.png" />
@@ -378,7 +383,6 @@
     <None Include="Resources\SplitLine.png" />
     <None Include="Resources\CommandTipBGI.png" />
     <None Include="Resources\ShowConsole.wav" />
-    <None Include="Resources\HideConsole.wav" />
     <None Include="Resources\OKButton.png" />
     <None Include="Resources\AboutMe.png" />
     <None Include="Resources\MouseCursor.png" />

@@ -17,35 +17,39 @@ Public Class ShutdowningUI
     Dim MouseDowned As Boolean
 
     Public Sub ShowShutdownForm()
+        If ThreadShowMe IsNot Nothing AndAlso ThreadShowMe.ThreadState = ThreadState.Running Then Exit Sub
         ThreadShowMe = New Thread(AddressOf ShowMe)
         ThreadShowMe.Start()
         'Application is going to exit.
         If SystemWorkStation.ApplicationClosing Then
             ThreadShowMe.Join()
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Shutdown"), AudioPlayMode.WaitToComplete)
+            '释放语音识别引擎
+            SystemWorkStation.MySpeechRecognitionEngine.RecognizeAsyncStop()
+            SystemWorkStation.MySpeechRecognitionEngine.Dispose()
             If XYMail.Visible Then XYMail.Hide()
             If AboutMeForm.Visible Then AboutMeForm.Hide()
             If MineSweeperForm.Visible Then MineSweeperForm.Hide()
             'Close scripts.
             For Each ChildForm As Form In SystemWorkStation.ScriptForm
-                    If Not (ChildForm Is Nothing) Then
-                        ChildForm.Close()
-                    End If
-                Next
-                'Close browsers.
-                For Each BrowserForm In SystemWorkStation.BrowserForms
-                    CType(BrowserForm, XYBrowser).GoingToExit = True
-                    CType(BrowserForm, XYBrowser).Close()
-                Next
-                'Hide desktop.
-                SystemWorkStation.Hide()
+                If Not (ChildForm Is Nothing) Then
+                    ChildForm.Close()
+                End If
+            Next
+            'Close browsers.
+            For Each BrowserForm In SystemWorkStation.BrowserForms
+                CType(BrowserForm, XYBrowser).GoingToExit = True
+                CType(BrowserForm, XYBrowser).Close()
+            Next
+            'Hide desktop.
+            SystemWorkStation.Hide()
 
-                ThreadHideMe = New Thread(AddressOf HideMe)
-                ThreadHideMe.Start(True)
-                ThreadHideMe.Join()
+            ThreadHideMe = New Thread(AddressOf HideMe)
+            ThreadHideMe.Start(True)
+            ThreadHideMe.Join()
 
-                End
-            End If
+            End
+        End If
     End Sub
 
     Private Sub ShowMe()
@@ -53,6 +57,14 @@ Public Class ShutdowningUI
             Me.Opacity = Index / 10
             Thread.Sleep(50)
         Next
+    End Sub
+
+    Public Sub HideShutdownForm(ByVal ToRight As Boolean)
+        If ThreadHideMe IsNot Nothing AndAlso ThreadHideMe.ThreadState = ThreadState.Running Then Exit Sub
+        ThreadHideMe = New Thread(AddressOf HideMe)
+        ThreadHideMe.Start(ToRight)
+        ThreadHideMe.Join()
+        SystemWorkStation.Focus()
     End Sub
 
     Private Sub HideMe(ByVal ToRight As Boolean)
@@ -110,17 +122,9 @@ Public Class ShutdowningUI
         'Mouse Up.
         MouseDowned = False
         If Me.Left > Me.Width \ 3 Then
-            ThreadHideMe = New Thread(AddressOf HideMe)
-            ThreadHideMe.Start(True)
-            ThreadHideMe.Join()
-
-            SystemWorkStation.Focus()
+            HideShutdownForm(True)
         ElseIf Me.Left < -Me.Width \ 3 Then
-            ThreadHideMe = New Thread(AddressOf HideMe)
-            ThreadHideMe.Start(False)
-            ThreadHideMe.Join()
-
-            SystemWorkStation.Focus()
+            HideShutdownForm(False)
         Else
             Threading.ThreadPool.QueueUserWorkItem(New Threading.WaitCallback(AddressOf ReSetMyLocation))
         End If

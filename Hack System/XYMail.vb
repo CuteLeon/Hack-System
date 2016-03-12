@@ -3,14 +3,16 @@ Public Class XYMail
     Dim FailColor As Color = Color.FromArgb(248, 97, 97)
 
     Private Sub Btn_Send_Click(sender As Object, e As EventArgs) Handles Btn_Send.Click
-        On Error GoTo MyERR
+        On Error GoTo MyERR '容错处理
         ReturnInfo.ForeColor = NormalColor
         ReturnInfo.Text = "Mail Sending ..."
+        Application.DoEvents()
         '创建SMTP连接和MAIL对象
-        Dim Smtp As New System.Net.Mail.SmtpClient("smtp.***.com", 25)
-        Smtp.Credentials = New System.Net.NetworkCredential("***", "***")
+        Dim Smtp As New System.Net.Mail.SmtpClient("smtp.yeah.net", 25)
+        Smtp.UseDefaultCredentials = True
+        Smtp.Credentials = New System.Net.NetworkCredential("HackSystem", "HackSystem123") '"I'mHackSystem")
         Dim Mail As New System.Net.Mail.MailMessage()
-        Mail.From = New System.Net.Mail.MailAddress("***@***.com")
+        Mail.From = New System.Net.Mail.MailAddress("HackSystem@yeah.net")
         Mail.To.Add(Txt_ToAddress.Text)
         Mail.SubjectEncoding = System.Text.Encoding.GetEncoding("GB2312")
         Mail.BodyEncoding = System.Text.Encoding.GetEncoding("GB2312")
@@ -57,11 +59,6 @@ MyERR:
     End Sub
 #End Region
 
-    Private Sub XYMail_Activated(sender As Object, e As EventArgs) Handles Me.Activated
-        '判断是否需要置后显示
-        If SystemWorkStation.ShowMeBehind Then SystemWorkStation.SetWindowPos(SystemWorkStation.Handle, 1, 0, 0, 0, 0, &H10 Or &H40 Or &H2 Or &H1)
-    End Sub
-
     Private Sub Txt_ToAddress_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Txt_ToAddress.KeyPress
         '发信人地址栏响应回车键
         If Asc(e.KeyChar) = 13 Then Btn_Send_Click(New Object, New EventArgs)
@@ -69,6 +66,24 @@ MyERR:
 
     Private Sub Btn_Close_Click(sender As Object, e As EventArgs) Handles Btn_Close.Click
         Me.Hide()
+    End Sub
+
+    '获取IP和真实地址
+    Private Sub GetIPAndAddress(ByRef IP As String, ByRef Address As String)
+        'Not My.Computer.Network.IsAvailable'网络未连接
+        Dim IPWebClient As Net.WebClient = New Net.WebClient
+        Dim WebString As String = vbNullString
+        Dim RegIP As System.Text.RegularExpressions.Regex = New System.Text.RegularExpressions.Regex("\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}")
+        Try
+            IPWebClient.Encoding = System.Text.Encoding.UTF8
+            WebString = IPWebClient.DownloadString("http://ip.chinaz.com/getip.aspx")
+            IP = RegIP.Match(WebString).ToString
+            Address = Strings.Mid(WebString, IP.Length + 17, WebString.Length - IP.Length - 18)
+        Catch ex As Exception
+            IP = "Unknown" : Address = "Unknown"
+        Finally
+            If Not IPWebClient Is Nothing Then IPWebClient.Dispose()
+        End Try
     End Sub
 
 #Region "关闭按钮响应鼠标动态效果"

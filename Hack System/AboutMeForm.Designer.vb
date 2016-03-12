@@ -25,6 +25,9 @@ Partial Class AboutMeForm
         Me.AboutMeWallpaperControl = New System.Windows.Forms.PictureBox()
         Me.AboutMeControl = New System.Windows.Forms.PictureBox()
         Me.OKButtonControl = New System.Windows.Forms.Label()
+        Me.WebLink = New System.Windows.Forms.LinkLabel()
+        Me.SetLabelColorLabel = New System.Windows.Forms.Label()
+        Me.LabelColorDialog = New System.Windows.Forms.ColorDialog()
         CType(Me.AboutMeWallpaperControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.AboutMeControl, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -64,11 +67,46 @@ Partial Class AboutMeForm
         Me.OKButtonControl.TabIndex = 12
         Me.OKButtonControl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'WebLink
+        '
+        Me.WebLink.AutoSize = True
+        Me.WebLink.BackColor = System.Drawing.Color.Transparent
+        Me.WebLink.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.WebLink.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.WebLink.LinkArea = New System.Windows.Forms.LinkArea(3, 33)
+        Me.WebLink.LinkColor = System.Drawing.Color.Red
+        Me.WebLink.Location = New System.Drawing.Point(113, 146)
+        Me.WebLink.Name = "WebLink"
+        Me.WebLink.Size = New System.Drawing.Size(268, 24)
+        Me.WebLink.TabIndex = 13
+        Me.WebLink.TabStop = True
+        Me.WebLink.Text = "访问：http://www.HackSystem.icoc.in/"
+        Me.WebLink.UseCompatibleTextRendering = True
+        '
+        'SetLabelColorLabel
+        '
+        Me.SetLabelColorLabel.AutoSize = True
+        Me.SetLabelColorLabel.BackColor = System.Drawing.Color.Transparent
+        Me.SetLabelColorLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.SetLabelColorLabel.ForeColor = System.Drawing.Color.Aqua
+        Me.SetLabelColorLabel.Location = New System.Drawing.Point(58, 193)
+        Me.SetLabelColorLabel.Name = "SetLabelColorLabel"
+        Me.SetLabelColorLabel.Size = New System.Drawing.Size(101, 19)
+        Me.SetLabelColorLabel.TabIndex = 14
+        Me.SetLabelColorLabel.Text = "Set Forecolor"
+        '
+        'LabelColorDialog
+        '
+        Me.LabelColorDialog.AnyColor = True
+        Me.LabelColorDialog.FullOpen = True
+        '
         'AboutMeForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(520, 250)
+        Me.Controls.Add(Me.SetLabelColorLabel)
+        Me.Controls.Add(Me.WebLink)
         Me.Controls.Add(Me.OKButtonControl)
         Me.Controls.Add(Me.AboutMeControl)
         Me.Controls.Add(Me.AboutMeWallpaperControl)
@@ -81,10 +119,14 @@ Partial Class AboutMeForm
         CType(Me.AboutMeWallpaperControl, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.AboutMeControl, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents AboutMeWallpaperControl As PictureBox
     Friend WithEvents AboutMeControl As PictureBox
     Friend WithEvents OKButtonControl As Label
+    Friend WithEvents WebLink As LinkLabel
+    Friend WithEvents SetLabelColorLabel As Label
+    Friend WithEvents LabelColorDialog As ColorDialog
 End Class

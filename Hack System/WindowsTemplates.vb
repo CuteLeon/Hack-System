@@ -64,10 +64,10 @@ Public Class WindowsTemplates
 
     Private Sub CloseScript() '关闭脚本过程
         '读取自身的脚本标识和需要的在桌面环境里的数据
-        IconLocation.X = SystemWorkStation.ScriptIcon(MyScriptIndex).Left
-        IconLocation.Y = SystemWorkStation.ScriptIcon(MyScriptIndex).Top
+        IconLocation.X = SystemWorkStation.ScriptIcons(MyScriptIndex).Left
+        IconLocation.Y = SystemWorkStation.ScriptIcons(MyScriptIndex).Top
         IconImage = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & Me.Tag)
-        IconControl = SystemWorkStation.ScriptIcon(MyScriptIndex)
+        IconControl = SystemWorkStation.ScriptIcons(MyScriptIndex)
         '记录脚本状态
         SystemWorkStation.ScriptFormVisible(MyScriptIndex) = False
         '关闭呼吸
@@ -187,7 +187,6 @@ Public Class WindowsTemplates
     End Sub
 
     Private Sub WindowsTemplates_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
-        If SystemWorkStation.ShowMeBehind Then SystemWorkStation.SetWindowPos(SystemWorkStation.Handle, 1, 0, 0, 0, 0, &H10 Or &H40 Or &H2 Or &H1)
         '防止在显示动态关闭特效时被激活
         If Not SystemWorkStation.ScriptFormVisible(MyScriptIndex) Then Exit Sub
         '判断AeroPeek模式状态和当前脚本标识，设置窗体透明度
@@ -195,8 +194,7 @@ Public Class WindowsTemplates
         '改变背景色
         Me.BackColor = BorderColor_Active
         '优先显示系统弹出框
-        If ShutdownWindow.Visible Then ShutdownWindow.TopMost = True
-        If AboutMeForm.Visible Then AboutMeForm.TopMost = True
+        If ShutdownWindow.Visible Then ShutdownWindow.Hide()
         '重新显示标题栏
         GIFControl.Top = TitleHeight + BorderWidth
         CloseButtonControl.Show()
@@ -208,11 +206,6 @@ Public Class WindowsTemplates
             '恢复窗体到初始设置
             SetMeToDefaultSetting()
         End If
-    End Sub
-
-    Private Sub WindowsTemplates_Activated(sender As Object, e As EventArgs) Handles Me.Activated
-        '激活窗体，判断窗体是否需要置后显示
-        If SystemWorkStation.ShowMeBehind Then SystemWorkStation.SetWindowPos(SystemWorkStation.Handle, 1, 0, 0, 0, 0, &H10 Or &H40 Or &H2 Or &H1)
     End Sub
 
     '呼吸

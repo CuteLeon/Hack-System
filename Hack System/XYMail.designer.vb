@@ -55,7 +55,7 @@ Partial Class XYMail
         Me.Txt_MailTitle.Name = "Txt_MailTitle"
         Me.Txt_MailTitle.Size = New System.Drawing.Size(270, 23)
         Me.Txt_MailTitle.TabIndex = 1
-        Me.Txt_MailTitle.Text = "Form Hack System"
+        Me.Txt_MailTitle.Text = "Hack System"
         '
         'Label1
         '
