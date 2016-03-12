@@ -30,7 +30,10 @@ _____
 * Ask you whether you are going to shutdown or not.
 ![image](./Screenshot/thumb/CuteLeon.Hack-System.S09.jpg)
 _____
-* Lock system.
+* Don't show in topmost.
 ![image](./Screenshot/thumb/CuteLeon.Hack-System.S10.jpg)
+_____
+* Lock system.
+![image](./Screenshot/thumb/CuteLeon.Hack-System.S11.jpg)
 
 > __by: Leon.ID@QQ.COM__
