@@ -80,6 +80,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="CommandConsole.Designer.vb">
       <DependentUpon>CommandConsole.vb</DependentUpon>
     </Compile>

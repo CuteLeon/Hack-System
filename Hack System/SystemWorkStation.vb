@@ -56,7 +56,6 @@ Public Class SystemWorkStation
     Dim DownloadValueOld(UBoundOfArray) As ULong, UploadValueOld(UBoundOfArray) As ULong
     Dim DownloadSpeedCount As ULong, UploadSpeedCount As ULong
     Dim DesktopIconHandle As Integer
-    Dim IP, Address As String
 
     Private Sub SystemWorkStation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Location = New Point(0, 0)
@@ -132,8 +131,7 @@ Public Class SystemWorkStation
         MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
 
         DateTimeLabel.Text = My.Computer.Clock.LocalTime.ToLocalTime
-        GetIPAndAddress(IP, Address)
-        IPLabel.Text = IP : AddressLabel.Text = Address
+        GetIPAndAddress()
 
         DesktopIconHandle = GetDesktopIconHandle()
     End Sub
@@ -474,18 +472,23 @@ Public Class SystemWorkStation
         DownloadSpeedCount = 0 : UploadSpeedCount = 0
         '遍历所有网卡
         For Index As Integer = LBoundOfArray To UBoundOfArray
-            '累计所有网卡已经下载和上传的字节
-            DownloadValue(Index) = DownloadCounter(Index).NextSample().RawValue
-            UploadValue(Index) = UploadCounter(Index).NextSample().RawValue
-            '每块网卡独立计算，防止禁用某网卡时出现速度为负值的情况，无符号整形变量冲突
-            If DownloadValue(Index) > 0 Then DownloadSpeed(Index) = DownloadValue(Index) - DownloadValueOld(Index) Else DownloadSpeed(Index) = 0
-            If UploadValue(Index) > 0 Then UploadSpeed(Index) = UploadValue(Index) - UploadValueOld(Index) Else UploadSpeed(Index) = 0
-            '计算总的下载和上传速度
-            DownloadSpeedCount += DownloadSpeed(Index)
-            UploadSpeedCount += UploadSpeed(Index)
-            '更新上次记录
-            DownloadValueOld(Index) = DownloadValue(Index)
-            UploadValueOld(Index) = UploadValue(Index)
+            Try
+                '累计所有网卡已经下载和上传的字节
+                DownloadValue(Index) = DownloadCounter(Index).NextSample().RawValue
+                UploadValue(Index) = UploadCounter(Index).NextSample().RawValue
+                '每块网卡独立计算，防止禁用某网卡时出现速度为负值的情况，无符号整形变量冲突
+                If DownloadValue(Index) > 0 Then DownloadSpeed(Index) = DownloadValue(Index) - DownloadValueOld(Index) Else DownloadSpeed(Index) = 0
+                If UploadValue(Index) > 0 Then UploadSpeed(Index) = UploadValue(Index) - UploadValueOld(Index) Else UploadSpeed(Index) = 0
+                '计算总的下载和上传速度
+                DownloadSpeedCount += DownloadSpeed(Index)
+                UploadSpeedCount += UploadSpeed(Index)
+                '更新上次记录
+                DownloadValueOld(Index) = DownloadValue(Index)
+                UploadValueOld(Index) = UploadValue(Index)
+            Catch ex As Exception
+                DownloadValueOld(Index) = 0
+                UploadValueOld(Index) = 0
+            End Try
         Next
 
         '显示数据
@@ -653,17 +656,20 @@ Public Class SystemWorkStation
     End Sub
 
     '获取IP和真实地址
-    Private Sub GetIPAndAddress(ByRef IP As String, ByRef Address As String)
+    Public Sub GetIPAndAddress()
+        '防止在校园或企业网里未连接网络时网址被重定向导致读取错误数据
+        If Not My.Computer.Network.IsAvailable Then IPLabel.Text = "Unconnected" : AddressLabel.Text = "Unknown" : Exit Sub
+
         Dim IPWebClient As Net.WebClient = New Net.WebClient
         Dim WebString As String = vbNullString
         Dim RegIP As System.Text.RegularExpressions.Regex = New System.Text.RegularExpressions.Regex("\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}")
         Try
             IPWebClient.Encoding = System.Text.Encoding.UTF8
             WebString = IPWebClient.DownloadString("http://ip.chinaz.com/getip.aspx")
-            IP = RegIP.Match(WebString).ToString
-            Address = Strings.Mid(WebString, IP.Length + 17, WebString.Length - IP.Length - 21)
+            IPLabel.Text = RegIP.Match(WebString).ToString
+            AddressLabel.Text = Strings.Mid(WebString, IPLabel.Text.Length + 17, WebString.Length - IPLabel.Text.Length - 21)
         Catch ex As Exception
-            IP = "Unknown" : Address = "Unknown"
+            IPLabel.Text = "Unknown" : AddressLabel.Text = "Unknown"
         Finally
             If Not IPWebClient Is Nothing Then IPWebClient.Dispose()
         End Try
