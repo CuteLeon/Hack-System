@@ -310,6 +310,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\CleanCommandPast_0.png" />
+    <None Include="Resources\CleanCommandPast_1.png" />
+    <None Include="Resources\CleanCommandPast_2.png" />
+    <None Include="Resources\CommandButton_0.png" />
+    <None Include="Resources\CommandButton_1.png" />
+    <None Include="Resources\CommandButton_2.png" />
     <None Include="Resources\MicroPhone_Off.png" />
     <None Include="Resources\MicroPhone_On.png" />
     <None Include="Resources\SpeechButton_0.png" />

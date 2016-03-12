@@ -68,8 +68,11 @@ Public Class CommandConsole
         'Allow thread to visit UI.
         System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
         'Set mouse curror.
+        CommandButton.Parent = CommandInputBox
+        CommandButton.Location = New Point(CommandInputBox.Width - CommandButton.Width - 1, 1)
         Me.Cursor = StartingUpUI.SystemCursor
         CommandPast.Cursor = Me.Cursor
+        CommandButton.Cursor = Me.Cursor
     End Sub
 
     Private Sub CommandConsole_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MyBase.KeyPress, CommandInputBox.KeyPress
@@ -80,54 +83,78 @@ Public Class CommandConsole
             SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle) 'Active other windows will make me deactive and hide me.
         ElseIf KeyAscii = 13 Then
             '[Enter] to run command.
-            CommandInputBox.Text = CommandInputBox.Text.TrimStart
+            RunCommand()
+        End If
+    End Sub
 
-            If CommandInputBox.Text = vbNullString Then CommandTip.Text = "Please input command." : Exit Sub
-            'Format the command type and parameter.
-            Dim CommandSliptIndex As Integer = CommandInputBox.Text.IndexOf(" ")
-            Dim CommandType, CommandParameter As String
-            If CommandSliptIndex = -1 Then
-                CommandType = CommandInputBox.Text.Trim.ToLower
-                CommandParameter = " "
-            Else
-                CommandType = CommandInputBox.Text.Substring(0, CommandSliptIndex).ToLower
-                CommandParameter = CommandInputBox.Text.Substring(CommandSliptIndex + 1)
-            End If
+    Private Sub RunCommand()
+        CommandInputBox.Text = CommandInputBox.Text.TrimStart
 
-            'Check command.
-            Select Case CommandType
-                Case "speak" 'Speak\Voice
-                    If Not ThreadSpeak.ThreadState = ThreadState.Running Then
-                        'If Parameter is null then use the default parameter.
-                        If CommandParameter.Trim = vbNullString Then CommandParameter = "Hello,welcome to hack system ."
-                        'Start the thread.
-                        ThreadSpeak = New Threading.Thread(AddressOf SpeakVoice)
-                        ThreadSpeak.Start(CommandParameter)
-                        'Show message and set message color.
-                        CommandTip.Text = "Speak"
-                        CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Speak： " & IIf(CommandParameter.Length > 15, Strings.Mid(CommandParameter, 1, 15) & "...", CommandParameter))
-                        SetLastCommandColor(True)
-                        'If length of command is more than 6 then select the parameter part.
-                        If CommandInputBox.TextLength > 6 Then
-                            CommandInputBox.SelectionStart = 6
-                            CommandInputBox.SelectionLength = CommandInputBox.TextLength - 6
-                        End If
-                    End If
-                Case "shutdown" 'Exit application
-                    'Call sub ShowShutdownWindow.
-                    SystemWorkStation.ShowShutdownWindow()
+        If CommandInputBox.Text = vbNullString Then CommandTip.Text = "Please input command." : Exit Sub
+        'Format the command type and parameter.
+        Dim CommandSliptIndex As Integer = CommandInputBox.Text.IndexOf(" ")
+        Dim CommandType, CommandParameter As String
+        If CommandSliptIndex = -1 Then
+            CommandType = CommandInputBox.Text.Trim.ToLower
+            CommandParameter = " "
+        Else
+            CommandType = CommandInputBox.Text.Substring(0, CommandSliptIndex).ToLower
+            CommandParameter = CommandInputBox.Text.Substring(CommandSliptIndex + 1)
+        End If
+
+        'Check command.
+        Select Case CommandType
+            Case "speak" 'Speak\Voice
+                If Not ThreadSpeak.ThreadState = ThreadState.Running Then
+                    'If Parameter is null then use the default parameter.
+                    If CommandParameter.Trim = vbNullString Then CommandParameter = "Hello,welcome to hack system ."
+                    'Start the thread.
+                    ThreadSpeak = New Threading.Thread(AddressOf SpeakVoice)
+                    ThreadSpeak.Start(CommandParameter)
                     'Show message and set message color.
-                    CommandTip.Text = "Plan to Shudtown"
-                    CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Plan to shutdown")
+                    CommandTip.Text = "Speak"
+                    CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Speak： " & IIf(CommandParameter.Length > 15, Strings.Mid(CommandParameter, 1, 15) & "...", CommandParameter))
                     SetLastCommandColor(True)
-                Case "shell" 'Show script window.
-                    'Remove spaces around parameter.
-                    CommandParameter = CommandParameter.Trim
-                    Dim ScriptIndex As Integer
-                    'Check whether the parameter is a number.
-                    If IsNumeric(CommandParameter) Then
-                        'If the length of parameter is more than 2 then it maybe too big to be a integer.
-                        If CommandParameter.Length > 2 Then
+                    'If length of command is more than 6 then select the parameter part.
+                    If CommandInputBox.TextLength > 6 Then
+                        CommandInputBox.SelectionStart = 6
+                        CommandInputBox.SelectionLength = CommandInputBox.TextLength - 6
+                    End If
+                End If
+            Case "shutdown" 'Exit application
+                'Call sub ShowShutdownWindow.
+                SystemWorkStation.ShowShutdownWindow()
+                'Show message and set message color.
+                CommandTip.Text = "Plan to Shudtown"
+                CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Plan to shutdown")
+                SetLastCommandColor(True)
+            Case "shell" 'Show script window.
+                'Remove spaces around parameter.
+                CommandParameter = CommandParameter.Trim
+                Dim ScriptIndex As Integer
+                'Check whether the parameter is a number.
+                If IsNumeric(CommandParameter) Then
+                    'If the length of parameter is more than 2 then it maybe too big to be a integer.
+                    If CommandParameter.Length > 2 Then
+                        'Select the parameter part.
+                        CommandInputBox.SelectionStart = 6
+                        CommandInputBox.SelectionLength = CommandInputBox.TextLength - 6
+                        'Show message and set message color.
+                        CommandTip.Text = "Pleasue input a number between [0 ~ " & SystemWorkStation.ScriptUpperBound & "]"
+                        CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load.")
+                        SetLastCommandColor(False)
+                    Else
+                        'Transformation parameter to a integer.
+                        ScriptIndex = Int(CommandParameter)
+                        'Make sure the number is more than 0 and less than count of scripts.
+                        If 0 <= ScriptIndex And ScriptIndex <= SystemWorkStation.ScriptUpperBound Then
+                            'Show message and set message color.
+                            CommandTip.Text = "Script " & CommandParameter & " is loaded！"
+                            CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Load script： " & CommandParameter)
+                            SetLastCommandColor(True)
+                            'Call sub LoadScript,Console will deactive and hide.
+                            SystemWorkStation.LoadScript(ScriptIndex)
+                        Else
                             'Select the parameter part.
                             CommandInputBox.SelectionStart = 6
                             CommandInputBox.SelectionLength = CommandInputBox.TextLength - 6
@@ -135,90 +162,70 @@ Public Class CommandConsole
                             CommandTip.Text = "Pleasue input a number between [0 ~ " & SystemWorkStation.ScriptUpperBound & "]"
                             CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load.")
                             SetLastCommandColor(False)
-                        Else
-                            'Transformation parameter to a integer.
-                            ScriptIndex = Int(CommandParameter)
-                            'Make sure the number is more than 0 and less than count of scripts.
-                            If 0 <= ScriptIndex And ScriptIndex <= SystemWorkStation.ScriptUpperBound Then
-                                'Show message and set message color.
-                                CommandTip.Text = "Script " & CommandParameter & " is loaded！"
-                                CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Load script： " & CommandParameter)
-                                SetLastCommandColor(True)
-                                'Call sub LoadScript,Console will deactive and hide.
-                                SystemWorkStation.LoadScript(ScriptIndex)
-                            Else
-                                'Select the parameter part.
-                                CommandInputBox.SelectionStart = 6
-                                CommandInputBox.SelectionLength = CommandInputBox.TextLength - 6
-                                'Show message and set message color.
-                                CommandTip.Text = "Pleasue input a number between [0 ~ " & SystemWorkStation.ScriptUpperBound & "]"
-                                CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load.")
-                                SetLastCommandColor(False)
-                            End If
                         End If
-                    Else
-                        If CommandInputBox.TextLength < 6 Then CommandInputBox.Text &= " "
-                        CommandInputBox.SelectionStart = 6
-                        CommandInputBox.SelectionLength = CommandInputBox.TextLength - 6
+                    End If
+                Else
+                    If CommandInputBox.TextLength < 6 Then CommandInputBox.Text &= " "
+                    CommandInputBox.SelectionStart = 6
+                    CommandInputBox.SelectionLength = CommandInputBox.TextLength - 6
 
-                        'Show message and set color.
-                        CommandTip.Text = "Pleasue input a number between [0 ~ " & SystemWorkStation.ScriptUpperBound & "]"
-                        CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load.")
-                        SetLastCommandColor(False)
-                    End If
-                Case "mine" 'Game: Mine Sweeper
-                    If Not MineSweeperForm.Visible Then MineSweeperForm.Show(SystemWorkStation)
-                    SystemWorkStation.SetForegroundWindow(MineSweeperForm.Handle)
-                    MineSweeperForm.TopMost = False
-                Case "browser" 'Run browser.
-                    SystemWorkStation.LoadNewBrowser()
-                Case "mail" 'Run mail.
-                    If XYMail.Visible Then XYMail.Hide() Else XYMail.Show(SystemWorkStation)
-                Case "about" 'Show AboutMe.
-                    If Not (AboutMeForm.Visible) Then AboutMeForm.Show(SystemWorkStation)
-                    SystemWorkStation.SetForegroundWindow(AboutMeForm.Handle)
-                Case "weather" 'Get weather from Internet.
-                    If Trim(CommandParameter) = vbNullString Then Exit Sub
-                    'Dont creat thread again.
-                    If Not ThreadWeather.ThreadState = ThreadState.Running Then
-                        ThreadWeather = New Threading.Thread(AddressOf ShowWeather)
-                        ThreadWeather.Start(CommandParameter)
-                    End If
-                Case "lock" 'Lock screen.
-                    If ShutdowningUI.Visible Then Exit Sub
-
-                    ShutdowningUI.Opacity = 0
-                    ShutdowningUI.Show(SystemWorkStation)
-                    ShutdowningUI.ShowShutdownForm()
-                    SystemWorkStation.SetForegroundWindow(ShutdowningUI.Handle)
                     'Show message and set color.
-                    CommandTip.Text = "Lock Screen"
-                    CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Lock Screen")
-                    CommandInputBox.SelectAll()
-                    SetLastCommandColor(True)
-                Case "melt" 'Start/Stop melting the desktop.
-                    'Whether it's melting.
-                    If ScreenMelt.Melting Then
-                        ScreenMelt.StopMelt()
-                        CommandTip.Text = "Stop melting."
-                        SystemWorkStation.Refresh()
-                    Else
-                        ScreenMelt.StartMelt()
-                        CommandTip.Text = "Start melting."
-                    End If
-                    'Show message and set color.
-                    CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | " & CommandTip.Text)
-                    SetLastCommandColor(True)
-                Case Else 'Commands not be supported.
-                    'Show message and set color.
-                    CommandTip.Text = "The command is unsupported"
-                    CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Unsupported：  " & IIf(CommandType.Length > 9, Strings.Mid(CommandType, 1, 9) & "...", CommandType))
-                    CommandInputBox.SelectAll()
+                    CommandTip.Text = "Pleasue input a number between [0 ~ " & SystemWorkStation.ScriptUpperBound & "]"
+                    CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load.")
                     SetLastCommandColor(False)
-                    'Print commands be supported.
-                    CommandPast.AppendText(vbCrLf & "    Supported：" & vbCrLf & "      Speak、Shutdown、Shell、" & vbCrLf & "      About、Weather、Lock、Melt" & vbCrLf & "      Mail、Browser、Mine")
-            End Select
-        End If
+                End If
+            Case "mine" 'Game: Mine Sweeper
+                If Not MineSweeperForm.Visible Then MineSweeperForm.Show(SystemWorkStation)
+                SystemWorkStation.SetForegroundWindow(MineSweeperForm.Handle)
+                MineSweeperForm.TopMost = False
+            Case "browser" 'Run browser.
+                SystemWorkStation.LoadNewBrowser()
+            Case "mail" 'Run mail.
+                If XYMail.Visible Then XYMail.Hide() Else XYMail.Show(SystemWorkStation)
+            Case "about" 'Show AboutMe.
+                If Not (AboutMeForm.Visible) Then AboutMeForm.Show(SystemWorkStation)
+                SystemWorkStation.SetForegroundWindow(AboutMeForm.Handle)
+            Case "weather" 'Get weather from Internet.
+                If Trim(CommandParameter) = vbNullString Then Exit Sub
+                'Dont creat thread again.
+                If Not ThreadWeather.ThreadState = ThreadState.Running Then
+                    ThreadWeather = New Threading.Thread(AddressOf ShowWeather)
+                    ThreadWeather.Start(CommandParameter)
+                End If
+            Case "lock" 'Lock screen.
+                If ShutdowningUI.Visible Then Exit Sub
+
+                ShutdowningUI.Opacity = 0
+                ShutdowningUI.Show(SystemWorkStation)
+                ShutdowningUI.ShowShutdownForm()
+                SystemWorkStation.SetForegroundWindow(ShutdowningUI.Handle)
+                'Show message and set color.
+                CommandTip.Text = "Lock Screen"
+                CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Lock Screen")
+                CommandInputBox.SelectAll()
+                SetLastCommandColor(True)
+            Case "melt" 'Start/Stop melting the desktop.
+                'Whether it's melting.
+                If ScreenMelt.Melting Then
+                    ScreenMelt.StopMelt()
+                    CommandTip.Text = "Stop melting."
+                    SystemWorkStation.Refresh()
+                Else
+                    ScreenMelt.StartMelt()
+                    CommandTip.Text = "Start melting."
+                End If
+                'Show message and set color.
+                CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | " & CommandTip.Text)
+                SetLastCommandColor(True)
+            Case Else 'Commands not be supported.
+                'Show message and set color.
+                CommandTip.Text = "The command is unsupported"
+                CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Unsupported：  " & IIf(CommandType.Length > 9, Strings.Mid(CommandType, 1, 9) & "...", CommandType))
+                CommandInputBox.SelectAll()
+                SetLastCommandColor(False)
+                'Print commands be supported.
+                CommandPast.AppendText(vbCrLf & "    Supported：" & vbCrLf & "      Speak、Shutdown、Shell、" & vbCrLf & "      About、Weather、Lock、Melt" & vbCrLf & "      Mail、Browser、Mine")
+        End Select
     End Sub
 
     'Get weather from Internet.
@@ -436,13 +443,6 @@ Public Class CommandConsole
         CommandPast.ScrollToCaret()
     End Sub
 
-    Private Sub CommandPast_DoubleClick(sender As Object, e As EventArgs) Handles CommandPast.DoubleClick
-        'Double Click to clear the CommandPast.
-        CommandPast.Text = "Console：（Double Click to Clear）"
-        CommandInputBox.ForeColor = Color.Gray
-        CommandInputBox.Text = "Please input command..."
-    End Sub
-
     Private Sub CommandPast_KeyPress(sender As Object, e As KeyPressEventArgs) Handles CommandPast.KeyPress
         Dim KeyAscii As Integer = Asc(e.KeyChar)
         'Press [~] or [Esc] to hide console.
@@ -455,4 +455,27 @@ Public Class CommandConsole
         End If
     End Sub
 
+    Private Sub CommandButton_Click(sender As Object, e As EventArgs) Handles CommandButton.Click
+        If CommandInputBox.ForeColor = Color.Black Then RunCommand()
+    End Sub
+
+    Private Sub Button_MouseEnter(sender As Object, e As EventArgs) Handles CommandButton.MouseEnter, CleanButton.MouseEnter
+        CType(sender, Label).Image = My.Resources.SystemAssets.ResourceManager.GetObject(CType(sender, Label).Tag & "1")
+    End Sub
+
+    Private Sub Button_MouseUp(sender As Object, e As MouseEventArgs) Handles CommandButton.MouseUp, CleanButton.MouseUp
+        CType(sender, Label).Image = My.Resources.SystemAssets.ResourceManager.GetObject(CType(sender, Label).Tag & "1")
+    End Sub
+
+    Private Sub Button_MouseLeave(sender As Object, e As EventArgs) Handles CommandButton.MouseLeave, CleanButton.MouseLeave
+        CType(sender, Label).Image = My.Resources.SystemAssets.ResourceManager.GetObject(CType(sender, Label).Tag & "0")
+    End Sub
+
+    Private Sub Button_MouseDown(sender As Object, e As MouseEventArgs) Handles CommandButton.MouseDown, CleanButton.MouseDown
+        CType(sender, Label).Image = My.Resources.SystemAssets.ResourceManager.GetObject(CType(sender, Label).Tag & "2")
+    End Sub
+
+    Private Sub CleanButton_Click(sender As Object, e As EventArgs) Handles CleanButton.Click
+        CommandPast.Text = "Console："
+    End Sub
 End Class

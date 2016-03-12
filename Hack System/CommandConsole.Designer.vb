@@ -25,6 +25,8 @@ Partial Class CommandConsole
         Me.CommandInputBox = New System.Windows.Forms.TextBox()
         Me.CommandTip = New System.Windows.Forms.Label()
         Me.CommandPast = New System.Windows.Forms.RichTextBox()
+        Me.CommandButton = New System.Windows.Forms.Label()
+        Me.CleanButton = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'CommandInputBox
@@ -67,8 +69,28 @@ Partial Class CommandConsole
         Me.CommandPast.ShortcutsEnabled = False
         Me.CommandPast.Size = New System.Drawing.Size(325, 242)
         Me.CommandPast.TabIndex = 5
-        Me.CommandPast.Text = "Console：（Double Click to Clear）"
+        Me.CommandPast.Text = "Console："
         Me.CommandPast.WordWrap = False
+        '
+        'CommandButton
+        '
+        Me.CommandButton.BackColor = System.Drawing.Color.White
+        Me.CommandButton.Image = Global.HackSystem.My.Resources.SystemAssets.CommandButton_0
+        Me.CommandButton.Location = New System.Drawing.Point(322, 323)
+        Me.CommandButton.Name = "CommandButton"
+        Me.CommandButton.Size = New System.Drawing.Size(23, 23)
+        Me.CommandButton.TabIndex = 6
+        Me.CommandButton.Tag = "CommandButton_"
+        '
+        'CleanButton
+        '
+        Me.CleanButton.BackColor = System.Drawing.Color.Transparent
+        Me.CleanButton.Image = Global.HackSystem.My.Resources.SystemAssets.CleanCommandPast_0
+        Me.CleanButton.Location = New System.Drawing.Point(300, 18)
+        Me.CleanButton.Name = "CleanButton"
+        Me.CleanButton.Size = New System.Drawing.Size(45, 23)
+        Me.CleanButton.TabIndex = 7
+        Me.CleanButton.Tag = "CleanCommandPast_"
         '
         'CommandConsole
         '
@@ -76,6 +98,8 @@ Partial Class CommandConsole
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DimGray
         Me.ClientSize = New System.Drawing.Size(360, 360)
+        Me.Controls.Add(Me.CleanButton)
+        Me.Controls.Add(Me.CommandButton)
         Me.Controls.Add(Me.CommandPast)
         Me.Controls.Add(Me.CommandTip)
         Me.Controls.Add(Me.CommandInputBox)
@@ -95,4 +119,6 @@ Partial Class CommandConsole
     Friend WithEvents CommandInputBox As TextBox
     Friend WithEvents CommandTip As Label
     Friend WithEvents CommandPast As RichTextBox
+    Friend WithEvents CommandButton As Label
+    Friend WithEvents CleanButton As Label
 End Class

@@ -107,9 +107,69 @@ Namespace My.Resources
         '''<summary>
         '''  查找 System.Drawing.Bitmap 类型的本地化资源。
         '''</summary>
+        Friend Shared ReadOnly Property CleanCommandPast_0() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CleanCommandPast_0", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
+        Friend Shared ReadOnly Property CleanCommandPast_1() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CleanCommandPast_1", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
+        Friend Shared ReadOnly Property CleanCommandPast_2() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CleanCommandPast_2", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
         Friend Shared ReadOnly Property CloseButton() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("CloseButton", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
+        Friend Shared ReadOnly Property CommandButton_0() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CommandButton_0", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
+        Friend Shared ReadOnly Property CommandButton_1() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CommandButton_1", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
+        Friend Shared ReadOnly Property CommandButton_2() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CommandButton_2", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

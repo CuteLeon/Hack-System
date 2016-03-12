@@ -164,7 +164,7 @@ Public Class XYBrowser
         MainWebBrowser.Stop()
         MainWebBrowser.Navigate("about:blank ")
         MainWebBrowser.Dispose()
-        SystemWorkStation.Focus()
+        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
         Me.Close()
     End Sub
 #Region "浏览器模块：前进、后退、主页、停止、刷新按钮响应鼠标的动态效果"

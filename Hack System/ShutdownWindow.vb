@@ -17,7 +17,7 @@ Public Class ShutdownWindow
         Me.Hide()
         ShutdowningUI.Show()
         ShutdowningUI.ShowShutdownForm()
-        ShutdowningUI.Focus()
+        SystemWorkStation.SetForegroundWindow(ShutdowningUI.Handle)
     End Sub
 
 #Region "Shutdown Button"
@@ -46,7 +46,7 @@ Public Class ShutdownWindow
     Private Sub CancelShutdown()
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         Me.Hide()
-        SystemWorkStation.Focus()
+        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
     Private Sub ShutdownWindows_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing

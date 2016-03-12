@@ -55,7 +55,7 @@ Public Class StartingUpUI
         If FrameIndex = 60 Then
             ExchangeUITimer.Enabled = False
             Me.Hide()
-            LockUI.Focus()
+            SystemWorkStation.SetForegroundWindow(LockUI.Handle)
         End If
     End Sub
 

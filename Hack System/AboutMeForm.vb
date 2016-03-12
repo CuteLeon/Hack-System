@@ -22,7 +22,7 @@
         'Click OKButton to and hide me and focus main desktop.
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         Me.Hide()
-        SystemWorkStation.Focus()
+        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
 #Region "The dynamic effect on the OKButton"
@@ -49,7 +49,7 @@
         If KeyAscii = 27 Or KeyAscii = 13 Then
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
             Me.Hide()
-            SystemWorkStation.Focus()
+            SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
         End If
     End Sub
 

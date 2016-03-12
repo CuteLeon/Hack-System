@@ -635,6 +635,7 @@ Public Class SystemWorkStation
         Static SpeechRecognitionMode As Boolean = True
         If SpeechRecognitionMode Then
             '关闭语音识别
+            VoiceLevelBar.Value = 0
             SpeechRecognitionMode = False
             SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_Off
             MySpeechRecognitionEngine.RecognizeAsyncStop()

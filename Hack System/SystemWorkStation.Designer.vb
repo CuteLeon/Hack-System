@@ -272,6 +272,7 @@ Partial Class SystemWorkStation
         Me.VoiceLevelBar.Location = New System.Drawing.Point(760, 526)
         Me.VoiceLevelBar.Name = "VoiceLevelBar"
         Me.VoiceLevelBar.Size = New System.Drawing.Size(56, 10)
+        Me.VoiceLevelBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
         Me.VoiceLevelBar.TabIndex = 11
         '
         'SpeechButtonControl

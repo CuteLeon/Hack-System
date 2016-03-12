@@ -463,4 +463,22 @@
   <data name="SpeechButton_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\SpeechButton_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CommandButton_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\CommandButton_0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CommandButton_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\CommandButton_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CommandButton_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\CommandButton_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CleanCommandPast_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\CleanCommandPast_0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CleanCommandPast_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\CleanCommandPast_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CleanCommandPast_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\CleanCommandPast_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

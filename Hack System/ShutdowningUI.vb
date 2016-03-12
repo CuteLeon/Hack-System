@@ -64,7 +64,7 @@ Public Class ShutdowningUI
         ThreadHideMe = New Thread(AddressOf HideMe)
         ThreadHideMe.Start(ToRight)
         ThreadHideMe.Join()
-        SystemWorkStation.Focus()
+        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
     Private Sub HideMe(ByVal ToRight As Boolean)

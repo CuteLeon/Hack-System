@@ -3,6 +3,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Threading
 
 Public Class WindowsTemplates
+    Private Declare Function GetNextWindow Lib "user32" Alias "GetWindow" (ByVal hwnd As Integer, ByVal wFlag As Integer) As Integer
     '允许鼠标通过控件拖动窗体的API
     Public Declare Function ReleaseCapture Lib "user32" () As Integer
     Public Declare Function SendMessageA Lib "user32" (ByVal hwnd As Integer, ByVal wMsg As Integer, ByVal wParam As Integer, lParam As VariantType) As Integer
@@ -78,8 +79,6 @@ Public Class WindowsTemplates
         '遍历脚本窗体，将焦点交给下一个标识的脚本窗体
         For ScriptIndex As Integer = SystemWorkStation.ScriptUpperBound To 0 Step -1
             If SystemWorkStation.ScriptFormVisible(ScriptIndex) Then
-                '找到了，激活下一个标识的脚本窗体
-                SystemWorkStation.ScriptForm(ScriptIndex).Focus()
                 '如果当前窗口正在被AeroPeek模式高亮显示，关闭后应退出AeroPeek模式
                 If SystemWorkStation.AeroPeekModel And SystemWorkStation.NowIconIndex = MyScriptIndex Then
                     '遍历脚本窗体
@@ -94,11 +93,14 @@ Public Class WindowsTemplates
                 End If
                 '启动动态关闭特效的线程
                 ThreadPool.QueueUserWorkItem(New WaitCallback(AddressOf HideMe))
+                '找到了，激活下一个标识的脚本窗体
+                SystemWorkStation.SetForegroundWindow(SystemWorkStation.ScriptForm(ScriptIndex).Handle)
+                SystemWorkStation.ScriptForm(ScriptIndex).TopMost = False
                 Exit Sub
             End If
         Next
         '未找到，将焦点交给桌面
-        SystemWorkStation.Focus()
+        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
         '启动动态关闭特效的线程
         ThreadPool.QueueUserWorkItem(New WaitCallback(AddressOf HideMe))
     End Sub
