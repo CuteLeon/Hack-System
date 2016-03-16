@@ -163,6 +163,17 @@
     <Compile Include="SystemWorkStation.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="TipsForm.designer.vb">
+      <DependentUpon>TipsForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TipsForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TipsRes.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TipsRes.resx</DependentUpon>
+    </Compile>
     <Compile Include="WindowsTemplates.Designer.vb">
       <DependentUpon>WindowsTemplates.vb</DependentUpon>
     </Compile>
@@ -233,6 +244,14 @@
     <EmbeddedResource Include="SystemWorkStation.resx">
       <DependentUpon>SystemWorkStation.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TipsForm.resx">
+      <DependentUpon>TipsForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TipsRes.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TipsRes.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="WindowsTemplates.resx">
       <DependentUpon>WindowsTemplates.vb</DependentUpon>
     </EmbeddedResource>
@@ -246,6 +265,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="XYMail.resx">
       <DependentUpon>XYMail.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -311,6 +331,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\TipsAlarm.wav" />
+    <None Include="Resources\TipsBackground.png" />
+    <None Include="Resources\TipsCloseButton_0.png" />
+    <None Include="Resources\TipsCloseButton_1.png" />
+    <None Include="Resources\TipsCloseButton_2.png" />
+    <None Include="Resources\TipsIconBackground.png" />
+    <None Include="Resources\TipsIcons.png" />
     <None Include="Resources\CleanCommandPast_0.png" />
     <None Include="Resources\CleanCommandPast_1.png" />
     <None Include="Resources\CleanCommandPast_2.png" />

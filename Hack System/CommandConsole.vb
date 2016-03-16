@@ -206,13 +206,16 @@ Public Class CommandConsole
                 SetLastCommandColor(True)
             Case "melt" 'Start/Stop melting the desktop.
                 'Whether it's melting.
+                If Not TipsForm.Visible Then TipsForm.Show(SystemWorkStation)
                 If ScreenMelt.Melting Then
                     ScreenMelt.StopMelt()
                     CommandTip.Text = "Stop melting."
                     SystemWorkStation.Refresh()
+                    TipsForm.PopupTips("Tips", TipsForm.TipsIconType.Infomation, "Stop melting.")
                 Else
                     ScreenMelt.StartMelt()
                     CommandTip.Text = "Start melting."
+                    TipsForm.PopupTips("Tips", TipsForm.TipsIconType.Infomation, "Start melting.")
                 End If
                 'Show message and set color.
                 CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | " & CommandTip.Text)

@@ -24,9 +24,13 @@ Public Class ShutdowningUI
         If SystemWorkStation.ApplicationClosing Then
             ThreadShowMe.Join()
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Shutdown"), AudioPlayMode.WaitToComplete)
-            '释放语音识别引擎
-            SystemWorkStation.MySpeechRecognitionEngine.RecognizeAsyncStop()
-            SystemWorkStation.MySpeechRecognitionEngine.Dispose()
+            '释放语音识别引擎(容错处理)
+            Try
+                SystemWorkStation.MySpeechRecognitionEngine.RecognizeAsyncStop()
+                SystemWorkStation.MySpeechRecognitionEngine.Dispose()
+            Catch ex As Exception
+            End Try
+            If TipsForm.Visible Then TipsForm.CancelTip()
             If XYMail.Visible Then XYMail.Hide()
             If AboutMeForm.Visible Then AboutMeForm.Hide()
             If MineSweeperForm.Visible Then MineSweeperForm.Hide()

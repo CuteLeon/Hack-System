@@ -50,8 +50,6 @@ Partial Class SystemWorkStation
         Me.CustomWallpaperDialog = New System.Windows.Forms.OpenFileDialog()
         Me.VoiceLevelBar = New System.Windows.Forms.ProgressBar()
         Me.SpeechButtonControl = New System.Windows.Forms.PictureBox()
-        Me.CPUCounterLable = New System.Windows.Forms.Label()
-        Me.MemoryUsageRateLabel = New System.Windows.Forms.Label()
         Me.DiskReadCounterLabel = New System.Windows.Forms.Label()
         Me.DiskWriteCounterLabel = New System.Windows.Forms.Label()
         Me.UploadSpeedCountLabel = New System.Windows.Forms.Label()
@@ -59,6 +57,8 @@ Partial Class SystemWorkStation
         Me.IPLabel = New System.Windows.Forms.Label()
         Me.AddressLabel = New System.Windows.Forms.Label()
         Me.DateTimeLabel = New System.Windows.Forms.Label()
+        Me.CPUCounterBar = New System.Windows.Forms.ProgressBar()
+        Me.MemoryUsageRateBar = New System.Windows.Forms.ProgressBar()
         CType(Me.WorkStationWallpaperControl, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.DesktopMenuStrip.SuspendLayout()
         Me.IconMenuStrip.SuspendLayout()
@@ -67,7 +67,7 @@ Partial Class SystemWorkStation
         '
         'WorkStationWallpaperControl
         '
-        Me.WorkStationWallpaperControl.BackColor = System.Drawing.SystemColors.Control
+        Me.WorkStationWallpaperControl.BackColor = System.Drawing.Color.Black
         Me.WorkStationWallpaperControl.ContextMenuStrip = Me.DesktopMenuStrip
         Me.WorkStationWallpaperControl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WorkStationWallpaperControl.Image = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_09
@@ -287,32 +287,6 @@ Partial Class SystemWorkStation
         Me.SpeechButtonControl.TabIndex = 12
         Me.SpeechButtonControl.TabStop = False
         '
-        'CPUCounterLable
-        '
-        Me.CPUCounterLable.BackColor = System.Drawing.Color.Transparent
-        Me.CPUCounterLable.Cursor = System.Windows.Forms.Cursors.Arrow
-        Me.CPUCounterLable.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.CPUCounterLable.ForeColor = System.Drawing.Color.White
-        Me.CPUCounterLable.Location = New System.Drawing.Point(1061, 37)
-        Me.CPUCounterLable.Name = "CPUCounterLable"
-        Me.CPUCounterLable.Size = New System.Drawing.Size(115, 20)
-        Me.CPUCounterLable.TabIndex = 13
-        Me.CPUCounterLable.Text = "0 %"
-        Me.CPUCounterLable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'MemoryUsageRateLabel
-        '
-        Me.MemoryUsageRateLabel.BackColor = System.Drawing.Color.Transparent
-        Me.MemoryUsageRateLabel.Cursor = System.Windows.Forms.Cursors.Arrow
-        Me.MemoryUsageRateLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.MemoryUsageRateLabel.ForeColor = System.Drawing.Color.White
-        Me.MemoryUsageRateLabel.Location = New System.Drawing.Point(1061, 57)
-        Me.MemoryUsageRateLabel.Name = "MemoryUsageRateLabel"
-        Me.MemoryUsageRateLabel.Size = New System.Drawing.Size(115, 20)
-        Me.MemoryUsageRateLabel.TabIndex = 14
-        Me.MemoryUsageRateLabel.Text = "0 %"
-        Me.MemoryUsageRateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'DiskReadCounterLabel
         '
         Me.DiskReadCounterLabel.BackColor = System.Drawing.Color.Transparent
@@ -375,7 +349,7 @@ Partial Class SystemWorkStation
         Me.IPLabel.Name = "IPLabel"
         Me.IPLabel.Size = New System.Drawing.Size(115, 20)
         Me.IPLabel.TabIndex = 19
-        Me.IPLabel.Text = "000.000.000.000"
+        Me.IPLabel.Text = "127.0.0.1"
         Me.IPLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'AddressLabel
@@ -388,7 +362,7 @@ Partial Class SystemWorkStation
         Me.AddressLabel.Name = "AddressLabel"
         Me.AddressLabel.Size = New System.Drawing.Size(115, 20)
         Me.AddressLabel.TabIndex = 20
-        Me.AddressLabel.Text = "xx省xx市"
+        Me.AddressLabel.Text = "Unknown"
         Me.AddressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'DateTimeLabel
@@ -402,11 +376,29 @@ Partial Class SystemWorkStation
         Me.DateTimeLabel.TabIndex = 23
         Me.DateTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'CPUCounterBar
+        '
+        Me.CPUCounterBar.Location = New System.Drawing.Point(1064, 41)
+        Me.CPUCounterBar.Name = "CPUCounterBar"
+        Me.CPUCounterBar.Size = New System.Drawing.Size(95, 12)
+        Me.CPUCounterBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.CPUCounterBar.TabIndex = 24
+        '
+        'MemoryUsageRateBar
+        '
+        Me.MemoryUsageRateBar.Location = New System.Drawing.Point(1064, 61)
+        Me.MemoryUsageRateBar.Name = "MemoryUsageRateBar"
+        Me.MemoryUsageRateBar.Size = New System.Drawing.Size(95, 12)
+        Me.MemoryUsageRateBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.MemoryUsageRateBar.TabIndex = 25
+        '
         'SystemWorkStation
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1181, 551)
+        Me.Controls.Add(Me.MemoryUsageRateBar)
+        Me.Controls.Add(Me.CPUCounterBar)
         Me.Controls.Add(Me.DateTimeLabel)
         Me.Controls.Add(Me.AddressLabel)
         Me.Controls.Add(Me.IPLabel)
@@ -414,8 +406,6 @@ Partial Class SystemWorkStation
         Me.Controls.Add(Me.UploadSpeedCountLabel)
         Me.Controls.Add(Me.DiskWriteCounterLabel)
         Me.Controls.Add(Me.DiskReadCounterLabel)
-        Me.Controls.Add(Me.MemoryUsageRateLabel)
-        Me.Controls.Add(Me.CPUCounterLable)
         Me.Controls.Add(Me.VoiceLevelBar)
         Me.Controls.Add(Me.InfoTitle)
         Me.Controls.Add(Me.ConsoleButtonControl)
@@ -462,8 +452,6 @@ Partial Class SystemWorkStation
     Friend WithEvents CustomWallpaperDialog As OpenFileDialog
     Friend WithEvents VoiceLevelBar As ProgressBar
     Friend WithEvents SpeechButtonControl As PictureBox
-    Friend WithEvents CPUCounterLable As Label
-    Friend WithEvents MemoryUsageRateLabel As Label
     Friend WithEvents DiskReadCounterLabel As Label
     Friend WithEvents DiskWriteCounterLabel As Label
     Friend WithEvents UploadSpeedCountLabel As Label
@@ -472,4 +460,6 @@ Partial Class SystemWorkStation
     Friend WithEvents IPLabel As Label
     Friend WithEvents AddressLabel As Label
     Friend WithEvents DateTimeLabel As Label
+    Friend WithEvents CPUCounterBar As ProgressBar
+    Friend WithEvents MemoryUsageRateBar As ProgressBar
 End Class

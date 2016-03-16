@@ -19,7 +19,7 @@ Public Class SystemWorkStation
     Public Const MainHomeURL As String = "http://www.baidu.com/"
 
     '以默认语言创建语音识别引擎
-    Public MySpeechRecognitionEngine As SpeechRecognitionEngine = New SpeechRecognitionEngine(SpeechRecognitionEngine.InstalledRecognizers().First)
+    Public MySpeechRecognitionEngine As SpeechRecognitionEngine
     Public ScriptInfomation() As String = {"Digital Rain", "Network Attack", "Air Defence", "Iron Man", "Attack Data", "3D Map", "Ballistic Missile", "Missile", "Action Indication", "Zone Isolation", "Waiting...", "Life Support", "Agent Info.", "Graphic SO", "Face 3DModel", "Driving System", "Thinking Export", "ARToolkit", "Combat", "UAV Camera", "NOVA 6", "Satellite", "Decrypt"}
     Public ScriptSpeechGrammar() As String = {"打开数字雨", "打开网络攻击", "打开防空系统", "打开钢铁侠", "打开攻击数据", "打开三维地图", "打开弹道导弹", "打开导弹部署", "打开行动指示", "打开区域隔离", "打开等待连接", "打开生命维护系统", "打开特工信息", "打开示波器", "打开面部模型", "打开驱动系统", "打开思维导出系统", "打开增强现实", "打开作战部署", "打开无人机", "打开新星", "打开近地卫星", "打开解密"}
     Public AeroPeekModel As Boolean 'AeroPeek model state.
@@ -31,6 +31,7 @@ Public Class SystemWorkStation
     Public RightestLoction As Integer 'The rightest icon's right location.
     Public ApplicationClosing As Boolean 'Application is going to exit.
 
+    Dim SpeechRecognitionMode As Boolean = True
     Dim MouseDownLocation As Point
     Dim XDistance, YDistance As Integer
     Dim ColumnIconCount As Integer = Int(My.Computer.Screen.Bounds.Height / IconHeight) - 1
@@ -55,14 +56,14 @@ Public Class SystemWorkStation
     Dim DownloadValue(UBoundOfArray) As ULong, UploadValue(UBoundOfArray) As ULong
     Dim DownloadValueOld(UBoundOfArray) As ULong, UploadValueOld(UBoundOfArray) As ULong
     Dim DownloadSpeedCount As ULong, UploadSpeedCount As ULong
-    Dim DesktopIconHandle As Integer
 
     Private Sub SystemWorkStation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Location = New Point(0, 0)
         Me.Size = My.Computer.Screen.Bounds.Size
 
-        CPUCounterLable.Parent = WorkStationWallpaperControl
-        MemoryUsageRateLabel.Parent = WorkStationWallpaperControl
+        InfoTitle.Parent = WorkStationWallpaperControl
+        CPUCounterBar.Parent = WorkStationWallpaperControl
+        MemoryUsageRateBar.Parent = WorkStationWallpaperControl
         DiskReadCounterLabel.Parent = WorkStationWallpaperControl
         DiskWriteCounterLabel.Parent = WorkStationWallpaperControl
         UploadSpeedCountLabel.Parent = WorkStationWallpaperControl
@@ -71,7 +72,6 @@ Public Class SystemWorkStation
         AddressLabel.Parent = WorkStationWallpaperControl
         DateTimeLabel.Parent = WorkStationWallpaperControl
 
-        InfoTitle.Parent = WorkStationWallpaperControl
         ConsoleButtonControl.Parent = WorkStationWallpaperControl
         XYMailButtonControl.Parent = WorkStationWallpaperControl
         XYBrowserButtonControl.Parent = WorkStationWallpaperControl
@@ -86,14 +86,14 @@ Public Class SystemWorkStation
 
         DateTimeLabel.Location = New Point(Me.Width - DateTimeLabel.Width - 12, 12)
         InfoTitle.Location = New Point(DateTimeLabel.Left, 38)
-        CPUCounterLable.Location = New Point(Me.Width - CPUCounterLable.Width - 12, 38)
-        MemoryUsageRateLabel.Location = New Point(Me.Width - MemoryUsageRateLabel.Width - 12, 58)
-        DiskReadCounterLabel.Location = New Point(Me.Width - DiskReadCounterLabel.Width - 12, 78)
-        DiskWriteCounterLabel.Location = New Point(Me.Width - DiskWriteCounterLabel.Width - 12, 98)
-        UploadSpeedCountLabel.Location = New Point(Me.Width - UploadSpeedCountLabel.Width - 12, 118)
-        DownloadSpeedCountLabel.Location = New Point(Me.Width - DownloadSpeedCountLabel.Width - 12, 138)
-        IPLabel.Location = New Point(Me.Width - IPLabel.Width - 12, 158)
-        AddressLabel.Location = New Point(Me.Width - AddressLabel.Width - 12, 178)
+        CPUCounterBar.Location = New Point(InfoTitle.Right + 4, InfoTitle.Top + 4)
+        MemoryUsageRateBar.Location = New Point(InfoTitle.Right + 4, CPUCounterBar.Bottom + 8)
+        DiskReadCounterLabel.Location = New Point(InfoTitle.Right, 78)
+        DiskWriteCounterLabel.Location = New Point(InfoTitle.Right, 98)
+        UploadSpeedCountLabel.Location = New Point(InfoTitle.Right, 118)
+        DownloadSpeedCountLabel.Location = New Point(InfoTitle.Right, 138)
+        IPLabel.Location = New Point(InfoTitle.Right, 158)
+        AddressLabel.Location = New Point(InfoTitle.Right, 178)
 
         ShutdownButtonControl.Location = New Point(Me.Width - ShutdownButtonControl.Width - IntervalDistance, Me.Height - IntervalDistance - ShutdownButtonControl.Height)
         SettingButtonControl.Location = New Point(ShutdownButtonControl.Left - IntervalDistance - SettingButtonControl.Width, ShutdownButtonControl.Top)
@@ -104,8 +104,9 @@ Public Class SystemWorkStation
         VoiceLevelBar.Location = New Point(5, SpeechButtonControl.Height - 12)
         Me.Cursor = StartingUpUI.SystemCursor
         InfoTitle.Cursor = StartingUpUI.SystemCursor
-        CPUCounterLable.Cursor = StartingUpUI.SystemCursor
-        MemoryUsageRateLabel.Cursor = StartingUpUI.SystemCursor
+
+        CPUCounterBar.Cursor = StartingUpUI.SystemCursor
+        MemoryUsageRateBar.Cursor = StartingUpUI.SystemCursor
         DiskReadCounterLabel.Cursor = StartingUpUI.SystemCursor
         DiskWriteCounterLabel.Cursor = StartingUpUI.SystemCursor
         UploadSpeedCountLabel.Cursor = StartingUpUI.SystemCursor
@@ -122,18 +123,8 @@ Public Class SystemWorkStation
         CommandConsole.CommandInputBox.Top = My.Computer.Screen.Bounds.Height - 40
 
         CustomWallpaperDialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
-
-        AddHandler MySpeechRecognitionEngine.AudioLevelUpdated, AddressOf SpeechRecognitionEngine_AudioLevelUpdated
-        AddHandler MySpeechRecognitionEngine.SpeechRecognized, AddressOf SpeechRecognitionEngine_SpeechRecognized
-        'AddHandler MySpeechRecognitionEngine.AudioStateChanged, AddressOf SpeechRecognitionEngine_AudioStateChanged
-        LoadGrammar()
-        MySpeechRecognitionEngine.SetInputToDefaultAudioDevice()
-        MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
-
         DateTimeLabel.Text = My.Computer.Clock.LocalTime.ToLocalTime
         GetIPAndAddress()
-
-        DesktopIconHandle = GetDesktopIconHandle()
     End Sub
 
     Private Sub LoadGrammar()
@@ -173,7 +164,7 @@ Public Class SystemWorkStation
                 SendKeys.Send(Chr(Keys.Enter))
             Case "取消"
                 SendKeys.Send(Chr(Keys.Escape))
-            Case "close"
+            Case "关闭"
                 SendKeys.Send("%{F4}")
             Case "切换"
                 SendKeys.Send("%{TAB}")
@@ -207,7 +198,7 @@ Public Class SystemWorkStation
                 '占空处理， 防止“解锁”进入[Case Else]
             Case Else
                 Dim ScriptIndex As Integer = Array.IndexOf(ScriptSpeechGrammar, e.Result.Text)
-                If ScriptIndex > 0 Then LoadScript(ScriptIndex)
+                If ScriptIndex > -1 Then LoadScript(ScriptIndex)
         End Select
     End Sub
 
@@ -492,8 +483,8 @@ Public Class SystemWorkStation
         Next
 
         '显示数据
-        CPUCounterLable.Text = Int(CPUCounter.NextValue) & "%"
-        MemoryUsageRateLabel.Text = Int(MemoryUsageRate) & "%"
+        CPUCounterBar.Value = Int(CPUCounter.NextValue)
+        MemoryUsageRateBar.Value = Int(MemoryUsageRate)
         DiskReadCounterLabel.Text = FormatSpeedString(DiskReadCounter.NextValue)
         DiskWriteCounterLabel.Text = FormatSpeedString(DiskWriteCounter.NextValue)
         UploadSpeedCountLabel.Text = FormatSpeedString(UploadSpeedCount)
@@ -545,6 +536,10 @@ Public Class SystemWorkStation
             AddHandler ScriptIcons(Index).MouseDown, AddressOf IconTemplates_MouseDown
             AddHandler ScriptIcons(Index).MouseUp, AddressOf IconTemplates_MouseUp
         Next
+
+        '播放开机提示音效
+        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("LoginDesktop"), AudioPlayMode.Background)
+
         '遍历完成后记录图标显示区域最右边界
         RightestLoction = ScriptIcons(ScriptUpperBound).Left + IconWidth
         '遍历网卡
@@ -557,8 +552,26 @@ Public Class SystemWorkStation
             UploadValueOld(Index) = UploadCounter(Index).NextSample().RawValue
         Next
         PerformanceCounterTimer.Enabled = True
-        '播放开机提示音效，切换并激活界面
-        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("LoginDesktop"), AudioPlayMode.Background)
+
+        '开启语音识别
+        Try
+            MySpeechRecognitionEngine = New SpeechRecognitionEngine(SpeechRecognitionEngine.InstalledRecognizers().First)
+            MySpeechRecognitionEngine.SetInputToDefaultAudioDevice()
+            LoadGrammar()
+            AddHandler MySpeechRecognitionEngine.AudioLevelUpdated, AddressOf SpeechRecognitionEngine_AudioLevelUpdated
+            AddHandler MySpeechRecognitionEngine.SpeechRecognized, AddressOf SpeechRecognitionEngine_SpeechRecognized
+            'AddHandler MySpeechRecognitionEngine.AudioStateChanged, AddressOf SpeechRecognitionEngine_AudioStateChanged
+            MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
+        Catch ex As Exception
+            '开启语音识别失败
+            VoiceLevelBar.Value = 0
+            SpeechRecognitionMode = False
+            SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_Off
+            MySpeechRecognitionEngine.Dispose()
+
+            If Not TipsForm.Visible Then TipsForm.Show(Me)
+            TipsForm.PopupTips("Failed to start the", TipsForm.TipsIconType.Critical, "SpeechRecognitionEngine")
+        End Try
     End Sub
 
     '格式化速度
@@ -575,7 +588,7 @@ Public Class SystemWorkStation
         If MenuTopMost.Checked Then
             SetParent(Me.Handle, GetDesktopWindow)
         Else
-            SetParent(Me.Handle, DesktopIconHandle)
+            SetParent(Me.Handle, GetDesktopIconHandle())
         End If
     End Sub
 
@@ -623,8 +636,13 @@ Public Class SystemWorkStation
     Private Sub MenuCustomWallpaper_Click(sender As Object, e As EventArgs) Handles MenuCustomWallpaper.Click
         '设置自定义壁纸
         If CustomWallpaperDialog.ShowDialog() = DialogResult.OK Then
-            CustomWallpaperBitmap = Bitmap.FromFile(CustomWallpaperDialog.FileName)
-            WorkStationWallpaperControl.Image = CustomWallpaperBitmap
+            Try
+                CustomWallpaperBitmap = Bitmap.FromFile(CustomWallpaperDialog.FileName)
+                WorkStationWallpaperControl.Image = CustomWallpaperBitmap
+            Catch ex As Exception
+                If Not TipsForm.Visible Then TipsForm.Show(Me)
+                TipsForm.PopupTips("Error reading image", TipsForm.TipsIconType.Critical, "Please select again.")
+            End Try
         End If
     End Sub
 
@@ -634,20 +652,30 @@ Public Class SystemWorkStation
     End Sub
 
     Private Sub SpeechButtonControl_Click(sender As Object, e As EventArgs) Handles SpeechButtonControl.Click
-        '开启或关闭语音识别功能
-        Static SpeechRecognitionMode As Boolean = True
-        If SpeechRecognitionMode Then
-            '关闭语音识别
-            VoiceLevelBar.Value = 0
-            SpeechRecognitionMode = False
-            SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_Off
-            MySpeechRecognitionEngine.RecognizeAsyncStop()
-        Else
-            '开启语音识别
-            SpeechRecognitionMode = True
-            SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_On
-            MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
-        End If
+        '无法开启语音识别服务时，跳出过程
+        Try
+            If SpeechRecognitionMode Then
+                '关闭语音识别
+                MySpeechRecognitionEngine.RecognizeAsyncStop()
+                VoiceLevelBar.Value = 0
+                SpeechRecognitionMode = False
+                SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_Off
+
+                If Not TipsForm.Visible Then TipsForm.Show(Me)
+                TipsForm.PopupTips("Shuted the", TipsForm.TipsIconType.Exclamation, "RecognitionEngine off.")
+            Else
+                '开启语音识别
+                MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
+                SpeechRecognitionMode = True
+                SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_On
+
+                If Not TipsForm.Visible Then TipsForm.Show(Me)
+                TipsForm.PopupTips("Started the", TipsForm.TipsIconType.Infomation, "SpeechRecognitionEngine.")
+            End If
+        Catch ex As Exception
+            If Not TipsForm.Visible Then TipsForm.Show(Me)
+            TipsForm.PopupTips("Failed to start the", TipsForm.TipsIconType.Critical, "SpeechRecognitionEngine")
+        End Try
     End Sub
 
     Private Sub XYMailButtonControl_Click(sender As Object, e As EventArgs) Handles XYMailButtonControl.Click
@@ -657,9 +685,6 @@ Public Class SystemWorkStation
 
     '获取IP和真实地址
     Public Sub GetIPAndAddress()
-        '防止在校园或企业网里未连接网络时网址被重定向导致读取错误数据
-        If Not My.Computer.Network.IsAvailable Then IPLabel.Text = "Unconnected" : AddressLabel.Text = "Unknown" : Exit Sub
-
         Dim IPWebClient As Net.WebClient = New Net.WebClient
         Dim WebString As String = vbNullString
         Dim RegIP As System.Text.RegularExpressions.Regex = New System.Text.RegularExpressions.Regex("\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}")
@@ -669,7 +694,7 @@ Public Class SystemWorkStation
             IPLabel.Text = RegIP.Match(WebString).ToString
             AddressLabel.Text = Strings.Mid(WebString, IPLabel.Text.Length + 17, WebString.Length - IPLabel.Text.Length - 21)
         Catch ex As Exception
-            IPLabel.Text = "Unknown" : AddressLabel.Text = "Unknown"
+            IPLabel.Text = "127.0.0.1" : AddressLabel.Text = "Unknown"
         Finally
             If Not IPWebClient Is Nothing Then IPWebClient.Dispose()
         End Try
@@ -685,10 +710,6 @@ Public Class SystemWorkStation
     Private Sub ButtonControl_MouseLeave(sender As Object, e As EventArgs) Handles XYBrowserButtonControl.MouseLeave, ConsoleButtonControl.MouseLeave, ShutdownButtonControl.MouseLeave, XYMailButtonControl.MouseLeave, SettingButtonControl.MouseLeave
         NowButton = CType(sender, Label)
         NowButton.Image = My.Resources.SystemAssets.ResourceManager.GetObject(NowButton.Tag & "0")
-    End Sub
-
-    Private Sub VoiceLevelBar_Click(sender As Object, e As EventArgs) Handles VoiceLevelBar.Click
-
     End Sub
 
     Private Sub ButtonControl_MouseUp(sender As Object, e As MouseEventArgs) Handles XYBrowserButtonControl.MouseUp, ConsoleButtonControl.MouseUp, ShutdownButtonControl.MouseUp, XYMailButtonControl.MouseUp, SettingButtonControl.MouseUp

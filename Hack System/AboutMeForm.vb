@@ -74,8 +74,6 @@
             Next
 
             SystemWorkStation.InfoTitle.ForeColor = LabelForeColor
-            SystemWorkStation.CPUCounterLable.ForeColor = LabelForeColor
-            SystemWorkStation.MemoryUsageRateLabel.ForeColor = LabelForeColor
             SystemWorkStation.DiskReadCounterLabel.ForeColor = LabelForeColor
             SystemWorkStation.DiskWriteCounterLabel.ForeColor = LabelForeColor
             SystemWorkStation.UploadSpeedCountLabel.ForeColor = LabelForeColor
@@ -98,5 +96,12 @@
 
     Private Sub SetLabelColor_MouseLeave(sender As Object, e As EventArgs) Handles SetLabelColorLabel.MouseLeave
         SetLabelColorLabel.Font = New Font(SetLabelColorLabel.Font.FontFamily, SetLabelColorLabel.Font.Size, FontStyle.Bold)
+    End Sub
+
+    Private Sub AboutMeForm_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+        If Me.Visible Then
+            If Not TipsForm.Visible Then TipsForm.Show(SystemWorkStation)
+            TipsForm.PopupTips("Contact me at", TipsForm.TipsIconType.Infomation, "Leon.ID@QQ.COM")
+        End If
     End Sub
 End Class

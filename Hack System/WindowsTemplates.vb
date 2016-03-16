@@ -64,13 +64,13 @@ Public Class WindowsTemplates
     End Sub
 
     Private Sub CloseScript() '关闭脚本过程
+        '记录脚本状态
+        SystemWorkStation.ScriptFormVisible(MyScriptIndex) = False
         '读取自身的脚本标识和需要的在桌面环境里的数据
         IconLocation.X = SystemWorkStation.ScriptIcons(MyScriptIndex).Left
         IconLocation.Y = SystemWorkStation.ScriptIcons(MyScriptIndex).Top
         IconImage = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & Me.Tag)
         IconControl = SystemWorkStation.ScriptIcons(MyScriptIndex)
-        '记录脚本状态
-        SystemWorkStation.ScriptFormVisible(MyScriptIndex) = False
         '关闭呼吸
         BreathTimer.Stop()
         UnBreathTimer.Stop()
@@ -179,7 +179,8 @@ Public Class WindowsTemplates
 
     Private Sub WindowsTemplates_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
         '窗体失去焦点时，如果不是AeroPeek模式也不是正在退出程序，就降低窗口透明度
-        If Not (SystemWorkStation.AeroPeekModel) And Not SystemWorkStation.ApplicationClosing Then Me.Opacity = NegativeOpacity
+        If Not (SystemWorkStation.AeroPeekModel) AndAlso Not SystemWorkStation.ApplicationClosing _
+            AndAlso SystemWorkStation.ScriptFormVisible(MyScriptIndex) = True Then Me.Opacity = NegativeOpacity
         '改变窗体背景色
         Me.BackColor = BorderColor_Negative
         '隐藏标题栏
