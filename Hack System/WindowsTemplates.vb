@@ -187,6 +187,7 @@ Public Class WindowsTemplates
         GIFControl.Top = BorderWidth
         CloseButtonControl.Hide()
         Me.Height = GIFControl.Height + 2 * BorderWidth
+        Me.Top += TitleHeight
     End Sub
 
     Private Sub WindowsTemplates_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
@@ -202,6 +203,7 @@ Public Class WindowsTemplates
         GIFControl.Top = TitleHeight + BorderWidth
         CloseButtonControl.Show()
         Me.Height = GIFControl.Height + TitleHeight + 2 * BorderWidth
+        Me.Top -= TitleHeight
     End Sub
 
     Private Sub WindowsTemplates_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged

@@ -143,6 +143,8 @@ Public Class TipsForm
     Private Sub TipsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CheckForIllegalCrossThreadCalls = False
         Me.Location = New Point(-Me.Width, 0)
+
+        AddHandler Me.KeyPress, AddressOf SystemWorkStation.SystemWorkStation_KeyPress
     End Sub
 
     Private Sub WaitForHiding()
@@ -170,6 +172,8 @@ Public Class TipsForm
     End Property
 
     Private Sub IconTimer_Tick(sender As Object, e As EventArgs) Handles IconTimer.Tick
+        Me.TopMost = True
+
         Static IconBackgroundIndex As Integer = 0
         Dim TempIconBackground As Bitmap = My.Resources.TipsRes.TipsIconBackground.Clone(New Rectangle(IconBackgroundIndex * IconBackgroundRectangle.Width, 0, IconBackgroundRectangle.Width, IconBackgroundRectangle.Height), Imaging.PixelFormat.Format32bppArgb)
 

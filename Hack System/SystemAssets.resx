@@ -481,4 +481,31 @@
   <data name="CleanCommandPast_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\CleanCommandPast_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="SystemWallpaper_12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SystemWallpaper_12.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SystemWallpaper_13" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SystemWallpaper_13.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SystemWallpaper_14" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SystemWallpaper_14.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SystemWallpaper_15" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SystemWallpaper_15.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SystemWallpaper_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SystemWallpaper_16.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SystemWallpaper_17" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SystemWallpaper_17.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SystemWallpaper_18" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SystemWallpaper_18.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SystemWallpaper_19" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SystemWallpaper_19.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SystemWallpaper_20" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SystemWallpaper_20.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -12,6 +12,9 @@ Public Class CommandConsole
     Dim ThreadSpeak As Thread = New Threading.Thread(AddressOf SpeakVoice) '"Speak" will make application sleep,so we create a new threah.
 
     Public Sub ShowConsole()
+        'Hide TipsForm if it is shown
+        If TipsForm.Visible Then TipsForm.CancelTip()
+
         'Show console.
         'Hide buttons in mian desktop.
         SystemWorkStation.ConsoleButtonControl.Visible = False
@@ -53,6 +56,7 @@ Public Class CommandConsole
             Me.Left -= 30
             Thread.Sleep(10)
         Loop
+        Me.Left = My.Computer.Screen.Bounds.Width - Me.Width
         ConsoleShowing = False
     End Sub
 
@@ -61,6 +65,7 @@ Public Class CommandConsole
             Me.Left += 30
             Thread.Sleep(10)
         Loop
+        Me.Left = My.Computer.Screen.Bounds.Width
         ConsoleHiding = False
     End Sub
 

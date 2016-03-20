@@ -2,7 +2,7 @@
 
 Public Class LockUI
     'The UpperBound of wallpapers.
-    Public Const WallpaperUpperBound As Int16 = 11
+    Public Const WallpaperUpperBound As Int16 = 20
     Dim LoginAreaRect As RectangleF
 
     Private Sub LockUI_Load(sender As Object, e As EventArgs) Handles Me.Load

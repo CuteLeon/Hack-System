@@ -67,7 +67,7 @@ Partial Class SystemWorkStation
         '
         'WorkStationWallpaperControl
         '
-        Me.WorkStationWallpaperControl.BackColor = System.Drawing.Color.Black
+        Me.WorkStationWallpaperControl.BackColor = System.Drawing.SystemColors.Control
         Me.WorkStationWallpaperControl.ContextMenuStrip = Me.DesktopMenuStrip
         Me.WorkStationWallpaperControl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WorkStationWallpaperControl.Image = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_09

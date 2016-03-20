@@ -587,6 +587,7 @@ Public Class SystemWorkStation
         '改变窗体的置前和置后状态
         If MenuTopMost.Checked Then
             SetParent(Me.Handle, GetDesktopWindow)
+            Me.Top = True
         Else
             SetParent(Me.Handle, GetDesktopIconHandle())
         End If
