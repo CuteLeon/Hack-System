@@ -207,7 +207,7 @@ Public Class SystemWorkStation
         VoiceLevelBar.Value = e.AudioLevel
     End Sub
 
-    '接收的音频更改
+    '引擎状态改变
     'Private Sub SpeechRecognitionEngine_AudioStateChanged(sender As Object, e As AudioStateChangedEventArgs)
     '   If e.AudioState = AudioState.Speech Then
     '       ResultLabel.ForeColor = Color.DarkGray
