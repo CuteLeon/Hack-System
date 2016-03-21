@@ -88,12 +88,14 @@ Partial Class SystemWorkStation
         '
         'MenuLastWallpaper
         '
+        Me.MenuLastWallpaper.Image = CType(resources.GetObject("MenuLastWallpaper.Image"), System.Drawing.Image)
         Me.MenuLastWallpaper.Name = "MenuLastWallpaper"
         Me.MenuLastWallpaper.Size = New System.Drawing.Size(184, 22)
         Me.MenuLastWallpaper.Text = "Last Wallpaper"
         '
         'MenuNextWallpaper
         '
+        Me.MenuNextWallpaper.Image = CType(resources.GetObject("MenuNextWallpaper.Image"), System.Drawing.Image)
         Me.MenuNextWallpaper.Name = "MenuNextWallpaper"
         Me.MenuNextWallpaper.Size = New System.Drawing.Size(184, 22)
         Me.MenuNextWallpaper.Text = "Next Wallpaper"
@@ -105,12 +107,14 @@ Partial Class SystemWorkStation
         '
         'MenuCustomWallpaper
         '
+        Me.MenuCustomWallpaper.Image = CType(resources.GetObject("MenuCustomWallpaper.Image"), System.Drawing.Image)
         Me.MenuCustomWallpaper.Name = "MenuCustomWallpaper"
         Me.MenuCustomWallpaper.Size = New System.Drawing.Size(184, 22)
         Me.MenuCustomWallpaper.Text = "Custom Wallpaper"
         '
         'MenuSetForecolor
         '
+        Me.MenuSetForecolor.Image = CType(resources.GetObject("MenuSetForecolor.Image"), System.Drawing.Image)
         Me.MenuSetForecolor.Name = "MenuSetForecolor"
         Me.MenuSetForecolor.Size = New System.Drawing.Size(184, 22)
         Me.MenuSetForecolor.Text = "Set Forecolor"
@@ -136,6 +140,7 @@ Partial Class SystemWorkStation
         '
         'MenuShutdown
         '
+        Me.MenuShutdown.Image = CType(resources.GetObject("MenuShutdown.Image"), System.Drawing.Image)
         Me.MenuShutdown.Name = "MenuShutdown"
         Me.MenuShutdown.Size = New System.Drawing.Size(184, 22)
         Me.MenuShutdown.Text = "Shutdown"
@@ -174,16 +179,18 @@ Partial Class SystemWorkStation
         '
         Me.IconMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuSetToWallpaper, Me.MenuBreath, Me.ToolStripSeparator4, Me.MenuCloseScript})
         Me.IconMenuStrip.Name = "IconMenuStrip"
-        Me.IconMenuStrip.Size = New System.Drawing.Size(180, 76)
+        Me.IconMenuStrip.Size = New System.Drawing.Size(180, 98)
         '
         'MenuSetToWallpaper
         '
+        Me.MenuSetToWallpaper.Image = CType(resources.GetObject("MenuSetToWallpaper.Image"), System.Drawing.Image)
         Me.MenuSetToWallpaper.Name = "MenuSetToWallpaper"
         Me.MenuSetToWallpaper.Size = New System.Drawing.Size(179, 22)
         Me.MenuSetToWallpaper.Text = "Set To Wallpaper"
         '
         'MenuBreath
         '
+        Me.MenuBreath.Image = CType(resources.GetObject("MenuBreath.Image"), System.Drawing.Image)
         Me.MenuBreath.Name = "MenuBreath"
         Me.MenuBreath.Size = New System.Drawing.Size(179, 22)
         Me.MenuBreath.Text = "Start/Stop Breath"
@@ -195,6 +202,7 @@ Partial Class SystemWorkStation
         '
         'MenuCloseScript
         '
+        Me.MenuCloseScript.Image = CType(resources.GetObject("MenuCloseScript.Image"), System.Drawing.Image)
         Me.MenuCloseScript.Name = "MenuCloseScript"
         Me.MenuCloseScript.Size = New System.Drawing.Size(179, 22)
         Me.MenuCloseScript.Text = "Close       ALT+F4"

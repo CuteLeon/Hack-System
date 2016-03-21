@@ -458,6 +458,7 @@ Public Class SystemWorkStation
     End Sub
 
     Private Sub PerformanceCounterTimer_Tick(sender As Object, e As EventArgs) Handles PerformanceCounterTimer.Tick
+        Me.TopMost = True
         MemoryUsageRate = (CmptInfo.TotalPhysicalMemory - CmptInfo.AvailablePhysicalMemory) / CmptInfo.TotalPhysicalMemory * 100
         '初始化目前已经上传和下载的字节
         DownloadSpeedCount = 0 : UploadSpeedCount = 0
