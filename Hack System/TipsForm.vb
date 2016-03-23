@@ -1,6 +1,9 @@
 ﻿Imports System.ComponentModel
 
 Public Class TipsForm
+    '置前显示，之所以不用TopMost是因为TopMost会让窗体激活，在Timer里值守置前会影响脚本窗口获取焦点
+    Private Declare Sub SetWindowPos Lib "User32" (ByVal hWnd As Integer, ByVal hWndInsertAfter As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal cx As Integer, ByVal cy As Integer, ByVal wFlags As Integer)
+
     Dim ShowThread As Threading.Thread = New Threading.Thread(AddressOf ShowTips)
     Dim HideThread As Threading.Thread = New Threading.Thread(AddressOf HideTips)
     Dim WaitThread As Threading.Thread = New Threading.Thread(AddressOf WaitForHiding)
@@ -172,10 +175,9 @@ Public Class TipsForm
     End Property
 
     Private Sub IconTimer_Tick(sender As Object, e As EventArgs) Handles IconTimer.Tick
-        Me.TopMost = True
-
         Static IconBackgroundIndex As Integer = 0
         Dim TempIconBackground As Bitmap = My.Resources.TipsRes.TipsIconBackground.Clone(New Rectangle(IconBackgroundIndex * IconBackgroundRectangle.Width, 0, IconBackgroundRectangle.Width, IconBackgroundRectangle.Height), Imaging.PixelFormat.Format32bppArgb)
+        SetWindowPos(Me.Handle, -1, 0, 0, 0, 0, &H10 Or &H40 Or &H2 Or &H1)
 
         TipsBitmap = My.Resources.TipsRes.TipsBackground
         TipsGraphics = Graphics.FromImage(TipsBitmap)

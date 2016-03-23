@@ -73,7 +73,7 @@ Partial Class SystemWorkStation
         Me.WorkStationWallpaperControl.Image = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_09
         Me.WorkStationWallpaperControl.Location = New System.Drawing.Point(0, 0)
         Me.WorkStationWallpaperControl.Name = "WorkStationWallpaperControl"
-        Me.WorkStationWallpaperControl.Size = New System.Drawing.Size(1181, 551)
+        Me.WorkStationWallpaperControl.Size = New System.Drawing.Size(787, 374)
         Me.WorkStationWallpaperControl.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.WorkStationWallpaperControl.TabIndex = 1
         Me.WorkStationWallpaperControl.TabStop = False
@@ -83,46 +83,54 @@ Partial Class SystemWorkStation
         '
         Me.DesktopMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuLastWallpaper, Me.MenuNextWallpaper, Me.ToolStripSeparator3, Me.MenuCustomWallpaper, Me.MenuSetForecolor, Me.ToolStripSeparator1, Me.MenuTopMost, Me.ToolStripSeparator2, Me.MenuShutdown})
         Me.DesktopMenuStrip.Name = "SystemMenuStrip"
-        Me.DesktopMenuStrip.Size = New System.Drawing.Size(185, 154)
+        Me.DesktopMenuStrip.Size = New System.Drawing.Size(177, 154)
         Me.DesktopMenuStrip.Text = "系统菜单"
         '
         'MenuLastWallpaper
         '
         Me.MenuLastWallpaper.Image = CType(resources.GetObject("MenuLastWallpaper.Image"), System.Drawing.Image)
         Me.MenuLastWallpaper.Name = "MenuLastWallpaper"
-        Me.MenuLastWallpaper.Size = New System.Drawing.Size(184, 22)
-        Me.MenuLastWallpaper.Text = "Last Wallpaper"
+        Me.MenuLastWallpaper.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.L), System.Windows.Forms.Keys)
+        Me.MenuLastWallpaper.ShowShortcutKeys = False
+        Me.MenuLastWallpaper.Size = New System.Drawing.Size(176, 22)
+        Me.MenuLastWallpaper.Text = "&Last Wallpaper"
         '
         'MenuNextWallpaper
         '
         Me.MenuNextWallpaper.Image = CType(resources.GetObject("MenuNextWallpaper.Image"), System.Drawing.Image)
         Me.MenuNextWallpaper.Name = "MenuNextWallpaper"
-        Me.MenuNextWallpaper.Size = New System.Drawing.Size(184, 22)
-        Me.MenuNextWallpaper.Text = "Next Wallpaper"
+        Me.MenuNextWallpaper.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
+        Me.MenuNextWallpaper.ShowShortcutKeys = False
+        Me.MenuNextWallpaper.Size = New System.Drawing.Size(176, 22)
+        Me.MenuNextWallpaper.Text = "&Next Wallpaper"
         '
         'ToolStripSeparator3
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(181, 6)
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(173, 6)
         '
         'MenuCustomWallpaper
         '
         Me.MenuCustomWallpaper.Image = CType(resources.GetObject("MenuCustomWallpaper.Image"), System.Drawing.Image)
         Me.MenuCustomWallpaper.Name = "MenuCustomWallpaper"
-        Me.MenuCustomWallpaper.Size = New System.Drawing.Size(184, 22)
-        Me.MenuCustomWallpaper.Text = "Custom Wallpaper"
+        Me.MenuCustomWallpaper.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+        Me.MenuCustomWallpaper.ShowShortcutKeys = False
+        Me.MenuCustomWallpaper.Size = New System.Drawing.Size(176, 22)
+        Me.MenuCustomWallpaper.Text = "&Custom Wallpaper"
         '
         'MenuSetForecolor
         '
         Me.MenuSetForecolor.Image = CType(resources.GetObject("MenuSetForecolor.Image"), System.Drawing.Image)
         Me.MenuSetForecolor.Name = "MenuSetForecolor"
-        Me.MenuSetForecolor.Size = New System.Drawing.Size(184, 22)
-        Me.MenuSetForecolor.Text = "Set Forecolor"
+        Me.MenuSetForecolor.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+        Me.MenuSetForecolor.ShowShortcutKeys = False
+        Me.MenuSetForecolor.Size = New System.Drawing.Size(176, 22)
+        Me.MenuSetForecolor.Text = "&Set Forecolor"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(181, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(173, 6)
         '
         'MenuTopMost
         '
@@ -130,19 +138,21 @@ Partial Class SystemWorkStation
         Me.MenuTopMost.CheckOnClick = True
         Me.MenuTopMost.CheckState = System.Windows.Forms.CheckState.Checked
         Me.MenuTopMost.Name = "MenuTopMost"
-        Me.MenuTopMost.Size = New System.Drawing.Size(184, 22)
-        Me.MenuTopMost.Text = "Topmost"
+        Me.MenuTopMost.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
+        Me.MenuTopMost.ShowShortcutKeys = False
+        Me.MenuTopMost.Size = New System.Drawing.Size(176, 22)
+        Me.MenuTopMost.Text = "&Topmost"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(181, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(173, 6)
         '
         'MenuShutdown
         '
         Me.MenuShutdown.Image = CType(resources.GetObject("MenuShutdown.Image"), System.Drawing.Image)
         Me.MenuShutdown.Name = "MenuShutdown"
-        Me.MenuShutdown.Size = New System.Drawing.Size(184, 22)
+        Me.MenuShutdown.Size = New System.Drawing.Size(176, 22)
         Me.MenuShutdown.Text = "Shutdown"
         '
         'ShutdownButtonControl
@@ -152,7 +162,7 @@ Partial Class SystemWorkStation
         Me.ShutdownButtonControl.ForeColor = System.Drawing.Color.Aqua
         Me.ShutdownButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.ShutdownWindow_0
         Me.ShutdownButtonControl.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.ShutdownButtonControl.Location = New System.Drawing.Point(1105, 460)
+        Me.ShutdownButtonControl.Location = New System.Drawing.Point(713, 390)
         Me.ShutdownButtonControl.Name = "ShutdownButtonControl"
         Me.ShutdownButtonControl.Size = New System.Drawing.Size(66, 80)
         Me.ShutdownButtonControl.TabIndex = 2
@@ -167,7 +177,7 @@ Partial Class SystemWorkStation
         Me.SettingButtonControl.ForeColor = System.Drawing.Color.Aqua
         Me.SettingButtonControl.Image = CType(resources.GetObject("SettingButtonControl.Image"), System.Drawing.Image)
         Me.SettingButtonControl.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.SettingButtonControl.Location = New System.Drawing.Point(1035, 460)
+        Me.SettingButtonControl.Location = New System.Drawing.Point(643, 390)
         Me.SettingButtonControl.Name = "SettingButtonControl"
         Me.SettingButtonControl.Size = New System.Drawing.Size(66, 80)
         Me.SettingButtonControl.TabIndex = 3
@@ -179,7 +189,7 @@ Partial Class SystemWorkStation
         '
         Me.IconMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuSetToWallpaper, Me.MenuBreath, Me.ToolStripSeparator4, Me.MenuCloseScript})
         Me.IconMenuStrip.Name = "IconMenuStrip"
-        Me.IconMenuStrip.Size = New System.Drawing.Size(180, 98)
+        Me.IconMenuStrip.Size = New System.Drawing.Size(180, 76)
         '
         'MenuSetToWallpaper
         '
@@ -218,7 +228,7 @@ Partial Class SystemWorkStation
         Me.XYBrowserButtonControl.ForeColor = System.Drawing.Color.Aqua
         Me.XYBrowserButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.XYBrowserIcon0
         Me.XYBrowserButtonControl.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.XYBrowserButtonControl.Location = New System.Drawing.Point(965, 460)
+        Me.XYBrowserButtonControl.Location = New System.Drawing.Point(573, 390)
         Me.XYBrowserButtonControl.Name = "XYBrowserButtonControl"
         Me.XYBrowserButtonControl.Size = New System.Drawing.Size(66, 80)
         Me.XYBrowserButtonControl.TabIndex = 6
@@ -233,7 +243,7 @@ Partial Class SystemWorkStation
         Me.XYMailButtonControl.ForeColor = System.Drawing.Color.Aqua
         Me.XYMailButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.Mailcon_0
         Me.XYMailButtonControl.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.XYMailButtonControl.Location = New System.Drawing.Point(895, 460)
+        Me.XYMailButtonControl.Location = New System.Drawing.Point(503, 390)
         Me.XYMailButtonControl.Name = "XYMailButtonControl"
         Me.XYMailButtonControl.Size = New System.Drawing.Size(66, 80)
         Me.XYMailButtonControl.TabIndex = 7
@@ -248,7 +258,7 @@ Partial Class SystemWorkStation
         Me.ConsoleButtonControl.ForeColor = System.Drawing.Color.Aqua
         Me.ConsoleButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.Console_0
         Me.ConsoleButtonControl.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.ConsoleButtonControl.Location = New System.Drawing.Point(825, 460)
+        Me.ConsoleButtonControl.Location = New System.Drawing.Point(433, 390)
         Me.ConsoleButtonControl.Name = "ConsoleButtonControl"
         Me.ConsoleButtonControl.Size = New System.Drawing.Size(66, 80)
         Me.ConsoleButtonControl.TabIndex = 8
@@ -262,7 +272,7 @@ Partial Class SystemWorkStation
         Me.InfoTitle.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.InfoTitle.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.InfoTitle.ForeColor = System.Drawing.Color.White
-        Me.InfoTitle.Location = New System.Drawing.Point(968, 37)
+        Me.InfoTitle.Location = New System.Drawing.Point(802, 36)
         Me.InfoTitle.Name = "InfoTitle"
         Me.InfoTitle.Size = New System.Drawing.Size(93, 160)
         Me.InfoTitle.TabIndex = 9
@@ -277,7 +287,7 @@ Partial Class SystemWorkStation
         'VoiceLevelBar
         '
         Me.VoiceLevelBar.BackColor = System.Drawing.SystemColors.MenuHighlight
-        Me.VoiceLevelBar.Location = New System.Drawing.Point(760, 526)
+        Me.VoiceLevelBar.Location = New System.Drawing.Point(368, 456)
         Me.VoiceLevelBar.Name = "VoiceLevelBar"
         Me.VoiceLevelBar.Size = New System.Drawing.Size(56, 10)
         Me.VoiceLevelBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
@@ -289,7 +299,7 @@ Partial Class SystemWorkStation
         Me.SpeechButtonControl.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.SpeechButton_0
         Me.SpeechButtonControl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.SpeechButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.MicroPhone_On
-        Me.SpeechButtonControl.Location = New System.Drawing.Point(755, 460)
+        Me.SpeechButtonControl.Location = New System.Drawing.Point(363, 390)
         Me.SpeechButtonControl.Name = "SpeechButtonControl"
         Me.SpeechButtonControl.Size = New System.Drawing.Size(66, 78)
         Me.SpeechButtonControl.TabIndex = 12
@@ -301,7 +311,7 @@ Partial Class SystemWorkStation
         Me.DiskReadCounterLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.DiskReadCounterLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.DiskReadCounterLabel.ForeColor = System.Drawing.Color.White
-        Me.DiskReadCounterLabel.Location = New System.Drawing.Point(1061, 77)
+        Me.DiskReadCounterLabel.Location = New System.Drawing.Point(895, 76)
         Me.DiskReadCounterLabel.Name = "DiskReadCounterLabel"
         Me.DiskReadCounterLabel.Size = New System.Drawing.Size(115, 20)
         Me.DiskReadCounterLabel.TabIndex = 15
@@ -314,7 +324,7 @@ Partial Class SystemWorkStation
         Me.DiskWriteCounterLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.DiskWriteCounterLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.DiskWriteCounterLabel.ForeColor = System.Drawing.Color.White
-        Me.DiskWriteCounterLabel.Location = New System.Drawing.Point(1061, 97)
+        Me.DiskWriteCounterLabel.Location = New System.Drawing.Point(895, 96)
         Me.DiskWriteCounterLabel.Name = "DiskWriteCounterLabel"
         Me.DiskWriteCounterLabel.Size = New System.Drawing.Size(115, 20)
         Me.DiskWriteCounterLabel.TabIndex = 16
@@ -327,7 +337,7 @@ Partial Class SystemWorkStation
         Me.UploadSpeedCountLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.UploadSpeedCountLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.UploadSpeedCountLabel.ForeColor = System.Drawing.Color.White
-        Me.UploadSpeedCountLabel.Location = New System.Drawing.Point(1061, 117)
+        Me.UploadSpeedCountLabel.Location = New System.Drawing.Point(895, 116)
         Me.UploadSpeedCountLabel.Name = "UploadSpeedCountLabel"
         Me.UploadSpeedCountLabel.Size = New System.Drawing.Size(115, 20)
         Me.UploadSpeedCountLabel.TabIndex = 17
@@ -340,7 +350,7 @@ Partial Class SystemWorkStation
         Me.DownloadSpeedCountLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.DownloadSpeedCountLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.DownloadSpeedCountLabel.ForeColor = System.Drawing.Color.White
-        Me.DownloadSpeedCountLabel.Location = New System.Drawing.Point(1061, 137)
+        Me.DownloadSpeedCountLabel.Location = New System.Drawing.Point(895, 136)
         Me.DownloadSpeedCountLabel.Name = "DownloadSpeedCountLabel"
         Me.DownloadSpeedCountLabel.Size = New System.Drawing.Size(115, 20)
         Me.DownloadSpeedCountLabel.TabIndex = 18
@@ -353,12 +363,13 @@ Partial Class SystemWorkStation
         Me.IPLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.IPLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.IPLabel.ForeColor = System.Drawing.Color.White
-        Me.IPLabel.Location = New System.Drawing.Point(1061, 157)
+        Me.IPLabel.Location = New System.Drawing.Point(895, 156)
         Me.IPLabel.Name = "IPLabel"
         Me.IPLabel.Size = New System.Drawing.Size(115, 20)
         Me.IPLabel.TabIndex = 19
         Me.IPLabel.Text = "127.0.0.1"
         Me.IPLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.IPLabel.UseMnemonic = False
         '
         'AddressLabel
         '
@@ -366,7 +377,7 @@ Partial Class SystemWorkStation
         Me.AddressLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.AddressLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.AddressLabel.ForeColor = System.Drawing.Color.White
-        Me.AddressLabel.Location = New System.Drawing.Point(1061, 177)
+        Me.AddressLabel.Location = New System.Drawing.Point(895, 176)
         Me.AddressLabel.Name = "AddressLabel"
         Me.AddressLabel.Size = New System.Drawing.Size(115, 20)
         Me.AddressLabel.TabIndex = 20
@@ -378,7 +389,7 @@ Partial Class SystemWorkStation
         Me.DateTimeLabel.BackColor = System.Drawing.Color.Transparent
         Me.DateTimeLabel.Font = New System.Drawing.Font("微软雅黑", 14.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.DateTimeLabel.ForeColor = System.Drawing.Color.White
-        Me.DateTimeLabel.Location = New System.Drawing.Point(968, 8)
+        Me.DateTimeLabel.Location = New System.Drawing.Point(802, 7)
         Me.DateTimeLabel.Name = "DateTimeLabel"
         Me.DateTimeLabel.Size = New System.Drawing.Size(208, 25)
         Me.DateTimeLabel.TabIndex = 23
@@ -386,7 +397,7 @@ Partial Class SystemWorkStation
         '
         'CPUCounterBar
         '
-        Me.CPUCounterBar.Location = New System.Drawing.Point(1064, 41)
+        Me.CPUCounterBar.Location = New System.Drawing.Point(898, 40)
         Me.CPUCounterBar.Name = "CPUCounterBar"
         Me.CPUCounterBar.Size = New System.Drawing.Size(95, 12)
         Me.CPUCounterBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
@@ -394,7 +405,7 @@ Partial Class SystemWorkStation
         '
         'MemoryUsageRateBar
         '
-        Me.MemoryUsageRateBar.Location = New System.Drawing.Point(1064, 61)
+        Me.MemoryUsageRateBar.Location = New System.Drawing.Point(898, 60)
         Me.MemoryUsageRateBar.Name = "MemoryUsageRateBar"
         Me.MemoryUsageRateBar.Size = New System.Drawing.Size(95, 12)
         Me.MemoryUsageRateBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
@@ -404,7 +415,7 @@ Partial Class SystemWorkStation
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1181, 551)
+        Me.ClientSize = New System.Drawing.Size(787, 374)
         Me.Controls.Add(Me.MemoryUsageRateBar)
         Me.Controls.Add(Me.CPUCounterBar)
         Me.Controls.Add(Me.DateTimeLabel)

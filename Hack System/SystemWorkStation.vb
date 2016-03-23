@@ -6,7 +6,7 @@ Public Class SystemWorkStation
     Public Declare Function SetForegroundWindow Lib "user32" Alias "SetForegroundWindow" (ByVal hwnd As Integer) As Integer
     Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Integer
     Private Declare Function FindWindowEx Lib "user32" Alias "FindWindowExA" (ByVal hWnd1 As Integer, ByVal hWnd2 As Integer, ByVal lpsz1 As String, ByVal lpsz2 As String) As Integer
-    Private Declare Function GetDesktopWindow Lib "user32" Alias "GetDesktopWindow" () As Integer
+    Private Declare Function GetDesktopWindow Lib "user32" Alias "GetDesktopWindow" () As IntPtr
     Private Declare Function SetParent Lib "user32" Alias "SetParent" (ByVal hWndChild As IntPtr, ByVal hWndNewParent As IntPtr) As Integer
     Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As IntPtr, ByVal nIndex As Integer, ByVal dwNewLong As Integer) As IntPtr
     Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hwnd As IntPtr, ByVal nIndex As Integer) As Integer
@@ -61,6 +61,7 @@ Public Class SystemWorkStation
         Me.Location = New Point(0, 0)
         Me.Size = My.Computer.Screen.Bounds.Size
 
+        '用控件显示图片当做壁纸：窗体BackgroundImage不支持动态图
         InfoTitle.Parent = WorkStationWallpaperControl
         CPUCounterBar.Parent = WorkStationWallpaperControl
         MemoryUsageRateBar.Parent = WorkStationWallpaperControl
@@ -124,7 +125,6 @@ Public Class SystemWorkStation
 
         CustomWallpaperDialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
         DateTimeLabel.Text = My.Computer.Clock.LocalTime.ToLocalTime
-        GetIPAndAddress()
     End Sub
 
     Private Sub LoadGrammar()
@@ -458,7 +458,6 @@ Public Class SystemWorkStation
     End Sub
 
     Private Sub PerformanceCounterTimer_Tick(sender As Object, e As EventArgs) Handles PerformanceCounterTimer.Tick
-        Me.TopMost = True
         MemoryUsageRate = (CmptInfo.TotalPhysicalMemory - CmptInfo.AvailablePhysicalMemory) / CmptInfo.TotalPhysicalMemory * 100
         '初始化目前已经上传和下载的字节
         DownloadSpeedCount = 0 : UploadSpeedCount = 0
@@ -573,6 +572,32 @@ Public Class SystemWorkStation
             If Not TipsForm.Visible Then TipsForm.Show(Me)
             TipsForm.PopupTips("Failed to start the", TipsForm.TipsIconType.Critical, "SpeechRecognitionEngine")
         End Try
+
+        '获取IP和地址
+        'GetIPAndAddress()
+    End Sub
+
+    '点击IP和地址标签重新获取IP和地址
+    Private Sub IPAndAddressLabel_Click(sender As Object, e As EventArgs) Handles IPLabel.Click, AddressLabel.Click
+        'GetIPAndAddress()
+    End Sub
+
+    '获取IP和真实地址
+    '@Leon 该函数在断网情况下会造成程序假死，所以暂时不予启用
+    Public Sub GetIPAndAddress()
+        Dim IPWebClient As Net.WebClient = New Net.WebClient
+        Dim WebString As String = vbNullString
+        Dim RegIP As System.Text.RegularExpressions.Regex = New System.Text.RegularExpressions.Regex("\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}")
+        Try
+            IPWebClient.Encoding = System.Text.Encoding.UTF8
+            WebString = IPWebClient.DownloadString(New Uri("http://ip.chinaz.com/getip.aspx"))
+            IPLabel.Text = RegIP.Match(WebString).ToString
+            AddressLabel.Text = Strings.Mid(WebString, IPLabel.Text.Length + 17, WebString.Length - IPLabel.Text.Length - 21)
+        Catch ex As Exception
+            IPLabel.Text = "127.0.0.1" : AddressLabel.Text = "Unknown"
+        Finally
+            If Not IPWebClient Is Nothing Then IPWebClient.Dispose()
+        End Try
     End Sub
 
     '格式化速度
@@ -586,29 +611,45 @@ Public Class SystemWorkStation
 
     Private Sub MenuTopMost_Click(sender As Object, e As EventArgs) Handles MenuTopMost.Click
         '改变窗体的置前和置后状态
-        If MenuTopMost.Checked Then
-            SetParent(Me.Handle, GetDesktopWindow)
-            Me.Top = True
-        Else
-            SetParent(Me.Handle, GetDesktopIconHandle())
-        End If
+        SetParent(Me.Handle, IIf(MenuTopMost.Checked, GetDesktopWindow(), GetDesktopIconHandle()))
+        Me.TopMost = True
     End Sub
 
+    ''' <summary>
+    ''' 遍历顶级句柄下的所有WorkerW句柄和Progman句柄，查找桌面图标所在句柄
+    ''' 两种桌面句柄结构：
+    ''' ""#32769
+    ''' ┝""WorkerW
+    ''' ┃ ┕""SHELLDLL_DefView
+    ''' ┃   ┕"FolderView"SysListView32 //即为所求
+    ''' ┝"..."...
+    ''' ┕"Program Manager"Progman
+    '''   ┕""SHELLDLL_DefView
+    '''     ┕"FolderView"SysListView32 //即为所求
+    ''' </summary>
+    ''' <returns>SysListView32类的句柄</returns>
     Private Function GetDesktopIconHandle() As IntPtr
         Dim HandleDesktop As Integer = GetDesktopWindow
-        Dim HandleWorkerW As Integer = 0
-        Dim LastHandleWorkerW As Integer = 0
+        Dim HandleTop As Integer = 0
+        Dim LastHandleTop As Integer = 0
         Dim HandleSHELLDLL_DefView As Integer = 0
         Dim HandleSysListView32 As Integer = 0
-
+        '在WorkerW里搜索
         Do Until HandleSysListView32 > 0
-            HandleWorkerW = FindWindowEx(HandleDesktop, LastHandleWorkerW, "WorkerW", vbNullString)
-            HandleSHELLDLL_DefView = FindWindowEx(HandleWorkerW, 0, "SHELLDLL_DefView", vbNullString)
+            HandleTop = FindWindowEx(HandleDesktop, LastHandleTop, "WorkerW", vbNullString)
+            HandleSHELLDLL_DefView = FindWindowEx(HandleTop, 0, "SHELLDLL_DefView", vbNullString)
             If HandleSHELLDLL_DefView > 0 Then HandleSysListView32 = FindWindowEx(HandleSHELLDLL_DefView, 0, "SysListView32", "FolderView")
-            LastHandleWorkerW = HandleWorkerW
-            If LastHandleWorkerW = 0 Then Exit Do : Return 0
+            LastHandleTop = HandleTop
+            If LastHandleTop = 0 Then Exit Do
         Loop
-
+        '在Progman里搜索
+        Do Until HandleSysListView32 > 0
+            HandleTop = FindWindowEx(HandleDesktop, LastHandleTop, "Progman", "Program Manager")
+            HandleSHELLDLL_DefView = FindWindowEx(HandleTop, 0, "SHELLDLL_DefView", vbNullString)
+            If HandleSHELLDLL_DefView > 0 Then HandleSysListView32 = FindWindowEx(HandleSHELLDLL_DefView, 0, "SysListView32", "FolderView")
+            LastHandleTop = HandleTop
+            If LastHandleTop = 0 Then Exit Do : Return 0
+        Loop
         Return HandleSysListView32
     End Function
 
@@ -685,25 +726,7 @@ Public Class SystemWorkStation
         If XYMail.Visible Then XYMail.Hide() Else XYMail.Show(Me)
     End Sub
 
-    '获取IP和真实地址
-    Public Sub GetIPAndAddress()
-        Dim IPWebClient As Net.WebClient = New Net.WebClient
-        Dim WebString As String = vbNullString
-        Dim RegIP As System.Text.RegularExpressions.Regex = New System.Text.RegularExpressions.Regex("\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}")
-        Try
-            IPWebClient.Encoding = System.Text.Encoding.UTF8
-            WebString = IPWebClient.DownloadString("http://ip.chinaz.com/getip.aspx")
-            IPLabel.Text = RegIP.Match(WebString).ToString
-            AddressLabel.Text = Strings.Mid(WebString, IPLabel.Text.Length + 17, WebString.Length - IPLabel.Text.Length - 21)
-        Catch ex As Exception
-            IPLabel.Text = "127.0.0.1" : AddressLabel.Text = "Unknown"
-        Finally
-            If Not IPWebClient Is Nothing Then IPWebClient.Dispose()
-        End Try
-    End Sub
-
 #Region "桌面右下角图标响应鼠标动态效果"
-
     Private Sub ButtonControl_MouseEnter(sender As Object, e As EventArgs) Handles XYBrowserButtonControl.MouseEnter, ConsoleButtonControl.MouseEnter, ShutdownButtonControl.MouseEnter, XYMailButtonControl.MouseEnter, SettingButtonControl.MouseEnter
         NowButton = CType(sender, Label)
         NowButton.Image = My.Resources.SystemAssets.ResourceManager.GetObject(NowButton.Tag & "1")
@@ -739,6 +762,11 @@ Public Class SystemWorkStation
 
     Private Sub SpeechButtonControl_MouseDown(sender As Object, e As MouseEventArgs) Handles SpeechButtonControl.MouseDown
         SpeechButtonControl.BackgroundImage = My.Resources.SystemAssets.SpeechButton_2
+    End Sub
+
+    Private Sub SystemWorkStation_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+        '不要使用Timer值守置前，因为会影响输入法的候选词窗体
+        Me.TopMost = True
     End Sub
 
 #End Region
