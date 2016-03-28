@@ -75,6 +75,7 @@ Public Class XYBrowser
     End Sub
 
     Private Sub MainWebBrowser_Navigating(sender As Object, e As WebBrowserNavigatingEventArgs) Handles MainWebBrowser.Navigating
+        On Error Resume Next
         '正在导航
         Btn_GoBack.Image = My.Resources.XYBrowserRes.GoBack.Clone(BtnRectangle(IIf(MainWebBrowser.CanGoBack, 0, 3)), DefaultPixelFormat)
         Btn_GoForward.Image = My.Resources.XYBrowserRes.GoForward.Clone(BtnRectangle(IIf(MainWebBrowser.CanGoForward, 0, 3)), DefaultPixelFormat)

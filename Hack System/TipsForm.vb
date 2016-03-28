@@ -15,7 +15,7 @@ Public Class TipsForm
 
     Dim BodyFont As Font = New Font("微软雅黑", 16.0!, System.Drawing.FontStyle.Regular)
     Dim BodyPoint As PointF = New PointF(0, 48)
-    Dim BodyColor As Color = Color.FromArgb(120, 140, 150)
+    Dim BodyColor As Color = Color.FromArgb(60, 100, 100)
     Dim BodyBrush As Brush = New SolidBrush(BodyColor)
 
     Dim TipsBitmap As Bitmap
@@ -175,6 +175,7 @@ Public Class TipsForm
     End Property
 
     Private Sub IconTimer_Tick(sender As Object, e As EventArgs) Handles IconTimer.Tick
+        On Error Resume Next
         Static IconBackgroundIndex As Integer = 0
         Dim TempIconBackground As Bitmap = My.Resources.TipsRes.TipsIconBackground.Clone(New Rectangle(IconBackgroundIndex * IconBackgroundRectangle.Width, 0, IconBackgroundRectangle.Width, IconBackgroundRectangle.Height), Imaging.PixelFormat.Format32bppArgb)
         SetWindowPos(Me.Handle, -1, 0, 0, 0, 0, &H10 Or &H40 Or &H2 Or &H1)

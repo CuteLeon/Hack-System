@@ -381,7 +381,7 @@ Partial Class SystemWorkStation
         Me.AddressLabel.Name = "AddressLabel"
         Me.AddressLabel.Size = New System.Drawing.Size(115, 20)
         Me.AddressLabel.TabIndex = 20
-        Me.AddressLabel.Text = "Unknown"
+        Me.AddressLabel.Text = "Click to get."
         Me.AddressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'DateTimeLabel

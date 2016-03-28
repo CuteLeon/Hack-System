@@ -8,9 +8,9 @@ Namespace My
     ' StartupNextInstance: 在启动单实例应用程序且应用程序已处于活动状态时引发。
     ' NetworkAvailabilityChanged: 在连接或断开网络连接时引发。
     Partial Friend Class MyApplication
-        'Private Sub MyApplication_NetworkAvailabilityChanged(sender As Object, e As NetworkAvailableEventArgs) Handles Me.NetworkAvailabilityChanged
-        '    '重新联接网络后自动读取IP和城市定位
-        '    If My.Computer.Network.IsAvailable Then SystemWorkStation.GetIPAndAddress()
-        'End Sub
+        Private Sub MyApplication_NetworkAvailabilityChanged(sender As Object, e As NetworkAvailableEventArgs) Handles Me.NetworkAvailabilityChanged
+            '重新联接网络后自动读取IP和城市定位
+            If My.Computer.Network.IsAvailable Then SystemWorkStation.GetIPAndAddress()
+        End Sub
     End Class
 End Namespace

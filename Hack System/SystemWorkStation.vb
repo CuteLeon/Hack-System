@@ -574,30 +574,37 @@ Public Class SystemWorkStation
         End Try
 
         '获取IP和地址
-        'GetIPAndAddress()
+        GetIPAndAddress()
     End Sub
 
     '点击IP和地址标签重新获取IP和地址
     Private Sub IPAndAddressLabel_Click(sender As Object, e As EventArgs) Handles IPLabel.Click, AddressLabel.Click
-        'GetIPAndAddress()
+        GetIPAndAddress()
     End Sub
 
     '获取IP和真实地址
-    '@Leon 该函数在断网情况下会造成程序假死，所以暂时不予启用
     Public Sub GetIPAndAddress()
-        Dim IPWebClient As Net.WebClient = New Net.WebClient
-        Dim WebString As String = vbNullString
-        Dim RegIP As System.Text.RegularExpressions.Regex = New System.Text.RegularExpressions.Regex("\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}")
         Try
-            IPWebClient.Encoding = System.Text.Encoding.UTF8
-            WebString = IPWebClient.DownloadString(New Uri("http://ip.chinaz.com/getip.aspx"))
-            IPLabel.Text = RegIP.Match(WebString).ToString
-            AddressLabel.Text = Strings.Mid(WebString, IPLabel.Text.Length + 17, WebString.Length - IPLabel.Text.Length - 21)
+            If (My.Computer.Network.Ping("ip.chinaz.com")) Then
+                Dim IPWebClient As Net.WebClient = New Net.WebClient
+                Dim WebString As String = vbNullString
+                Dim RegIP As System.Text.RegularExpressions.Regex = New System.Text.RegularExpressions.Regex("\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}")
+                IPWebClient.Encoding = System.Text.Encoding.UTF8
+                WebString = IPWebClient.DownloadString(New Uri("http://ip.chinaz.com/getip.aspx"))
+                IPLabel.Text = RegIP.Match(WebString).ToString
+                AddressLabel.Text = Strings.Mid(WebString, IPLabel.Text.Length + 17, WebString.Length - IPLabel.Text.Length - 21)
+
+                If Not TipsForm.Visible Then TipsForm.Show(Me)
+                TipsForm.PopupTips("Successfully :", TipsForm.TipsIconType.Exclamation, "Get IP and address !")
+                If Not IPWebClient Is Nothing Then IPWebClient.Dispose()
+                Exit Sub
+            End If
         Catch ex As Exception
-            IPLabel.Text = "127.0.0.1" : AddressLabel.Text = "Unknown"
-        Finally
-            If Not IPWebClient Is Nothing Then IPWebClient.Dispose()
         End Try
+
+        IPLabel.Text = "127.0.0.1" : AddressLabel.Text = "Click to get."
+        If Not TipsForm.Visible Then TipsForm.Show(Me)
+        TipsForm.PopupTips("Error :", TipsForm.TipsIconType.Exclamation, "Can't get IP and Address.")
     End Sub
 
     '格式化速度
