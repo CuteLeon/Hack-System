@@ -18,7 +18,7 @@ Partial Class ShutdownWindow
     Private components As System.ComponentModel.IContainer
 
     '注意: 以下过程是 Windows 窗体设计器所必需的
-    '可以使用 Windows 窗体设计器修改它。  
+    '可以使用 Windows 窗体设计器修改它。
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
@@ -45,7 +45,6 @@ Partial Class ShutdownWindow
         'ShutdownButtonControl
         '
         Me.ShutdownButtonControl.BackColor = System.Drawing.Color.Transparent
-        Me.ShutdownButtonControl.Cursor = System.Windows.Forms.Cursors.Hand
         Me.ShutdownButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.ShutdownButton_1
         Me.ShutdownButtonControl.Location = New System.Drawing.Point(507, 47)
         Me.ShutdownButtonControl.Name = "ShutdownButtonControl"
@@ -56,7 +55,6 @@ Partial Class ShutdownWindow
         'CancelButtonControl
         '
         Me.CancelButtonControl.BackColor = System.Drawing.Color.Transparent
-        Me.CancelButtonControl.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CancelButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.CancelButton_1
         Me.CancelButtonControl.Location = New System.Drawing.Point(42, 47)
         Me.CancelButtonControl.Name = "CancelButtonControl"

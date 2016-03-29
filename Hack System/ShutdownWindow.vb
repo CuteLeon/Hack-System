@@ -1,11 +1,18 @@
 ﻿Imports System.ComponentModel
 
 Public Class ShutdownWindow
+    '圆角窗体
+    Private Declare Function CreateRoundRectRgn Lib "gdi32" Alias "CreateRoundRectRgn" (ByVal X1 As Int32, ByVal Y1 As Int32, ByVal X2 As Int32, ByVal Y2 As Int32, ByVal X3 As Int32, ByVal Y3 As Int32) As Int32
+    Private Declare Function SetWindowRgn Lib "user32" Alias "SetWindowRgn" (ByVal hWnd As Int32, ByVal hRgn As Int32, ByVal bRedraw As Boolean) As Int32
+
     Private Sub ShutdownWindows_Load(sender As Object, e As EventArgs) Handles Me.Load
         ShutdownAreaControl.Parent = ShutdownWallpaperControl
         CancelButtonControl.Parent = ShutdownAreaControl
         ShutdownButtonControl.Parent = ShutdownAreaControl
         Me.Cursor = StartingUpUI.SystemCursor
+        '圆角窗体
+        Dim RoundRectangle As Integer = CreateRoundRectRgn(1, 1, Me.Width, Me.Height, Me.Height, Me.Height)
+        SetWindowRgn(Me.Handle, RoundRectangle, True)
     End Sub
 
     Private Sub ShutdownButtonControl_Click(sender As Object, e As EventArgs) Handles ShutdownButtonControl.Click
@@ -13,7 +20,7 @@ Public Class ShutdownWindow
     End Sub
 
     Private Sub Shutdown()
-        SystemWorkStation.ApplicationClosing = True
+        SystemWorkStation.SystemClosing = True
         Me.Hide()
         ShutdowningUI.Show()
         ShutdowningUI.ShowShutdownForm()
@@ -50,7 +57,7 @@ Public Class ShutdownWindow
     End Sub
 
     Private Sub ShutdownWindows_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        If Not SystemWorkStation.ApplicationClosing Then
+        If Not SystemWorkStation.SystemClosing Then
             e.Cancel = True
             CancelShutdown()
         End If

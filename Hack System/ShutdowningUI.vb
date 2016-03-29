@@ -24,7 +24,7 @@ Public Class ShutdowningUI
         ThreadShowMe = New Thread(AddressOf ShowMe)
         ThreadShowMe.Start()
         'Application is going to exit.
-        If SystemWorkStation.ApplicationClosing Then
+        If SystemWorkStation.SystemClosing Then
             ThreadShowMe.Join()
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Shutdown"), AudioPlayMode.WaitToComplete)
             '释放语音识别引擎(容错处理)

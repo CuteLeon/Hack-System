@@ -150,7 +150,7 @@ Public Class WindowsTemplates
     End Sub
 
     Private Sub WindowsTemplates_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        If Not SystemWorkStation.ApplicationClosing Then
+        If Not SystemWorkStation.SystemClosing Then
             '不是退出程序时，关闭窗体调用关闭过程
             e.Cancel = True
             CloseScript()
@@ -179,7 +179,7 @@ Public Class WindowsTemplates
 
     Private Sub WindowsTemplates_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
         '窗体失去焦点时，如果不是AeroPeek模式也不是正在退出程序，就降低窗口透明度
-        If Not (SystemWorkStation.AeroPeekModel) AndAlso Not SystemWorkStation.ApplicationClosing _
+        If Not (SystemWorkStation.AeroPeekModel) AndAlso Not SystemWorkStation.SystemClosing _
             AndAlso SystemWorkStation.ScriptFormVisible(MyScriptIndex) = True Then Me.Opacity = NegativeOpacity
         '改变窗体背景色
         Me.BackColor = BorderColor_Negative

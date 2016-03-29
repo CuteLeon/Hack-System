@@ -29,7 +29,8 @@ Public Class SystemWorkStation
     Public ScriptIcons(ScriptUpperBound) As Label
     Public NowIconIndex As Integer = -1 'Icon under mouse.
     Public RightestLoction As Integer 'The rightest icon's right location.
-    Public ApplicationClosing As Boolean 'Application is going to exit.
+    Public NotFirstGetIPAndAddress As Boolean
+    Public SystemClosing As Boolean 'Application is going to exit.
 
     Dim SpeechRecognitionMode As Boolean = True
     Dim MouseDownLocation As Point
@@ -112,9 +113,10 @@ Public Class SystemWorkStation
         DiskWriteCounterLabel.Cursor = StartingUpUI.SystemCursor
         UploadSpeedCountLabel.Cursor = StartingUpUI.SystemCursor
         DownloadSpeedCountLabel.Cursor = StartingUpUI.SystemCursor
-        IPLabel.Cursor = StartingUpUI.SystemCursor
-        AddressLabel.Cursor = StartingUpUI.SystemCursor
         DateTimeLabel.Cursor = StartingUpUI.SystemCursor
+        'Set as hand,to tips that users can click them.
+        IPLabel.Cursor = Cursors.Hand
+        AddressLabel.Cursor = Cursors.Hand
 
         CommandConsole.Show(Me)
         CommandConsole.Height = My.Computer.Screen.Bounds.Height
@@ -124,7 +126,10 @@ Public Class SystemWorkStation
         CommandConsole.CommandInputBox.Top = My.Computer.Screen.Bounds.Height - 40
 
         CustomWallpaperDialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
+        '考虑到用户时间和日期的格式问题，需要自适应标签大小，防止数据显示不全
+        DateTimeLabel.AutoSize = True
         DateTimeLabel.Text = My.Computer.Clock.LocalTime.ToLocalTime
+        DateTimeLabel.Location = New Point(Me.Width - DateTimeLabel.Width - 12, 12)
     End Sub
 
     Private Sub LoadGrammar()
@@ -372,7 +377,7 @@ Public Class SystemWorkStation
 
     '关机按钮响应鼠标动态效果
     Private Sub SystemWorkStation_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        If Not ApplicationClosing Then
+        If Not SystemClosing Then
             '取消关闭消息
             e.Cancel = True
             '弹出关机提示框
@@ -573,7 +578,6 @@ Public Class SystemWorkStation
             TipsForm.PopupTips("Failed to start the", TipsForm.TipsIconType.Critical, "SpeechRecognitionEngine")
         End Try
 
-        '获取IP和地址
         GetIPAndAddress()
     End Sub
 
@@ -593,18 +597,25 @@ Public Class SystemWorkStation
                 WebString = IPWebClient.DownloadString(New Uri("http://ip.chinaz.com/getip.aspx"))
                 IPLabel.Text = RegIP.Match(WebString).ToString
                 AddressLabel.Text = Strings.Mid(WebString, IPLabel.Text.Length + 17, WebString.Length - IPLabel.Text.Length - 21)
-
-                If Not TipsForm.Visible Then TipsForm.Show(Me)
-                TipsForm.PopupTips("Successfully :", TipsForm.TipsIconType.Exclamation, "Get IP and address !")
                 If Not IPWebClient Is Nothing Then IPWebClient.Dispose()
+                If NotFirstGetIPAndAddress Then
+                    If Not TipsForm.Visible Then TipsForm.Show(Me)
+                    TipsForm.PopupTips("Successfully :", TipsForm.TipsIconType.Exclamation, "Get IP and address !")
+                    Exit Sub
+                End If
+                NotFirstGetIPAndAddress = True
                 Exit Sub
             End If
         Catch ex As Exception
         End Try
 
         IPLabel.Text = "127.0.0.1" : AddressLabel.Text = "Click to get."
-        If Not TipsForm.Visible Then TipsForm.Show(Me)
-        TipsForm.PopupTips("Error :", TipsForm.TipsIconType.Exclamation, "Can't get IP and Address.")
+        If NotFirstGetIPAndAddress Then
+            If Not TipsForm.Visible Then TipsForm.Show(Me)
+            TipsForm.PopupTips("Error :", TipsForm.TipsIconType.Exclamation, "Can't get IP and Address.")
+            Exit Sub
+        End If
+        NotFirstGetIPAndAddress = True
     End Sub
 
     '格式化速度
@@ -733,6 +744,11 @@ Public Class SystemWorkStation
         If XYMail.Visible Then XYMail.Hide() Else XYMail.Show(Me)
     End Sub
 
+    Private Sub SystemWorkStation_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+        '不要使用Timer值守置前，因为会影响输入法的候选词窗体
+        Me.TopMost = True
+    End Sub
+
 #Region "桌面右下角图标响应鼠标动态效果"
     Private Sub ButtonControl_MouseEnter(sender As Object, e As EventArgs) Handles XYBrowserButtonControl.MouseEnter, ConsoleButtonControl.MouseEnter, ShutdownButtonControl.MouseEnter, XYMailButtonControl.MouseEnter, SettingButtonControl.MouseEnter
         NowButton = CType(sender, Label)
@@ -769,11 +785,6 @@ Public Class SystemWorkStation
 
     Private Sub SpeechButtonControl_MouseDown(sender As Object, e As MouseEventArgs) Handles SpeechButtonControl.MouseDown
         SpeechButtonControl.BackgroundImage = My.Resources.SystemAssets.SpeechButton_2
-    End Sub
-
-    Private Sub SystemWorkStation_Activated(sender As Object, e As EventArgs) Handles Me.Activated
-        '不要使用Timer值守置前，因为会影响输入法的候选词窗体
-        Me.TopMost = True
     End Sub
 
 #End Region

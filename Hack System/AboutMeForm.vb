@@ -98,10 +98,10 @@
         SetLabelColorLabel.Font = New Font(SetLabelColorLabel.Font.FontFamily, SetLabelColorLabel.Font.Size, FontStyle.Bold)
     End Sub
 
-    Private Sub AboutMeForm_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-        If Me.Visible Then
-            If Not TipsForm.Visible Then TipsForm.Show(SystemWorkStation)
-            TipsForm.PopupTips("Contact me at", TipsForm.TipsIconType.Infomation, "Leon.ID@QQ.COM")
-        End If
-    End Sub
+    'Private Sub AboutMeForm_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+    '    If Me.Visible Then
+    '        If Not TipsForm.Visible Then TipsForm.Show(SystemWorkStation)
+    '        TipsForm.PopupTips("Contact me at", TipsForm.TipsIconType.Infomation, "Leon.ID@QQ.COM")
+    '    End If
+    'End Sub
 End Class
