@@ -418,14 +418,25 @@ Public Class SystemWorkStation
     Private Sub MenuLastWallpaper_Click(sender As Object, e As EventArgs) Handles MenuLastWallpaper.Click
         '桌面右键菜单之上一张壁纸
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-        WallpaperIndex += IIf(WallpaperIndex = 0, WallpaperUpperBound, -1)
+        If WallpaperIndex = 0 AndAlso (CustomWallpaperBitmap IsNot Nothing) Then
+            WallpaperIndex = -1
+            Me.BackgroundImage = CustomWallpaperBitmap
+            Exit Sub
+        Else
+            WallpaperIndex = IIf(WallpaperIndex <= 0, WallpaperUpperBound, WallpaperIndex - 1)
+        End If
         Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
     End Sub
 
     Private Sub MenuNextWallpaper_Click(sender As Object, e As EventArgs) Handles MenuNextWallpaper.Click
         '桌面右键菜单之下一张壁纸
-        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-        WallpaperIndex += IIf(WallpaperIndex = WallpaperUpperBound, -WallpaperUpperBound, 1)
+        If WallpaperIndex = WallpaperUpperBound AndAlso (CustomWallpaperBitmap IsNot Nothing) Then
+            WallpaperIndex = -1
+            Me.BackgroundImage = CustomWallpaperBitmap
+            Exit Sub
+        Else
+            WallpaperIndex = IIf(WallpaperIndex = WallpaperUpperBound Or WallpaperIndex = -1, 0, WallpaperIndex + 1)
+        End If
         Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
     End Sub
 

@@ -18,7 +18,7 @@ Public Class LoginAndLockUI
     Private Const WallpaperUpperBound As Int16 = 18
     Dim LoginAreaRect As RectangleF
 
-    Private Sub LockUI_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub LoginAndLockUI_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Allow thread to visit UI.
         System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
         'Full screen
@@ -127,11 +127,11 @@ Public Class LoginAndLockUI
         LockScreenMode = True
     End Sub
 
-    Private Sub LockUI_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+    Private Sub LoginAndLockUI_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         e.Cancel = True
     End Sub
 
-    Private Sub LockUI_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+    Private Sub LoginAndLockUI_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         'Play audio,loop.
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("LockUIBGM"), AudioPlayMode.BackgroundLoop)
     End Sub
