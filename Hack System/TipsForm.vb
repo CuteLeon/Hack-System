@@ -216,7 +216,7 @@ Public Class TipsForm
     End Sub
 
     Private Sub TipsForm_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
-        WaitThread.Abort()
+        If WaitThread IsNot Nothing AndAlso WaitThread.ThreadState = Threading.ThreadState.Running Then WaitThread.Abort()
     End Sub
 
     Private Sub TipsForm_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave

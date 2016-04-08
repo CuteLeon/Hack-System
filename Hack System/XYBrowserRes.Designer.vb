@@ -265,21 +265,11 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
-        '''</summary>
-        Friend Shared ReadOnly Property XYBrowser() As System.Drawing.Icon
-            Get
-                Dim obj As Object = ResourceManager.GetObject("XYBrowser", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  查找 System.Drawing.Bitmap 类型的本地化资源。
         '''</summary>
-        Friend Shared ReadOnly Property XYBrowser1() As System.Drawing.Bitmap
+        Friend Shared ReadOnly Property XYBrowser() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("XYBrowser1", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("XYBrowser", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

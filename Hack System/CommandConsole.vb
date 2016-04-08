@@ -198,12 +198,12 @@ Public Class CommandConsole
                     ThreadWeather.Start(CommandParameter)
                 End If
             Case "lock" 'Lock screen.
-                If ShutdowningUI.Visible Then Exit Sub
+                If LoginAndLockUI.Visible Then Exit Sub
 
-                ShutdowningUI.Opacity = 0
-                ShutdowningUI.Show(SystemWorkStation)
-                ShutdowningUI.ShowShutdownForm()
-                SystemWorkStation.SetForegroundWindow(ShutdowningUI.Handle)
+                LoginAndLockUI.Opacity = 0
+                LoginAndLockUI.Show(SystemWorkStation)
+                LoginAndLockUI.ShowLockScreen()
+                SystemWorkStation.SetForegroundWindow(LoginAndLockUI.Handle)
                 'Show message and set color.
                 CommandTip.Text = "Lock Screen"
                 CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Lock Screen")

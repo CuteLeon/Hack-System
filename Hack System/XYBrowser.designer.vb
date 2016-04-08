@@ -157,7 +157,7 @@ Partial Class XYBrowser
         Me.BrowserTitle.AutoEllipsis = True
         Me.BrowserTitle.BackColor = System.Drawing.Color.White
         Me.BrowserTitle.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.BrowserTitle.Image = Global.HackSystem.My.Resources.XYBrowserRes.XYBrowser1
+        Me.BrowserTitle.Image = Global.HackSystem.My.Resources.XYBrowserRes.XYBrowser
         Me.BrowserTitle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.BrowserTitle.Location = New System.Drawing.Point(0, 0)
         Me.BrowserTitle.Name = "BrowserTitle"

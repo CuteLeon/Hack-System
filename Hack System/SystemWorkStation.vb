@@ -17,6 +17,7 @@ Public Class SystemWorkStation
     Public Const IconWidth As Integer = 65
     Public Const IconHeight As Integer = 90
     Public Const MainHomeURL As String = "http://www.baidu.com/"
+    Private Const WallpaperUpperBound As Int16 = 18
 
     '以默认语言创建语音识别引擎
     Public MySpeechRecognitionEngine As SpeechRecognitionEngine
@@ -61,33 +62,13 @@ Public Class SystemWorkStation
     Private Sub SystemWorkStation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Location = New Point(0, 0)
         Me.Size = My.Computer.Screen.Bounds.Size
-
-        '用控件显示图片当做壁纸：窗体BackgroundImage不支持动态图
-        InfoTitle.Parent = WorkStationWallpaperControl
-        CPUCounterBar.Parent = WorkStationWallpaperControl
-        MemoryUsageRateBar.Parent = WorkStationWallpaperControl
-        DiskReadCounterLabel.Parent = WorkStationWallpaperControl
-        DiskWriteCounterLabel.Parent = WorkStationWallpaperControl
-        UploadSpeedCountLabel.Parent = WorkStationWallpaperControl
-        DownloadSpeedCountLabel.Parent = WorkStationWallpaperControl
-        IPLabel.Parent = WorkStationWallpaperControl
-        AddressLabel.Parent = WorkStationWallpaperControl
-        DateTimeLabel.Parent = WorkStationWallpaperControl
-
-        ConsoleButtonControl.Parent = WorkStationWallpaperControl
-        XYMailButtonControl.Parent = WorkStationWallpaperControl
-        XYBrowserButtonControl.Parent = WorkStationWallpaperControl
-        ShutdownButtonControl.Parent = WorkStationWallpaperControl
-        SettingButtonControl.Parent = WorkStationWallpaperControl
-        SpeechButtonControl.Parent = WorkStationWallpaperControl
         VoiceLevelBar.Parent = SpeechButtonControl
 
         Call SetParent(MouseDragForm.Handle, Me.Handle)
         Call SetWindowLong(MouseDragForm.Handle, -20, GetWindowLong(MouseDragForm.Handle, -20) Or &H80000)
         Call SetLayeredWindowAttributes(MouseDragForm.Handle, 0, 100, 2)
 
-        DateTimeLabel.Location = New Point(Me.Width - DateTimeLabel.Width - 12, 12)
-        InfoTitle.Location = New Point(DateTimeLabel.Left, 38)
+        InfoTitle.Location = New Point(Me.Width - InfoTitle.Width - DiskReadCounterLabel.Width - 12, 38)
         CPUCounterBar.Location = New Point(InfoTitle.Right + 4, InfoTitle.Top + 4)
         MemoryUsageRateBar.Location = New Point(InfoTitle.Right + 4, CPUCounterBar.Bottom + 8)
         DiskReadCounterLabel.Location = New Point(InfoTitle.Right, 78)
@@ -158,7 +139,7 @@ Public Class SystemWorkStation
     '采用与其加载启用的 Grammar 对象匹配的输入
     Private Sub SpeechRecognitionEngine_SpeechRecognized(sender As Object, e As SpeechRecognizedEventArgs)
         If ShutdowningUI.Visible Then
-            If e.Result.Text = "解锁" Then ShutdowningUI.HideShutdownForm(True)
+            If e.Result.Text = "解锁" Then LoginAndLockUI.HideLockScreen(True)
             Exit Sub
         End If
 
@@ -191,11 +172,11 @@ Public Class SystemWorkStation
             Case "浏览器"
                 LoadNewBrowser()
             Case "锁屏"
-                If ShutdowningUI.Visible Then Exit Sub
-                ShutdowningUI.Opacity = 0
-                ShutdowningUI.Show(Me)
-                ShutdowningUI.ShowShutdownForm()
-                SetForegroundWindow(ShutdowningUI.Handle)
+                If LoginAndLockUI.Visible Then Exit Sub
+                LoginAndLockUI.Opacity = 0
+                LoginAndLockUI.Show(Me)
+                LoginAndLockUI.ShowLockScreen()
+                SetForegroundWindow(LoginAndLockUI.Handle)
             Case "about"
                 If Not (AboutMeForm.Visible) Then AboutMeForm.Show(Me)
                 SetForegroundWindow(AboutMeForm.Handle)
@@ -272,11 +253,9 @@ Public Class SystemWorkStation
         If ScriptForm(ScriptIndex).Visible And ScriptFormVisible(ScriptIndex) Then
             '图标右键菜单项设为可用
             MenuCloseScript.Enabled = True
-            MenuSetToWallpaper.Enabled = True
             MenuBreath.Enabled = True
             '激活脚本窗体
             SetForegroundWindow(ScriptForm(ScriptIndex).Handle)
-            ScriptForm(ScriptIndex).TopMost = False
         End If
     End Sub
 
@@ -295,7 +274,6 @@ Public Class SystemWorkStation
         NowIconIndex = Int(SenderControl.Tag)
         '设置图标右键菜单项可用
         MenuCloseScript.Enabled = ScriptFormVisible(NowIconIndex)
-        MenuSetToWallpaper.Enabled = ScriptFormVisible(NowIconIndex)
         MenuBreath.Enabled = ScriptFormVisible(NowIconIndex)
     End Sub
 
@@ -331,7 +309,7 @@ Public Class SystemWorkStation
     End Sub
     Private Sub IconTemplates_MouseHover(sender As Object, e As EventArgs)
         '鼠标悬停时显示AeroPeek视图
-        If Not (ScriptFormVisible(NowIconIndex)) Or ShutdownWindow.Visible Or AboutMeForm.Visible Then Exit Sub
+        If Not (ScriptFormVisible(NowIconIndex)) Or ShutdownTips.Visible Or AboutMeForm.Visible Then Exit Sub
         '如果脚本是打开状态，则开启AeroPeek模式
         AeroPeekModel = True
         Dim StartIndex, EndIndex, ScriptIndex As Integer
@@ -371,8 +349,8 @@ Public Class SystemWorkStation
         '播放提示音
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
         '显示或激活关机提示框
-        If Not (ShutdownWindow.Visible) Then ShutdownWindow.Show(Me)
-        SetForegroundWindow(ShutdownWindow.Handle)
+        If Not (ShutdownTips.Visible) Then ShutdownTips.Show(Me)
+        SetForegroundWindow(ShutdownTips.Handle)
     End Sub
 
     '关机按钮响应鼠标动态效果
@@ -393,17 +371,17 @@ Public Class SystemWorkStation
         SetForegroundWindow(AboutMeForm.Handle)
     End Sub
 
-    Private Sub WorkStationWallpaperControl_MouseDown(sender As Object, e As MouseEventArgs) Handles WorkStationWallpaperControl.MouseDown
+    Private Sub SystemWorkStation_MouseDown(sender As Object, e As MouseEventArgs) Handles MyBase.MouseDown
         '桌面按下左键开始拖动效果
         MouseDragForm.Location = e.Location
         MouseDownLocation = e.Location
         MouseDragForm.Size = New Size(0, 0)
         MouseDragForm.Visible = True
         '注册鼠标移动事件，开时监听鼠标移动
-        AddHandler WorkStationWallpaperControl.MouseMove, AddressOf WorkStationWallpaperControl_MouseMove
+        AddHandler Me.MouseMove, AddressOf SystemWorkStation_MouseMove
     End Sub
 
-    Private Sub WorkStationWallpaperControl_MouseMove(sender As Object, e As MouseEventArgs)
+    Private Sub SystemWorkStation_MouseMove(sender As Object, e As MouseEventArgs)
         '记录鼠标移动距离
         XDistance = e.X - MouseDownLocation.X
         YDistance = e.Y - MouseDownLocation.Y
@@ -427,12 +405,6 @@ Public Class SystemWorkStation
         MouseDragForm.SetBounds(DragArea.X, DragArea.Y, DragArea.Width, DragArea.Height)
     End Sub
 
-    Private Sub MenuSetToWallpaper_Click(sender As Object, e As EventArgs) Handles MenuSetToWallpaper.Click
-        '桌面图标菜单之将脚本设置为桌面壁纸
-        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-        WorkStationWallpaperControl.Image = My.Resources.SystemAssets.ResourceManager.GetObject("HackScript_" & NowIconIndex.ToString("00"))
-    End Sub
-
     Private Sub MenuBreath_Click(sender As Object, e As EventArgs) Handles MenuBreath.Click
         '呼吸
         ScriptForm(NowIconIndex).Breath()
@@ -446,15 +418,15 @@ Public Class SystemWorkStation
     Private Sub MenuLastWallpaper_Click(sender As Object, e As EventArgs) Handles MenuLastWallpaper.Click
         '桌面右键菜单之上一张壁纸
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-        WallpaperIndex += IIf(WallpaperIndex = 0, LockUI.WallpaperUpperBound, -1)
-        WorkStationWallpaperControl.Image = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
+        WallpaperIndex += IIf(WallpaperIndex = 0, WallpaperUpperBound, -1)
+        Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
     End Sub
 
     Private Sub MenuNextWallpaper_Click(sender As Object, e As EventArgs) Handles MenuNextWallpaper.Click
         '桌面右键菜单之下一张壁纸
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-        WallpaperIndex += IIf(WallpaperIndex = LockUI.WallpaperUpperBound, -LockUI.WallpaperUpperBound, 1)
-        WorkStationWallpaperControl.Image = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
+        WallpaperIndex += IIf(WallpaperIndex = WallpaperUpperBound, -WallpaperUpperBound, 1)
+        Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
     End Sub
 
     Private Sub MenuShutdown_Click(sender As Object, e As EventArgs) Handles MenuShutdown.Click
@@ -497,11 +469,11 @@ Public Class SystemWorkStation
         DateTimeLabel.Text = My.Computer.Clock.LocalTime.ToLocalTime
     End Sub
 
-    Private Sub WorkStationWallpaperControl_MouseUp(sender As Object, e As MouseEventArgs) Handles WorkStationWallpaperControl.MouseUp
+    Private Sub SystemWorkStation_MouseUp(sender As Object, e As MouseEventArgs) Handles MyBase.MouseUp
         '桌面左键抬起，停止鼠标拖动
         MouseDragForm.Visible = False
         '卸载鼠标移动事件
-        RemoveHandler WorkStationWallpaperControl.MouseMove, AddressOf WorkStationWallpaperControl_MouseMove
+        RemoveHandler Me.MouseMove, AddressOf SystemWorkStation_MouseMove
     End Sub
 
     Private Sub SystemWorkStation_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -518,9 +490,9 @@ Public Class SystemWorkStation
             With ScriptIcons(Index)
                 '设置尺寸、透明背景色、关联图标右键菜单、设置父句柄、图像对齐位置、初始图像、文本对齐位置、图标文本、文本颜色
                 .Size = New Size(IconWidth, IconHeight)
+                .Parent = Me
                 .BackColor = Color.Transparent
                 .ContextMenuStrip = IconMenuStrip
-                .Parent = WorkStationWallpaperControl
                 .ImageAlign = ContentAlignment.TopCenter
                 .Image = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & Index.ToString("00"))
                 .TextAlign = ContentAlignment.BottomCenter
@@ -630,7 +602,7 @@ Public Class SystemWorkStation
     Private Sub MenuTopMost_Click(sender As Object, e As EventArgs) Handles MenuTopMost.Click
         '改变窗体的置前和置后状态
         SetParent(Me.Handle, IIf(MenuTopMost.Checked, GetDesktopWindow(), GetDesktopIconHandle()))
-        Me.TopMost = True
+        Me.TopMost = MenuTopMost.Checked
     End Sub
 
     ''' <summary>
@@ -699,7 +671,7 @@ Public Class SystemWorkStation
         If CustomWallpaperDialog.ShowDialog() = DialogResult.OK Then
             Try
                 CustomWallpaperBitmap = Bitmap.FromFile(CustomWallpaperDialog.FileName)
-                WorkStationWallpaperControl.Image = CustomWallpaperBitmap
+                Me.BackgroundImage = CustomWallpaperBitmap
             Catch ex As Exception
                 If Not TipsForm.Visible Then TipsForm.Show(Me)
                 TipsForm.PopupTips("Error reading image", TipsForm.TipsIconType.Critical, "Please select again.")

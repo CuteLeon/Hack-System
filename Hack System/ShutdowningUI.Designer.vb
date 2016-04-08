@@ -24,17 +24,17 @@ Partial Class ShutdowningUI
     Private Sub InitializeComponent()
         Me.SuspendLayout()
         '
-        'Shutdowning
+        'ShutdowningUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(75, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.ShutdownBGI
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(606, 343)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Name = "Shutdowning"
+        Me.Name = "ShutdowningUI"
         Me.Opacity = 0R
         Me.ShowIcon = False
         Me.ShowInTaskbar = False

@@ -18,7 +18,6 @@ Public Class XYBrowser
 
     Private Sub XYBrowser_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         '初始化，设置图标和各个按钮控件的初始图像
-        Me.Icon = My.Resources.XYBrowserRes.XYBrowser
         Btn_GoBack.Image = My.Resources.XYBrowserRes.GoBack.Clone(BtnRectangle(3), DefaultPixelFormat)
         Btn_GoForward.Image = My.Resources.XYBrowserRes.GoForward.Clone(BtnRectangle(3), DefaultPixelFormat)
         Btn_Refresh.Image = My.Resources.XYBrowserRes.Refresh.Clone(BtnRectangle(0), DefaultPixelFormat)

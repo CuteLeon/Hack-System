@@ -8,7 +8,7 @@ Public Class StartingUpUI
         Me.Size = My.Computer.Screen.Bounds.Size
 
         Me.Icon = My.Resources.SystemAssets.HackSystem
-        LockUI.Icon = My.Resources.SystemAssets.HackSystem
+        LoginAndLockUI.Icon = My.Resources.SystemAssets.HackSystem
         SystemWorkStation.Icon = My.Resources.SystemAssets.HackSystem
         WindowsTemplates.Icon = My.Resources.SystemAssets.HackSystem
 
@@ -36,11 +36,12 @@ Public Class StartingUpUI
         FrameIndex += 1
 
         StartingUpLable.Text = "Hack System Loading... (" & 2 * FrameIndex & "%)"
+        Me.Text = StartingUpLable.Text
         'Exchange UI after the 50th frame.
         If FrameIndex = 50 Then
             StartingUpTimer.Enabled = False
             ExchangeUITimer.Enabled = True
-            LockUI.Show()
+            LoginAndLockUI.Show()
             Me.Focus()
         End If
     End Sub
@@ -55,12 +56,12 @@ Public Class StartingUpUI
         If FrameIndex = 60 Then
             ExchangeUITimer.Enabled = False
             Me.Hide()
-            SystemWorkStation.SetForegroundWindow(LockUI.Handle)
+            SystemWorkStation.SetForegroundWindow(LoginAndLockUI.Handle)
         End If
     End Sub
 
     Private Sub StartingUpUI_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        End
+        Application.Exit()
     End Sub
 
 End Class

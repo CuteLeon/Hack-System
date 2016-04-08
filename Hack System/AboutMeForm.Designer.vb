@@ -36,7 +36,7 @@ Partial Class AboutMeForm
         '
         Me.AboutMeWallpaperControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.AboutMeWallpaperControl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.AboutMeWallpaperControl.Image = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_10
+        Me.AboutMeWallpaperControl.Image = Global.HackSystem.My.Resources.SystemAssets.SystemMsgBGI
         Me.AboutMeWallpaperControl.Location = New System.Drawing.Point(0, 0)
         Me.AboutMeWallpaperControl.Name = "AboutMeWallpaperControl"
         Me.AboutMeWallpaperControl.Size = New System.Drawing.Size(520, 250)
@@ -104,6 +104,7 @@ Partial Class AboutMeForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(520, 250)
         Me.Controls.Add(Me.SetLabelColorLabel)
         Me.Controls.Add(Me.WebLink)

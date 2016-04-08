@@ -95,7 +95,6 @@ Public Class WindowsTemplates
                 ThreadPool.QueueUserWorkItem(New WaitCallback(AddressOf HideMe))
                 '找到了，激活下一个标识的脚本窗体
                 SystemWorkStation.SetForegroundWindow(SystemWorkStation.ScriptForm(ScriptIndex).Handle)
-                SystemWorkStation.ScriptForm(ScriptIndex).TopMost = False
                 Exit Sub
             End If
         Next
@@ -161,7 +160,7 @@ Public Class WindowsTemplates
 #Region "关闭按钮响应鼠标动态效果"
 
     Private Sub CloseButtonControl_MouseEnter(sender As Object, e As EventArgs) Handles CloseButtonControl.MouseEnter
-        If Not (ShutdownWindow.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(27, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
+        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(27, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
     End Sub
 
     Private Sub CloseButtonControl_MouseLeave(sender As Object, e As EventArgs) Handles CloseButtonControl.MouseLeave
@@ -169,11 +168,11 @@ Public Class WindowsTemplates
     End Sub
 
     Private Sub CloseButtonControl_MouseUp(sender As Object, e As MouseEventArgs) Handles CloseButtonControl.MouseUp
-        If Not (ShutdownWindow.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(27, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
+        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(27, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
     End Sub
 
     Private Sub CloseButtonControl_MouseDown(sender As Object, e As MouseEventArgs) Handles CloseButtonControl.MouseDown
-        If Not (ShutdownWindow.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(54, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
+        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(54, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
     End Sub
 #End Region
 
@@ -198,7 +197,7 @@ Public Class WindowsTemplates
         '改变背景色
         Me.BackColor = BorderColor_Active
         '优先显示系统弹出框
-        If ShutdownWindow.Visible Then ShutdownWindow.Hide()
+        If ShutdownTips.Visible Then ShutdownTips.Hide()
         '重新显示标题栏
         GIFControl.Top = TitleHeight + BorderWidth
         CloseButtonControl.Show()

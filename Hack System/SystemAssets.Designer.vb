@@ -1109,6 +1109,16 @@ Namespace My.Resources
         '''<summary>
         '''  查找 System.Drawing.Bitmap 类型的本地化资源。
         '''</summary>
+        Friend Shared ReadOnly Property SystemMsgBGI() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("SystemMsgBGI", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
         Friend Shared ReadOnly Property SystemWallpaper_00() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("SystemWallpaper_00", resourceCulture)
@@ -1292,26 +1302,6 @@ Namespace My.Resources
         Friend Shared ReadOnly Property SystemWallpaper_18() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("SystemWallpaper_18", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
-        '''</summary>
-        Friend Shared ReadOnly Property SystemWallpaper_19() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("SystemWallpaper_19", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
-        '''</summary>
-        Friend Shared ReadOnly Property SystemWallpaper_20() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("SystemWallpaper_20", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

@@ -98,7 +98,7 @@ Partial Class StartingUpUI
         Me.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "StartingUpUI"
-        Me.Text = "StartingUpUI"
+        Me.Text = "Hack System Loading... (0%)"
         Me.TopMost = True
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.StartingUpControl, System.ComponentModel.ISupportInitialize).EndInit()

@@ -24,7 +24,6 @@ Partial Class SystemWorkStation
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SystemWorkStation))
-        Me.WorkStationWallpaperControl = New System.Windows.Forms.PictureBox()
         Me.DesktopMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.MenuLastWallpaper = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuNextWallpaper = New System.Windows.Forms.ToolStripMenuItem()
@@ -38,7 +37,6 @@ Partial Class SystemWorkStation
         Me.ShutdownButtonControl = New System.Windows.Forms.Label()
         Me.SettingButtonControl = New System.Windows.Forms.Label()
         Me.IconMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.MenuSetToWallpaper = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuBreath = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.MenuCloseScript = New System.Windows.Forms.ToolStripMenuItem()
@@ -59,25 +57,10 @@ Partial Class SystemWorkStation
         Me.DateTimeLabel = New System.Windows.Forms.Label()
         Me.CPUCounterBar = New System.Windows.Forms.ProgressBar()
         Me.MemoryUsageRateBar = New System.Windows.Forms.ProgressBar()
-        CType(Me.WorkStationWallpaperControl, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.DesktopMenuStrip.SuspendLayout()
         Me.IconMenuStrip.SuspendLayout()
         CType(Me.SpeechButtonControl, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'WorkStationWallpaperControl
-        '
-        Me.WorkStationWallpaperControl.BackColor = System.Drawing.SystemColors.Control
-        Me.WorkStationWallpaperControl.ContextMenuStrip = Me.DesktopMenuStrip
-        Me.WorkStationWallpaperControl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WorkStationWallpaperControl.Image = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_09
-        Me.WorkStationWallpaperControl.Location = New System.Drawing.Point(0, 0)
-        Me.WorkStationWallpaperControl.Name = "WorkStationWallpaperControl"
-        Me.WorkStationWallpaperControl.Size = New System.Drawing.Size(787, 374)
-        Me.WorkStationWallpaperControl.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.WorkStationWallpaperControl.TabIndex = 1
-        Me.WorkStationWallpaperControl.TabStop = False
-        Me.WorkStationWallpaperControl.Tag = ""
         '
         'DesktopMenuStrip
         '
@@ -187,16 +170,9 @@ Partial Class SystemWorkStation
         '
         'IconMenuStrip
         '
-        Me.IconMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuSetToWallpaper, Me.MenuBreath, Me.ToolStripSeparator4, Me.MenuCloseScript})
+        Me.IconMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuBreath, Me.ToolStripSeparator4, Me.MenuCloseScript})
         Me.IconMenuStrip.Name = "IconMenuStrip"
-        Me.IconMenuStrip.Size = New System.Drawing.Size(180, 76)
-        '
-        'MenuSetToWallpaper
-        '
-        Me.MenuSetToWallpaper.Image = CType(resources.GetObject("MenuSetToWallpaper.Image"), System.Drawing.Image)
-        Me.MenuSetToWallpaper.Name = "MenuSetToWallpaper"
-        Me.MenuSetToWallpaper.Size = New System.Drawing.Size(179, 22)
-        Me.MenuSetToWallpaper.Text = "Set To Wallpaper"
+        Me.IconMenuStrip.Size = New System.Drawing.Size(180, 54)
         '
         'MenuBreath
         '
@@ -415,7 +391,11 @@ Partial Class SystemWorkStation
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(787, 374)
+        Me.BackColor = System.Drawing.Color.Black
+        Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_09
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.ClientSize = New System.Drawing.Size(720, 360)
+        Me.ContextMenuStrip = Me.DesktopMenuStrip
         Me.Controls.Add(Me.MemoryUsageRateBar)
         Me.Controls.Add(Me.CPUCounterBar)
         Me.Controls.Add(Me.DateTimeLabel)
@@ -433,20 +413,17 @@ Partial Class SystemWorkStation
         Me.Controls.Add(Me.SettingButtonControl)
         Me.Controls.Add(Me.ShutdownButtonControl)
         Me.Controls.Add(Me.SpeechButtonControl)
-        Me.Controls.Add(Me.WorkStationWallpaperControl)
+        Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "SystemWorkStation"
         Me.Text = "SystemWorkStation"
         Me.TopMost = True
-        CType(Me.WorkStationWallpaperControl, System.ComponentModel.ISupportInitialize).EndInit()
         Me.DesktopMenuStrip.ResumeLayout(False)
         Me.IconMenuStrip.ResumeLayout(False)
         CType(Me.SpeechButtonControl, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents WorkStationWallpaperControl As PictureBox
     Friend WithEvents ShutdownButtonControl As Label
     Friend WithEvents SettingButtonControl As Label
     Friend WithEvents DesktopMenuStrip As ContextMenuStrip
@@ -457,7 +434,6 @@ Partial Class SystemWorkStation
     Friend WithEvents IconMenuStrip As ContextMenuStrip
     Friend WithEvents MenuCloseScript As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
-    Friend WithEvents MenuSetToWallpaper As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents MenuTopMost As ToolStripMenuItem
     Friend WithEvents PerformanceCounterTimer As Timer

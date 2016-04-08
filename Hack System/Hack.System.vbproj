@@ -88,11 +88,11 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DrawImageModule.vb" />
-    <Compile Include="LockUI.vb">
+    <Compile Include="LoginAndLockUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LockUI.Designer.vb">
-      <DependentUpon>LockUI.vb</DependentUpon>
+    <Compile Include="LoginAndLockUI.Designer.vb">
+      <DependentUpon>LoginAndLockUI.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MineSweeperAssets.Designer.vb">
@@ -140,10 +140,10 @@
     <Compile Include="ShutdowningUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ShutdownWindow.Designer.vb">
-      <DependentUpon>ShutdownWindow.vb</DependentUpon>
+    <Compile Include="ShutdownTips.Designer.vb">
+      <DependentUpon>ShutdownTips.vb</DependentUpon>
     </Compile>
-    <Compile Include="ShutdownWindow.vb">
+    <Compile Include="ShutdownTips.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="StartingUpUI.Designer.vb">
@@ -202,8 +202,8 @@
     <EmbeddedResource Include="CommandConsole.resx">
       <DependentUpon>CommandConsole.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LockUI.resx">
-      <DependentUpon>LockUI.vb</DependentUpon>
+    <EmbeddedResource Include="LoginAndLockUI.resx">
+      <DependentUpon>LoginAndLockUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MineSweeperAssets.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
@@ -225,12 +225,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AboutMeForm.resx">
       <DependentUpon>AboutMeForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ShutdowningUI.resx">
       <DependentUpon>ShutdowningUI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ShutdownWindow.resx">
-      <DependentUpon>ShutdownWindow.vb</DependentUpon>
+    <EmbeddedResource Include="ShutdownTips.resx">
+      <DependentUpon>ShutdownTips.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StartingUpUI.resx">
       <DependentUpon>StartingUpUI.vb</DependentUpon>
@@ -262,6 +263,7 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>XYBrowserRes.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="XYMail.resx">
       <DependentUpon>XYMail.vb</DependentUpon>
@@ -309,9 +311,6 @@
     <None Include="Resources\SystemWallpaper_09.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SystemWallpaper_11.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\LoginArea.png" />
   </ItemGroup>
   <ItemGroup>
@@ -324,15 +323,11 @@
     <None Include="Resources\LoginButton_3.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SystemWallpaper_10.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\SystemWallpaper_00.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
-    <None Include="Resources\SystemWallpaper_19.jpg" />
-    <None Include="Resources\SystemWallpaper_20.jpg" />
+    <None Include="Resources\SystemMsgBGI.gif" />
     <None Include="Resources\SystemWallpaper_18.jpg" />
     <None Include="Resources\SystemWallpaper_17.jpg" />
     <None Include="Resources\SystemWallpaper_16.jpg" />
@@ -403,7 +398,6 @@
     <None Include="Resources\SendBtn_0.png" />
     <None Include="Resources\MailBackgroundImage.png" />
     <None Include="Resources\XYBrowser.png" />
-    <None Include="Resources\XYBrowser.ico" />
     <None Include="Resources\Search.png" />
     <None Include="Resources\Restore_N.png" />
     <None Include="Resources\Restore_E.png" />
