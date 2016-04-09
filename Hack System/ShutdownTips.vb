@@ -22,8 +22,7 @@ Public Class ShutdownTips
     Private Sub Shutdown()
         SystemWorkStation.SystemClosing = True
         Me.Hide()
-        ShutdowningUI.Show()
-        ShutdowningUI.ShowShutdownForm()
+        ShutdowningUI.Show(SystemWorkStation)
         SystemWorkStation.SetForegroundWindow(ShutdowningUI.Handle)
     End Sub
 
