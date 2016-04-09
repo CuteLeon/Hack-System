@@ -345,7 +345,7 @@ Public Class SystemWorkStation
     End Sub
 
     Public Sub ShowShutdownWindow()
-        If ShutdowningUI.Visible Then Exit Sub
+        If LoginAndLockUI.Visible Then Exit Sub
         '播放提示音
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
         '显示或激活关机提示框
