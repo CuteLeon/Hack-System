@@ -27,10 +27,8 @@ Partial Class StartingUpUI
         Me.ExchangeUITimer = New System.Windows.Forms.Timer(Me.components)
         Me.StartingUpLable = New System.Windows.Forms.Label()
         Me.StartingUpControl = New System.Windows.Forms.PictureBox()
-        Me.StartingUpWallpaperControl = New System.Windows.Forms.PictureBox()
         Me.StartUpLogo = New System.Windows.Forms.Label()
         CType(Me.StartingUpControl, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.StartingUpWallpaperControl, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'StartingUpTimer
@@ -47,7 +45,7 @@ Partial Class StartingUpUI
         Me.StartingUpLable.BackColor = System.Drawing.Color.Transparent
         Me.StartingUpLable.Font = New System.Drawing.Font("微软雅黑", 18.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.StartingUpLable.ForeColor = System.Drawing.Color.Silver
-        Me.StartingUpLable.Location = New System.Drawing.Point(0, 0)
+        Me.StartingUpLable.Location = New System.Drawing.Point(196, 346)
         Me.StartingUpLable.Name = "StartingUpLable"
         Me.StartingUpLable.Size = New System.Drawing.Size(400, 32)
         Me.StartingUpLable.TabIndex = 2
@@ -57,29 +55,17 @@ Partial Class StartingUpUI
         'StartingUpControl
         '
         Me.StartingUpControl.BackColor = System.Drawing.Color.Transparent
-        Me.StartingUpControl.Location = New System.Drawing.Point(0, 0)
+        Me.StartingUpControl.Location = New System.Drawing.Point(296, 146)
         Me.StartingUpControl.Name = "StartingUpControl"
         Me.StartingUpControl.Size = New System.Drawing.Size(200, 200)
         Me.StartingUpControl.TabIndex = 0
         Me.StartingUpControl.TabStop = False
         '
-        'StartingUpWallpaperControl
-        '
-        Me.StartingUpWallpaperControl.BackColor = System.Drawing.SystemColors.Control
-        Me.StartingUpWallpaperControl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.StartingUpWallpaperControl.Image = Global.HackSystem.My.Resources.SystemAssets.StartingUIWallpaper
-        Me.StartingUpWallpaperControl.Location = New System.Drawing.Point(0, 0)
-        Me.StartingUpWallpaperControl.Name = "StartingUpWallpaperControl"
-        Me.StartingUpWallpaperControl.Size = New System.Drawing.Size(1366, 768)
-        Me.StartingUpWallpaperControl.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.StartingUpWallpaperControl.TabIndex = 1
-        Me.StartingUpWallpaperControl.TabStop = False
-        '
         'StartUpLogo
         '
         Me.StartUpLogo.BackColor = System.Drawing.Color.Transparent
         Me.StartUpLogo.Image = Global.HackSystem.My.Resources.SystemAssets.HackSystemLogo
-        Me.StartUpLogo.Location = New System.Drawing.Point(374, 151)
+        Me.StartUpLogo.Location = New System.Drawing.Point(206, 44)
         Me.StartUpLogo.Name = "StartUpLogo"
         Me.StartUpLogo.Size = New System.Drawing.Size(380, 71)
         Me.StartUpLogo.TabIndex = 3
@@ -89,12 +75,13 @@ Partial Class StartingUpUI
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.StartingUIWallpaper
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(1366, 768)
+        Me.ClientSize = New System.Drawing.Size(826, 394)
         Me.Controls.Add(Me.StartUpLogo)
         Me.Controls.Add(Me.StartingUpLable)
         Me.Controls.Add(Me.StartingUpControl)
-        Me.Controls.Add(Me.StartingUpWallpaperControl)
+        Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "StartingUpUI"
@@ -102,12 +89,10 @@ Partial Class StartingUpUI
         Me.TopMost = True
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.StartingUpControl, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.StartingUpWallpaperControl, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents StartingUpControl As PictureBox
-    Friend WithEvents StartingUpWallpaperControl As PictureBox
     Friend WithEvents StartingUpTimer As Timer
     Friend WithEvents ExchangeUITimer As Timer
     Friend WithEvents StartingUpLable As Label

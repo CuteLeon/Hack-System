@@ -12,10 +12,6 @@ Public Class StartingUpUI
         SystemWorkStation.Icon = My.Resources.SystemAssets.HackSystem
         WindowsTemplates.Icon = My.Resources.SystemAssets.HackSystem
 
-        StartingUpControl.Parent = StartingUpWallpaperControl
-        StartingUpLable.Parent = StartingUpWallpaperControl
-        StartUpLogo.Parent = StartingUpWallpaperControl
-
         Dim LocationX As Integer = (My.Computer.Screen.Bounds.Width - StartingUpControl.Width) / 2
         Dim LocationY As Integer = (My.Computer.Screen.Bounds.Height - StartingUpControl.Height) * 0.85
         StartingUpControl.Location = New Point(LocationX, LocationY)
