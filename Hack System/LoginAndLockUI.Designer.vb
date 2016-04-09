@@ -22,12 +22,33 @@ Partial Class LoginAndLockUI
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.PasswordControl = New System.Windows.Forms.TextBox()
+        Me.LoginAreaControl = New System.Windows.Forms.Panel()
         Me.LoginButtonControl = New System.Windows.Forms.PictureBox()
-        Me.LoginAreaControl = New System.Windows.Forms.PictureBox()
+        Me.PasswordControl = New System.Windows.Forms.TextBox()
+        Me.LoginAreaControl.SuspendLayout()
         CType(Me.LoginButtonControl, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LoginAreaControl, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
+        '
+        'LoginAreaControl
+        '
+        Me.LoginAreaControl.BackColor = System.Drawing.Color.Transparent
+        Me.LoginAreaControl.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.LoginArea
+        Me.LoginAreaControl.Controls.Add(Me.LoginButtonControl)
+        Me.LoginAreaControl.Controls.Add(Me.PasswordControl)
+        Me.LoginAreaControl.Location = New System.Drawing.Point(74, 118)
+        Me.LoginAreaControl.Name = "LoginAreaControl"
+        Me.LoginAreaControl.Size = New System.Drawing.Size(643, 185)
+        Me.LoginAreaControl.TabIndex = 4
+        '
+        'LoginButtonControl
+        '
+        Me.LoginButtonControl.BackColor = System.Drawing.Color.Transparent
+        Me.LoginButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.LoginButton_1
+        Me.LoginButtonControl.Location = New System.Drawing.Point(507, 49)
+        Me.LoginButtonControl.Name = "LoginButtonControl"
+        Me.LoginButtonControl.Size = New System.Drawing.Size(94, 95)
+        Me.LoginButtonControl.TabIndex = 5
+        Me.LoginButtonControl.TabStop = False
         '
         'PasswordControl
         '
@@ -36,33 +57,13 @@ Partial Class LoginAndLockUI
         Me.PasswordControl.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.PasswordControl.Font = New System.Drawing.Font("微软雅黑", 13.5!, System.Drawing.FontStyle.Bold)
         Me.PasswordControl.ForeColor = System.Drawing.Color.Black
-        Me.PasswordControl.Location = New System.Drawing.Point(268, 113)
+        Me.PasswordControl.Location = New System.Drawing.Point(268, 114)
         Me.PasswordControl.MaxLength = 11
         Me.PasswordControl.Name = "PasswordControl"
         Me.PasswordControl.PasswordChar = Global.Microsoft.VisualBasic.ChrW(1422)
         Me.PasswordControl.Size = New System.Drawing.Size(207, 24)
-        Me.PasswordControl.TabIndex = 0
+        Me.PasswordControl.TabIndex = 4
         Me.PasswordControl.Text = "00000000"
-        '
-        'LoginButtonControl
-        '
-        Me.LoginButtonControl.BackColor = System.Drawing.Color.Transparent
-        Me.LoginButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.LoginButton_1
-        Me.LoginButtonControl.Location = New System.Drawing.Point(507, 48)
-        Me.LoginButtonControl.Name = "LoginButtonControl"
-        Me.LoginButtonControl.Size = New System.Drawing.Size(94, 95)
-        Me.LoginButtonControl.TabIndex = 3
-        Me.LoginButtonControl.TabStop = False
-        '
-        'LoginAreaControl
-        '
-        Me.LoginAreaControl.BackColor = System.Drawing.Color.Transparent
-        Me.LoginAreaControl.Image = Global.HackSystem.My.Resources.SystemAssets.LoginArea
-        Me.LoginAreaControl.Location = New System.Drawing.Point(0, 0)
-        Me.LoginAreaControl.Name = "LoginAreaControl"
-        Me.LoginAreaControl.Size = New System.Drawing.Size(643, 185)
-        Me.LoginAreaControl.TabIndex = 1
-        Me.LoginAreaControl.TabStop = False
         '
         'LoginAndLockUI
         '
@@ -72,8 +73,6 @@ Partial Class LoginAndLockUI
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_09
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(812, 440)
-        Me.Controls.Add(Me.LoginButtonControl)
-        Me.Controls.Add(Me.PasswordControl)
         Me.Controls.Add(Me.LoginAreaControl)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -81,13 +80,13 @@ Partial Class LoginAndLockUI
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Hack System"
         Me.TopMost = True
+        Me.LoginAreaControl.ResumeLayout(False)
+        Me.LoginAreaControl.PerformLayout()
         CType(Me.LoginButtonControl, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LoginAreaControl, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
-    Friend WithEvents LoginAreaControl As PictureBox
-    Friend WithEvents PasswordControl As TextBox
+    Friend WithEvents LoginAreaControl As Panel
     Friend WithEvents LoginButtonControl As PictureBox
+    Friend WithEvents PasswordControl As TextBox
 End Class

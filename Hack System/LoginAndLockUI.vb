@@ -16,7 +16,6 @@ Public Class LoginAndLockUI
 
     'The UpperBound of wallpapers.
     Private Const WallpaperUpperBound As Int16 = 18
-    Dim LoginAreaRect As RectangleF
 
     Private Sub LoginAndLockUI_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Allow thread to visit UI.
@@ -24,16 +23,8 @@ Public Class LoginAndLockUI
         'Full screen
         Me.Location = New Point(0, 0)
         Me.Size = My.Computer.Screen.Bounds.Size
-        With LoginAreaRect
-            .Width = My.Resources.SystemAssets.LoginArea.Width
-            .Height = My.Resources.SystemAssets.LoginArea.Height
-            .X = (My.Computer.Screen.Bounds.Width - .Width) / 2
-            .Y = (My.Computer.Screen.Bounds.Height - .Height) / 2
-            LoginAreaControl.Location = New Point(.X, .Y)
-        End With
-        'Set Parent
-        LoginButtonControl.Parent = LoginAreaControl
-        PasswordControl.Parent = LoginAreaControl
+        LoginAreaControl.Left = (My.Computer.Screen.Bounds.Width - LoginAreaControl.Width) / 2
+        LoginAreaControl.Top = (My.Computer.Screen.Bounds.Height - LoginAreaControl.Height) / 2
         'Dont select password.
         PasswordControl.SelectionStart = PasswordControl.TextLength
         PasswordControl.SelectionLength = 0
