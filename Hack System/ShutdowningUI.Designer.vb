@@ -31,7 +31,7 @@ Partial Class ShutdowningUI
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.ShutdownBGI
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(796, 436)
+        Me.ClientSize = New System.Drawing.Size(606, 343)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "ShutdowningUI"

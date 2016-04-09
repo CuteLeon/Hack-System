@@ -68,7 +68,6 @@ Partial Class WindowsTemplates
         Me.ClientSize = New System.Drawing.Size(280, 280)
         Me.Controls.Add(Me.CloseButtonControl)
         Me.Controls.Add(Me.GIFControl)
-        Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "WindowsTemplates"
         Me.ShowIcon = False
