@@ -138,7 +138,7 @@ Public Class SystemWorkStation
 
     '采用与其加载启用的 Grammar 对象匹配的输入
     Private Sub SpeechRecognitionEngine_SpeechRecognized(sender As Object, e As SpeechRecognizedEventArgs)
-        If ShutdowningUI.Visible Then
+        If LoginAndLockUI.Visible Then
             If e.Result.Text = "解锁" Then LoginAndLockUI.HideLockScreen(True)
             Exit Sub
         End If

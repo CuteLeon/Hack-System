@@ -42,6 +42,7 @@ Public Class LoginAndLockUI
     End Sub
 
     Public Sub ShowLockScreen()
+        If TipsForm.Visible Then TipsForm.CancelTip()
         If ThreadShowMe IsNot Nothing AndAlso ThreadShowMe.ThreadState = ThreadState.Running Then Exit Sub
         ThreadShowMe = New Thread(AddressOf ShowMe)
         ThreadShowMe.Start()
