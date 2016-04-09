@@ -172,11 +172,7 @@ Public Class SystemWorkStation
             Case "浏览器"
                 LoadNewBrowser()
             Case "锁屏"
-                If LoginAndLockUI.Visible Then Exit Sub
-                LoginAndLockUI.Opacity = 0
-                LoginAndLockUI.Show(Me)
-                LoginAndLockUI.ShowLockScreen()
-                SetForegroundWindow(LoginAndLockUI.Handle)
+                LockScreen()
             Case "about"
                 If Not (AboutMeForm.Visible) Then AboutMeForm.Show(Me)
                 SetForegroundWindow(AboutMeForm.Handle)
@@ -186,6 +182,14 @@ Public Class SystemWorkStation
                 Dim ScriptIndex As Integer = Array.IndexOf(ScriptSpeechGrammar, e.Result.Text)
                 If ScriptIndex > -1 Then LoadScript(ScriptIndex)
         End Select
+    End Sub
+
+    Public Sub LockScreen()
+        If LoginAndLockUI.Visible Then Exit Sub
+        LoginAndLockUI.Opacity = 0
+        LoginAndLockUI.Show(Me)
+        LoginAndLockUI.ShowLockScreen()
+        SetForegroundWindow(LoginAndLockUI.Handle)
     End Sub
 
     '报告音频输入的级别

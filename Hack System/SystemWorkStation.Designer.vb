@@ -416,7 +416,7 @@ Partial Class SystemWorkStation
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "SystemWorkStation"
-        Me.Text = "SystemWorkStation"
+        Me.Text = "Hack-System WorkStation"
         Me.TopMost = True
         Me.DesktopMenuStrip.ResumeLayout(False)
         Me.IconMenuStrip.ResumeLayout(False)
