@@ -23,6 +23,7 @@ Public Class LoginAndLockUI
         'Full screen
         Me.Location = New Point(0, 0)
         Me.Size = My.Computer.Screen.Bounds.Size
+        StartUpLogo.Location = New Point((My.Computer.Screen.Bounds.Width - My.Resources.SystemAssets.HackSystemLogo.Width) \ 2, My.Computer.Screen.Bounds.Height \ 4)
         LoginAreaControl.Left = (My.Computer.Screen.Bounds.Width - LoginAreaControl.Width) / 2
         LoginAreaControl.Top = (My.Computer.Screen.Bounds.Height - LoginAreaControl.Height) / 2
         'Dont select password.

@@ -25,6 +25,7 @@ Partial Class LoginAndLockUI
         Me.LoginAreaControl = New System.Windows.Forms.Panel()
         Me.LoginButtonControl = New System.Windows.Forms.PictureBox()
         Me.PasswordControl = New System.Windows.Forms.TextBox()
+        Me.StartUpLogo = New System.Windows.Forms.Label()
         Me.LoginAreaControl.SuspendLayout()
         CType(Me.LoginButtonControl, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -35,7 +36,7 @@ Partial Class LoginAndLockUI
         Me.LoginAreaControl.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.LoginArea
         Me.LoginAreaControl.Controls.Add(Me.LoginButtonControl)
         Me.LoginAreaControl.Controls.Add(Me.PasswordControl)
-        Me.LoginAreaControl.Location = New System.Drawing.Point(74, 118)
+        Me.LoginAreaControl.Location = New System.Drawing.Point(85, 115)
         Me.LoginAreaControl.Name = "LoginAreaControl"
         Me.LoginAreaControl.Size = New System.Drawing.Size(643, 185)
         Me.LoginAreaControl.TabIndex = 4
@@ -63,7 +64,16 @@ Partial Class LoginAndLockUI
         Me.PasswordControl.PasswordChar = Global.Microsoft.VisualBasic.ChrW(1422)
         Me.PasswordControl.Size = New System.Drawing.Size(207, 24)
         Me.PasswordControl.TabIndex = 4
-        Me.PasswordControl.Text = "00000000"
+        Me.PasswordControl.Text = "HackSystem"
+        '
+        'StartUpLogo
+        '
+        Me.StartUpLogo.BackColor = System.Drawing.Color.Transparent
+        Me.StartUpLogo.Image = Global.HackSystem.My.Resources.SystemAssets.HackSystemLogo
+        Me.StartUpLogo.Location = New System.Drawing.Point(169, 9)
+        Me.StartUpLogo.Name = "StartUpLogo"
+        Me.StartUpLogo.Size = New System.Drawing.Size(487, 100)
+        Me.StartUpLogo.TabIndex = 6
         '
         'LoginAndLockUI
         '
@@ -74,11 +84,12 @@ Partial Class LoginAndLockUI
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(812, 440)
         Me.Controls.Add(Me.LoginAreaControl)
+        Me.Controls.Add(Me.StartUpLogo)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "LoginAndLockUI"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Hack System"
+        Me.Text = "HackSystem"
         Me.TopMost = True
         Me.LoginAreaControl.ResumeLayout(False)
         Me.LoginAreaControl.PerformLayout()
@@ -89,4 +100,5 @@ Partial Class LoginAndLockUI
     Friend WithEvents LoginAreaControl As Panel
     Friend WithEvents LoginButtonControl As PictureBox
     Friend WithEvents PasswordControl As TextBox
+    Friend WithEvents StartUpLogo As Label
 End Class

@@ -349,13 +349,14 @@ Partial Class SystemWorkStation
         '
         'AddressLabel
         '
+        Me.AddressLabel.AutoSize = True
         Me.AddressLabel.BackColor = System.Drawing.Color.Transparent
         Me.AddressLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.AddressLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.AddressLabel.ForeColor = System.Drawing.Color.White
         Me.AddressLabel.Location = New System.Drawing.Point(895, 176)
         Me.AddressLabel.Name = "AddressLabel"
-        Me.AddressLabel.Size = New System.Drawing.Size(115, 20)
+        Me.AddressLabel.Size = New System.Drawing.Size(88, 20)
         Me.AddressLabel.TabIndex = 20
         Me.AddressLabel.Text = "Click to get."
         Me.AddressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -422,6 +423,7 @@ Partial Class SystemWorkStation
         Me.IconMenuStrip.ResumeLayout(False)
         CType(Me.SpeechButtonControl, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents ShutdownButtonControl As Label

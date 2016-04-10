@@ -32,8 +32,8 @@ Public Class SystemWorkStation
     Public RightestLoction As Integer 'The rightest icon's right location.
     Public NotFirstGetIPAndAddress As Boolean
     Public SystemClosing As Boolean 'Application is going to exit.
+    Public SpeechRecognitionMode As Boolean = True
 
-    Dim SpeechRecognitionMode As Boolean = True
     Dim MouseDownLocation As Point
     Dim XDistance, YDistance As Integer
     Dim ColumnIconCount As Integer = Int(My.Computer.Screen.Bounds.Height / IconHeight) - 1
@@ -583,7 +583,7 @@ Public Class SystemWorkStation
                 IPWebClient.Encoding = System.Text.Encoding.UTF8
                 WebString = IPWebClient.DownloadString(New Uri("http://ip.chinaz.com/getip.aspx"))
                 IPLabel.Text = RegIP.Match(WebString).ToString
-                AddressLabel.Text = Strings.Mid(WebString, IPLabel.Text.Length + 17, WebString.Length - IPLabel.Text.Length - 21)
+                AddressLabel.Text = Replace(Strings.Mid(WebString, IPLabel.Text.Length + 17, WebString.Length - IPLabel.Text.Length - 18), Chr(32), vbCrLf)
                 If Not IPWebClient Is Nothing Then IPWebClient.Dispose()
                 If NotFirstGetIPAndAddress Then
                     If Not TipsForm.Visible Then TipsForm.Show(Me)
