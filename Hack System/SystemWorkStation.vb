@@ -647,6 +647,8 @@ Public Class SystemWorkStation
             LastHandleTop = HandleTop
             If LastHandleTop = 0 Then Exit Do
         Loop
+        '如果找到了，立即返回
+        If HandleSysListView32 > 0 Then Return HandleSysListView32
         '在Progman里搜索
         Do Until HandleSysListView32 > 0
             HandleTop = FindWindowEx(HandleDesktop, LastHandleTop, "Progman", "Program Manager")
