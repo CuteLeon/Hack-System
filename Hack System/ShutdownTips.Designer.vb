@@ -74,7 +74,7 @@ Partial Class ShutdownTips
         Me.ShutdownWallpaperControl.TabIndex = 9
         Me.ShutdownWallpaperControl.TabStop = False
         '
-        'ShutdownWindow
+        'ShutdownTips
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -85,7 +85,7 @@ Partial Class ShutdownTips
         Me.Controls.Add(Me.ShutdownAreaControl)
         Me.Controls.Add(Me.ShutdownWallpaperControl)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Name = "ShutdownWindow"
+        Me.Name = "ShutdownTips"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

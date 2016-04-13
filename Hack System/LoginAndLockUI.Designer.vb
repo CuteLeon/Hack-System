@@ -22,22 +22,15 @@ Partial Class LoginAndLockUI
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.StartUpLogo = New System.Windows.Forms.Label()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LoginAndLockUI))
         Me.LoginAreaControl = New System.Windows.Forms.PictureBox()
         Me.PasswordControl = New System.Windows.Forms.TextBox()
         Me.LoginButtonControl = New System.Windows.Forms.PictureBox()
+        Me.HeadPictureBox = New System.Windows.Forms.PictureBox()
         CType(Me.LoginAreaControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LoginButtonControl, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.HeadPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'StartUpLogo
-        '
-        Me.StartUpLogo.BackColor = System.Drawing.Color.Transparent
-        Me.StartUpLogo.Image = Global.HackSystem.My.Resources.SystemAssets.HackSystemLogo
-        Me.StartUpLogo.Location = New System.Drawing.Point(169, 9)
-        Me.StartUpLogo.Name = "StartUpLogo"
-        Me.StartUpLogo.Size = New System.Drawing.Size(487, 100)
-        Me.StartUpLogo.TabIndex = 6
         '
         'LoginAreaControl
         '
@@ -56,11 +49,11 @@ Partial Class LoginAndLockUI
         Me.PasswordControl.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.PasswordControl.Font = New System.Drawing.Font("微软雅黑", 13.5!, System.Drawing.FontStyle.Bold)
         Me.PasswordControl.ForeColor = System.Drawing.Color.Black
-        Me.PasswordControl.Location = New System.Drawing.Point(363, 260)
+        Me.PasswordControl.Location = New System.Drawing.Point(376, 260)
         Me.PasswordControl.MaxLength = 11
         Me.PasswordControl.Name = "PasswordControl"
         Me.PasswordControl.PasswordChar = Global.Microsoft.VisualBasic.ChrW(1422)
-        Me.PasswordControl.Size = New System.Drawing.Size(207, 24)
+        Me.PasswordControl.Size = New System.Drawing.Size(198, 24)
         Me.PasswordControl.TabIndex = 4
         Me.PasswordControl.Text = "HackSystem"
         '
@@ -74,6 +67,18 @@ Partial Class LoginAndLockUI
         Me.LoginButtonControl.TabIndex = 5
         Me.LoginButtonControl.TabStop = False
         '
+        'HeadPictureBox
+        '
+        Me.HeadPictureBox.BackColor = System.Drawing.Color.Transparent
+        Me.HeadPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.HeadPictureBox.Image = CType(resources.GetObject("HeadPictureBox.Image"), System.Drawing.Image)
+        Me.HeadPictureBox.Location = New System.Drawing.Point(92, 144)
+        Me.HeadPictureBox.Name = "HeadPictureBox"
+        Me.HeadPictureBox.Size = New System.Drawing.Size(191, 191)
+        Me.HeadPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.HeadPictureBox.TabIndex = 7
+        Me.HeadPictureBox.TabStop = False
+        '
         'LoginAndLockUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -82,10 +87,10 @@ Partial Class LoginAndLockUI
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_09
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(812, 440)
+        Me.Controls.Add(Me.HeadPictureBox)
         Me.Controls.Add(Me.LoginButtonControl)
         Me.Controls.Add(Me.PasswordControl)
         Me.Controls.Add(Me.LoginAreaControl)
-        Me.Controls.Add(Me.StartUpLogo)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "LoginAndLockUI"
@@ -94,12 +99,13 @@ Partial Class LoginAndLockUI
         Me.TopMost = True
         CType(Me.LoginAreaControl, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LoginButtonControl, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.HeadPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents StartUpLogo As Label
     Friend WithEvents LoginAreaControl As PictureBox
     Friend WithEvents LoginButtonControl As PictureBox
     Friend WithEvents PasswordControl As TextBox
+    Friend WithEvents HeadPictureBox As PictureBox
 End Class

@@ -327,6 +327,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\DefaultUserHead.png" />
     <None Include="Resources\SystemMsgBGI.gif" />
     <None Include="Resources\SystemWallpaper_18.jpg" />
     <None Include="Resources\SystemWallpaper_17.jpg" />

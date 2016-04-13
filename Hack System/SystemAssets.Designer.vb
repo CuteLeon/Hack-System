@@ -217,6 +217,16 @@ Namespace My.Resources
         '''<summary>
         '''  查找 System.Drawing.Bitmap 类型的本地化资源。
         '''</summary>
+        Friend Shared ReadOnly Property DefaultUserHead() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("DefaultUserHead", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
         Friend Shared ReadOnly Property HackScript_00() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("HackScript_00", resourceCulture)

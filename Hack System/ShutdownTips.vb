@@ -7,8 +7,8 @@ Public Class ShutdownTips
 
     Private Sub ShutdownWindows_Load(sender As Object, e As EventArgs) Handles Me.Load
         ShutdownAreaControl.Parent = ShutdownWallpaperControl
-        CancelButtonControl.Parent = ShutdownAreaControl
         ShutdownButtonControl.Parent = ShutdownAreaControl
+        CancelButtonControl.Parent = ShutdownAreaControl
         Me.Cursor = StartingUpUI.SystemCursor
         '圆角窗体
         Dim RoundRectangle As Integer = CreateRoundRectRgn(2, 2, Me.Width + 1, Me.Height + 1, Me.Height, Me.Height)

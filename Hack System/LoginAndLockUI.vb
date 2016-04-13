@@ -7,13 +7,15 @@ Public Class LoginAndLockUI
         Dim X As Int16
         Dim Y As Int16
     End Structure
+    Public HeadSize As Size = New Size(159, 159)
+    Public UserHead As Bitmap
+    Public HeadString As String
+    Public LockScreenMode As Boolean = False
     Dim FirstPoint As POINTAPI
     Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Width \ 50
-    Dim LockScreenMode As Boolean = False
     Dim MovedMe As Boolean = False
     Dim ThreadShowMe As Thread
     Dim ThreadHideMe As Thread
-
     'The UpperBound of wallpapers.
     Private Const WallpaperUpperBound As Int16 = 18
 
@@ -23,11 +25,20 @@ Public Class LoginAndLockUI
         'Full screen
         Me.Location = New Point(0, 0)
         Me.Size = My.Computer.Screen.Bounds.Size
-        StartUpLogo.Location = New Point((My.Computer.Screen.Bounds.Width - My.Resources.SystemAssets.HackSystemLogo.Width) \ 2, My.Computer.Screen.Bounds.Height \ 4)
         '使用Panel控件可以优化设计，但是Panel会闪烁，所以继续使用PictureBox
+        HeadString = My.Settings.UserHead
+        If HeadString = vbNullString Then
+            UserHead = My.Resources.SystemAssets.DefaultUserHead
+        Else
+            UserHead = StringToBitmap(HeadString)
+        End If
+        HeadPictureBox.BackgroundImage = UserHead
+
+        HeadPictureBox.Location = New Point(-3, -3)
         PasswordControl.Parent = LoginAreaControl
         LoginButtonControl.Parent = LoginAreaControl
-        PasswordControl.Location = New Point(268, 113)
+        HeadPictureBox.Parent = LoginAreaControl
+        PasswordControl.Location = New Point(281, 113)
         LoginButtonControl.Location = New Point(507, 48)
         LoginAreaControl.Left = (My.Computer.Screen.Bounds.Width - LoginAreaControl.Width) / 2
         LoginAreaControl.Top = (My.Computer.Screen.Bounds.Height - LoginAreaControl.Height) / 2
@@ -37,6 +48,16 @@ Public Class LoginAndLockUI
 
         Me.Cursor = StartingUpUI.SystemCursor
     End Sub
+
+    Private Function StringToBitmap(ByVal Base64 As String) As Bitmap
+        Try
+            Dim EncryptByte() As Byte = Convert.FromBase64String(Base64)
+            Dim BitmapStream As IO.MemoryStream = New IO.MemoryStream(EncryptByte)
+            Return Bitmap.FromStream(BitmapStream)
+        Catch ex As Exception
+            Return My.Resources.SystemAssets.DefaultUserHead
+        End Try
+    End Function
 
     Public Sub ShowLockScreen()
         If TipsForm.Visible Then TipsForm.CancelTip()
@@ -113,16 +134,27 @@ Public Class LoginAndLockUI
     End Sub
 
     Private Sub ExchangeUI()
-        If LockScreenMode Then
-            HideLockScreen(True)
+        If PasswordControl.Text.ToLower = "resethead" Then
+            '密码输入框输入"resethead"可以恢复初始头像
+            UserHead = Nothing
+            HeadString = vbNullString
+            HeadPictureBox.BackgroundImage = My.Resources.SystemAssets.DefaultUserHead
+            My.Settings.UserHead = vbNullString
+            My.Settings.Save()
+            If Not TipsForm.Visible Then TipsForm.Show(Me)
+            TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Reset head successfully")
         Else
-            SystemWorkStation.Show()
-            Me.Hide()
+            If LockScreenMode Then
+                HideLockScreen(True)
+                LockScreenMode = False
+            Else
+                SystemWorkStation.Show()
+                Me.Hide()
+            End If
+            SystemWorkStation.Focus()
+            AddHandler Me.MouseUp, AddressOf LoginAndLockUI_MouseUp
+            AddHandler Me.MouseDown, AddressOf LoginAndLockUI_MouseDown
         End If
-        SystemWorkStation.Focus()
-        AddHandler Me.MouseUp, AddressOf LoginAndLockUI_MouseUp
-        AddHandler Me.MouseDown, AddressOf LoginAndLockUI_MouseDown
-        LockScreenMode = True
     End Sub
 
     Private Sub LoginAndLockUI_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing

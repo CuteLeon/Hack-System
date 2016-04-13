@@ -26,8 +26,6 @@ Partial Class AboutMeForm
         Me.AboutMeControl = New System.Windows.Forms.PictureBox()
         Me.OKButtonControl = New System.Windows.Forms.Label()
         Me.WebLink = New System.Windows.Forms.LinkLabel()
-        Me.SetLabelColorLabel = New System.Windows.Forms.Label()
-        Me.LabelColorDialog = New System.Windows.Forms.ColorDialog()
         CType(Me.AboutMeWallpaperControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.AboutMeControl, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -83,30 +81,12 @@ Partial Class AboutMeForm
         Me.WebLink.Text = "访问：http://www.HackSystem.icoc.in/"
         Me.WebLink.UseCompatibleTextRendering = True
         '
-        'SetLabelColorLabel
-        '
-        Me.SetLabelColorLabel.AutoSize = True
-        Me.SetLabelColorLabel.BackColor = System.Drawing.Color.Transparent
-        Me.SetLabelColorLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.SetLabelColorLabel.ForeColor = System.Drawing.Color.Aqua
-        Me.SetLabelColorLabel.Location = New System.Drawing.Point(58, 193)
-        Me.SetLabelColorLabel.Name = "SetLabelColorLabel"
-        Me.SetLabelColorLabel.Size = New System.Drawing.Size(101, 19)
-        Me.SetLabelColorLabel.TabIndex = 14
-        Me.SetLabelColorLabel.Text = "Set Forecolor"
-        '
-        'LabelColorDialog
-        '
-        Me.LabelColorDialog.AnyColor = True
-        Me.LabelColorDialog.FullOpen = True
-        '
         'AboutMeForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(520, 250)
-        Me.Controls.Add(Me.SetLabelColorLabel)
         Me.Controls.Add(Me.WebLink)
         Me.Controls.Add(Me.OKButtonControl)
         Me.Controls.Add(Me.AboutMeControl)
@@ -128,6 +108,4 @@ Partial Class AboutMeForm
     Friend WithEvents AboutMeControl As PictureBox
     Friend WithEvents OKButtonControl As Label
     Friend WithEvents WebLink As LinkLabel
-    Friend WithEvents SetLabelColorLabel As Label
-    Friend WithEvents LabelColorDialog As ColorDialog
 End Class

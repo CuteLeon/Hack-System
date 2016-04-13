@@ -42,6 +42,7 @@ Public Class SystemWorkStation
     Dim CustomWallpaperBitmap As Bitmap 'User Custom Wallpaper
     Dim HighLightIcon(ScriptUpperBound) As Bitmap
     Dim MouseDownIcon(ScriptUpperBound) As Bitmap
+    Dim LabelForeColor As Color = Color.Aqua
     Dim IconGraphics As Graphics
     Dim SenderControl As Label
     Dim NowButton As Label
@@ -106,7 +107,7 @@ Public Class SystemWorkStation
         CommandConsole.CommandTip.Top = My.Computer.Screen.Bounds.Height - 100
         CommandConsole.CommandInputBox.Top = My.Computer.Screen.Bounds.Height - 40
 
-        CustomWallpaperDialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
+        CustomImageDialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
         '考虑到用户时间和日期的格式问题，需要自适应标签大小，防止数据显示不全
         DateTimeLabel.AutoSize = True
         DateTimeLabel.Text = My.Computer.Clock.LocalTime.ToLocalTime
@@ -186,6 +187,7 @@ Public Class SystemWorkStation
 
     Public Sub LockScreen()
         If LoginAndLockUI.Visible Then Exit Sub
+        LoginAndLockUI.LockScreenMode = True
         LoginAndLockUI.Opacity = 0
         LoginAndLockUI.Show(Me)
         LoginAndLockUI.ShowLockScreen()
@@ -215,7 +217,8 @@ Public Class SystemWorkStation
         LoadScript(ScriptIndex)
     End Sub
 
-    Public Sub SystemWorkStation_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
+    Public Sub SystemWorkStation_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MyBase.KeyPress
+        If LoginAndLockUI.Visible Then Exit Sub
         Dim KeyAscii As Integer = Asc(e.KeyChar)
         If KeyAscii = 27 Then
             '按下Esc弹出关机提示框
@@ -442,6 +445,10 @@ Public Class SystemWorkStation
             WallpaperIndex = IIf(WallpaperIndex = WallpaperUpperBound Or WallpaperIndex = -1, 0, WallpaperIndex + 1)
         End If
         Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
+    End Sub
+
+    Private Sub MenuLock_Click(sender As Object, e As EventArgs) Handles MenuLock.Click
+        LockScreen()
     End Sub
 
     Private Sub MenuShutdown_Click(sender As Object, e As EventArgs) Handles MenuShutdown.Click
@@ -685,10 +692,12 @@ Public Class SystemWorkStation
 
     Private Sub MenuCustomWallpaper_Click(sender As Object, e As EventArgs) Handles MenuCustomWallpaper.Click
         '设置自定义壁纸
-        If CustomWallpaperDialog.ShowDialog() = DialogResult.OK Then
+        If CustomImageDialog.ShowDialog() = DialogResult.OK Then
             Try
-                CustomWallpaperBitmap = Bitmap.FromFile(CustomWallpaperDialog.FileName)
+                CustomWallpaperBitmap = Bitmap.FromFile(CustomImageDialog.FileName)
                 Me.BackgroundImage = CustomWallpaperBitmap
+                If Not TipsForm.Visible Then TipsForm.Show(Me)
+                TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Set wallpaper successfully")
             Catch ex As Exception
                 If Not TipsForm.Visible Then TipsForm.Show(Me)
                 TipsForm.PopupTips("Error reading image", TipsForm.TipsIconType.Critical, "Please select again.")
@@ -698,7 +707,7 @@ Public Class SystemWorkStation
 
     Private Sub MenuSetForecolor_Click(sender As Object, e As EventArgs) Handles MenuSetForecolor.Click
         '右键菜单设置系统字体颜色
-        AboutMeForm.SetLabelForecolor()
+        SetLabelForecolor()
     End Sub
 
     Private Sub SpeechButtonControl_Click(sender As Object, e As EventArgs) Handles SpeechButtonControl.Click
@@ -737,6 +746,79 @@ Public Class SystemWorkStation
         '不要使用Timer值守置前，因为会影响输入法的候选词窗体
         Me.TopMost = True
     End Sub
+
+    Private Sub SetLabelForecolor()
+        If LabelColorDialog.ShowDialog = DialogResult.OK Then
+            LabelForeColor = LabelColorDialog.Color
+            For Each ScriptIcon As Label In ScriptIcons
+                ScriptIcon.ForeColor = LabelForeColor
+            Next
+
+            InfoTitle.ForeColor = LabelForeColor
+            DiskReadCounterLabel.ForeColor = LabelForeColor
+            DiskWriteCounterLabel.ForeColor = LabelForeColor
+            UploadSpeedCountLabel.ForeColor = LabelForeColor
+            DownloadSpeedCountLabel.ForeColor = LabelForeColor
+            IPLabel.ForeColor = LabelForeColor
+            AddressLabel.ForeColor = LabelForeColor
+            DateTimeLabel.ForeColor = LabelForeColor
+
+            ConsoleButtonControl.ForeColor = LabelForeColor
+            XYMailButtonControl.ForeColor = LabelForeColor
+            XYBrowserButtonControl.ForeColor = LabelForeColor
+            ShutdownButtonControl.ForeColor = LabelForeColor
+            SettingButtonControl.ForeColor = LabelForeColor
+        End If
+    End Sub
+
+    Private Sub MenuSetUserHead_Click(sender As Object, e As EventArgs) Handles MenuSetUserHead.Click
+        If Not (CustomImageDialog.ShowDialog = DialogResult.OK) Then Exit Sub
+        Try
+            LoginAndLockUI.UserHead = MakeCircularBitmap(Bitmap.FromFile(CustomImageDialog.FileName), LoginAndLockUI.HeadSize)
+            LoginAndLockUI.HeadPictureBox.BackgroundImage = LoginAndLockUI.UserHead
+            LoginAndLockUI.HeadString = BitmapToString(LoginAndLockUI.UserHead)
+            My.Settings.UserHead = LoginAndLockUI.HeadString
+            My.Settings.Save()
+            If Not TipsForm.Visible Then TipsForm.Show(Me)
+            TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Set user head successfully")
+        Catch ex As Exception
+            If Not TipsForm.Visible Then TipsForm.Show(Me)
+            TipsForm.PopupTips("Error reading image", TipsForm.TipsIconType.Critical, "Please select again.")
+        End Try
+    End Sub
+
+    Private Function BitmapToString(ByVal Image As Bitmap) As String
+        Dim BitmapStream As IO.MemoryStream = New IO.MemoryStream()
+        Image.Save(BitmapStream, System.Drawing.Imaging.ImageFormat.Png)
+        Dim EncryptByte() As Byte = BitmapStream.GetBuffer()
+        Return Convert.ToBase64String(EncryptByte)
+    End Function
+
+    Private Function MakeCircularBitmap(ByVal InitialBitmap As Bitmap, ByVal BitmapSize As Size) As Bitmap
+        With InitialBitmap
+            If .Width > .Height Then
+                InitialBitmap = .Clone(New Rectangle((.Width - .Height) / 2, 0, .Height, .Height), InitialBitmap.PixelFormat)
+            ElseIf .Width < .Height Then
+                InitialBitmap = .Clone(New Rectangle(0, (.Height - .Width) / 2, .Width, .Width), InitialBitmap.PixelFormat)
+            End If
+        End With
+        InitialBitmap = New Bitmap(InitialBitmap, BitmapSize)
+        Dim CircularBitmap As Bitmap = New Bitmap(BitmapSize.Width, BitmapSize.Height)
+        Dim CircularGraphics As Graphics = Graphics.FromImage(InitialBitmap)
+        Dim CircularGraphicsPath As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
+
+        CircularGraphicsPath.AddRectangle(New RectangleF(0, 0, BitmapSize.Width, BitmapSize.Height))
+        CircularGraphicsPath.AddEllipse(0, 0, BitmapSize.Width, BitmapSize.Height)
+        CircularGraphics.FillPath(Brushes.Black, CircularGraphicsPath)
+        CircularGraphicsPath.Dispose()
+        InitialBitmap.MakeTransparent(Color.Black)
+        CircularGraphics = Graphics.FromImage(CircularBitmap)
+        CircularGraphics.FillEllipse(Brushes.Black, New Rectangle(0, 0, CircularBitmap.Width, CircularBitmap.Height))
+        CircularGraphics.DrawImage(InitialBitmap, New Rectangle(0, 0, InitialBitmap.Width, InitialBitmap.Height))
+        CircularGraphics.Dispose()
+
+        Return CircularBitmap
+    End Function
 
 #Region "桌面右下角图标响应鼠标动态效果"
     Private Sub ButtonControl_MouseEnter(sender As Object, e As EventArgs) Handles XYBrowserButtonControl.MouseEnter, ConsoleButtonControl.MouseEnter, ShutdownButtonControl.MouseEnter, XYMailButtonControl.MouseEnter, SettingButtonControl.MouseEnter
