@@ -1,4 +1,7 @@
 ﻿Module ScreenMelt
+
+#Region "声明区"
+
     'Melt screen.
     Private Declare Function GetWindowDC Lib "user32" (ByVal hwnd As Integer) As Integer
     Private Declare Function GetDesktopWindow Lib "user32" () As Integer
@@ -18,6 +21,9 @@
     Dim ScreenWidth As Integer = My.Computer.Screen.Bounds.Width
     Dim ScreenHeight As Integer = My.Computer.Screen.Bounds.Height
     Dim ThreadMelt As Threading.Thread
+#End Region
+
+#Region "接口函数"
 
     Public Sub StartMelt()
         Melting = True
@@ -29,6 +35,9 @@
         ThreadMelt.Abort()
         Melting = False
     End Sub
+#End Region
+
+#Region "功能函数"
 
     Private Sub Melt()
         DesktopHDC = GetWindowDC(GetDesktopWindow())
@@ -49,4 +58,6 @@
             Threading.Thread.Sleep(1)
         Loop
     End Sub
+#End Region
+
 End Module

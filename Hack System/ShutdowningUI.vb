@@ -4,6 +4,8 @@ Imports System.Threading
 Public Class ShutdowningUI
     Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Width \ 50
 
+#Region "动态显示和隐藏"
+
     Private Sub ShowMe()
         For Index As Integer = 1 To 10
             Me.Opacity = Index / 10
@@ -18,8 +20,11 @@ Public Class ShutdowningUI
             Thread.Sleep(10)
         Loop
     End Sub
+#End Region
 
-    Private Sub Shutdowning_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+#Region "窗体"
+
+    Private Sub ShutdowningUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Allow thread to visit UI.
         System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
         Me.Location = New Point(0, 0)
@@ -38,7 +43,7 @@ Public Class ShutdowningUI
         End If
     End Sub
 
-    Private Sub Shutdowning_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+    Private Sub ShutdowningUI_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         If Not SystemWorkStation.SystemClosing Then e.Cancel = True
     End Sub
 
@@ -73,4 +78,6 @@ Public Class ShutdowningUI
 
         Application.Exit()
     End Sub
+#End Region
+
 End Class

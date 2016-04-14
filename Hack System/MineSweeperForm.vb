@@ -1,4 +1,7 @@
 ﻿Public Class MineSweeperForm
+
+#Region "声明区"
+
     Private Declare Function ReleaseCapture Lib "user32" () As Integer
     Private Declare Function SendMessageA Lib "user32" (ByVal hwnd As Integer, ByVal wMsg As Integer, ByVal wParam As Integer, lParam As VariantType) As Integer
     Private Const DefaultPixelFormat As Integer = Imaging.PixelFormat.Format32bppArgb
@@ -23,6 +26,9 @@
     Dim CellState(9, 9) As Int16  '地雷状态(0：未知；1：标记；2：无雷；3：高亮；4：高亮_标记)
     Dim CellAroundCount(9, 9) As Int16 '周围地雷数
     Dim ClickTimes As Integer = 0 '点击次数
+#End Region
+
+#Region "窗体"
 
     Protected Overloads Overrides ReadOnly Property CreateParams() As CreateParams
         'Alpha通道绘图相关
@@ -47,6 +53,136 @@
         '初始化
         ResetMinefield()
     End Sub
+
+    Private Sub MineSweeperForm_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
+        '鼠标在窗体移动，判断鼠标是否在关闭按钮
+        Dim IsMouseIn As Boolean = CloseRectangle.Contains(e.X, e.Y)
+        '如果已经处理过，不重复处理
+        If IsMouseIn = CloseState Then Exit Sub
+        '初始化背景
+        BackgroundBitmap = My.Resources.MineSweeperAssets.Background
+        BackgroundGraphics = Graphics.FromImage(BackgroundBitmap)
+        '改变关闭按钮状态和处理状态
+        If IsMouseIn Then
+            '鼠标在关闭按钮
+            CloseBitmap = My.Resources.MineSweeperAssets.MineClose_E
+            CloseState = True
+        Else
+            '鼠标不在关闭按钮
+            CloseBitmap = My.Resources.MineSweeperAssets.MineClose_N
+            CloseState = False
+        End If
+        '绘制关闭按钮和雷区
+        BackgroundGraphics.DrawImage(CloseBitmap, CloseRectangle)
+        BackgroundGraphics.DrawImage(MinefieldBitmap, MinefieldRectangle)
+        '应用到窗口并释放背景内存
+        DrawImageModule.DrawImage(Me, BackgroundBitmap)
+        BackgroundGraphics.Dispose()
+    End Sub
+
+    Private Sub MineSweeperForm_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
+        If CloseRectangle.Contains(e.X, e.Y) Then
+            '鼠标在关闭按钮
+            '初始化背景
+            BackgroundBitmap = My.Resources.MineSweeperAssets.Background
+            BackgroundGraphics = Graphics.FromImage(BackgroundBitmap)
+            '设置关闭按钮
+            CloseBitmap = My.Resources.MineSweeperAssets.MineClose_D
+            '绘制关闭按钮和雷区
+            BackgroundGraphics.DrawImage(CloseBitmap, CloseRectangle)
+            BackgroundGraphics.DrawImage(MinefieldBitmap, MinefieldRectangle)
+            '应用到窗口并释放背景内存
+            DrawImageModule.DrawImage(Me, BackgroundBitmap)
+            BackgroundGraphics.Dispose()
+        Else
+            '鼠标不在关闭按钮，实现鼠标拖动
+            ReleaseCapture()
+            SendMessageA(Me.Handle, &HA1, 2, 0&)
+        End If
+    End Sub
+
+    Private Sub MineSweeperForm_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
+        '初始化背景
+        BackgroundBitmap = My.Resources.MineSweeperAssets.Background
+        BackgroundGraphics = Graphics.FromImage(BackgroundBitmap)
+        '设置关闭按钮
+        CloseBitmap = IIf(CloseRectangle.Contains(e.X, e.Y), My.Resources.MineSweeperAssets.MineClose_E, My.Resources.MineSweeperAssets.MineClose_N)
+        '绘制关闭按钮和雷区
+        BackgroundGraphics.DrawImage(CloseBitmap, CloseRectangle)
+        BackgroundGraphics.DrawImage(MinefieldBitmap, MinefieldRectangle)
+        '应用到窗口并释放背景内存
+        DrawImageModule.DrawImage(Me, BackgroundBitmap)
+        BackgroundGraphics.Dispose()
+    End Sub
+
+    Private Sub MineSweeperForm_MouseClick(sender As Object, e As MouseEventArgs) Handles Me.MouseClick
+        '点击关闭按钮，退出程序
+        If CloseRectangle.Contains(e.X, e.Y) Then Me.Close()
+        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+    End Sub
+#End Region
+
+#Region "控件"
+
+    Private Sub MinefieldPanel_MouseMove(sender As Object, e As MouseEventArgs) Handles MinefieldPanel.MouseMove
+        '鼠标在雷区移动
+        Dim NowIndex As PointF = New PointF(e.X \ 32, e.Y \ 32)
+        If LastHLIndex = New PointF(-1, -1) Then LastHLIndex = NowIndex
+        If NowIndex = LastHLIndex Then Exit Sub
+        If CellState(LastHLIndex.X, LastHLIndex.Y) > 2 Then CellState(LastHLIndex.X, LastHLIndex.Y) -= 3
+        If CellState(NowIndex.X, NowIndex.Y) < 2 Then CellState(NowIndex.X, NowIndex.Y) += 3
+        LastHLIndex = NowIndex
+        DrawUI()
+    End Sub
+
+    Private Sub MinefieldPanel_MouseLeave(sender As Object, e As EventArgs) Handles MinefieldPanel.MouseLeave
+        '设置激活的标识为空
+        If Not (LastHLIndex = New PointF(-1, -1)) Then
+            If CellState(LastHLIndex.X, LastHLIndex.Y) > 2 Then CellState(LastHLIndex.X, LastHLIndex.Y) -= 3
+            LastHLIndex = New PointF(-1, -1)
+            DrawUI()
+        End If
+    End Sub
+
+    Private Sub MinefieldPanel_MouseClick(sender As Object, e As MouseEventArgs) Handles MinefieldPanel.MouseClick
+        Dim RowIndex As Integer = e.X \ 32, ColumnIndex As Integer = e.Y \ 32
+        If e.Button = MouseButtons.Right Then
+            '右键标记/取消标记
+            If CellState(RowIndex, ColumnIndex) = 3 Then
+                '未被挖掘且未被标记
+                CellState(RowIndex, ColumnIndex) = 4
+                DrawUI()
+            ElseIf CellState(RowIndex, ColumnIndex) = 4 Then
+                '未被挖掘且已被标记
+                CellState(RowIndex, ColumnIndex) = 3
+                DrawUI()
+            End If
+        ElseIf e.Button = MouseButtons.Left Then
+            '左键挖掘
+            If CellState(RowIndex, ColumnIndex) = 2 Then Exit Sub '已被挖掘，不处理
+            If CellState(RowIndex, ColumnIndex) = 4 Then CellState(RowIndex, ColumnIndex) = 3 : DrawUI() : Exit Sub '被标记的不挖掘
+
+            If MineState(RowIndex, ColumnIndex) Then
+                '有雷
+                GameOver(False)
+            Else
+                '无雷
+                SweepCell(RowIndex, ColumnIndex)
+            End If
+        End If
+    End Sub
+
+    Private Sub MinefieldPanel_MouseDoubleClick(sender As Object, e As MouseEventArgs)
+        '双击重设游戏后，解除事件注册
+        ResetMinefield()
+        RemoveHandler MinefieldPanel.MouseDoubleClick, AddressOf MinefieldPanel_MouseDoubleClick
+        AddHandler MinefieldPanel.MouseMove, AddressOf MinefieldPanel_MouseMove
+        AddHandler MinefieldPanel.MouseClick, AddressOf MinefieldPanel_MouseClick
+        AddHandler MinefieldPanel.MouseLeave, AddressOf MinefieldPanel_MouseLeave
+    End Sub
+#End Region
+
+#Region "功能函数"
 
     Private Sub ResetMinefield()
         '初始化雷区状态
@@ -111,54 +247,6 @@
         DrawImageModule.DrawImage(Me, BackgroundBitmap)
         MinefieldGraphics.Dispose()
         BackgroundGraphics.Dispose()
-    End Sub
-
-    Private Sub MinefieldPanel_MouseMove(sender As Object, e As MouseEventArgs) Handles MinefieldPanel.MouseMove
-        '鼠标在雷区移动
-        Dim NowIndex As PointF = New PointF(e.X \ 32, e.Y \ 32)
-        If LastHLIndex = New PointF(-1, -1) Then LastHLIndex = NowIndex
-        If NowIndex = LastHLIndex Then Exit Sub
-        If CellState(LastHLIndex.X, LastHLIndex.Y) > 2 Then CellState(LastHLIndex.X, LastHLIndex.Y) -= 3
-        If CellState(NowIndex.X, NowIndex.Y) < 2 Then CellState(NowIndex.X, NowIndex.Y) += 3
-        LastHLIndex = NowIndex
-        DrawUI()
-    End Sub
-
-    Private Sub MinefieldPanel_MouseLeave(sender As Object, e As EventArgs) Handles MinefieldPanel.MouseLeave
-        '设置激活的标识为空
-        If Not (LastHLIndex = New PointF(-1, -1)) Then
-            If CellState(LastHLIndex.X, LastHLIndex.Y) > 2 Then CellState(LastHLIndex.X, LastHLIndex.Y) -= 3
-            LastHLIndex = New PointF(-1, -1)
-            DrawUI()
-        End If
-    End Sub
-
-    Private Sub MinefieldPanel_MouseClick(sender As Object, e As MouseEventArgs) Handles MinefieldPanel.MouseClick
-        Dim RowIndex As Integer = e.X \ 32, ColumnIndex As Integer = e.Y \ 32
-        If e.Button = MouseButtons.Right Then
-            '右键标记/取消标记
-            If CellState(RowIndex, ColumnIndex) = 3 Then
-                '未被挖掘且未被标记
-                CellState(RowIndex, ColumnIndex) = 4
-                DrawUI()
-            ElseIf CellState(RowIndex, ColumnIndex) = 4 Then
-                '未被挖掘且已被标记
-                CellState(RowIndex, ColumnIndex) = 3
-                DrawUI()
-            End If
-        ElseIf e.Button = MouseButtons.Left Then
-            '左键挖掘
-            If CellState(RowIndex, ColumnIndex) = 2 Then Exit Sub '已被挖掘，不处理
-            If CellState(RowIndex, ColumnIndex) = 4 Then CellState(RowIndex, ColumnIndex) = 3 : DrawUI() : Exit Sub '被标记的不挖掘
-
-            If MineState(RowIndex, ColumnIndex) Then
-                '有雷
-                GameOver(False)
-            Else
-                '无雷
-                SweepCell(RowIndex, ColumnIndex)
-            End If
-        End If
     End Sub
 
     Private Sub SweepCell(ByVal RowIndex As Integer, ColumnIndex As Integer)
@@ -234,81 +322,6 @@
         MinefieldGraphics.Dispose()
         BackgroundGraphics.Dispose()
     End Sub
-
-    Private Sub MineSweeperForm_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
-        '鼠标在窗体移动，判断鼠标是否在关闭按钮
-        Dim IsMouseIn As Boolean = CloseRectangle.Contains(e.X, e.Y)
-        '如果已经处理过，不重复处理
-        If IsMouseIn = CloseState Then Exit Sub
-        '初始化背景
-        BackgroundBitmap = My.Resources.MineSweeperAssets.Background
-        BackgroundGraphics = Graphics.FromImage(BackgroundBitmap)
-        '改变关闭按钮状态和处理状态
-        If IsMouseIn Then
-            '鼠标在关闭按钮
-            CloseBitmap = My.Resources.MineSweeperAssets.MineClose_E
-            CloseState = True
-        Else
-            '鼠标不在关闭按钮
-            CloseBitmap = My.Resources.MineSweeperAssets.MineClose_N
-            CloseState = False
-        End If
-        '绘制关闭按钮和雷区
-        BackgroundGraphics.DrawImage(CloseBitmap, CloseRectangle)
-        BackgroundGraphics.DrawImage(MinefieldBitmap, MinefieldRectangle)
-        '应用到窗口并释放背景内存
-        DrawImageModule.DrawImage(Me, BackgroundBitmap)
-        BackgroundGraphics.Dispose()
-    End Sub
-
-    Private Sub MineSweeperForm_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
-        If CloseRectangle.Contains(e.X, e.Y) Then
-            '鼠标在关闭按钮
-            '初始化背景
-            BackgroundBitmap = My.Resources.MineSweeperAssets.Background
-            BackgroundGraphics = Graphics.FromImage(BackgroundBitmap)
-            '设置关闭按钮
-            CloseBitmap = My.Resources.MineSweeperAssets.MineClose_D
-            '绘制关闭按钮和雷区
-            BackgroundGraphics.DrawImage(CloseBitmap, CloseRectangle)
-            BackgroundGraphics.DrawImage(MinefieldBitmap, MinefieldRectangle)
-            '应用到窗口并释放背景内存
-            DrawImageModule.DrawImage(Me, BackgroundBitmap)
-            BackgroundGraphics.Dispose()
-        Else
-            '鼠标不在关闭按钮，实现鼠标拖动
-            ReleaseCapture()
-            SendMessageA(Me.Handle, &HA1, 2, 0&)
-        End If
-    End Sub
-
-    Private Sub MineSweeperForm_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
-        '初始化背景
-        BackgroundBitmap = My.Resources.MineSweeperAssets.Background
-        BackgroundGraphics = Graphics.FromImage(BackgroundBitmap)
-        '设置关闭按钮
-        CloseBitmap = IIf(CloseRectangle.Contains(e.X, e.Y), My.Resources.MineSweeperAssets.MineClose_E, My.Resources.MineSweeperAssets.MineClose_N)
-        '绘制关闭按钮和雷区
-        BackgroundGraphics.DrawImage(CloseBitmap, CloseRectangle)
-        BackgroundGraphics.DrawImage(MinefieldBitmap, MinefieldRectangle)
-        '应用到窗口并释放背景内存
-        DrawImageModule.DrawImage(Me, BackgroundBitmap)
-        BackgroundGraphics.Dispose()
-    End Sub
-
-    Private Sub MineSweeperForm_MouseClick(sender As Object, e As MouseEventArgs) Handles Me.MouseClick
-        '点击关闭按钮，退出程序
-        If CloseRectangle.Contains(e.X, e.Y) Then Me.Close()
-        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
-    End Sub
-
-    Private Sub MinefieldPanel_MouseDoubleClick(sender As Object, e As MouseEventArgs)
-        '双击重设游戏后，解除事件注册
-        ResetMinefield()
-        RemoveHandler MinefieldPanel.MouseDoubleClick, AddressOf MinefieldPanel_MouseDoubleClick
-        AddHandler MinefieldPanel.MouseMove, AddressOf MinefieldPanel_MouseMove
-        AddHandler MinefieldPanel.MouseClick, AddressOf MinefieldPanel_MouseClick
-        AddHandler MinefieldPanel.MouseLeave, AddressOf MinefieldPanel_MouseLeave
-    End Sub
+#End Region
 
 End Class

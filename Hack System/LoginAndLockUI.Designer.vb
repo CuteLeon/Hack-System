@@ -22,7 +22,6 @@ Partial Class LoginAndLockUI
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LoginAndLockUI))
         Me.LoginAreaControl = New System.Windows.Forms.PictureBox()
         Me.PasswordControl = New System.Windows.Forms.TextBox()
         Me.LoginButtonControl = New System.Windows.Forms.PictureBox()
@@ -71,7 +70,7 @@ Partial Class LoginAndLockUI
         '
         Me.HeadPictureBox.BackColor = System.Drawing.Color.Transparent
         Me.HeadPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.HeadPictureBox.Image = CType(resources.GetObject("HeadPictureBox.Image"), System.Drawing.Image)
+        Me.HeadPictureBox.Image = Global.HackSystem.My.Resources.SystemAssets.HeadMask
         Me.HeadPictureBox.Location = New System.Drawing.Point(92, 144)
         Me.HeadPictureBox.Name = "HeadPictureBox"
         Me.HeadPictureBox.Size = New System.Drawing.Size(191, 191)

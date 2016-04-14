@@ -34,6 +34,7 @@ Partial Class SystemWorkStation
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.MenuTopMost = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.MenuLockScreen = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuShutdown = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShutdownButtonControl = New System.Windows.Forms.Label()
         Me.SettingButtonControl = New System.Windows.Forms.Label()
@@ -59,7 +60,6 @@ Partial Class SystemWorkStation
         Me.CPUCounterBar = New System.Windows.Forms.ProgressBar()
         Me.MemoryUsageRateBar = New System.Windows.Forms.ProgressBar()
         Me.LabelColorDialog = New System.Windows.Forms.ColorDialog()
-        Me.MenuLock = New System.Windows.Forms.ToolStripMenuItem()
         Me.DesktopMenuStrip.SuspendLayout()
         Me.IconMenuStrip.SuspendLayout()
         CType(Me.SpeechButtonControl, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -67,7 +67,7 @@ Partial Class SystemWorkStation
         '
         'DesktopMenuStrip
         '
-        Me.DesktopMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuLastWallpaper, Me.MenuNextWallpaper, Me.ToolStripSeparator3, Me.MenuCustomWallpaper, Me.MenuSetUserHead, Me.MenuSetForecolor, Me.ToolStripSeparator1, Me.MenuTopMost, Me.ToolStripSeparator2, Me.MenuLock, Me.MenuShutdown})
+        Me.DesktopMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuLastWallpaper, Me.MenuNextWallpaper, Me.ToolStripSeparator3, Me.MenuCustomWallpaper, Me.MenuSetUserHead, Me.MenuSetForecolor, Me.ToolStripSeparator1, Me.MenuTopMost, Me.ToolStripSeparator2, Me.MenuLockScreen, Me.MenuShutdown})
         Me.DesktopMenuStrip.Name = "SystemMenuStrip"
         Me.DesktopMenuStrip.Size = New System.Drawing.Size(177, 220)
         Me.DesktopMenuStrip.Text = "系统菜单"
@@ -87,13 +87,13 @@ Partial Class SystemWorkStation
         Me.MenuNextWallpaper.Name = "MenuNextWallpaper"
         Me.MenuNextWallpaper.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
         Me.MenuNextWallpaper.ShowShortcutKeys = False
-        Me.MenuNextWallpaper.Size = New System.Drawing.Size(187, 22)
+        Me.MenuNextWallpaper.Size = New System.Drawing.Size(176, 22)
         Me.MenuNextWallpaper.Text = "&Next Wallpaper"
         '
         'ToolStripSeparator3
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(184, 6)
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(173, 6)
         '
         'MenuCustomWallpaper
         '
@@ -101,7 +101,7 @@ Partial Class SystemWorkStation
         Me.MenuCustomWallpaper.Name = "MenuCustomWallpaper"
         Me.MenuCustomWallpaper.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
         Me.MenuCustomWallpaper.ShowShortcutKeys = False
-        Me.MenuCustomWallpaper.Size = New System.Drawing.Size(187, 22)
+        Me.MenuCustomWallpaper.Size = New System.Drawing.Size(176, 22)
         Me.MenuCustomWallpaper.Text = "&Custom Wallpaper"
         '
         'MenuSetUserHead
@@ -110,7 +110,7 @@ Partial Class SystemWorkStation
         Me.MenuSetUserHead.Name = "MenuSetUserHead"
         Me.MenuSetUserHead.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
         Me.MenuSetUserHead.ShowShortcutKeys = False
-        Me.MenuSetUserHead.Size = New System.Drawing.Size(187, 22)
+        Me.MenuSetUserHead.Size = New System.Drawing.Size(176, 22)
         Me.MenuSetUserHead.Text = "Set User Head"
         '
         'MenuSetForecolor
@@ -119,13 +119,13 @@ Partial Class SystemWorkStation
         Me.MenuSetForecolor.Name = "MenuSetForecolor"
         Me.MenuSetForecolor.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
         Me.MenuSetForecolor.ShowShortcutKeys = False
-        Me.MenuSetForecolor.Size = New System.Drawing.Size(187, 22)
+        Me.MenuSetForecolor.Size = New System.Drawing.Size(176, 22)
         Me.MenuSetForecolor.Text = "&Set Forecolor"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(184, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(173, 6)
         '
         'MenuTopMost
         '
@@ -135,19 +135,28 @@ Partial Class SystemWorkStation
         Me.MenuTopMost.Name = "MenuTopMost"
         Me.MenuTopMost.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
         Me.MenuTopMost.ShowShortcutKeys = False
-        Me.MenuTopMost.Size = New System.Drawing.Size(187, 22)
+        Me.MenuTopMost.Size = New System.Drawing.Size(176, 22)
         Me.MenuTopMost.Text = "&Topmost"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(184, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(173, 6)
+        '
+        'MenuLockScreen
+        '
+        Me.MenuLockScreen.Image = CType(resources.GetObject("MenuLockScreen.Image"), System.Drawing.Image)
+        Me.MenuLockScreen.Name = "MenuLockScreen"
+        Me.MenuLockScreen.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.L), System.Windows.Forms.Keys)
+        Me.MenuLockScreen.ShowShortcutKeys = False
+        Me.MenuLockScreen.Size = New System.Drawing.Size(176, 22)
+        Me.MenuLockScreen.Text = "Lock Hack-System"
         '
         'MenuShutdown
         '
         Me.MenuShutdown.Image = CType(resources.GetObject("MenuShutdown.Image"), System.Drawing.Image)
         Me.MenuShutdown.Name = "MenuShutdown"
-        Me.MenuShutdown.Size = New System.Drawing.Size(187, 22)
+        Me.MenuShutdown.Size = New System.Drawing.Size(176, 22)
         Me.MenuShutdown.Text = "Shutdown"
         '
         'ShutdownButtonControl
@@ -405,15 +414,6 @@ Partial Class SystemWorkStation
         Me.LabelColorDialog.AnyColor = True
         Me.LabelColorDialog.FullOpen = True
         '
-        'MenuLock
-        '
-        Me.MenuLock.Image = CType(resources.GetObject("MenuLock.Image"), System.Drawing.Image)
-        Me.MenuLock.Name = "MenuLock"
-        Me.MenuLock.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.L), System.Windows.Forms.Keys)
-        Me.MenuLock.ShowShortcutKeys = False
-        Me.MenuLock.Size = New System.Drawing.Size(176, 22)
-        Me.MenuLock.Text = "Lock Hack-System"
-        '
         'SystemWorkStation
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -487,5 +487,5 @@ Partial Class SystemWorkStation
     Friend WithEvents MemoryUsageRateBar As ProgressBar
     Friend WithEvents LabelColorDialog As ColorDialog
     Friend WithEvents MenuSetUserHead As ToolStripMenuItem
-    Friend WithEvents MenuLock As ToolStripMenuItem
+    Friend WithEvents MenuLockScreen As ToolStripMenuItem
 End Class

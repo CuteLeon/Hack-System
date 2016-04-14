@@ -4,6 +4,9 @@
 'Shell("control.exe Inetcpl.cpl", vbNormalFocus)
 
 Public Class XYBrowser
+
+#Region "声明区"
+
     '鼠标拖动
     Private Declare Function ReleaseCapture Lib "user32" () As Integer
     Private Declare Function SendMessageA Lib "user32" (ByVal hwnd As Integer, ByVal wMsg As Integer, ByVal wParam As Integer, lParam As VariantType) As Integer
@@ -15,6 +18,9 @@ Public Class XYBrowser
     Dim DistancePoint As Point '鼠标在窗口右下角拖动块里按下的坐标
     Dim NowButton As Label '当前响应的动态按钮
     Dim FullScreenMode As Boolean '全屏模式开关
+#End Region
+
+#Region "窗体"
 
     Private Sub XYBrowser_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         '初始化，设置图标和各个按钮控件的初始图像
@@ -37,6 +43,41 @@ Public Class XYBrowser
         Call SendMessageA(Me.Handle, &HA1, 2, 0&)
         If MousePosition.Y = 0 Then Me.WindowState = FormWindowState.Maximized
     End Sub
+
+    Private Sub XYBrowser_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        '除非程序要退出，否则一律以CloseBrowser方法关闭窗口
+        If GoingToExit Then Exit Sub
+        e.Cancel = True
+        CloseBrowser()
+    End Sub
+
+    Private Sub XYBrowser_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        If Me.WindowState = FormWindowState.Normal And Btn_Restore.Visible Then Btn_Max.Show() : Btn_Restore.Hide()
+        If Me.WindowState = FormWindowState.Maximized And Btn_Max.Visible Then Btn_Restore.Show() : Btn_Max.Hide()
+        TopPanel.Location = New Point(BorderWidth, BorderWidth)
+        TopPanel.Width = Me.Width - 2 * BorderWidth
+        Btn_FullScreen.Left = TopPanel.Width - 84
+        Btn_Restore.Left = Btn_FullScreen.Right
+        Btn_Max.Left = Btn_Restore.Left
+        Btn_Close.Left = Btn_Max.Right
+
+        BrowserTitle.Width = Btn_FullScreen.Left
+        BrowserAddress.Width = TopPanel.Width * 0.6
+        Btn_GoNavigate.Left = BrowserAddress.Right
+        Btn_Search.Left = TopPanel.Width - 28
+        SearchTextBox.Left = Btn_GoNavigate.Right
+        SearchTextBox.Width = Btn_Search.Left - SearchTextBox.Left
+
+        BrowserState.Location = New Point(BorderWidth, Me.Height - BrowserState.Height - BorderWidth)
+        BrowserState.Width = TopPanel.Width - Btn_DragBlock.Width
+        Btn_DragBlock.Location = New Point(Me.Width - Btn_DragBlock.Width - BorderWidth, Me.Height - Btn_DragBlock.Height - BorderWidth)
+        MainWebBrowser.Location = New Point(BorderWidth, TopPanel.Bottom)
+        MainWebBrowser.Size = New Point(Me.Width - 2 * BorderWidth, BrowserState.Top - TopPanel.Bottom)
+    End Sub
+
+#End Region
+
+#Region "控件"
 
     Private Sub MainWebBrowser_NewWindow(sender As Object, e As CancelEventArgs) Handles MainWebBrowser.NewWindow
         '试图打开新网页
@@ -148,24 +189,22 @@ Public Class XYBrowser
         End Select
     End Sub
 
-    Private Sub XYBrowser_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        '除非程序要退出，否则一律以CloseBrowser方法关闭窗口
-        If GoingToExit Then Exit Sub
-        e.Cancel = True
-        CloseBrowser()
+    '地址栏导航
+    Private Sub Btn_GoNavigate_Click(sender As Object, e As EventArgs) Handles Btn_GoNavigate.Click
+        NavigateToAddress()
     End Sub
 
-    '关闭
-    Private Sub CloseBrowser()
-        'Closing方法放行
-        GoingToExit = True
-        '浏览器窗口数组里移出当前
-        SystemWorkStation.BrowserForms.Remove(Me)
-        MainWebBrowser.Stop()
-        MainWebBrowser.Navigate("about:blank ")
-        MainWebBrowser.Dispose()
-        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
-        Me.Close()
+    Private Sub BrowserAddress_KeyPress(sender As Object, e As KeyPressEventArgs) Handles BrowserAddress.KeyPress
+        If Asc(e.KeyChar) = 13 Then NavigateToAddress()
+    End Sub
+
+    Private Sub Btn_Search_Click(sender As Object, e As EventArgs) Handles Btn_Search.Click
+        MainWebBrowser.Navigate("http://www.baidu.com/s?wd=" & IIf(SearchTextBox.Text = "Search...", vbNullString, SearchTextBox.Text))
+    End Sub
+
+    Private Sub SearchTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles SearchTextBox.KeyPress
+        '搜索框敲回车键一样调用搜索功能
+        If Asc(e.KeyChar) = 13 Then MainWebBrowser.Navigate("http://www.baidu.com/s?wd=" & SearchTextBox.Text)
     End Sub
 #Region "浏览器模块：前进、后退、主页、停止、刷新按钮响应鼠标的动态效果"
     Private Sub BrowserButton_MouseEnter(sender As Object, e As EventArgs) Handles Btn_GoBack.MouseEnter, Btn_GoForward.MouseEnter, Btn_Home.MouseEnter, Btn_NowStop.MouseEnter, Btn_Refresh.MouseEnter, Btn_GoNavigate.MouseEnter, Btn_Search.MouseEnter
@@ -218,59 +257,76 @@ Public Class XYBrowser
     End Sub
 #End Region
 
-    '窗体大小改变，重新规划控件位置
-    Private Sub XYBrowser_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-        If Me.WindowState = FormWindowState.Normal And Btn_Restore.Visible Then Btn_Max.Show() : Btn_Restore.Hide()
-        If Me.WindowState = FormWindowState.Maximized And Btn_Max.Visible Then Btn_Restore.Show() : Btn_Max.Hide()
-        TopPanel.Location = New Point(BorderWidth, BorderWidth)
-        TopPanel.Width = Me.Width - 2 * BorderWidth
-        Btn_FullScreen.Left = TopPanel.Width - 84
-        Btn_Restore.Left = Btn_FullScreen.Right
-        Btn_Max.Left = Btn_Restore.Left
-        Btn_Close.Left = Btn_Max.Right
-
-        BrowserTitle.Width = Btn_FullScreen.Left
-        BrowserAddress.Width = TopPanel.Width * 0.6
-        Btn_GoNavigate.Left = BrowserAddress.Right
-        Btn_Search.Left = TopPanel.Width - 28
-        SearchTextBox.Left = Btn_GoNavigate.Right
-        SearchTextBox.Width = Btn_Search.Left - SearchTextBox.Left
-
-        BrowserState.Location = New Point(BorderWidth, Me.Height - BrowserState.Height - BorderWidth)
-        BrowserState.Width = TopPanel.Width - Btn_DragBlock.Width
-        Btn_DragBlock.Location = New Point(Me.Width - Btn_DragBlock.Width - BorderWidth, Me.Height - Btn_DragBlock.Height - BorderWidth)
-        MainWebBrowser.Location = New Point(BorderWidth, TopPanel.Bottom)
-        MainWebBrowser.Size = New Point(Me.Width - 2 * BorderWidth, BrowserState.Top - TopPanel.Bottom)
-    End Sub
-
-    '百度搜索功能
-    Private Sub Btn_Search_Click(sender As Object, e As EventArgs) Handles Btn_Search.Click
-        MainWebBrowser.Navigate("http://www.baidu.com/s?wd=" & IIf(SearchTextBox.Text = "Search...", vbNullString, SearchTextBox.Text))
-    End Sub
-
-    Private Sub SearchTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles SearchTextBox.KeyPress
-        '搜索框敲回车键一样调用搜索功能
-        If Asc(e.KeyChar) = 13 Then MainWebBrowser.Navigate("http://www.baidu.com/s?wd=" & SearchTextBox.Text)
-    End Sub
-
 #Region "搜索框个性化提示"
+
     Private Sub SearchTextBox_LostFocus(sender As Object, e As EventArgs) Handles SearchTextBox.LostFocus
         SearchTextBox.ForeColor = Color.DimGray
         If SearchTextBox.Text = vbNullString Then SearchTextBox.Text = "Search..."
     End Sub
+
     Private Sub SearchTextBox_GotFocus(sender As Object, e As EventArgs) Handles SearchTextBox.GotFocus
         SearchTextBox.ForeColor = Color.Black
         If SearchTextBox.Text = "Search..." Then SearchTextBox.Text = vbNullString
     End Sub
 #End Region
 
-    '地址栏导航
-    Private Sub Btn_GoNavigate_Click(sender As Object, e As EventArgs) Handles Btn_GoNavigate.Click
-        NavigateToAddress()
+#Region "激活下拉框，字体为黑色，失活为灰色"
+
+    Private Sub BrowserAddress_GotFocus(sender As Object, e As EventArgs) Handles BrowserAddress.GotFocus
+        BrowserAddress.ForeColor = Color.Black
     End Sub
-    Private Sub BrowserAddress_KeyPress(sender As Object, e As KeyPressEventArgs) Handles BrowserAddress.KeyPress
-        If Asc(e.KeyChar) = 13 Then NavigateToAddress()
+
+    Private Sub BrowserAddress_LostFocus(sender As Object, e As EventArgs) Handles BrowserAddress.LostFocus
+        BrowserAddress.ForeColor = Color.DimGray
     End Sub
+#End Region
+
+#Region "鼠标拖动右下角方块改变窗体大小"
+
+    Private Sub Btn_DragBlock_MouseDown(sender As Object, e As MouseEventArgs) Handles Btn_DragBlock.MouseDown
+        If Me.WindowState = FormWindowState.Maximized Then Exit Sub
+        MouseDowned = True
+        Btn_DragBlock.BackColor = Color.Silver
+        DistancePoint.X = Btn_DragBlock.Width - e.X
+        DistancePoint.Y = Btn_DragBlock.Height - e.Y
+    End Sub
+
+    Private Sub Btn_DragBlock_MouseUp(sender As Object, e As MouseEventArgs) Handles Btn_DragBlock.MouseUp
+        MouseDowned = False
+        Btn_DragBlock.BackColor = Color.LightGray
+    End Sub
+
+    Private Sub Btn_DragBlock_MouseMove(sender As Object, e As MouseEventArgs) Handles Btn_DragBlock.MouseMove
+        If Not MouseDowned Then Exit Sub
+        Me.Width = MousePosition.X - Me.Left + DistancePoint.X
+        Me.Height = MousePosition.Y - Me.Top + DistancePoint.Y
+    End Sub
+
+    Private Sub Btn_DragBlock_MouseEnter(sender As Object, e As EventArgs) Handles Btn_DragBlock.MouseEnter
+        Btn_DragBlock.BackColor = Color.LightGray
+    End Sub
+
+    Private Sub Btn_DragBlock_MouseLeave(sender As Object, e As EventArgs) Handles Btn_DragBlock.MouseLeave
+        Btn_DragBlock.BackColor = Color.White
+    End Sub
+#End Region
+
+#End Region
+
+#Region "功能函数"
+
+    Private Sub CloseBrowser()
+        'Closing方法放行
+        GoingToExit = True
+        '浏览器窗口数组里移出当前
+        SystemWorkStation.BrowserForms.Remove(Me)
+        MainWebBrowser.Stop()
+        MainWebBrowser.Navigate("about:blank ")
+        MainWebBrowser.Dispose()
+        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+        Me.Close()
+    End Sub
+
     Private Sub NavigateToAddress()
         '导航到网址
         '如果下拉框已经存在目标网址，将其删掉，重新添加到第一个，否则直接添加到第一个
@@ -280,39 +336,6 @@ Public Class XYBrowser
         BrowserAddress.Items.Insert(0, BrowserAddress.Text)
         '导航
         MainWebBrowser.Navigate(TempString)
-    End Sub
-
-#Region "激活下拉框，字体为黑色，失活为灰色"
-    Private Sub BrowserAddress_GotFocus(sender As Object, e As EventArgs) Handles BrowserAddress.GotFocus
-        BrowserAddress.ForeColor = Color.Black
-    End Sub
-    Private Sub BrowserAddress_LostFocus(sender As Object, e As EventArgs) Handles BrowserAddress.LostFocus
-        BrowserAddress.ForeColor = Color.DimGray
-    End Sub
-#End Region
-
-#Region "鼠标拖动右下角方块改变窗体大小"
-    Private Sub Btn_DragBlock_MouseDown(sender As Object, e As MouseEventArgs) Handles Btn_DragBlock.MouseDown
-        If Me.WindowState = FormWindowState.Maximized Then Exit Sub
-        MouseDowned = True
-        Btn_DragBlock.BackColor = Color.Silver
-        DistancePoint.X = Btn_DragBlock.Width - e.X
-        DistancePoint.Y = Btn_DragBlock.Height - e.Y
-    End Sub
-    Private Sub Btn_DragBlock_MouseUp(sender As Object, e As MouseEventArgs) Handles Btn_DragBlock.MouseUp
-        MouseDowned = False
-        Btn_DragBlock.BackColor = Color.LightGray
-    End Sub
-    Private Sub Btn_DragBlock_MouseMove(sender As Object, e As MouseEventArgs) Handles Btn_DragBlock.MouseMove
-        If Not MouseDowned Then Exit Sub
-        Me.Width = MousePosition.X - Me.Left + DistancePoint.X
-        Me.Height = MousePosition.Y - Me.Top + DistancePoint.Y
-    End Sub
-    Private Sub Btn_DragBlock_MouseEnter(sender As Object, e As EventArgs) Handles Btn_DragBlock.MouseEnter
-        Btn_DragBlock.BackColor = Color.LightGray
-    End Sub
-    Private Sub Btn_DragBlock_MouseLeave(sender As Object, e As EventArgs) Handles Btn_DragBlock.MouseLeave
-        Btn_DragBlock.BackColor = Color.White
     End Sub
 #End Region
 

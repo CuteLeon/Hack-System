@@ -3,6 +3,9 @@ Imports System.Drawing.Drawing2D
 Imports System.Threading
 
 Public Class WindowsTemplates
+
+#Region "声明区"
+
     Private Declare Function GetNextWindow Lib "user32" Alias "GetWindow" (ByVal hwnd As Integer, ByVal wFlag As Integer) As Integer
     '允许鼠标通过控件拖动窗体的API
     Public Declare Function ReleaseCapture Lib "user32" () As Integer
@@ -20,6 +23,9 @@ Public Class WindowsTemplates
     Dim IconLocation As Point '与自己对应的图标在桌面上的位置
     Dim IconImage As Image '图标图像
     Dim IconControl As Label '在桌面环境里对应的图标控件
+#End Region
+
+#Region "窗体"
 
     Private Sub WindowsTemplates_Load(sender As Object, e As EventArgs) Handles Me.Load
         '允许多线程访问UI
@@ -52,16 +58,114 @@ Public Class WindowsTemplates
         WindowsGraphics.Dispose()
     End Sub
 
+    Private Sub WindowsTemplates_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        If Not SystemWorkStation.SystemClosing Then
+            '不是退出程序时，关闭窗体调用关闭过程
+            e.Cancel = True
+            CloseScript()
+        End If
+    End Sub
+
+    Private Sub WindowsTemplates_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
+        '窗体失去焦点时，如果不是AeroPeek模式也不是正在退出程序，就降低窗口透明度
+        If Not (SystemWorkStation.AeroPeekModel) AndAlso Not SystemWorkStation.SystemClosing _
+            AndAlso SystemWorkStation.ScriptFormVisible(MyScriptIndex) = True Then Me.Opacity = NegativeOpacity
+        '改变窗体背景色
+        Me.BackColor = BorderColor_Negative
+        '隐藏标题栏
+        GIFControl.Top = BorderWidth
+        CloseButtonControl.Hide()
+        Me.Height = GIFControl.Height + 2 * BorderWidth
+        Me.Top += TitleHeight
+    End Sub
+
+    Private Sub WindowsTemplates_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
+        '防止在显示动态关闭特效时被激活
+        If Not SystemWorkStation.ScriptFormVisible(MyScriptIndex) Then Exit Sub
+        '判断AeroPeek模式状态和当前脚本标识，设置窗体透明度
+        Me.Opacity = IIf(SystemWorkStation.AeroPeekModel And SystemWorkStation.NowIconIndex <> MyScriptIndex, SystemWorkStation.AeroPeekOpacity, 1)
+        '改变背景色
+        Me.BackColor = BorderColor_Active
+        '优先显示系统弹出框
+        If ShutdownTips.Visible Then ShutdownTips.Hide()
+        '重新显示标题栏
+        GIFControl.Top = TitleHeight + BorderWidth
+        CloseButtonControl.Show()
+        Me.Height = GIFControl.Height + TitleHeight + 2 * BorderWidth
+        Me.Top -= TitleHeight
+    End Sub
+
+    Private Sub WindowsTemplates_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+        If Me.Visible Then
+            '恢复窗体到初始设置
+            SetMeToDefaultSetting()
+        End If
+    End Sub
+#End Region
+
+#Region "功能函数"
+
     Private Sub MoveWindow(sender As Object, e As MouseEventArgs) Handles Me.MouseDown, GIFControl.MouseDown
         '鼠标通过控件拖动窗体
         ReleaseCapture()
         SendMessageA(Me.Handle, &HA1, 2, 0&)
     End Sub
+#End Region
+
+#Region "接口函数"
+
+    Public Sub Breath()
+        If BreathTimer.Enabled Then
+            BreathTimer.Stop()
+            UnBreathTimer.Start()
+        Else '开始呼吸
+            UnBreathTimer.Stop()
+            BreathTimer.Start()
+        End If
+    End Sub
+#End Region
+
+#Region "控件"
 
     Private Sub CloseButtonControl_Click(sender As Object, e As EventArgs) Handles CloseButtonControl.Click
         '点击关闭按钮调用关闭过程
         CloseScript()
     End Sub
+
+    Private Sub BreathTimer_Tick(sender As Object, e As EventArgs) Handles BreathTimer.Tick
+        Static Difference As Single = 0.05
+        If Me.Opacity = 0 Or Me.Opacity = 1 Then Difference = -Difference
+        Me.Opacity += Difference
+    End Sub
+
+    Private Sub UnBreathTimer_Tick(sender As Object, e As EventArgs) Handles UnBreathTimer.Tick
+        Static EndOpacity As Double = IIf(ActiveForm Is Me, 1, NegativeOpacity)
+        Me.Opacity += IIf(Me.Opacity > EndOpacity, -0.05, 0.05)
+        If Math.Round(Me.Opacity, 1) = EndOpacity Then UnBreathTimer.Stop()
+    End Sub
+
+#Region "关闭按钮动态效果"
+
+    Private Sub CloseButtonControl_MouseEnter(sender As Object, e As EventArgs) Handles CloseButtonControl.MouseEnter
+        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(27, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
+    End Sub
+
+    Private Sub CloseButtonControl_MouseLeave(sender As Object, e As EventArgs) Handles CloseButtonControl.MouseLeave
+        CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(0, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
+    End Sub
+
+    Private Sub CloseButtonControl_MouseUp(sender As Object, e As MouseEventArgs) Handles CloseButtonControl.MouseUp
+        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(27, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
+    End Sub
+
+    Private Sub CloseButtonControl_MouseDown(sender As Object, e As MouseEventArgs) Handles CloseButtonControl.MouseDown
+        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(54, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
+    End Sub
+#End Region
+
+#End Region
+
+#Region "动态隐藏"
 
     Private Sub CloseScript() '关闭脚本过程
         '记录脚本状态
@@ -103,6 +207,9 @@ Public Class WindowsTemplates
         '启动动态关闭特效的线程
         ThreadPool.QueueUserWorkItem(New WaitCallback(AddressOf HideMe))
     End Sub
+#End Region
+
+#Region "功能函数"
 
     Private Sub HideMe() '动态关闭特效的线程
         '计算窗体位置和尺寸没每次应该变化的数值
@@ -147,91 +254,6 @@ Public Class WindowsTemplates
         Me.Left = (SystemWorkStation.Width - Me.Width - SystemWorkStation.RightestLoction) * VBMath.Rnd + SystemWorkStation.RightestLoction
         Me.Top = (SystemWorkStation.Height - Me.Height) * VBMath.Rnd
     End Sub
-
-    Private Sub WindowsTemplates_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        If Not SystemWorkStation.SystemClosing Then
-            '不是退出程序时，关闭窗体调用关闭过程
-            e.Cancel = True
-            CloseScript()
-        End If
-    End Sub
-
-
-#Region "关闭按钮响应鼠标动态效果"
-
-    Private Sub CloseButtonControl_MouseEnter(sender As Object, e As EventArgs) Handles CloseButtonControl.MouseEnter
-        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(27, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
-    End Sub
-
-    Private Sub CloseButtonControl_MouseLeave(sender As Object, e As EventArgs) Handles CloseButtonControl.MouseLeave
-        CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(0, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
-    End Sub
-
-    Private Sub CloseButtonControl_MouseUp(sender As Object, e As MouseEventArgs) Handles CloseButtonControl.MouseUp
-        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(27, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
-    End Sub
-
-    Private Sub CloseButtonControl_MouseDown(sender As Object, e As MouseEventArgs) Handles CloseButtonControl.MouseDown
-        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(54, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
-    End Sub
 #End Region
 
-    Private Sub WindowsTemplates_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
-        '窗体失去焦点时，如果不是AeroPeek模式也不是正在退出程序，就降低窗口透明度
-        If Not (SystemWorkStation.AeroPeekModel) AndAlso Not SystemWorkStation.SystemClosing _
-            AndAlso SystemWorkStation.ScriptFormVisible(MyScriptIndex) = True Then Me.Opacity = NegativeOpacity
-        '改变窗体背景色
-        Me.BackColor = BorderColor_Negative
-        '隐藏标题栏
-        GIFControl.Top = BorderWidth
-        CloseButtonControl.Hide()
-        Me.Height = GIFControl.Height + 2 * BorderWidth
-        Me.Top += TitleHeight
-    End Sub
-
-    Private Sub WindowsTemplates_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
-        '防止在显示动态关闭特效时被激活
-        If Not SystemWorkStation.ScriptFormVisible(MyScriptIndex) Then Exit Sub
-        '判断AeroPeek模式状态和当前脚本标识，设置窗体透明度
-        Me.Opacity = IIf(SystemWorkStation.AeroPeekModel And SystemWorkStation.NowIconIndex <> MyScriptIndex, SystemWorkStation.AeroPeekOpacity, 1)
-        '改变背景色
-        Me.BackColor = BorderColor_Active
-        '优先显示系统弹出框
-        If ShutdownTips.Visible Then ShutdownTips.Hide()
-        '重新显示标题栏
-        GIFControl.Top = TitleHeight + BorderWidth
-        CloseButtonControl.Show()
-        Me.Height = GIFControl.Height + TitleHeight + 2 * BorderWidth
-        Me.Top -= TitleHeight
-    End Sub
-
-    Private Sub WindowsTemplates_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-        If Me.Visible Then
-            '恢复窗体到初始设置
-            SetMeToDefaultSetting()
-        End If
-    End Sub
-
-    '呼吸
-    Public Sub Breath()
-        If BreathTimer.Enabled Then
-            BreathTimer.Stop()
-            UnBreathTimer.Start()
-        Else '开始呼吸
-            UnBreathTimer.Stop()
-            BreathTimer.Start()
-        End If
-    End Sub
-
-    Private Sub BreathTimer_Tick(sender As Object, e As EventArgs) Handles BreathTimer.Tick
-        Static Difference As Single = 0.05
-        If Me.Opacity = 0 Or Me.Opacity = 1 Then Difference = -Difference
-        Me.Opacity += Difference
-    End Sub
-
-    Private Sub UnBreathTimer_Tick(sender As Object, e As EventArgs) Handles UnBreathTimer.Tick
-        Static EndOpacity As Double = IIf(ActiveForm Is Me, 1, NegativeOpacity)
-        Me.Opacity += IIf(Me.Opacity > EndOpacity, -0.05, 0.05)
-        If Math.Round(Me.Opacity, 1) = EndOpacity Then UnBreathTimer.Stop()
-    End Sub
 End Class

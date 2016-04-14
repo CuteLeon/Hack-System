@@ -5,6 +5,8 @@ Public Class ShutdownTips
     Private Declare Function CreateRoundRectRgn Lib "gdi32" Alias "CreateRoundRectRgn" (ByVal X1 As Int32, ByVal Y1 As Int32, ByVal X2 As Int32, ByVal Y2 As Int32, ByVal X3 As Int32, ByVal Y3 As Int32) As Int32
     Private Declare Function SetWindowRgn Lib "user32" Alias "SetWindowRgn" (ByVal hWnd As Int32, ByVal hRgn As Int32, ByVal bRedraw As Boolean) As Int32
 
+#Region "窗体"
+
     Private Sub ShutdownWindows_Load(sender As Object, e As EventArgs) Handles Me.Load
         ShutdownAreaControl.Parent = ShutdownWallpaperControl
         ShutdownButtonControl.Parent = ShutdownAreaControl
@@ -15,18 +17,32 @@ Public Class ShutdownTips
         SetWindowRgn(Me.Handle, RoundRectangle, True)
     End Sub
 
+    Private Sub ShutdownWindows_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        If Not SystemWorkStation.SystemClosing Then
+            e.Cancel = True
+            CancelShutdown()
+        End If
+    End Sub
+
+    Private Sub ShutdownWindows_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
+        Dim KeyAsc As Integer = Asc(e.KeyChar)
+        If KeyAsc = 27 Then
+            '[Esc] to cancel.
+            CancelShutdown()
+        ElseIf KeyAsc = 13 Then
+            '[Enter] to shutdown.
+            Shutdown()
+        End If
+    End Sub
+#End Region
+
+#Region "控件"
+
     Private Sub ShutdownButtonControl_Click(sender As Object, e As EventArgs) Handles ShutdownButtonControl.Click
         Shutdown()
     End Sub
 
-    Private Sub Shutdown()
-        SystemWorkStation.SystemClosing = True
-        Me.Hide()
-        ShutdowningUI.Show(SystemWorkStation)
-        SystemWorkStation.SetForegroundWindow(ShutdowningUI.Handle)
-    End Sub
-
-#Region "Shutdown Button"
+#Region "关机按钮"
 
     Private Sub ShutdownButtonControl_MouseDown(sender As Object, e As MouseEventArgs) Handles ShutdownButtonControl.MouseDown
         ShutdownButtonControl.Image = My.Resources.SystemAssets.ShutdownButton_3
@@ -45,24 +61,7 @@ Public Class ShutdownTips
     End Sub
 #End Region
 
-    Private Sub CancelButtonControl_Click(sender As Object, e As EventArgs) Handles CancelButtonControl.Click
-        CancelShutdown()
-    End Sub
-
-    Private Sub CancelShutdown()
-        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-        Me.Hide()
-        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
-    End Sub
-
-    Private Sub ShutdownWindows_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        If Not SystemWorkStation.SystemClosing Then
-            e.Cancel = True
-            CancelShutdown()
-        End If
-    End Sub
-
-#Region "Cancel Button"
+#Region "取消按钮"
 
     Private Sub CancelButtonControl_MouseDown(sender As Object, e As MouseEventArgs) Handles CancelButtonControl.MouseDown
         CancelButtonControl.Image = My.Resources.SystemAssets.CancelButton_3
@@ -81,15 +80,26 @@ Public Class ShutdownTips
     End Sub
 #End Region
 
-    Private Sub ShutdownWindows_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
-        Dim KeyAsc As Integer = Asc(e.KeyChar)
-        If KeyAsc = 27 Then
-            '[Esc] to cancel.
-            CancelShutdown()
-        ElseIf KeyAsc = 13 Then
-            '[Enter] to shutdown.
-            Shutdown()
-        End If
+#End Region
+
+#Region "功能函数"
+
+    Private Sub Shutdown()
+        SystemWorkStation.SystemClosing = True
+        Me.Hide()
+        ShutdowningUI.Show(SystemWorkStation)
+        SystemWorkStation.SetForegroundWindow(ShutdowningUI.Handle)
     End Sub
+
+    Private Sub CancelButtonControl_Click(sender As Object, e As EventArgs) Handles CancelButtonControl.Click
+        CancelShutdown()
+    End Sub
+
+    Private Sub CancelShutdown()
+        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
+        Me.Hide()
+        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+    End Sub
+#End Region
 
 End Class

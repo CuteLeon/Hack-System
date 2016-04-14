@@ -1,9 +1,43 @@
 Public Class XYMail
     Dim NormalColor As Color = Color.FromArgb(19, 132, 205)
     Dim FailColor As Color = Color.FromArgb(248, 97, 97)
-    Dim MailThread As Threading.Thread=New Threading.Thread(AddressOf SendMail)
+    Dim MailThread As Threading.Thread = New Threading.Thread(AddressOf SendMail)
+
+#Region "窗体"
+
+    Private Sub XYMail_Load(sender As Object, e As EventArgs) Handles Me.Load
+        CheckForIllegalCrossThreadCalls = False
+        Txt_ToAddress.SelectionLength = 0
+    End Sub
+
+    Private Sub XYMail_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+        If Me.Visible Then
+            ReturnInfo.ForeColor = NormalColor
+            ReturnInfo.Text = "Mail function is ready."
+        Else
+            Btn_Send.Enabled = True
+            If MailThread.ThreadState = Threading.ThreadState.Running Then
+                MailThread.Abort()
+                MailThread = Nothing
+            End If
+        End If
+    End Sub
+#End Region
+
+#Region "控件"
+
+    Private Sub Txt_ToAddress_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Txt_ToAddress.KeyPress
+        '发信人地址栏响应回车键
+        If Asc(e.KeyChar) = 13 Then Btn_Send_Click(New Object, New EventArgs)
+    End Sub
+
+    Private Sub Btn_Close_Click(sender As Object, e As EventArgs) Handles Btn_Close.Click
+        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
+        Me.Hide()
+    End Sub
 
     Private Sub Btn_Send_Click(sender As Object, e As EventArgs) Handles Btn_Send.Click
+        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         If MailThread.ThreadState = Threading.ThreadState.Running Then Exit Sub
 
         MailThread = New Threading.Thread(AddressOf SendMail)
@@ -14,6 +48,48 @@ Public Class XYMail
 
         MailThread.Start()
     End Sub
+
+#Region "发送按钮动态效果"
+
+    Private Sub Btn_Send_MouseDown(sender As Object, e As MouseEventArgs) Handles Btn_Send.MouseDown
+        Btn_Send.Image = My.Resources.SystemAssets.SendBtn_2
+    End Sub
+
+    Private Sub Btn_Send_MouseEnter(sender As Object, e As EventArgs) Handles Btn_Send.MouseEnter
+        Btn_Send.Image = My.Resources.SystemAssets.SendBtn_1
+    End Sub
+
+    Private Sub Btn_Send_MouseLeave(sender As Object, e As EventArgs) Handles Btn_Send.MouseLeave
+        Btn_Send.Image = My.Resources.SystemAssets.SendBtn_0
+    End Sub
+
+    Private Sub Btn_Send_MouseUp(sender As Object, e As MouseEventArgs) Handles Btn_Send.MouseUp
+        Btn_Send.Image = My.Resources.SystemAssets.SendBtn_1
+    End Sub
+#End Region
+
+#Region "关闭按钮动态效果"
+
+    Private Sub Btn_Close_MouseEnter(sender As Object, e As EventArgs) Handles Btn_Close.MouseEnter
+        Btn_Close.Image = My.Resources.XYBrowserRes.Close_E
+    End Sub
+
+    Private Sub Btn_Close_MouseLeave(sender As Object, e As EventArgs) Handles Btn_Close.MouseLeave
+        Btn_Close.Image = My.Resources.XYBrowserRes.Close_N
+    End Sub
+
+    Private Sub Btn_Close_MouseDown(sender As Object, e As MouseEventArgs) Handles Btn_Close.MouseDown
+        Btn_Close.Image = My.Resources.XYBrowserRes.Close_D
+    End Sub
+
+    Private Sub Btn_Close_MouseUp(sender As Object, e As MouseEventArgs) Handles Btn_Close.MouseUp
+        Btn_Close.Image = My.Resources.XYBrowserRes.Close_E
+    End Sub
+#End Region
+
+#End Region
+
+#Region "功能函数"
 
     Private Sub SendMail()
         Try
@@ -51,70 +127,6 @@ Public Class XYMail
         WindowsTemplates.ReleaseCapture()
         WindowsTemplates.SendMessageA(Me.Handle, &HA1, 2, 0&)
     End Sub
-
-#Region "发送按钮响应鼠标动态效果"
-    Private Sub Btn_Send_MouseDown(sender As Object, e As MouseEventArgs) Handles Btn_Send.MouseDown
-        Btn_Send.Image = My.Resources.SystemAssets.SendBtn_2
-    End Sub
-
-    Private Sub Btn_Send_MouseEnter(sender As Object, e As EventArgs) Handles Btn_Send.MouseEnter
-        Btn_Send.Image = My.Resources.SystemAssets.SendBtn_1
-    End Sub
-
-    Private Sub Btn_Send_MouseLeave(sender As Object, e As EventArgs) Handles Btn_Send.MouseLeave
-        Btn_Send.Image = My.Resources.SystemAssets.SendBtn_0
-    End Sub
-
-    Private Sub Btn_Send_MouseUp(sender As Object, e As MouseEventArgs) Handles Btn_Send.MouseUp
-        Btn_Send.Image = My.Resources.SystemAssets.SendBtn_1
-    End Sub
-#End Region
-
-    Private Sub Txt_ToAddress_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Txt_ToAddress.KeyPress
-        '发信人地址栏响应回车键
-        If Asc(e.KeyChar) = 13 Then Btn_Send_Click(New Object, New EventArgs)
-    End Sub
-
-    Private Sub Btn_Close_Click(sender As Object, e As EventArgs) Handles Btn_Close.Click
-        Me.Hide()
-    End Sub
-
-    Private Sub XYMail_Load(sender As Object, e As EventArgs) Handles Me.Load
-        CheckForIllegalCrossThreadCalls = False
-        Txt_ToAddress.SelectionLength = 0
-    End Sub
-
-    Private Sub XYMail_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-        If Me.Visible Then
-            ReturnInfo.ForeColor = NormalColor
-            ReturnInfo.Text = "Mail function is ready."
-        Else
-            Btn_Send.Enabled = True
-            If MailThread.ThreadState = Threading.ThreadState.Running Then
-                MailThread.Abort()
-                MailThread = Nothing
-            End If
-        End If
-    End Sub
-
-
-#Region "关闭按钮响应鼠标动态效果"
-    Private Sub Btn_Close_MouseEnter(sender As Object, e As EventArgs) Handles Btn_Close.MouseEnter
-        Btn_Close.Image = My.Resources.XYBrowserRes.Close_E
-    End Sub
-
-    Private Sub Btn_Close_MouseLeave(sender As Object, e As EventArgs) Handles Btn_Close.MouseLeave
-        Btn_Close.Image = My.Resources.XYBrowserRes.Close_N
-    End Sub
-
-    Private Sub Btn_Close_MouseDown(sender As Object, e As MouseEventArgs) Handles Btn_Close.MouseDown
-        Btn_Close.Image = My.Resources.XYBrowserRes.Close_D
-    End Sub
-
-    Private Sub Btn_Close_MouseUp(sender As Object, e As MouseEventArgs) Handles Btn_Close.MouseUp
-        Btn_Close.Image = My.Resources.XYBrowserRes.Close_E
-    End Sub
-
 #End Region
 
 End Class

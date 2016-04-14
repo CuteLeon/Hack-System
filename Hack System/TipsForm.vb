@@ -1,6 +1,9 @@
 ﻿Imports System.ComponentModel
 
 Public Class TipsForm
+
+#Region "声明区"
+
     '置前显示，之所以不用TopMost是因为TopMost会让窗体激活，在Timer里值守置前会影响脚本窗口获取焦点
     Private Declare Sub SetWindowPos Lib "User32" (ByVal hWnd As Integer, ByVal hWndInsertAfter As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal cx As Integer, ByVal cy As Integer, ByVal wFlags As Integer)
 
@@ -41,6 +44,67 @@ Public Class TipsForm
         Exclamation = 2    '警告
         Critical = 3            '错误
     End Enum
+#End Region
+
+#Region "窗体"
+
+    Private Sub TipsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        CheckForIllegalCrossThreadCalls = False
+        Me.Location = New Point(-Me.Width, 0)
+
+        AddHandler Me.KeyPress, AddressOf SystemWorkStation.SystemWorkStation_KeyPress
+    End Sub
+
+    Private Sub TipsForm_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
+        Static LastState As Boolean = False
+        If Not LastState = CloseRecangle.Contains(e.X, e.Y) Then
+            LastState = Not LastState
+            If LastState Then
+                CloseBitmap = My.Resources.TipsRes.TipsCloseButton_1
+            Else
+                CloseBitmap = My.Resources.TipsRes.TipsCloseButton_0
+            End If
+        End If
+    End Sub
+
+    Private Sub TipsForm_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
+        If CloseRecangle.Contains(e.X, e.Y) Then CloseBitmap = My.Resources.TipsRes.TipsCloseButton_0 : CancelTip()
+    End Sub
+
+    Private Sub TipsForm_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
+        If CloseRecangle.Contains(e.X, e.Y) Then CloseBitmap = My.Resources.TipsRes.TipsCloseButton_2
+    End Sub
+
+    Private Sub TipsForm_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+        If WaitThread IsNot Nothing AndAlso WaitThread.ThreadState = Threading.ThreadState.Running Then WaitThread.Abort()
+    End Sub
+
+    Private Sub TipsForm_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        If HideThread.ThreadState = Threading.ThreadState.Running Then Exit Sub
+        WaitThread = New Threading.Thread(AddressOf WaitForHiding)
+        WaitThread.Start()
+    End Sub
+
+    Private Sub TipsForm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        If CloseMe Then Exit Sub
+        e.Cancel = True
+        CancelTip()
+    End Sub
+
+    Protected Overloads Overrides ReadOnly Property CreateParams() As CreateParams
+        Get
+            If Not DesignMode Then
+                Dim cp As CreateParams = MyBase.CreateParams
+                cp.ExStyle = cp.ExStyle Or WS_EX_LAYERED
+                Return cp
+            Else
+                Return MyBase.CreateParams
+            End If
+        End Get
+    End Property
+#End Region
+
+#Region "接口函数"
 
     Public Sub PopupTips(ByVal TipTitle As String, ByVal TipIcon As TipsIconType, ByVal TipBody As String, Optional ByVal TimeOut As Integer = 5000)
         Me.TopMost = True
@@ -114,6 +178,9 @@ Public Class TipsForm
 
         Me.Close()
     End Sub
+#End Region
+
+#Region "动态显示和隐藏"
 
     Private Sub ShowTips()
         HiddenLocation = Nothing : ShownLocation = Nothing
@@ -142,13 +209,9 @@ Public Class TipsForm
 
         TipsShown = False
     End Sub
+#End Region
 
-    Private Sub TipsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        CheckForIllegalCrossThreadCalls = False
-        Me.Location = New Point(-Me.Width, 0)
-
-        AddHandler Me.KeyPress, AddressOf SystemWorkStation.SystemWorkStation_KeyPress
-    End Sub
+#Region "功能函数"
 
     Private Sub WaitForHiding()
         Threading.Thread.Sleep(TipsTimeOut)
@@ -161,18 +224,9 @@ Public Class TipsForm
             Me.Close()
         End If
     End Sub
+#End Region
 
-    Protected Overloads Overrides ReadOnly Property CreateParams() As CreateParams
-        Get
-            If Not DesignMode Then
-                Dim cp As CreateParams = MyBase.CreateParams
-                cp.ExStyle = cp.ExStyle Or WS_EX_LAYERED
-                Return cp
-            Else
-                Return MyBase.CreateParams
-            End If
-        End Get
-    End Property
+#Region "控件"
 
     Private Sub IconTimer_Tick(sender As Object, e As EventArgs) Handles IconTimer.Tick
         On Error Resume Next
@@ -194,40 +248,6 @@ Public Class TipsForm
         TipsBitmap.Dispose()
         TempIconBackground.Dispose()
     End Sub
+#End Region
 
-    Private Sub TipsForm_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
-        Static LastState As Boolean = False
-        If Not LastState = CloseRecangle.Contains(e.X, e.Y) Then
-            LastState = Not LastState
-            If LastState Then
-                CloseBitmap = My.Resources.TipsRes.TipsCloseButton_1
-            Else
-                CloseBitmap = My.Resources.TipsRes.TipsCloseButton_0
-            End If
-        End If
-    End Sub
-
-    Private Sub TipsForm_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
-        If CloseRecangle.Contains(e.X, e.Y) Then CloseBitmap = My.Resources.TipsRes.TipsCloseButton_0 : CancelTip()
-    End Sub
-
-    Private Sub TipsForm_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
-        If CloseRecangle.Contains(e.X, e.Y) Then CloseBitmap = My.Resources.TipsRes.TipsCloseButton_2
-    End Sub
-
-    Private Sub TipsForm_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
-        If WaitThread IsNot Nothing AndAlso WaitThread.ThreadState = Threading.ThreadState.Running Then WaitThread.Abort()
-    End Sub
-
-    Private Sub TipsForm_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
-        If HideThread.ThreadState = Threading.ThreadState.Running Then Exit Sub
-        WaitThread = New Threading.Thread(AddressOf WaitForHiding)
-        WaitThread.Start()
-    End Sub
-
-    Private Sub TipsForm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        If CloseMe Then Exit Sub
-        e.Cancel = True
-        CancelTip()
-    End Sub
 End Class
