@@ -6,6 +6,7 @@ Public Class TipsForm
 
     '置前显示，之所以不用TopMost是因为TopMost会让窗体激活，在Timer里值守置前会影响脚本窗口获取焦点
     Private Declare Sub SetWindowPos Lib "User32" (ByVal hWnd As Integer, ByVal hWndInsertAfter As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal cx As Integer, ByVal cy As Integer, ByVal wFlags As Integer)
+    Public CloseMe As Boolean = False
 
     Dim ShowThread As Threading.Thread = New Threading.Thread(AddressOf ShowTips)
     Dim HideThread As Threading.Thread = New Threading.Thread(AddressOf HideTips)
@@ -36,7 +37,6 @@ Public Class TipsForm
 
     Dim HiddenLocation As Point
     Dim ShownLocation As Point
-    Dim CloseMe As Boolean = False
 
     Public Enum TipsIconType
         Infomation = 0     '消息
@@ -86,9 +86,10 @@ Public Class TipsForm
     End Sub
 
     Private Sub TipsForm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        If CloseMe Then Exit Sub
-        e.Cancel = True
-        CancelTip()
+        If Not CloseMe Then
+            e.Cancel = True
+            CancelTip()
+        End If
     End Sub
 
     Protected Overloads Overrides ReadOnly Property CreateParams() As CreateParams
@@ -160,6 +161,8 @@ Public Class TipsForm
     End Sub
 
     Public Sub CancelTip()
+        If Not Me.Visible Then Exit Sub
+
         CloseMe = True
         If ShowThread.ThreadState = Threading.ThreadState.Running Then
             ShowThread.Abort()
@@ -174,8 +177,6 @@ Public Class TipsForm
             HideThread.Start()
         End If
         HideThread.Join()
-        IconTimer.Stop()
-
         Me.Close()
     End Sub
 #End Region
@@ -248,6 +249,7 @@ Public Class TipsForm
         TipsBitmap.Dispose()
         TempIconBackground.Dispose()
     End Sub
+
 #End Region
 
 End Class

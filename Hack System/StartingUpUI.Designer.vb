@@ -78,7 +78,7 @@ Partial Class StartingUpUI
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.StartingUIWallpaper
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(845, 389)
+        Me.ClientSize = New System.Drawing.Size(768, 390)
         Me.Controls.Add(Me.StartUpLogo)
         Me.Controls.Add(Me.StartingUpLable)
         Me.Controls.Add(Me.StartingUpControl)

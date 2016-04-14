@@ -1,7 +1,11 @@
 Public Class XYMail
+
+#Region "声明区"
+
     Dim NormalColor As Color = Color.FromArgb(19, 132, 205)
     Dim FailColor As Color = Color.FromArgb(248, 97, 97)
     Dim MailThread As Threading.Thread = New Threading.Thread(AddressOf SendMail)
+#End Region
 
 #Region "窗体"
 

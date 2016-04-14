@@ -2,7 +2,11 @@
 Imports System.Threading
 
 Public Class ShutdowningUI
+
+#Region "声明区"
+
     Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Width \ 50
+#End Region
 
 #Region "动态显示和隐藏"
 
@@ -54,7 +58,7 @@ Public Class ShutdowningUI
         ThreadShowMe.Join()
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Shutdown"), AudioPlayMode.WaitToComplete)
         '直接关闭提示浮窗，因为CancelTips函数要等待线程结束，退出程序时会出错
-        If TipsForm.Visible Then TipsForm.Close()
+        If TipsForm.Visible Then TipsForm.CloseMe = True : TipsForm.Close()
         If XYMail.Visible Then XYMail.Hide()
         If AboutMeForm.Visible Then AboutMeForm.Hide()
         If MineSweeperForm.Visible Then MineSweeperForm.Hide()

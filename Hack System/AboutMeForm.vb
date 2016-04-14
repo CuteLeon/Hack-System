@@ -1,4 +1,7 @@
 ﻿Public Class AboutMeForm
+
+#Region "窗体和控件"
+
     Private Sub AboutMeForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Set control's parent.
         AboutMeControl.Parent = AboutMeWallpaperControl
@@ -22,7 +25,25 @@
         SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
-#Region "The dynamic effect on the OKButton"
+    Private Sub AboutMe_KeyPress(sender As Object, e As KeyPressEventArgs) Handles AboutMeControl.KeyPress, Me.KeyPress, WebLink.KeyPress
+        'Press [Enter] or [Esc] to hide me and focus main desktop.
+        Dim KeyAscii As Integer = Asc(e.KeyChar)
+        If KeyAscii = 27 Or KeyAscii = 13 Then
+            My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
+            Me.Hide()
+            SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+        End If
+    End Sub
+
+    Private Sub WebLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles WebLink.LinkClicked
+        '访问官网
+        SystemWorkStation.LoadNewBrowser("http://www.HackSystem.icoc.in/")
+    End Sub
+
+#End Region
+
+#Region "按钮动态效果"
+
     Private Sub OKButtonControl_MouseDown(sender As Object, e As MouseEventArgs) Handles OKButtonControl.MouseDown
         OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(280, 0, 140, 49), Imaging.PixelFormat.Format32bppArgb)
     End Sub
@@ -40,25 +61,4 @@
     End Sub
 #End Region
 
-    Private Sub AboutMe_KeyPress(sender As Object, e As KeyPressEventArgs) Handles AboutMeControl.KeyPress, Me.KeyPress, WebLink.KeyPress
-        'Press [Enter] or [Esc] to hide me and focus main desktop.
-        Dim KeyAscii As Integer = Asc(e.KeyChar)
-        If KeyAscii = 27 Or KeyAscii = 13 Then
-            My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-            Me.Hide()
-            SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
-        End If
-    End Sub
-
-    Private Sub WebLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles WebLink.LinkClicked
-        '访问官网
-        SystemWorkStation.LoadNewBrowser("http://www.HackSystem.icoc.in/")
-    End Sub
-
-    'Private Sub AboutMeForm_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-    '    If Me.Visible Then
-    '        If Not TipsForm.Visible Then TipsForm.Show(SystemWorkStation)
-    '        TipsForm.PopupTips("Contact me at", TipsForm.TipsIconType.Infomation, "Leon.ID@QQ.COM")
-    '    End If
-    'End Sub
 End Class

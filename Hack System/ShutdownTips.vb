@@ -1,9 +1,13 @@
 ﻿Imports System.ComponentModel
 
 Public Class ShutdownTips
+
+#Region "声明区"
+
     '圆角窗体
     Private Declare Function CreateRoundRectRgn Lib "gdi32" Alias "CreateRoundRectRgn" (ByVal X1 As Int32, ByVal Y1 As Int32, ByVal X2 As Int32, ByVal Y2 As Int32, ByVal X3 As Int32, ByVal Y3 As Int32) As Int32
     Private Declare Function SetWindowRgn Lib "user32" Alias "SetWindowRgn" (ByVal hWnd As Int32, ByVal hRgn As Int32, ByVal bRedraw As Boolean) As Int32
+#End Region
 
 #Region "窗体"
 

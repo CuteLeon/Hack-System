@@ -1,6 +1,9 @@
 ﻿Imports System.Runtime.InteropServices
 
 Module DrawImageModule
+
+#Region "声明区"
+
     Private Const ULW_COLORKEY As Int32 = &H1
     Public Const ULW_ALPHA As Int32 = &H2
     Private Const ULW_OPAQUE As Int32 = &H4
@@ -45,6 +48,9 @@ Module DrawImageModule
     Public Declare Auto Function ReleaseDC Lib "user32.dll" (ByVal hWnd As IntPtr, ByVal hDC As IntPtr) As Integer
     Public Declare Auto Function DeleteObject Lib "gdi32.dll" (ByVal hObject As IntPtr) As Boolean
     Public Declare Auto Function DeleteDC Lib "gdi32.dll" (ByVal hdc As IntPtr) As Boolean
+#End Region
+
+#Region "执行函数"
 
     Public Sub DrawImage(ByVal FormToDraw As Form, ByVal AlphaImage As Bitmap)
         On Error Resume Next
@@ -71,5 +77,6 @@ Module DrawImageModule
         End If
         Call DeleteDC(hDC2)
     End Sub
+#End Region
 
 End Module

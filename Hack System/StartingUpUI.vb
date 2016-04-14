@@ -1,7 +1,11 @@
 ﻿Imports System.ComponentModel
 
 Public Class StartingUpUI
+
+#Region "声明区"
+
     Public SystemCursor As Cursor = New Cursor(My.Resources.SystemAssets.MouseCursor.GetHicon)
+#End Region
 
 #Region "窗体"
 
