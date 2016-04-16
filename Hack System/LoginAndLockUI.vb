@@ -20,7 +20,7 @@ Public Class LoginAndLockUI
     Public UserHeadString As String
     Public UserNameString As String
     Public LockScreenMode As Boolean = False
-    Dim WallpaperIndex As Integer = 9
+    Dim WallpaperIndex As Integer = 14
     Dim FirstPoint As POINTAPI
     Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Width \ 50
     Dim ThreadShowMe As Thread
