@@ -19,15 +19,6 @@ Public Class CommandConsole
     Public Sub ShowConsole()
         'Hide TipsForm if it is shown
         If TipsForm.Visible Then TipsForm.CancelTip()
-
-        'Show console.
-        'Hide buttons in mian desktop.
-        SystemWorkStation.ConsoleButtonControl.Visible = False
-        SystemWorkStation.XYMailButtonControl.Visible = False
-        SystemWorkStation.XYBrowserButtonControl.Visible = False
-        SystemWorkStation.ShutdownButtonControl.Visible = False
-        SystemWorkStation.SettingButtonControl.Visible = False
-        SystemWorkStation.SpeechButtonControl.Visible = False
         'Set focus and play audio.
         SystemWorkStation.SetForegroundWindow(Me.Handle)
         CommandInputBox.Focus()
@@ -40,13 +31,6 @@ Public Class CommandConsole
     End Sub
 
     Public Sub HideConsole()
-        'Hide console.
-        SystemWorkStation.ConsoleButtonControl.Visible = True
-        SystemWorkStation.XYMailButtonControl.Visible = True
-        SystemWorkStation.XYBrowserButtonControl.Visible = True
-        SystemWorkStation.ShutdownButtonControl.Visible = True
-        SystemWorkStation.SettingButtonControl.Visible = True
-        SystemWorkStation.SpeechButtonControl.Visible = True
         'Play audio
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
         'Start thread

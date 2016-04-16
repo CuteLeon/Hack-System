@@ -37,15 +37,17 @@ Public Class SystemWorkStation
     Public SystemClosing As Boolean 'Application is going to exit.
     Public SpeechRecognitionMode As Boolean = True
 
+    Dim UserNameFont As Font = New Font("微软雅黑", 36.0)
     Dim MouseDownLocation As Point
     Dim XDistance, YDistance As Integer
     Dim ColumnIconCount As Integer = Int(My.Computer.Screen.Bounds.Height / IconHeight) - 1
     Dim IntervalDistance As Integer = (My.Computer.Screen.Bounds.Height - ColumnIconCount * IconHeight) / (ColumnIconCount + 1) 'Distance between icons.
     Dim WallpaperIndex As Integer = 9 'Default wallpaper's ID.
     Dim CustomWallpaperBitmap As Bitmap 'User Custom Wallpaper
+    Dim CustomWallpaperString As String
     Dim HighLightIcon(ScriptUpperBound) As Bitmap
     Dim MouseDownIcon(ScriptUpperBound) As Bitmap
-    Dim LabelForeColor As Color = Color.Aqua
+    Dim LabelForecolor As Color = Color.Aqua
     Dim IconGraphics As Graphics
     Dim SenderControl As Label
     Dim NowButton As Label
@@ -82,8 +84,11 @@ Public Class SystemWorkStation
         DiskWriteCounterLabel.Location = New Point(InfoTitle.Right, 98)
         UploadSpeedCountLabel.Location = New Point(InfoTitle.Right, 118)
         DownloadSpeedCountLabel.Location = New Point(InfoTitle.Right, 138)
-        IPLabel.Location = New Point(InfoTitle.Right, 158)
-        AddressLabel.Location = New Point(InfoTitle.Right, 178)
+        PowerLineLabel.Location = New Point(InfoTitle.Right, 158)
+        BatteryStatusLabel.Location = New Point(InfoTitle.Right, 178)
+        BatteryPercentLabel.Location = New Point(InfoTitle.Right, 198)
+        IPLabel.Location = New Point(InfoTitle.Right, 218)
+        AddressLabel.Location = New Point(InfoTitle.Right, 238)
 
         ShutdownButtonControl.Location = New Point(Me.Width - ShutdownButtonControl.Width - IntervalDistance, Me.Height - IntervalDistance - ShutdownButtonControl.Height)
         SettingButtonControl.Location = New Point(ShutdownButtonControl.Left - IntervalDistance - SettingButtonControl.Width, ShutdownButtonControl.Top)
@@ -92,9 +97,9 @@ Public Class SystemWorkStation
         ConsoleButtonControl.Location = New Point(XYMailButtonControl.Left - IntervalDistance - ConsoleButtonControl.Width, XYMailButtonControl.Top)
         SpeechButtonControl.Location = New Point(ConsoleButtonControl.Left - IntervalDistance - SpeechButtonControl.Width, ConsoleButtonControl.Top)
         VoiceLevelBar.Location = New Point(5, SpeechButtonControl.Height - 12)
+
         Me.Cursor = StartingUpUI.SystemCursor
         InfoTitle.Cursor = StartingUpUI.SystemCursor
-
         CPUCounterBar.Cursor = StartingUpUI.SystemCursor
         MemoryUsageRateBar.Cursor = StartingUpUI.SystemCursor
         DiskReadCounterLabel.Cursor = StartingUpUI.SystemCursor
@@ -105,6 +110,21 @@ Public Class SystemWorkStation
         'Set as hand,to tips that users can click them.
         IPLabel.Cursor = Cursors.Hand
         AddressLabel.Cursor = Cursors.Hand
+
+        CustomWallpaperString = My.Settings.CustomWallpaper
+        If Not CustomWallpaperString = vbNullString Then
+            CustomWallpaperBitmap = LoginAndLockUI.StringToBitmap(CustomWallpaperString)
+        End If
+
+        Dim WallpaperIndexSetting As String = My.Settings.DesktopWallpaperIndex
+        If Not WallpaperIndexSetting = vbNullString Then
+            WallpaperIndex = Int(WallpaperIndexSetting)
+            If WallpaperIndex = -1 Then
+                Me.BackgroundImage = CustomWallpaperBitmap
+            Else
+                Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
+            End If
+        End If
 
         CommandConsole.Show(Me)
         CommandConsole.Height = My.Computer.Screen.Bounds.Height
@@ -188,18 +208,12 @@ Public Class SystemWorkStation
     End Sub
 
     Private Sub SystemWorkStation_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        '排列桌面图标需要的坐标变量
         Dim PointX, PointY As Integer
-        '遍历桌面图标
         For Index = 0 To ScriptUpperBound
-            '创建新的图标对象
             ScriptIcons(Index) = New Label
-            '计算图标位置
             PointX = Int(Index / ColumnIconCount)
             PointY = Index - PointX * ColumnIconCount
-            '设置图标属性
             With ScriptIcons(Index)
-                '设置尺寸、透明背景色、关联图标右键菜单、设置父句柄、图像对齐位置、初始图像、文本对齐位置、图标文本、文本颜色
                 .Size = New Size(IconWidth, IconHeight)
                 .Parent = Me
                 .BackColor = Color.Transparent
@@ -208,15 +222,12 @@ Public Class SystemWorkStation
                 .Image = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & Index.ToString("00"))
                 .TextAlign = ContentAlignment.BottomCenter
                 .Text = ScriptInfomation(Index)
-                .ForeColor = Color.Aqua
                 .Font = ShutdownButtonControl.Font
-                '设置图标指向的脚本标识和位置后显示图标
                 .Tag = Index.ToString("00")
                 .Left = IntervalDistance + PointX * (IconWidth + IntervalDistance)
                 .Top = IntervalDistance + PointY * (IconHeight + IntervalDistance)
                 .Show()
             End With
-            '为图标注册点击和鼠标进入、悬停、离开、按下、抬起事件
             AddHandler ScriptIcons(Index).Click, AddressOf IconTemplates_Click
             AddHandler ScriptIcons(Index).MouseEnter, AddressOf IconTemplates_MouseEnter
             AddHandler ScriptIcons(Index).MouseHover, AddressOf IconTemplates_MouseHover
@@ -225,23 +236,23 @@ Public Class SystemWorkStation
             AddHandler ScriptIcons(Index).MouseUp, AddressOf IconTemplates_MouseUp
         Next
 
-        '播放开机提示音效
+        Dim ForeColorCell() As String = My.Settings.ForeColor.Split(",")
+        If ForeColorCell.Count = 3 Then
+            LabelForecolor = Color.FromArgb(Int(ForeColorCell(0)), Int(ForeColorCell(1)), Int(ForeColorCell(2)))
+        End If
+        SetLabelForecolor(LabelForecolor)
+
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("LoginDesktop"), AudioPlayMode.Background)
 
-        '遍历完成后记录图标显示区域最右边界
         RightestLoction = ScriptIcons(ScriptUpperBound).Left + IconWidth
-        '遍历网卡
         For Index As Integer = LBoundOfArray To UBoundOfArray
-            '初始化性能计数器
             DownloadCounter(Index) = New PerformanceCounter("Network Interface", "Bytes Received/sec", PCCategory.GetInstanceNames(Index))
             UploadCounter(Index) = New PerformanceCounter("Network Interface", "Bytes Sent/sec", PCCategory.GetInstanceNames(Index))
-            '默认记录上次下载和上传的字节
             DownloadValueOld(Index) = DownloadCounter(Index).NextSample().RawValue
             UploadValueOld(Index) = UploadCounter(Index).NextSample().RawValue
         Next
         PerformanceCounterTimer.Enabled = True
 
-        '开启语音识别
         Try
             MySpeechRecognitionEngine = New SpeechRecognitionEngine(SpeechRecognitionEngine.InstalledRecognizers().First)
             MySpeechRecognitionEngine.SetInputToDefaultAudioDevice()
@@ -251,7 +262,6 @@ Public Class SystemWorkStation
             'AddHandler MySpeechRecognitionEngine.AudioStateChanged, AddressOf SpeechRecognitionEngine_AudioStateChanged
             MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
         Catch ex As Exception
-            '开启语音识别失败
             VoiceLevelBar.Value = 0
             SpeechRecognitionMode = False
             SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_Off
@@ -276,21 +286,15 @@ Public Class SystemWorkStation
 
     Private Sub PerformanceCounterTimer_Tick(sender As Object, e As EventArgs) Handles PerformanceCounterTimer.Tick
         MemoryUsageRate = (CmptInfo.TotalPhysicalMemory - CmptInfo.AvailablePhysicalMemory) / CmptInfo.TotalPhysicalMemory * 100
-        '初始化目前已经上传和下载的字节
         DownloadSpeedCount = 0 : UploadSpeedCount = 0
-        '遍历所有网卡
         For Index As Integer = LBoundOfArray To UBoundOfArray
             Try
-                '累计所有网卡已经下载和上传的字节
                 DownloadValue(Index) = DownloadCounter(Index).NextSample().RawValue
                 UploadValue(Index) = UploadCounter(Index).NextSample().RawValue
-                '每块网卡独立计算，防止禁用某网卡时出现速度为负值的情况，无符号整形变量冲突
                 If DownloadValue(Index) > 0 Then DownloadSpeed(Index) = DownloadValue(Index) - DownloadValueOld(Index) Else DownloadSpeed(Index) = 0
                 If UploadValue(Index) > 0 Then UploadSpeed(Index) = UploadValue(Index) - UploadValueOld(Index) Else UploadSpeed(Index) = 0
-                '计算总的下载和上传速度
                 DownloadSpeedCount += DownloadSpeed(Index)
                 UploadSpeedCount += UploadSpeed(Index)
-                '更新上次记录
                 DownloadValueOld(Index) = DownloadValue(Index)
                 UploadValueOld(Index) = UploadValue(Index)
             Catch ex As Exception
@@ -299,7 +303,6 @@ Public Class SystemWorkStation
             End Try
         Next
 
-        '显示数据
         CPUCounterBar.Value = Int(CPUCounter.NextValue)
         MemoryUsageRateBar.Value = Int(MemoryUsageRate)
         DiskReadCounterLabel.Text = FormatSpeedString(DiskReadCounter.NextValue)
@@ -307,6 +310,10 @@ Public Class SystemWorkStation
         UploadSpeedCountLabel.Text = FormatSpeedString(UploadSpeedCount)
         DownloadSpeedCountLabel.Text = FormatSpeedString(DownloadSpeedCount)
         DateTimeLabel.Text = My.Computer.Clock.LocalTime.ToLocalTime
+
+        PowerLineLabel.Text = SystemInformation.PowerStatus.PowerLineStatus.ToString
+        BatteryStatusLabel.Text = SystemInformation.PowerStatus.BatteryChargeStatus.ToString
+        BatteryPercentLabel.Text = SystemInformation.PowerStatus.BatteryLifePercent * 100 & "%"
     End Sub
 
     Private Sub IPAndAddressLabel_Click(sender As Object, e As EventArgs) Handles IPLabel.Click, AddressLabel.Click
@@ -364,8 +371,28 @@ Public Class SystemWorkStation
     End Sub
 
     Private Sub SpeechRecognitionEngine_AudioLevelUpdated(sender As Object, e As AudioLevelUpdatedEventArgs)
+        Static LastVoiceLevel As Int16 = 0
         VoiceLevelBar.Value = e.AudioLevel
+        If e.AudioLevel > 1 Then
+            If Not MicroPhoneTimer.Enabled Then MicroPhoneTimer.Start()
+        Else
+            If LastVoiceLevel = 0 AndAlso MicroPhoneTimer.Enabled Then
+                MicroPhoneTimer.Stop()
+                SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_On
+            End If
+        End If
+        LastVoiceLevel = e.AudioLevel
     End Sub
+
+    'Private Sub SpeechRecognitionEngine_AudioStateChanged(sender As Object, e As AudioStateChangedEventArgs)
+    '    If e.AudioState = AudioState.Silence Then
+    '        Debug.Print("识别引擎开启")
+    '    ElseIf e.AudioState = AudioState.Speech Then
+    '        Debug.Print("引擎识别到结果")
+    '    ElseIf e.AudioState = AudioState.Stopped Then
+    '        Debug.Print("识别引擎关闭")
+    '    End If
+    'End Sub
 #End Region
 
 #Region "桌面图标"
@@ -477,11 +504,13 @@ Public Class SystemWorkStation
         If WallpaperIndex = 0 AndAlso (CustomWallpaperBitmap IsNot Nothing) Then
             WallpaperIndex = -1
             Me.BackgroundImage = CustomWallpaperBitmap
-            Exit Sub
         Else
             WallpaperIndex = IIf(WallpaperIndex <= 0, WallpaperUpperBound, WallpaperIndex - 1)
+            Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
         End If
-        Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
+
+        My.Settings.DesktopWallpaperIndex = WallpaperIndex
+        My.Settings.Save()
     End Sub
 
     Private Sub MenuNextWallpaper_Click(sender As Object, e As EventArgs) Handles MenuNextWallpaper.Click
@@ -490,11 +519,13 @@ Public Class SystemWorkStation
         If WallpaperIndex = WallpaperUpperBound AndAlso (CustomWallpaperBitmap IsNot Nothing) Then
             WallpaperIndex = -1
             Me.BackgroundImage = CustomWallpaperBitmap
-            Exit Sub
         Else
             WallpaperIndex = IIf(WallpaperIndex = WallpaperUpperBound Or WallpaperIndex = -1, 0, WallpaperIndex + 1)
+            Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
         End If
-        Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
+
+        My.Settings.DesktopWallpaperIndex = WallpaperIndex
+        My.Settings.Save()
     End Sub
 
     Private Sub MenuLockScreen_Click(sender As Object, e As EventArgs) Handles MenuLockScreen.Click
@@ -521,6 +552,10 @@ Public Class SystemWorkStation
                 Me.BackgroundImage = CustomWallpaperBitmap
                 If Not TipsForm.Visible Then TipsForm.Show(Me)
                 TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Set wallpaper successfully")
+                WallpaperIndex = -1
+                My.Settings.DesktopWallpaperIndex = WallpaperIndex
+                My.Settings.CustomWallpaper = BitmapToString(CustomWallpaperBitmap)
+                My.Settings.Save()
             Catch ex As Exception
                 If Not TipsForm.Visible Then TipsForm.Show(Me)
                 TipsForm.PopupTips("Error reading image", TipsForm.TipsIconType.Critical, "Please select again.")
@@ -533,18 +568,24 @@ Public Class SystemWorkStation
     Private Sub MenuSetForecolor_Click(sender As Object, e As EventArgs) Handles MenuSetForecolor.Click
         '右键菜单设置系统字体颜色
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-        SetLabelForecolor()
+        If LabelColorDialog.ShowDialog = DialogResult.OK Then
+            LabelForecolor = LabelColorDialog.Color
+            SetLabelForecolor(LabelForecolor)
+            My.Settings.ForeColor = LabelForecolor.R & "," & LabelForecolor.G & "," & LabelForecolor.B
+            My.Settings.Save()
+        Else
+            My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
+        End If
     End Sub
 
     Private Sub MenuSetUserHead_Click(sender As Object, e As EventArgs) Handles MenuSetUserHead.Click
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         If (CustomImageDialog.ShowDialog = DialogResult.OK) Then
-
             Try
                 LoginAndLockUI.UserHead = MakeCircularBitmap(Bitmap.FromFile(CustomImageDialog.FileName), LoginAndLockUI.HeadSize)
                 LoginAndLockUI.HeadPictureBox.BackgroundImage = LoginAndLockUI.UserHead
-                LoginAndLockUI.HeadString = BitmapToString(LoginAndLockUI.UserHead)
-                My.Settings.UserHead = LoginAndLockUI.HeadString
+                LoginAndLockUI.UserHeadString = BitmapToString(LoginAndLockUI.UserHead)
+                My.Settings.UserHead = LoginAndLockUI.UserHeadString
                 My.Settings.Save()
                 If Not TipsForm.Visible Then TipsForm.Show(Me)
                 TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Set user head successfully")
@@ -554,6 +595,31 @@ Public Class SystemWorkStation
             End Try
         Else
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
+        End If
+    End Sub
+
+    Private Sub MenuUserName_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MenuUserName.KeyPress
+        If e.KeyChar = Chr(Keys.Enter) Then
+            If LoginAndLockUI.UserName = MenuUserName.Text Then Exit Sub
+            Dim ShadowRadius As Integer = 10
+            Dim DoubleRadius As Integer = ShadowRadius * 2
+            LoginAndLockUI.UserName = MenuUserName.Text
+            LoginAndLockUI.UserNameControl.AutoSize = True
+            LoginAndLockUI.UserNameControl.Font = UserNameFont
+            LoginAndLockUI.UserNameControl.Text = MenuUserName.Text
+            LoginAndLockUI.UserNameBitmap = TextShadowStroke(MenuUserName.Text, UserNameFont,
+                ShadowRadius, Color.White, Color.Red, Color.Black,
+                New Size(LoginAndLockUI.UserNameControl.Width + DoubleRadius, LoginAndLockUI.UserNameControl.Height + DoubleRadius))
+            LoginAndLockUI.UserNameControl.Image = LoginAndLockUI.UserNameBitmap
+            LoginAndLockUI.UserNameControl.AutoSize = False
+            LoginAndLockUI.UserNameControl.Text = vbNullString
+            LoginAndLockUI.UserNameControl.Size = New Size(300, LoginAndLockUI.UserNameControl.Image.Height)
+            If Not TipsForm.Visible Then TipsForm.Show(Me)
+            TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Set user name successfully")
+            LoginAndLockUI.UserNameString = BitmapToString(LoginAndLockUI.UserNameBitmap)
+            My.Settings.UserName = LoginAndLockUI.UserName
+            My.Settings.UserNameBitmap = LoginAndLockUI.UserNameString
+            My.Settings.Save()
         End If
     End Sub
 
@@ -641,7 +707,6 @@ Public Class SystemWorkStation
         NowButton.Image = My.Resources.SystemAssets.ResourceManager.GetObject(NowButton.Tag & "2")
     End Sub
 
-    '语音识别按钮是PictureBox类型，所以单独处理
     Private Sub SpeechButtonControl_MouseEnter(sender As Object, e As EventArgs) Handles SpeechButtonControl.MouseEnter
         SpeechButtonControl.BackgroundImage = My.Resources.SystemAssets.SpeechButton_1
     End Sub
@@ -658,6 +723,11 @@ Public Class SystemWorkStation
         SpeechButtonControl.BackgroundImage = My.Resources.SystemAssets.SpeechButton_2
     End Sub
 
+    Private Sub MicroPhoneTimer_Tick(sender As Object, e As EventArgs) Handles MicroPhoneTimer.Tick
+        Static BitmapIndex As Int16 = 0
+        SpeechButtonControl.Image = My.Resources.SystemAssets.ResourceManager.GetObject("MicroPhone_" & BitmapIndex.ToString("0"))
+        BitmapIndex = IIf(BitmapIndex = 4, 0, BitmapIndex + 1)
+    End Sub
 #End Region
 
 #End Region
@@ -818,30 +888,28 @@ Public Class SystemWorkStation
         NewXYBrowser.TopMost = False
     End Sub
 
-    Private Sub SetLabelForecolor()
-        If LabelColorDialog.ShowDialog = DialogResult.OK Then
-            LabelForeColor = LabelColorDialog.Color
-            For Each ScriptIcon As Label In ScriptIcons
-                ScriptIcon.ForeColor = LabelForeColor
-            Next
+    Private Sub SetLabelForecolor(ByVal ForeColor As Color)
+        For Each ScriptIcon As Label In ScriptIcons
+            ScriptIcon.ForeColor = LabelForecolor
+        Next
 
-            InfoTitle.ForeColor = LabelForeColor
-            DiskReadCounterLabel.ForeColor = LabelForeColor
-            DiskWriteCounterLabel.ForeColor = LabelForeColor
-            UploadSpeedCountLabel.ForeColor = LabelForeColor
-            DownloadSpeedCountLabel.ForeColor = LabelForeColor
-            IPLabel.ForeColor = LabelForeColor
-            AddressLabel.ForeColor = LabelForeColor
-            DateTimeLabel.ForeColor = LabelForeColor
+        InfoTitle.ForeColor = LabelForecolor
+        DiskReadCounterLabel.ForeColor = LabelForecolor
+        DiskWriteCounterLabel.ForeColor = LabelForecolor
+        UploadSpeedCountLabel.ForeColor = LabelForecolor
+        DownloadSpeedCountLabel.ForeColor = LabelForecolor
+        PowerLineLabel.ForeColor = LabelForecolor
+        BatteryStatusLabel.ForeColor = LabelForecolor
+        BatteryPercentLabel.ForeColor = LabelForecolor
+        IPLabel.ForeColor = LabelForecolor
+        AddressLabel.ForeColor = LabelForecolor
+        DateTimeLabel.ForeColor = LabelForecolor
 
-            ConsoleButtonControl.ForeColor = LabelForeColor
-            XYMailButtonControl.ForeColor = LabelForeColor
-            XYBrowserButtonControl.ForeColor = LabelForeColor
-            ShutdownButtonControl.ForeColor = LabelForeColor
-            SettingButtonControl.ForeColor = LabelForeColor
-        Else
-            My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-        End If
+        ConsoleButtonControl.ForeColor = LabelForecolor
+        XYMailButtonControl.ForeColor = LabelForecolor
+        XYBrowserButtonControl.ForeColor = LabelForecolor
+        ShutdownButtonControl.ForeColor = LabelForecolor
+        SettingButtonControl.ForeColor = LabelForecolor
     End Sub
 
     Private Function BitmapToString(ByVal Image As Bitmap) As String
@@ -875,6 +943,78 @@ Public Class SystemWorkStation
         CircularGraphics.Dispose()
 
         Return CircularBitmap
+    End Function
+
+    Private Function TextShadowStroke(ByVal DrawText As String, ByVal TextFont As Font, ByVal ShadowRadius As Integer, ByVal ForeColor As Color, ByVal ShadowColor As Color, ByVal StrokeColor As Color, ByVal BitmapSize As Size) As Bitmap
+        Dim DoubleRadius As Integer = ShadowRadius * 2
+        Dim ShadowColorCell() As Byte = {ShadowColor.R, ShadowColor.G, ShadowColor.B}
+        Dim ResualtBitmap As Bitmap = New Bitmap(BitmapSize.Width, BitmapSize.Height)
+        Dim ResualtGraphics As Graphics = Graphics.FromImage(ResualtBitmap)
+        ResualtGraphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+        ResualtGraphics.TextRenderingHint = Drawing.Text.TextRenderingHint.ClearTypeGridFit
+
+        '绘制阴影
+        ResualtGraphics.DrawString(DrawText, TextFont, New SolidBrush(ShadowColor), New PointF(ShadowRadius, ShadowRadius))
+        Dim ResualtBitmapData As Imaging.BitmapData = New Imaging.BitmapData
+        ResualtBitmapData = ResualtBitmap.LockBits(New Rectangle(0, 0, BitmapSize.Width, BitmapSize.Height), Imaging.ImageLockMode.WriteOnly, ResualtBitmap.PixelFormat)
+        Dim DataStride As Integer = ResualtBitmapData.Stride
+        Dim DataWidth As Integer = ResualtBitmapData.Width
+        Dim DataHeight As Integer = ResualtBitmapData.Height
+        Dim InitalDataArray(DataStride * DataHeight - 1) As Byte
+        Dim DataArray(DataStride * DataHeight - 1) As Byte
+        Dim Position(DoubleRadius, DoubleRadius) As Integer
+        Runtime.InteropServices.Marshal.Copy(ResualtBitmapData.Scan0, InitalDataArray, 0, InitalDataArray.Length)
+        Dim Index = 0, IndexX, IndexY As Integer, Round, RoundX, RoundY As Integer
+        Dim ByteSum, AValue As Integer
+        Dim Boundary(DataHeight) As Integer, LineIndex As Integer
+        For RoundY = 0 To DoubleRadius
+            Index = (RoundY - ShadowRadius) * DataWidth - ShadowRadius
+            For RoundX = 0 To DoubleRadius
+                Position(RoundY, RoundX) = IIf((RoundX - ShadowRadius) ^ 2 + (RoundY - ShadowRadius) ^ 2 <= ShadowRadius ^ 2, 4 * (Index + RoundX), 0)
+            Next
+        Next
+        For IndexY = 0 To DataHeight - 1
+            Boundary(IndexY + 1) = Boundary(IndexY) + DataStride
+        Next
+        For IndexY = 0 To DataHeight - 1
+            For IndexX = 0 To DataWidth - 1
+                ByteSum = 0 : AValue = 0
+                Index = IndexY * DataStride + IndexX * 4
+                For RoundY = 0 To DoubleRadius
+                    LineIndex = IndexY + RoundY - ShadowRadius
+                    If 0 <= LineIndex AndAlso LineIndex < Boundary.Count - 1 Then
+                        For RoundX = 0 To DoubleRadius
+                            Round = Index + Position(RoundY, RoundX)
+                            If Boundary(LineIndex) <= Round AndAlso Round < Boundary(LineIndex + 1) Then
+                                AValue += InitalDataArray(Round + 3)
+                                ByteSum += 1
+                            End If
+                        Next
+                    End If
+                Next
+                AValue /= ByteSum
+                DataArray(Index) = ShadowColorCell(2)
+                DataArray(Index + 1) = ShadowColorCell(1)
+                DataArray(Index + 2) = ShadowColorCell(0)
+                DataArray(Index + 3) = AValue
+            Next
+        Next
+        Runtime.InteropServices.Marshal.Copy(DataArray, 0, ResualtBitmapData.Scan0, DataArray.Length)
+        ResualtBitmap.UnlockBits(ResualtBitmapData)
+        '文字描边
+        Dim DrawBrush As Brush = New System.Drawing.Drawing2D.LinearGradientBrush(New Point(0, 0), New Point(0, 1), StrokeColor, StrokeColor)
+        ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius - 1, ShadowRadius + 1))
+        ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius - 1, ShadowRadius - 1))
+        ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius + 1, ShadowRadius + 1))
+        ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius + 1, ShadowRadius - 1))
+        ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius + 1, ShadowRadius))
+        ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius - 1, ShadowRadius))
+        ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius, ShadowRadius + 1))
+        ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius, ShadowRadius - 1))
+        '绘制原文字
+        ResualtGraphics.DrawString(DrawText, TextFont, New SolidBrush(ForeColor), New PointF(ShadowRadius, ShadowRadius))
+        ResualtGraphics.Dispose()
+        Return ResualtBitmap
     End Function
 
 #End Region

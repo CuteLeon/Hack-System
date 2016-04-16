@@ -26,12 +26,14 @@
 #Region "接口函数"
 
     Public Sub StartMelt()
+        If Melting Then Exit Sub
         Melting = True
         ThreadMelt = New Threading.Thread(AddressOf Melt)
         ThreadMelt.Start()
     End Sub
 
     Public Sub StopMelt()
+        If Not Melting Then Exit Sub
         ThreadMelt.Abort()
         Melting = False
     End Sub

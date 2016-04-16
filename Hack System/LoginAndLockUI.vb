@@ -6,46 +6,63 @@ Public Class LoginAndLockUI
 #Region "声明区"
 
     Private Declare Function GetCursorPos Lib "user32" (ByRef lpPoint As POINTAPI) As Integer
+
     Private Structure POINTAPI
         Dim X As Int16
         Dim Y As Int16
     End Structure
+
+    Private Const WallpaperCount As Int16 = 19
     Public HeadSize As Size = New Size(159, 159)
     Public UserHead As Bitmap
-    Public HeadString As String
+    Public UserName As String
+    Public UserNameBitmap As Bitmap
+    Public UserHeadString As String
+    Public UserNameString As String
     Public LockScreenMode As Boolean = False
+    Dim WallpaperIndex As Integer = 9
     Dim FirstPoint As POINTAPI
     Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Width \ 50
-    Dim MovedMe As Boolean = False
     Dim ThreadShowMe As Thread
     Dim ThreadHideMe As Thread
-    'The UpperBound of wallpapers.
-    Private Const WallpaperUpperBound As Int16 = 18
 #End Region
 
 #Region "窗体"
 
     Private Sub LoginAndLockUI_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Allow thread to visit UI.
-        System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
+        CheckForIllegalCrossThreadCalls = False
         'Full screen
         Me.Location = New Point(0, 0)
         Me.Size = My.Computer.Screen.Bounds.Size
-        '使用Panel控件可以优化设计，但是Panel会闪烁，所以继续使用PictureBox
-        HeadString = My.Settings.UserHead
-        If HeadString = vbNullString Then
-            UserHead = My.Resources.SystemAssets.DefaultUserHead
-        Else
-            UserHead = StringToBitmap(HeadString)
+
+        Dim WallpaperIndexSetting As String = My.Settings.LoginWallpaperIndex
+        If Not WallpaperIndexSetting = vbNullString Then
+            WallpaperIndex = Int(WallpaperIndexSetting)
+            Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
         End If
+
+        UserHeadString = My.Settings.UserHead
+        If UserHeadString = vbNullString Then UserHead = My.Resources.SystemAssets.DefaultUserHead Else UserHead = StringToBitmap(UserHeadString)
         HeadPictureBox.BackgroundImage = UserHead
 
+        UserNameString = My.Settings.UserNameBitmap
+        If UserNameString = vbNullString Then UserNameBitmap = My.Resources.SystemAssets.DefaultUserName Else UserNameBitmap = StringToBitmap(UserNameString)
+        UserNameControl.Image = UserNameBitmap
+
+        UserName = My.Settings.UserName
+        If UserName = vbNullString Then UserName = "Leon"
+        SystemWorkStation.MenuUserName.Text = UserName
+
+        '使用Panel控件可以简化设计，但是Panel会闪烁，所以继续使用PictureBox
         HeadPictureBox.Location = New Point(-3, -3)
         PasswordControl.Parent = LoginAreaControl
         LoginButtonControl.Parent = LoginAreaControl
         HeadPictureBox.Parent = LoginAreaControl
+        UserNameControl.Parent = LoginAreaControl
         PasswordControl.Location = New Point(281, 113)
         LoginButtonControl.Location = New Point(507, 48)
+        UserNameControl.Location = New Point(HeadPictureBox.Right, 20)
         LoginAreaControl.Left = (My.Computer.Screen.Bounds.Width - LoginAreaControl.Width) / 2
         LoginAreaControl.Top = (My.Computer.Screen.Bounds.Height - LoginAreaControl.Height) / 2
         'Dont select password.
@@ -66,7 +83,6 @@ Public Class LoginAndLockUI
 
     Private Sub LoginAndLockUI_MouseMove(sender As Object, e As MouseEventArgs)
         'Allow mouse to move window.
-        MovedMe = True
         Dim NowPoint As POINTAPI
         GetCursorPos(NowPoint)
         Me.Left += NowPoint.X - FirstPoint.X
@@ -86,7 +102,6 @@ Public Class LoginAndLockUI
     End Sub
 
     Private Sub LoginAndLockUI_MouseDown(sender As Object, e As MouseEventArgs)
-        MovedMe = False
         GetCursorPos(FirstPoint)
         AddHandler Me.MouseMove, AddressOf LoginAndLockUI_MouseMove
     End Sub
@@ -94,10 +109,11 @@ Public Class LoginAndLockUI
     Private Sub LoginAndLockUI_Click(sender As Object, e As EventArgs) Handles Me.Click
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         'Click to change wallpaper.
-        If Not MovedMe Then
-            Static Index As Integer = 10
-            Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & Index.ToString("00"))
-            If Index = WallpaperUpperBound Then Index = 0 Else Index += 1
+        If Me.Left ^ 2 < 25 Then
+            If WallpaperIndex = WallpaperCount Then WallpaperIndex = 0 Else WallpaperIndex += 1
+            Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
+            My.Settings.LoginWallpaperIndex = WallpaperIndex
+            My.Settings.Save()
         End If
     End Sub
 #End Region
@@ -178,25 +194,35 @@ Public Class LoginAndLockUI
 
 #Region "功能函数"
 
-    Private Function StringToBitmap(ByVal Base64 As String) As Bitmap
+    Public Function StringToBitmap(ByVal Base64 As String) As Bitmap
         Try
             Dim EncryptByte() As Byte = Convert.FromBase64String(Base64)
             Dim BitmapStream As IO.MemoryStream = New IO.MemoryStream(EncryptByte)
             Return Bitmap.FromStream(BitmapStream)
         Catch ex As Exception
-            Return My.Resources.SystemAssets.DefaultUserHead
+            Return Nothing
         End Try
     End Function
 
-    'Exchange windows.
     Private Sub ExchangeUI()
-        If PasswordControl.Text.ToLower = "resethead" Then
-            '密码输入框输入"resethead"可以恢复初始头像
+        If PasswordControl.Text.ToLower = "resetuser" Then
+            '密码输入框输入"resetuser"可以恢复初始头像和用户名
             UserHead = Nothing
-            HeadString = vbNullString
+            UserName = "Leon"
+            SystemWorkStation.MenuUserName.Text = UserName
+            UserNameString = vbNullString
+            UserNameBitmap = Nothing
+            UserHeadString = vbNullString
+
+            UserNameControl.Image = My.Resources.SystemAssets.DefaultUserName
+            UserNameControl.Size = New Size(300, UserNameControl.Image.Height)
             HeadPictureBox.BackgroundImage = My.Resources.SystemAssets.DefaultUserHead
+
+            My.Settings.UserName = UserName
+            My.Settings.UserNameBitmap = UserNameString
             My.Settings.UserHead = vbNullString
             My.Settings.Save()
+
             If Not TipsForm.Visible Then TipsForm.Show(Me)
             TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Reset head successfully")
         Else
@@ -231,6 +257,7 @@ Public Class LoginAndLockUI
             Me.Left = 0
         End If
     End Sub
+
 #End Region
 
 End Class

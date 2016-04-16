@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Devices
+﻿Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Devices
 
 Namespace My
     ' 以下事件可用于 MyApplication: 
@@ -11,6 +12,15 @@ Namespace My
         Private Sub MyApplication_NetworkAvailabilityChanged(sender As Object, e As NetworkAvailableEventArgs) Handles Me.NetworkAvailabilityChanged
             '重新联接网络后自动读取IP和城市定位
             If My.Computer.Network.IsAvailable Then SystemWorkStation.GetIPAndAddress()
+        End Sub
+
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            If e.CommandLine.Count = 0 Then Exit Sub
+            If InStr(e.CommandLine.First.ToLower, "reset") Then
+                My.Settings.Reset()
+                MsgBox("Config has been reset ! Please run me again.", MsgBoxStyle.Information, "Hack-System :")
+                End
+            End If
         End Sub
     End Class
 End Namespace

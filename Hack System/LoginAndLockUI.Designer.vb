@@ -26,6 +26,7 @@ Partial Class LoginAndLockUI
         Me.PasswordControl = New System.Windows.Forms.TextBox()
         Me.LoginButtonControl = New System.Windows.Forms.PictureBox()
         Me.HeadPictureBox = New System.Windows.Forms.PictureBox()
+        Me.UserNameControl = New System.Windows.Forms.Label()
         CType(Me.LoginAreaControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LoginButtonControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.HeadPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -78,6 +79,16 @@ Partial Class LoginAndLockUI
         Me.HeadPictureBox.TabIndex = 7
         Me.HeadPictureBox.TabStop = False
         '
+        'UserNameControl
+        '
+        Me.UserNameControl.BackColor = System.Drawing.Color.Transparent
+        Me.UserNameControl.Font = New System.Drawing.Font("微软雅黑", 27.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.UserNameControl.Location = New System.Drawing.Point(285, 177)
+        Me.UserNameControl.Name = "UserNameControl"
+        Me.UserNameControl.Size = New System.Drawing.Size(300, 64)
+        Me.UserNameControl.TabIndex = 8
+        Me.UserNameControl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'LoginAndLockUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -86,6 +97,7 @@ Partial Class LoginAndLockUI
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_09
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(812, 440)
+        Me.Controls.Add(Me.UserNameControl)
         Me.Controls.Add(Me.HeadPictureBox)
         Me.Controls.Add(Me.LoginButtonControl)
         Me.Controls.Add(Me.PasswordControl)
@@ -107,4 +119,5 @@ Partial Class LoginAndLockUI
     Friend WithEvents LoginButtonControl As PictureBox
     Friend WithEvents PasswordControl As TextBox
     Friend WithEvents HeadPictureBox As PictureBox
+    Friend WithEvents UserNameControl As Label
 End Class

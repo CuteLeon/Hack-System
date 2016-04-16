@@ -65,6 +65,78 @@ Namespace My
                 Me("UserHead") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property UserName() As String
+            Get
+                Return CType(Me("UserName"),String)
+            End Get
+            Set
+                Me("UserName") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property UserNameBitmap() As String
+            Get
+                Return CType(Me("UserNameBitmap"),String)
+            End Get
+            Set
+                Me("UserNameBitmap") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property ForeColor() As String
+            Get
+                Return CType(Me("ForeColor"),String)
+            End Get
+            Set
+                Me("ForeColor") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LoginWallpaperIndex() As String
+            Get
+                Return CType(Me("LoginWallpaperIndex"),String)
+            End Get
+            Set
+                Me("LoginWallpaperIndex") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DesktopWallpaperIndex() As String
+            Get
+                Return CType(Me("DesktopWallpaperIndex"),String)
+            End Get
+            Set
+                Me("DesktopWallpaperIndex") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property CustomWallpaper() As String
+            Get
+                Return CType(Me("CustomWallpaper"),String)
+            End Get
+            Set
+                Me("CustomWallpaper") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

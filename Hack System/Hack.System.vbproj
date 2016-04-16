@@ -327,6 +327,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\MicroPhone_3.png" />
+    <None Include="Resources\MicroPhone_2.png" />
+    <None Include="Resources\MicroPhone_1.png" />
+    <None Include="Resources\MicroPhone_0.png" />
+    <None Include="Resources\DefaultUserName.png" />
     <None Include="Resources\HeadMask.png" />
     <None Include="Resources\DefaultUserHead.png" />
     <None Include="Resources\SystemMsgBGI.gif" />
@@ -421,7 +426,6 @@
     <None Include="Resources\FullScreen_D.png" />
     <None Include="Resources\DragBlock.png" />
     <None Include="Resources\ShutdownBGI.png" />
-    <None Include="Resources\SplitLine.png" />
     <None Include="Resources\CommandTipBGI.png" />
     <None Include="Resources\ShowConsole.wav" />
     <None Include="Resources\OKButton.png" />
