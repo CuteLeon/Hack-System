@@ -495,7 +495,7 @@ Partial Class SystemWorkStation
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_09
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(1018, 459)
+        Me.ClientSize = New System.Drawing.Size(771, 378)
         Me.ContextMenuStrip = Me.DesktopMenuStrip
         Me.Controls.Add(Me.PowerLineLabel)
         Me.Controls.Add(Me.BatteryPercentLabel)
