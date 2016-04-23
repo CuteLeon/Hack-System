@@ -656,7 +656,6 @@ Public Class SystemWorkStation
         Try
             If SpeechRecognitionMode Then
                 '关闭语音识别
-                If MicroPhoneTimer.Enabled Then MicroPhoneTimer.Stop()
                 MySpeechRecognitionEngine.RecognizeAsyncStop()
                 VoiceLevelBar.Value = 0
                 SpeechRecognitionMode = False

@@ -161,7 +161,7 @@ Public Class TipsForm
     End Sub
 
     Public Sub CancelTip()
-        On Error Resume Next
+        If Not Me.Visible Then Exit Sub
 
         CloseMe = True
         If ShowThread.ThreadState = Threading.ThreadState.Running Then
