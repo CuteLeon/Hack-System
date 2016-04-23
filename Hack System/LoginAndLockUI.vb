@@ -225,8 +225,6 @@ Public Class LoginAndLockUI
 
             If Not TipsForm.Visible Then TipsForm.Show(Me)
             TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Reset head successfully")
-
-            Me.Activate()
         Else
             If LockScreenMode Then
                 My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
