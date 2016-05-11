@@ -15,35 +15,35 @@ Public Class SystemWorkStation
     Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hwnd As IntPtr, ByVal nIndex As Integer) As Integer
     Private Declare Function SetLayeredWindowAttributes Lib "user32" (ByVal hwnd As IntPtr, ByVal crKey As Integer, ByVal bAlpha As Integer, ByVal dwFlags As Integer) As Integer
 
-    Public Const AeroPeekOpacity As Double = 0.15 'Opacity in AeroPeek model.
+    Public Const AeroPeekOpacity As Double = 0.15 'Opacity in AeroPeek model.'
     Public Const ScriptUpperBound As Int16 = 22
     Public Const IconWidth As Integer = 65
     Public Const IconHeight As Integer = 90
     Public Const MainHomeURL As String = "http://www.baidu.com/"
     Private Const WallpaperUpperBound As Int16 = 18
 
-    '以默认语言创建语音识别引擎
+    '以默认语言创建语音识别引擎'
     Public MySpeechRecognitionEngine As SpeechRecognitionEngine
     Public ScriptInfomation() As String = {"Digital Rain", "Network Attack", "Air Defence", "Iron Man", "Attack Data", "3D Map", "Ballistic Missile", "Missile", "Action Indication", "Zone Isolation", "Waiting...", "Life Support", "Agent Info.", "Graphic SO", "Face 3DModel", "Driving System", "Thinking Export", "ARToolkit", "Combat", "UAV Camera", "NOVA 6", "Satellite", "Decrypt"}
     Public ScriptSpeechGrammar() As String = {"打开数字雨", "打开网络攻击", "打开防空系统", "打开钢铁侠", "打开攻击数据", "打开三维地图", "打开弹道导弹", "打开导弹部署", "打开行动指示", "打开区域隔离", "打开等待连接", "打开生命维护系统", "打开特工信息", "打开示波器", "打开面部模型", "打开驱动系统", "打开思维导出系统", "打开增强现实", "打开作战部署", "打开无人机", "打开新星", "打开近地卫星", "打开解密"}
-    Public AeroPeekModel As Boolean 'AeroPeek model state.
-    Public ScriptForm(ScriptUpperBound) As WindowsTemplates 'Scripts
-    Public BrowserForms As New ArrayList  'Browsers.
+    Public AeroPeekModel As Boolean 'AeroPeek model state.'
+    Public ScriptForm(ScriptUpperBound) As WindowsTemplates 'Scripts'
+    Public BrowserForms As New ArrayList  'Browsers.'
     Public ScriptFormVisible(ScriptUpperBound) As Boolean 'Scripts' visible.（Diffrent with Form.Visible）
     Public ScriptIcons(ScriptUpperBound) As Label
-    Public NowIconIndex As Integer = -1 'Icon under mouse.
-    Public RightestLoction As Integer 'The rightest icon's right location.
+    Public NowIconIndex As Integer = -1 'Icon under mouse.'
+    Public RightestLoction As Integer 'The rightest icon’s right location.'
     Public NotFirstGetIPAndAddress As Boolean
-    Public SystemClosing As Boolean 'Application is going to exit.
+    Public SystemClosing As Boolean 'Application is going to exit.'
     Public SpeechRecognitionMode As Boolean = True
 
     Dim UserNameFont As Font = New Font("微软雅黑", 36.0)
     Dim MouseDownLocation As Point
     Dim XDistance, YDistance As Integer
     Dim ColumnIconCount As Integer = Int(My.Computer.Screen.Bounds.Height / IconHeight) - 1
-    Dim IntervalDistance As Integer = (My.Computer.Screen.Bounds.Height - ColumnIconCount * IconHeight) / (ColumnIconCount + 1) 'Distance between icons.
-    Dim WallpaperIndex As Integer = 9 'Default wallpaper's ID.
-    Dim CustomWallpaperBitmap As Bitmap 'User Custom Wallpaper
+    Dim IntervalDistance As Integer = (My.Computer.Screen.Bounds.Height - ColumnIconCount * IconHeight) / (ColumnIconCount + 1) 'Distance between icons.'
+    Dim WallpaperIndex As Integer = 9 'Default wallpaper’s ID.'
+    Dim CustomWallpaperBitmap As Bitmap 'User Custom Wallpaper'
     Dim CustomWallpaperString As String
     Dim HighLightIcon(ScriptUpperBound) As Bitmap
     Dim MouseDownIcon(ScriptUpperBound) As Bitmap
@@ -51,12 +51,12 @@ Public Class SystemWorkStation
     Dim IconGraphics As Graphics
     Dim SenderControl As Label
     Dim NowButton As Label
-    Dim CPUCounter As New PerformanceCounter("Processor", "% Processor Time", "_Total") 'CPU
-    Dim DiskReadCounter As New PerformanceCounter("PhysicalDisk", "Disk Read Bytes/sec", "_Total") 'RAM
-    Dim DiskWriteCounter As New PerformanceCounter("PhysicalDisk", "Disk Write Bytes/sec", "_Total") 'DISK
+    Dim CPUCounter As New PerformanceCounter("Processor", "% Processor Time", "_Total") 'CPU'
+    Dim DiskReadCounter As New PerformanceCounter("PhysicalDisk", "Disk Read Bytes/sec", "_Total") 'RAM'
+    Dim DiskWriteCounter As New PerformanceCounter("PhysicalDisk", "Disk Write Bytes/sec", "_Total") 'DISK'
     Dim CmptInfo As New ComputerInfo()
     Dim MemoryUsageRate As Integer
-    Dim PCCategory As New PerformanceCounterCategory("Network Interface") 'NetWork
+    Dim PCCategory As New PerformanceCounterCategory("Network Interface") 'NetWork'
     Dim LBoundOfArray As UInteger = 0, UBoundOfArray As UInteger = PCCategory.GetInstanceNames.Count - 1
     Dim DownloadCounter(UBoundOfArray) As PerformanceCounter
     Dim UploadCounter(UBoundOfArray) As PerformanceCounter
@@ -107,7 +107,7 @@ Public Class SystemWorkStation
         UploadSpeedCountLabel.Cursor = StartingUpUI.SystemCursor
         DownloadSpeedCountLabel.Cursor = StartingUpUI.SystemCursor
         DateTimeLabel.Cursor = StartingUpUI.SystemCursor
-        'Set as hand,to tips that users can click them.
+        'Set as hand,to tips that users can click them.'
         IPLabel.Cursor = Cursors.Hand
         AddressLabel.Cursor = Cursors.Hand
 
@@ -134,7 +134,7 @@ Public Class SystemWorkStation
         CommandConsole.CommandInputBox.Top = My.Computer.Screen.Bounds.Height - 40
 
         CustomImageDialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
-        '考虑到用户时间和日期的格式问题，需要自适应标签大小，防止数据显示不全
+        '考虑到用户时间和日期的格式问题，需要自适应标签大小，防止数据显示不全'
         DateTimeLabel.AutoSize = True
         DateTimeLabel.Text = My.Computer.Clock.LocalTime.ToLocalTime
         DateTimeLabel.Location = New Point(Me.Width - DateTimeLabel.Width - 12, 12)
@@ -144,13 +144,13 @@ Public Class SystemWorkStation
         If LoginAndLockUI.Visible Then Exit Sub
         Dim KeyAscii As Integer = Asc(e.KeyChar)
         If KeyAscii = 27 Then
-            '按下Esc弹出关机提示框
+            '按下Esc弹出关机提示框'
             ShowShutdownWindow()
         ElseIf KeyAscii = 96 Or KeyAscii = -24156 Then
-            '按下~键，显示控制台
+            '按下~键，显示控制台'
             CommandConsole.ShowConsole()
         Else
-            '其它按键Asc码对脚本总数求余当做脚本标识，加载脚本
+            '其它按键Asc码对脚本总数求余当做脚本标识，加载脚本'
             KeyAscii = KeyAscii Mod (ScriptUpperBound + 1)
             LoadScript(KeyAscii)
         End If
@@ -158,7 +158,7 @@ Public Class SystemWorkStation
 
     Private Sub SystemWorkStation_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         If Not SystemClosing Then
-            '取消关闭消息
+            '取消关闭消息'
             e.Cancel = True
             '弹出关机提示框
             ShowShutdownWindow()
@@ -171,16 +171,16 @@ Public Class SystemWorkStation
         MouseDownLocation = e.Location
         MouseDragForm.Size = New Size(0, 0)
         MouseDragForm.Visible = True
-        '注册鼠标移动事件，开时监听鼠标移动
+        '注册鼠标移动事件，开时监听鼠标移动'
         AddHandler Me.MouseMove, AddressOf SystemWorkStation_MouseMove
     End Sub
 
     Private Sub SystemWorkStation_MouseMove(sender As Object, e As MouseEventArgs)
-        '记录鼠标移动距离
+        '记录鼠标移动距离'
         XDistance = e.X - MouseDownLocation.X
         YDistance = e.Y - MouseDownLocation.Y
         Dim DragArea As Rectangle
-        '设置鼠标拖动区域
+        '设置鼠标拖动区域'
         If XDistance > 0 Then
             DragArea.X = MouseDownLocation.X
             DragArea.Width = XDistance
@@ -195,15 +195,15 @@ Public Class SystemWorkStation
             DragArea.Y = e.Location.Y
             DragArea.Height = -YDistance
         End If
-        '将上述区域应用到鼠标拖动窗体
+        '将上述区域应用到鼠标拖动窗体'
         MouseDragForm.SetBounds(DragArea.X, DragArea.Y, DragArea.Width, DragArea.Height)
     End Sub
 
     Private Sub SystemWorkStation_MouseUp(sender As Object, e As MouseEventArgs) Handles MyBase.MouseUp
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-        '桌面左键抬起，停止鼠标拖动
+        '桌面左键抬起，停止鼠标拖动'
         MouseDragForm.Visible = False
-        '卸载鼠标移动事件
+        '卸载鼠标移动事件'
         RemoveHandler Me.MouseMove, AddressOf SystemWorkStation_MouseMove
     End Sub
 
@@ -259,7 +259,7 @@ Public Class SystemWorkStation
             LoadGrammar()
             AddHandler MySpeechRecognitionEngine.AudioLevelUpdated, AddressOf SpeechRecognitionEngine_AudioLevelUpdated
             AddHandler MySpeechRecognitionEngine.SpeechRecognized, AddressOf SpeechRecognitionEngine_SpeechRecognized
-            'AddHandler MySpeechRecognitionEngine.AudioStateChanged, AddressOf SpeechRecognitionEngine_AudioStateChanged
+            'AddHandler MySpeechRecognitionEngine.AudioStateChanged, AddressOf SpeechRecognitionEngine_AudioStateChanged'
             MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
         Catch ex As Exception
             VoiceLevelBar.Value = 0
@@ -275,7 +275,7 @@ Public Class SystemWorkStation
     End Sub
 
     Private Sub SystemWorkStation_Activated(sender As Object, e As EventArgs) Handles Me.Activated
-        '不要使用Timer值守置前，因为会影响输入法的候选词窗体
+        '不要使用Timer值守置前，因为会影响输入法的候选词窗体'
         Me.TopMost = True
     End Sub
 #End Region
@@ -363,7 +363,7 @@ Public Class SystemWorkStation
                 If Not (AboutMeForm.Visible) Then AboutMeForm.Show(Me)
                 SetForegroundWindow(AboutMeForm.Handle)
             Case "解锁"
-                '占空处理， 防止“解锁”进入[Case Else]
+                '占空处理， 防止“解锁”进入[Case Else]'
             Case Else
                 Dim ScriptIndex As Integer = Array.IndexOf(ScriptSpeechGrammar, e.Result.Text)
                 If ScriptIndex > -1 Then LoadScript(ScriptIndex)
@@ -384,27 +384,27 @@ Public Class SystemWorkStation
         LastVoiceLevel = e.AudioLevel
     End Sub
 
-    'Private Sub SpeechRecognitionEngine_AudioStateChanged(sender As Object, e As AudioStateChangedEventArgs)
-    '    If e.AudioState = AudioState.Silence Then
-    '        Debug.Print("识别引擎开启")
-    '    ElseIf e.AudioState = AudioState.Speech Then
-    '        Debug.Print("引擎识别到结果")
-    '    ElseIf e.AudioState = AudioState.Stopped Then
-    '        Debug.Print("识别引擎关闭")
-    '    End If
-    'End Sub
+    'Private Sub SpeechRecognitionEngine_AudioStateChanged(sender As Object, e As AudioStateChangedEventArgs)'
+    '    If e.AudioState = AudioState.Silence Then'
+    '        Debug.Print("识别引擎开启")'
+    '    ElseIf e.AudioState = AudioState.Speech Then'
+    '        Debug.Print("引擎识别到结果")'
+    '    ElseIf e.AudioState = AudioState.Stopped Then'
+    '        Debug.Print("识别引擎关闭")'
+    '    End If'
+    'End Sub'
 #End Region
 
 #Region "桌面图标"
 
     Private Sub IconTemplates_Click(sender As Object, e As MouseEventArgs)
-        '点击图标调用过程加载对应的脚本窗口
+        '点击图标调用过程加载对应的脚本窗口'
         Dim ScriptIndex As Integer = Int(CType(sender, Label).Tag)
         LoadScript(ScriptIndex)
     End Sub
 
     Private Sub IconTemplates_MouseEnter(sender As Object, e As EventArgs)
-        '鼠标进入桌面图标，高亮显示图标
+        '鼠标进入桌面图标，高亮显示图标'
         SenderControl = CType(sender, Label)
         Dim ScriptIndex As Integer = Int(CType(sender, Label).Tag)
         If HighLightIcon(ScriptIndex) Is Nothing Then
@@ -414,33 +414,33 @@ Public Class SystemWorkStation
             IconGraphics.Dispose()
         End If
         SenderControl.Image = HighLightIcon(ScriptIndex)
-        '记录鼠标下图标的标识
+        '记录鼠标下图标的标识'
         NowIconIndex = Int(SenderControl.Tag)
-        '设置图标右键菜单项可用
+        '设置图标右键菜单项可用'
         MenuCloseScript.Enabled = ScriptFormVisible(NowIconIndex)
         MenuBreath.Enabled = ScriptFormVisible(NowIconIndex)
     End Sub
 
     Private Sub IconTemplates_MouseLeave(sender As Object, e As EventArgs)
-        '鼠标离开图标时，如果脚本在关闭状态就取消高亮显示图标
+        '鼠标离开图标时，如果脚本在关闭状态就取消高亮显示图标'
         Dim ScriptIndex As Integer = Int(CType(sender, Label).Tag)
-        'NowIconIndex = -1
+        'NowIconIndex = -1'
         If Not (ScriptFormVisible(ScriptIndex)) Then SenderControl.Image = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
         If AeroPeekModel Then
-            '遍历脚本窗体
+            '遍历脚本窗体'
             For ScriptIndex = 0 To ScriptUpperBound
-                '还原在AeroPeek模式下被隐藏的窗体的透明度
+                '还原在AeroPeek模式下被隐藏的窗体的透明度'
                 If ScriptFormVisible(ScriptIndex) Then ScriptForm(ScriptIndex).Opacity = WindowsTemplates.NegativeOpacity
             Next
-            '关闭AeroPeek模式
+            '关闭AeroPeek模式'
             AeroPeekModel = False
-            '被激活的窗体不被透明
+            '被激活的窗体不被透明'
             If Not (ActiveForm Is Nothing) Then If Not (ActiveForm Is CommandConsole) Then ActiveForm.Opacity = 1
         End If
     End Sub
 
     Private Sub IconTemplates_MouseUp(sender As Object, e As MouseEventArgs)
-        '鼠标抬起
+        '鼠标抬起'
         SenderControl = CType(sender, Label)
         Dim ScriptIndex As Integer = Int(CType(sender, Label).Tag)
         If HighLightIcon(ScriptIndex) Is Nothing Then
@@ -453,26 +453,26 @@ Public Class SystemWorkStation
     End Sub
 
     Private Sub IconTemplates_MouseHover(sender As Object, e As EventArgs)
-        '鼠标悬停时显示AeroPeek视图
+        '鼠标悬停时显示AeroPeek视图'
         If Not (ScriptFormVisible(NowIconIndex)) Or ShutdownTips.Visible Or AboutMeForm.Visible Then Exit Sub
-        '如果脚本是打开状态，则开启AeroPeek模式
+        '如果脚本是打开状态，则开启AeroPeek模式'
         AeroPeekModel = True
         Dim StartIndex, EndIndex, ScriptIndex As Integer
         EndIndex = NowIconIndex - 1
         StartIndex = NowIconIndex + 1
         ScriptForm(NowIconIndex).Opacity = 1
-        '向前遍历隐藏脚本窗体
+        '向前遍历隐藏脚本窗体'
         For ScriptIndex = 0 To EndIndex
             If ScriptFormVisible(ScriptIndex) Then ScriptForm(ScriptIndex).Opacity = AeroPeekOpacity
         Next
-        '向后遍历隐藏脚本窗体
+        '向后遍历隐藏脚本窗体'
         For ScriptIndex = StartIndex To ScriptUpperBound
             If ScriptFormVisible(ScriptIndex) Then ScriptForm(ScriptIndex).Opacity = AeroPeekOpacity
         Next
     End Sub
 
     Private Sub IconTemplates_MouseDown(sender As Object, e As MouseEventArgs)
-        '鼠标按下，再次改变图标样式
+        '鼠标按下，再次改变图标样式'
         SenderControl = CType(sender, Label)
         Dim ScriptIndex As Integer = Int(CType(sender, Label).Tag)
         If MouseDownIcon(ScriptIndex) Is Nothing Then
@@ -488,18 +488,18 @@ Public Class SystemWorkStation
 #Region "菜单项"
 
     Private Sub MenuBreath_Click(sender As Object, e As EventArgs) Handles MenuBreath.Click
-        '呼吸
+        '呼吸'
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         ScriptForm(NowIconIndex).Breath()
     End Sub
 
     Private Sub MenuCloseScript_Click(sender As Object, e As EventArgs) Handles MenuCloseScript.Click
-        '桌面图标菜单之关闭脚本
+        '桌面图标菜单之关闭脚本'
         ScriptForm(NowIconIndex).Close()
     End Sub
 
     Private Sub MenuLastWallpaper_Click(sender As Object, e As EventArgs) Handles MenuLastWallpaper.Click
-        '桌面右键菜单之上一张壁纸
+        '桌面右键菜单之上一张壁纸'
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         If WallpaperIndex = 0 AndAlso (CustomWallpaperBitmap IsNot Nothing) Then
             WallpaperIndex = -1
@@ -515,7 +515,7 @@ Public Class SystemWorkStation
 
     Private Sub MenuNextWallpaper_Click(sender As Object, e As EventArgs) Handles MenuNextWallpaper.Click
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-        '桌面右键菜单之下一张壁纸
+        '桌面右键菜单之下一张壁纸'
         If WallpaperIndex = WallpaperUpperBound AndAlso (CustomWallpaperBitmap IsNot Nothing) Then
             WallpaperIndex = -1
             Me.BackgroundImage = CustomWallpaperBitmap
@@ -533,18 +533,18 @@ Public Class SystemWorkStation
     End Sub
 
     Private Sub MenuShutdown_Click(sender As Object, e As EventArgs) Handles MenuShutdown.Click
-        '桌面右键菜单之关机
+        '桌面右键菜单之关机'
         ShowShutdownWindow()
     End Sub
 
     Private Sub MenuTopMost_Click(sender As Object, e As EventArgs) Handles MenuTopMost.Click
-        '改变窗体的置前和置后状态
+        '改变窗体的置前和置后状态'
         SetParent(Me.Handle, IIf(MenuTopMost.Checked, GetDesktopWindow(), GetDesktopIconHandle()))
         Me.TopMost = MenuTopMost.Checked
     End Sub
 
     Private Sub MenuCustomWallpaper_Click(sender As Object, e As EventArgs) Handles MenuCustomWallpaper.Click
-        '设置自定义壁纸
+        '设置自定义壁纸'
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         If CustomImageDialog.ShowDialog() = DialogResult.OK Then
             Try
@@ -566,7 +566,7 @@ Public Class SystemWorkStation
     End Sub
 
     Private Sub MenuSetForecolor_Click(sender As Object, e As EventArgs) Handles MenuSetForecolor.Click
-        '右键菜单设置系统字体颜色
+        '右键菜单设置系统字体颜色'
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         If LabelColorDialog.ShowDialog = DialogResult.OK Then
             LabelForecolor = LabelColorDialog.Color
@@ -629,33 +629,33 @@ Public Class SystemWorkStation
 
     Private Sub XYBrowserButtonControl_Click(sender As Object, e As EventArgs) Handles XYBrowserButtonControl.Click
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-        '新建浏览器窗口
+        '新建浏览器窗口'
         LoadNewBrowser()
     End Sub
 
     Private Sub ConsoleButtonControl_Click(sender As Object, e As EventArgs) Handles ConsoleButtonControl.Click
-        '显示控制台
+        '显示控制台'
         CommandConsole.ShowConsole()
     End Sub
 
     Private Sub ShutdownButtonControl_Click(sender As Object, e As EventArgs) Handles ShutdownButtonControl.Click
-        '点击关机按钮显示关机提示框
+        '点击关机按钮显示关机提示框'
         ShowShutdownWindow()
     End Sub
 
     Private Sub SettingButtonControl_Click(sender As Object, e As EventArgs) Handles SettingButtonControl.Click
-        '播放提示音
+        '播放提示音'
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
-        '显示或激活关于窗体
+        '显示或激活关于窗体'
         If Not (AboutMeForm.Visible) Then AboutMeForm.Show(Me)
         SetForegroundWindow(AboutMeForm.Handle)
     End Sub
 
     Private Sub SpeechButtonControl_Click(sender As Object, e As EventArgs) Handles SpeechButtonControl.Click
-        '无法开启语音识别服务时，跳出过程
+        '无法开启语音识别服务时，跳出过程'
         Try
             If SpeechRecognitionMode Then
-                '关闭语音识别
+                '关闭语音识别'
                 MySpeechRecognitionEngine.RecognizeAsyncStop()
                 VoiceLevelBar.Value = 0
                 SpeechRecognitionMode = False
@@ -664,7 +664,7 @@ Public Class SystemWorkStation
                 If Not TipsForm.Visible Then TipsForm.Show(Me)
                 TipsForm.PopupTips("Shuted the", TipsForm.TipsIconType.Exclamation, "RecognitionEngine off.")
             Else
-                '开启语音识别
+                '开启语音识别'
                 MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
                 SpeechRecognitionMode = True
                 SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_On
@@ -679,7 +679,7 @@ Public Class SystemWorkStation
     End Sub
 
     Private Sub XYMailButtonControl_Click(sender As Object, e As EventArgs) Handles XYMailButtonControl.Click
-        '显示/隐藏发送邮件窗体
+        '显示/隐藏发送邮件窗体'
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         If XYMail.Visible Then XYMail.Hide() Else XYMail.Show(Me)
     End Sub
@@ -767,17 +767,17 @@ Public Class SystemWorkStation
         SetForegroundWindow(LoginAndLockUI.Handle)
     End Sub
 
-    Public Sub LoadScript(ByVal ScriptIndex As Integer) '加载脚本
-        '播放脚本启动音效
+    Public Sub LoadScript(ByVal ScriptIndex As Integer) '加载脚本'
+        '播放脚本启动音效'
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ScriptStarting"), AudioPlayMode.Background)
-        '如果脚本未被加载过，先创建脚本窗体对象并设定脚本标识
+        '如果脚本未被加载过，先创建脚本窗体对象并设定脚本标识'
         If ScriptForm(ScriptIndex) Is Nothing Then
             ScriptForm(ScriptIndex) = New WindowsTemplates
             ScriptForm(ScriptIndex).Tag = ScriptIndex.ToString("00")
         End If
-        '脚本在关闭状态
+        '脚本在关闭状态'
         If Not (ScriptForm(ScriptIndex).Visible) And Not (ScriptFormVisible(ScriptIndex)) Then
-            '高亮显示脚本对应桌面图标
+            '高亮显示脚本对应桌面图标'
             SenderControl = ScriptIcons(ScriptIndex)
             If HighLightIcon(ScriptIndex) Is Nothing Then
                 HighLightIcon(ScriptIndex) = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
@@ -786,25 +786,25 @@ Public Class SystemWorkStation
                 IconGraphics.Dispose()
             End If
             SenderControl.Image = HighLightIcon(ScriptIndex)
-            '显示脚本窗体并记录
+            '显示脚本窗体并记录'
             ScriptFormVisible(ScriptIndex) = True
             ScriptForm(ScriptIndex).Show(Me)
         End If
-        '脚本在打开状态
+        '脚本在打开状态'
         If ScriptForm(ScriptIndex).Visible And ScriptFormVisible(ScriptIndex) Then
-            '图标右键菜单项设为可用
+            '图标右键菜单项设为可用'
             MenuCloseScript.Enabled = True
             MenuBreath.Enabled = True
-            '激活脚本窗体
+            '激活脚本窗体'
             SetForegroundWindow(ScriptForm(ScriptIndex).Handle)
         End If
     End Sub
 
     Public Sub ShowShutdownWindow()
         If LoginAndLockUI.Visible Then Exit Sub
-        '播放提示音
+        '播放提示音'
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
-        '显示或激活关机提示框
+        '显示或激活关机提示框'
         If Not (ShutdownTips.Visible) Then ShutdownTips.Show(Me)
         SetForegroundWindow(ShutdownTips.Handle)
     End Sub
@@ -854,7 +854,7 @@ Public Class SystemWorkStation
         Dim LastHandleTop As Integer = 0
         Dim HandleSHELLDLL_DefView As Integer = 0
         Dim HandleSysListView32 As Integer = 0
-        '在WorkerW里搜索
+        '在WorkerW里搜索'
         Do Until HandleSysListView32 > 0
             HandleTop = FindWindowEx(HandleDesktop, LastHandleTop, "WorkerW", vbNullString)
             HandleSHELLDLL_DefView = FindWindowEx(HandleTop, 0, "SHELLDLL_DefView", vbNullString)
@@ -862,9 +862,9 @@ Public Class SystemWorkStation
             LastHandleTop = HandleTop
             If LastHandleTop = 0 Then Exit Do
         Loop
-        '如果找到了，立即返回
+        '如果找到了，立即返回'
         If HandleSysListView32 > 0 Then Return HandleSysListView32
-        '在Progman里搜索
+        '在Progman里搜索'
         Do Until HandleSysListView32 > 0
             HandleTop = FindWindowEx(HandleDesktop, LastHandleTop, "Progman", "Program Manager")
             HandleSHELLDLL_DefView = FindWindowEx(HandleTop, 0, "SHELLDLL_DefView", vbNullString)
@@ -876,13 +876,13 @@ Public Class SystemWorkStation
     End Function
 
     Public Sub LoadNewBrowser(Optional ByVal HomeURL As String = MainHomeURL)
-        '加载新浏览器窗口
+        '加载新浏览器窗口'
         Dim NewXYBrowser As Form = New XYBrowser
-        '将需要打开的网址赋给新窗口
+        '将需要打开的网址赋给新窗口'
         NewXYBrowser.Tag = HomeURL
-        '将新窗口添加进BrowserForms数组
+        '将新窗口添加进BrowserForms数组'
         BrowserForms.Add(NewXYBrowser)
-        '显示新的浏览器窗口
+        '显示新的浏览器窗口'
         NewXYBrowser.Show(Me)
         SetForegroundWindow(NewXYBrowser.Handle)
         NewXYBrowser.TopMost = False
@@ -953,7 +953,7 @@ Public Class SystemWorkStation
         ResualtGraphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
         ResualtGraphics.TextRenderingHint = Drawing.Text.TextRenderingHint.ClearTypeGridFit
 
-        '绘制阴影
+        '绘制阴影'
         ResualtGraphics.DrawString(DrawText, TextFont, New SolidBrush(ShadowColor), New PointF(ShadowRadius, ShadowRadius))
         Dim ResualtBitmapData As Imaging.BitmapData = New Imaging.BitmapData
         ResualtBitmapData = ResualtBitmap.LockBits(New Rectangle(0, 0, BitmapSize.Width, BitmapSize.Height), Imaging.ImageLockMode.WriteOnly, ResualtBitmap.PixelFormat)
@@ -993,7 +993,7 @@ Public Class SystemWorkStation
                     End If
                 Next
                 AValue /= ByteSum
-                DataArray(Index) = ShadowColorCell(2)
+                DataArray(Index + 0) = ShadowColorCell(2)
                 DataArray(Index + 1) = ShadowColorCell(1)
                 DataArray(Index + 2) = ShadowColorCell(0)
                 DataArray(Index + 3) = AValue
@@ -1001,7 +1001,7 @@ Public Class SystemWorkStation
         Next
         Runtime.InteropServices.Marshal.Copy(DataArray, 0, ResualtBitmapData.Scan0, DataArray.Length)
         ResualtBitmap.UnlockBits(ResualtBitmapData)
-        '文字描边
+        '文字描边'
         Dim DrawBrush As Brush = New System.Drawing.Drawing2D.LinearGradientBrush(New Point(0, 0), New Point(0, 1), StrokeColor, StrokeColor)
         ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius - 1, ShadowRadius + 1))
         ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius - 1, ShadowRadius - 1))
@@ -1011,7 +1011,7 @@ Public Class SystemWorkStation
         ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius - 1, ShadowRadius))
         ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius, ShadowRadius + 1))
         ResualtGraphics.DrawString(DrawText, TextFont, DrawBrush, New Point(ShadowRadius, ShadowRadius - 1))
-        '绘制原文字
+        '绘制原文字'
         ResualtGraphics.DrawString(DrawText, TextFont, New SolidBrush(ForeColor), New PointF(ShadowRadius, ShadowRadius))
         ResualtGraphics.Dispose()
         Return ResualtBitmap
