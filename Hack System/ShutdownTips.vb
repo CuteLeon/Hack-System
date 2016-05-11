@@ -38,12 +38,21 @@ Public Class ShutdownTips
             Shutdown()
         End If
     End Sub
+
+    Private Sub ShutdownTips_Deactivate(sender As Object, e As EventArgs) Handles Me.Deactivate
+        CancelShutdown() 'Deactivate to hide me.
+    End Sub
+
 #End Region
 
 #Region "控件"
 
     Private Sub ShutdownButtonControl_Click(sender As Object, e As EventArgs) Handles ShutdownButtonControl.Click
         Shutdown()
+    End Sub
+
+    Private Sub CancelButtonControl_Click(sender As Object, e As EventArgs) Handles CancelButtonControl.Click
+        CancelShutdown()
     End Sub
 
 #Region "关机按钮"
@@ -95,15 +104,12 @@ Public Class ShutdownTips
         SystemWorkStation.SetForegroundWindow(ShutdowningUI.Handle)
     End Sub
 
-    Private Sub CancelButtonControl_Click(sender As Object, e As EventArgs) Handles CancelButtonControl.Click
-        CancelShutdown()
-    End Sub
-
     Private Sub CancelShutdown()
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         Me.Hide()
         SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
+
 #End Region
 
 End Class
