@@ -109,9 +109,10 @@ Public Class LoginAndLockUI
     Private Sub LoginAndLockUI_Click(sender As Object, e As EventArgs) Handles Me.Click
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         'Click to change wallpaper.
-        If Me.Left ^ 2 < 25 Then
-            If WallpaperIndex = WallpaperCount Then WallpaperIndex = 0 Else WallpaperIndex += 1
+        If Math.Abs(Me.Left) < 15 Then '当拖动距离超过15像素时不切换壁纸
+            If WallpaperIndex = WallpaperCount - 1 Then WallpaperIndex = 0 Else WallpaperIndex += 1
             Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
+            UserNameControl.Text = WallpaperIndex & "," & CBool(Me.BackgroundImage Is Nothing)
             My.Settings.LoginWallpaperIndex = WallpaperIndex
             My.Settings.Save()
         End If
