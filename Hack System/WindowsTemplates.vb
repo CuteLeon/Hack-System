@@ -133,12 +133,14 @@ Public Class WindowsTemplates
     End Sub
 
     Private Sub BreathTimer_Tick(sender As Object, e As EventArgs) Handles BreathTimer.Tick
+        '呼吸
         Static Difference As Single = 0.05
         If Me.Opacity = 0 Or Me.Opacity = 1 Then Difference = -Difference
         Me.Opacity += Difference
     End Sub
 
     Private Sub UnBreathTimer_Tick(sender As Object, e As EventArgs) Handles UnBreathTimer.Tick
+        '呼吸到对应的透明度后停止呼吸
         Static EndOpacity As Double = IIf(ActiveForm Is Me, 1, NegativeOpacity)
         Me.Opacity += IIf(Me.Opacity > EndOpacity, -0.05, 0.05)
         If Math.Round(Me.Opacity, 1) = EndOpacity Then UnBreathTimer.Stop()

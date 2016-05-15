@@ -2,6 +2,8 @@
 
 Module DrawImageModule
 
+    '服务于扫雷游戏，使用Alpha通道绘制图像
+
 #Region "声明区"
 
     Private Const ULW_COLORKEY As Int32 = &H1

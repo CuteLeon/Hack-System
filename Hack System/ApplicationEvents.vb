@@ -16,6 +16,7 @@ Namespace My
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             If e.CommandLine.Count = 0 Then Exit Sub
+            '命令行参数为"reset"时重置存档
             If InStr(e.CommandLine.First.ToLower, "reset") Then
                 My.Settings.Reset()
                 MsgBox("Config has been reset ! Please run me again.", MsgBoxStyle.Information, "Hack-System :")

@@ -128,8 +128,8 @@ Public Class XYBrowser
         Application.DoEvents()
     End Sub
 
-    '点击浏览器按钮
     Private Sub BrowserButton_Click(sender As Object, e As EventArgs) Handles Btn_GoBack.Click, Btn_GoForward.Click, Btn_Home.Click, Btn_NowStop.Click, Btn_Refresh.Click
+        '点击浏览器按钮
         NowButton = CType(sender, Label)
         Select Case NowButton.Tag
             Case "GoBack" '后退
@@ -151,8 +151,8 @@ Public Class XYBrowser
         Application.DoEvents()
     End Sub
 
-    '点击标题栏按钮
     Private Sub TitleButton_Click(sender As Object, e As EventArgs) Handles Btn_Max.Click, Btn_Restore.Click, Btn_Close.Click, Btn_FullScreen.Click
+        '点击标题栏按钮
         NowButton = CType(sender, Label)
         Select Case NowButton.Tag
             Case "Min" '最小化
@@ -189,16 +189,18 @@ Public Class XYBrowser
         End Select
     End Sub
 
-    '地址栏导航
     Private Sub Btn_GoNavigate_Click(sender As Object, e As EventArgs) Handles Btn_GoNavigate.Click
+        '地址栏导航
         NavigateToAddress()
     End Sub
 
     Private Sub BrowserAddress_KeyPress(sender As Object, e As KeyPressEventArgs) Handles BrowserAddress.KeyPress
+        '回车键导航到地址
         If Asc(e.KeyChar) = 13 Then NavigateToAddress()
     End Sub
 
     Private Sub Btn_Search_Click(sender As Object, e As EventArgs) Handles Btn_Search.Click
+        '搜索功能
         MainWebBrowser.Navigate("http://www.baidu.com/s?wd=" & IIf(SearchTextBox.Text = "Search...", vbNullString, SearchTextBox.Text))
     End Sub
 
@@ -206,6 +208,7 @@ Public Class XYBrowser
         '搜索框敲回车键一样调用搜索功能
         If Asc(e.KeyChar) = 13 Then MainWebBrowser.Navigate("http://www.baidu.com/s?wd=" & SearchTextBox.Text)
     End Sub
+
 #Region "浏览器模块：前进、后退、主页、停止、刷新按钮响应鼠标的动态效果"
     Private Sub BrowserButton_MouseEnter(sender As Object, e As EventArgs) Handles Btn_GoBack.MouseEnter, Btn_GoForward.MouseEnter, Btn_Home.MouseEnter, Btn_NowStop.MouseEnter, Btn_Refresh.MouseEnter, Btn_GoNavigate.MouseEnter, Btn_Search.MouseEnter
         NowButton = CType(sender, Label)

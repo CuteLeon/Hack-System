@@ -1,7 +1,7 @@
 Public Class XYMail
 
 #Region "声明区"
-
+    '返回结果信息的颜色
     Dim NormalColor As Color = Color.FromArgb(19, 132, 205)
     Dim FailColor As Color = Color.FromArgb(248, 97, 97)
     Dim MailThread As Threading.Thread = New Threading.Thread(AddressOf SendMail)
@@ -16,9 +16,11 @@ Public Class XYMail
 
     Private Sub XYMail_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         If Me.Visible Then
+            '初始化界面
             ReturnInfo.ForeColor = NormalColor
             ReturnInfo.Text = "Mail function is ready."
         Else
+            '中断进程
             Btn_Send.Enabled = True
             If MailThread.ThreadState = Threading.ThreadState.Running Then
                 MailThread.Abort()
@@ -43,7 +45,7 @@ Public Class XYMail
     Private Sub Btn_Send_Click(sender As Object, e As EventArgs) Handles Btn_Send.Click
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         If MailThread.ThreadState = Threading.ThreadState.Running Then Exit Sub
-
+        '多线程发送邮件
         MailThread = New Threading.Thread(AddressOf SendMail)
         Btn_Send.Enabled = False
         ReturnInfo.ForeColor = NormalColor

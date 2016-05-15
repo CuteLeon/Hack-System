@@ -3,30 +3,30 @@
 #Region "窗体和控件"
 
     Private Sub AboutMeForm_Load(sender As Object, e As EventArgs) Handles Me.Load
-        'Set control's parent.
+        '设置控件的父容器
         AboutMeControl.Parent = AboutMeWallpaperControl
         OKButtonControl.Parent = AboutMeControl
         WebLink.Parent = AboutMeControl
         OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(0, 0, 140, 49), Imaging.PixelFormat.Format32bppArgb)
-        'Set mouse curor.
+
         Me.Cursor = StartingUpUI.SystemCursor
     End Sub
 
     Private Sub AboutMeControl_MouseDown(sender As Object, e As MouseEventArgs) Handles AboutMeControl.MouseDown
-        'Allow mouse to move window.
+        '允许鼠标拖动窗体
         WindowsTemplates.ReleaseCapture()
         WindowsTemplates.SendMessageA(Me.Handle, &HA1, 2, 0&)
     End Sub
 
     Private Sub OKButtonControl_Click(sender As Object, e As EventArgs) Handles OKButtonControl.Click
-        'Click OKButton to and hide me and focus main desktop.
+        '点击按钮隐藏
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         Me.Hide()
         SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
     Private Sub AboutMe_KeyPress(sender As Object, e As KeyPressEventArgs) Handles AboutMeControl.KeyPress, Me.KeyPress, WebLink.KeyPress
-        'Press [Enter] or [Esc] to hide me and focus main desktop.
+        '按 [Enter] 或 [Esc] 隐藏
         Dim KeyAscii As Integer = Asc(e.KeyChar)
         If KeyAscii = 27 Or KeyAscii = 13 Then
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)

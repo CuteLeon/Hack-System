@@ -4,20 +4,22 @@ Imports System.Threading
 Public Class ShutdowningUI
 
 #Region "声明区"
-
+    '线程每次移动的距离
     Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Width \ 50
 #End Region
 
 #Region "动态显示和隐藏"
 
     Private Sub ShowMe()
+        '动态显示关机界面
         For Index As Integer = 1 To 10
             Me.Opacity = Index / 10
             Thread.Sleep(50)
         Next
     End Sub
 
-    Private Sub HideMe(ByVal ToRight As Boolean)
+    Private Sub HideMe()
+        '动态隐藏关机界面
         Do Until Me.Left > My.Computer.Screen.Bounds.Width
             Me.Left += MoveDistance
             Me.Opacity = 0.5 * (1 - Me.Left / My.Computer.Screen.Bounds.Width) + 0.5
@@ -29,8 +31,9 @@ Public Class ShutdowningUI
 #Region "窗体"
 
     Private Sub ShutdowningUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'Allow thread to visit UI.
+        '允许多线程访问UI
         System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
+        '初始化界面
         Me.Location = New Point(0, 0)
         Me.Size = My.Computer.Screen.Bounds.Size
         Me.Cursor = StartingUpUI.SystemCursor
@@ -47,12 +50,8 @@ Public Class ShutdowningUI
         End If
     End Sub
 
-    Private Sub ShutdowningUI_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        If Not SystemWorkStation.SystemClosing Then e.Cancel = True
-    End Sub
-
     Private Sub ShutdowningUI_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        'Hide TipsForm if it is shown
+        '需要隐藏提示浮窗
         Dim ThreadShowMe As Thread = New Thread(AddressOf ShowMe)
         ThreadShowMe.Start()
         ThreadShowMe.Join()
@@ -62,24 +61,26 @@ Public Class ShutdowningUI
         If XYMail.Visible Then XYMail.Hide()
         If AboutMeForm.Visible Then AboutMeForm.Hide()
         If MineSweeperForm.Visible Then MineSweeperForm.Hide()
-        'Close scripts.
+        '遍历关闭脚本窗口
         For Each ChildForm As Form In SystemWorkStation.ScriptForm
             If Not (ChildForm Is Nothing) Then
                 ChildForm.Close()
             End If
         Next
-        'Close browsers.
+        '遍历关闭浏览器
         For Each BrowserForm In SystemWorkStation.BrowserForms
             CType(BrowserForm, XYBrowser).GoingToExit = True
             CType(BrowserForm, XYBrowser).Close()
         Next
-        'Hide desktop.
+        '隐藏主桌面
         SystemWorkStation.Hide()
 
+        '开始隐藏
         Dim ThreadHideMe As Thread = New Thread(AddressOf HideMe)
         ThreadHideMe.Start(True)
         ThreadHideMe.Join()
 
+        '程序退出！！！
         Application.Exit()
     End Sub
 #End Region

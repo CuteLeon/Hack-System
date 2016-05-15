@@ -22,6 +22,7 @@ Public Class ShutdownTips
     End Sub
 
     Private Sub ShutdownWindows_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        '系统试图关闭时不拦截窗体关闭消息
         If Not SystemWorkStation.SystemClosing Then
             e.Cancel = True
             CancelShutdown()
@@ -31,16 +32,17 @@ Public Class ShutdownTips
     Private Sub ShutdownWindows_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
         Dim KeyAsc As Integer = Asc(e.KeyChar)
         If KeyAsc = 27 Then
-            '[Esc] to cancel.
+            '[Esc] 取消关机
             CancelShutdown()
         ElseIf KeyAsc = 13 Then
-            '[Enter] to shutdown.
+            '[Enter] 关机
             Shutdown()
         End If
     End Sub
 
     Private Sub ShutdownTips_Deactivate(sender As Object, e As EventArgs) Handles Me.Deactivate
-        CancelShutdown() 'Deactivate to hide me.
+        '失活自动隐藏
+        CancelShutdown()
     End Sub
 
 #End Region
@@ -48,10 +50,12 @@ Public Class ShutdownTips
 #Region "控件"
 
     Private Sub ShutdownButtonControl_Click(sender As Object, e As EventArgs) Handles ShutdownButtonControl.Click
+        '点击关机那妞
         Shutdown()
     End Sub
 
     Private Sub CancelButtonControl_Click(sender As Object, e As EventArgs) Handles CancelButtonControl.Click
+        '点击取消按钮
         CancelShutdown()
     End Sub
 
@@ -98,6 +102,7 @@ Public Class ShutdownTips
 #Region "功能函数"
 
     Private Sub Shutdown()
+        '关机
         SystemWorkStation.SystemClosing = True
         Me.Hide()
         ShutdowningUI.Show(SystemWorkStation)
@@ -105,6 +110,7 @@ Public Class ShutdownTips
     End Sub
 
     Private Sub CancelShutdown()
+        '取消关机
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         Me.Hide()
         SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)

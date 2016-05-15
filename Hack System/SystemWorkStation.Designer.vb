@@ -197,7 +197,7 @@ Partial Class SystemWorkStation
         Me.ShutdownButtonControl.ForeColor = System.Drawing.Color.Aqua
         Me.ShutdownButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.ShutdownWindow_0
         Me.ShutdownButtonControl.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.ShutdownButtonControl.Location = New System.Drawing.Point(713, 390)
+        Me.ShutdownButtonControl.Location = New System.Drawing.Point(713, 411)
         Me.ShutdownButtonControl.Name = "ShutdownButtonControl"
         Me.ShutdownButtonControl.Size = New System.Drawing.Size(66, 80)
         Me.ShutdownButtonControl.TabIndex = 2
@@ -212,7 +212,7 @@ Partial Class SystemWorkStation
         Me.SettingButtonControl.ForeColor = System.Drawing.Color.Aqua
         Me.SettingButtonControl.Image = CType(resources.GetObject("SettingButtonControl.Image"), System.Drawing.Image)
         Me.SettingButtonControl.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.SettingButtonControl.Location = New System.Drawing.Point(643, 390)
+        Me.SettingButtonControl.Location = New System.Drawing.Point(643, 411)
         Me.SettingButtonControl.Name = "SettingButtonControl"
         Me.SettingButtonControl.Size = New System.Drawing.Size(66, 80)
         Me.SettingButtonControl.TabIndex = 3
@@ -256,7 +256,7 @@ Partial Class SystemWorkStation
         Me.XYBrowserButtonControl.ForeColor = System.Drawing.Color.Aqua
         Me.XYBrowserButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.XYBrowserIcon0
         Me.XYBrowserButtonControl.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.XYBrowserButtonControl.Location = New System.Drawing.Point(573, 390)
+        Me.XYBrowserButtonControl.Location = New System.Drawing.Point(573, 411)
         Me.XYBrowserButtonControl.Name = "XYBrowserButtonControl"
         Me.XYBrowserButtonControl.Size = New System.Drawing.Size(66, 80)
         Me.XYBrowserButtonControl.TabIndex = 6
@@ -271,7 +271,7 @@ Partial Class SystemWorkStation
         Me.XYMailButtonControl.ForeColor = System.Drawing.Color.Aqua
         Me.XYMailButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.Mailcon_0
         Me.XYMailButtonControl.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.XYMailButtonControl.Location = New System.Drawing.Point(503, 390)
+        Me.XYMailButtonControl.Location = New System.Drawing.Point(503, 411)
         Me.XYMailButtonControl.Name = "XYMailButtonControl"
         Me.XYMailButtonControl.Size = New System.Drawing.Size(66, 80)
         Me.XYMailButtonControl.TabIndex = 7
@@ -286,7 +286,7 @@ Partial Class SystemWorkStation
         Me.ConsoleButtonControl.ForeColor = System.Drawing.Color.Aqua
         Me.ConsoleButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.Console_0
         Me.ConsoleButtonControl.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.ConsoleButtonControl.Location = New System.Drawing.Point(433, 390)
+        Me.ConsoleButtonControl.Location = New System.Drawing.Point(433, 411)
         Me.ConsoleButtonControl.Name = "ConsoleButtonControl"
         Me.ConsoleButtonControl.Size = New System.Drawing.Size(66, 80)
         Me.ConsoleButtonControl.TabIndex = 8
@@ -300,7 +300,7 @@ Partial Class SystemWorkStation
         Me.InfoTitle.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.InfoTitle.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.InfoTitle.ForeColor = System.Drawing.Color.White
-        Me.InfoTitle.Location = New System.Drawing.Point(772, 38)
+        Me.InfoTitle.Location = New System.Drawing.Point(917, 38)
         Me.InfoTitle.Name = "InfoTitle"
         Me.InfoTitle.Size = New System.Drawing.Size(119, 220)
         Me.InfoTitle.TabIndex = 9
@@ -316,7 +316,7 @@ Partial Class SystemWorkStation
         'VoiceLevelBar
         '
         Me.VoiceLevelBar.BackColor = System.Drawing.SystemColors.MenuHighlight
-        Me.VoiceLevelBar.Location = New System.Drawing.Point(368, 456)
+        Me.VoiceLevelBar.Location = New System.Drawing.Point(368, 479)
         Me.VoiceLevelBar.Name = "VoiceLevelBar"
         Me.VoiceLevelBar.Size = New System.Drawing.Size(56, 10)
         Me.VoiceLevelBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
@@ -328,7 +328,7 @@ Partial Class SystemWorkStation
         Me.SpeechButtonControl.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.SpeechButton_0
         Me.SpeechButtonControl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.SpeechButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.MicroPhone_On
-        Me.SpeechButtonControl.Location = New System.Drawing.Point(363, 390)
+        Me.SpeechButtonControl.Location = New System.Drawing.Point(363, 413)
         Me.SpeechButtonControl.Name = "SpeechButtonControl"
         Me.SpeechButtonControl.Size = New System.Drawing.Size(66, 78)
         Me.SpeechButtonControl.TabIndex = 12
@@ -340,7 +340,7 @@ Partial Class SystemWorkStation
         Me.DiskReadCounterLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.DiskReadCounterLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.DiskReadCounterLabel.ForeColor = System.Drawing.Color.White
-        Me.DiskReadCounterLabel.Location = New System.Drawing.Point(891, 78)
+        Me.DiskReadCounterLabel.Location = New System.Drawing.Point(1036, 78)
         Me.DiskReadCounterLabel.Name = "DiskReadCounterLabel"
         Me.DiskReadCounterLabel.Size = New System.Drawing.Size(115, 20)
         Me.DiskReadCounterLabel.TabIndex = 15
@@ -353,7 +353,7 @@ Partial Class SystemWorkStation
         Me.DiskWriteCounterLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.DiskWriteCounterLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.DiskWriteCounterLabel.ForeColor = System.Drawing.Color.White
-        Me.DiskWriteCounterLabel.Location = New System.Drawing.Point(891, 98)
+        Me.DiskWriteCounterLabel.Location = New System.Drawing.Point(1036, 98)
         Me.DiskWriteCounterLabel.Name = "DiskWriteCounterLabel"
         Me.DiskWriteCounterLabel.Size = New System.Drawing.Size(115, 20)
         Me.DiskWriteCounterLabel.TabIndex = 16
@@ -366,7 +366,7 @@ Partial Class SystemWorkStation
         Me.UploadSpeedCountLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.UploadSpeedCountLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.UploadSpeedCountLabel.ForeColor = System.Drawing.Color.White
-        Me.UploadSpeedCountLabel.Location = New System.Drawing.Point(891, 118)
+        Me.UploadSpeedCountLabel.Location = New System.Drawing.Point(1036, 118)
         Me.UploadSpeedCountLabel.Name = "UploadSpeedCountLabel"
         Me.UploadSpeedCountLabel.Size = New System.Drawing.Size(115, 20)
         Me.UploadSpeedCountLabel.TabIndex = 17
@@ -379,7 +379,7 @@ Partial Class SystemWorkStation
         Me.DownloadSpeedCountLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.DownloadSpeedCountLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.DownloadSpeedCountLabel.ForeColor = System.Drawing.Color.White
-        Me.DownloadSpeedCountLabel.Location = New System.Drawing.Point(891, 138)
+        Me.DownloadSpeedCountLabel.Location = New System.Drawing.Point(1036, 138)
         Me.DownloadSpeedCountLabel.Name = "DownloadSpeedCountLabel"
         Me.DownloadSpeedCountLabel.Size = New System.Drawing.Size(115, 20)
         Me.DownloadSpeedCountLabel.TabIndex = 18
@@ -392,7 +392,7 @@ Partial Class SystemWorkStation
         Me.IPLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.IPLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.IPLabel.ForeColor = System.Drawing.Color.White
-        Me.IPLabel.Location = New System.Drawing.Point(891, 218)
+        Me.IPLabel.Location = New System.Drawing.Point(1036, 218)
         Me.IPLabel.Name = "IPLabel"
         Me.IPLabel.Size = New System.Drawing.Size(115, 20)
         Me.IPLabel.TabIndex = 19
@@ -407,7 +407,7 @@ Partial Class SystemWorkStation
         Me.AddressLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.AddressLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.AddressLabel.ForeColor = System.Drawing.Color.White
-        Me.AddressLabel.Location = New System.Drawing.Point(891, 238)
+        Me.AddressLabel.Location = New System.Drawing.Point(1036, 238)
         Me.AddressLabel.Name = "AddressLabel"
         Me.AddressLabel.Size = New System.Drawing.Size(88, 20)
         Me.AddressLabel.TabIndex = 20
@@ -419,7 +419,7 @@ Partial Class SystemWorkStation
         Me.DateTimeLabel.BackColor = System.Drawing.Color.Transparent
         Me.DateTimeLabel.Font = New System.Drawing.Font("微软雅黑", 14.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.DateTimeLabel.ForeColor = System.Drawing.Color.White
-        Me.DateTimeLabel.Location = New System.Drawing.Point(798, 9)
+        Me.DateTimeLabel.Location = New System.Drawing.Point(943, 9)
         Me.DateTimeLabel.Name = "DateTimeLabel"
         Me.DateTimeLabel.Size = New System.Drawing.Size(208, 25)
         Me.DateTimeLabel.TabIndex = 23
@@ -427,7 +427,7 @@ Partial Class SystemWorkStation
         '
         'CPUCounterBar
         '
-        Me.CPUCounterBar.Location = New System.Drawing.Point(894, 42)
+        Me.CPUCounterBar.Location = New System.Drawing.Point(1039, 42)
         Me.CPUCounterBar.Name = "CPUCounterBar"
         Me.CPUCounterBar.Size = New System.Drawing.Size(95, 12)
         Me.CPUCounterBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
@@ -435,7 +435,7 @@ Partial Class SystemWorkStation
         '
         'MemoryUsageRateBar
         '
-        Me.MemoryUsageRateBar.Location = New System.Drawing.Point(894, 62)
+        Me.MemoryUsageRateBar.Location = New System.Drawing.Point(1039, 62)
         Me.MemoryUsageRateBar.Name = "MemoryUsageRateBar"
         Me.MemoryUsageRateBar.Size = New System.Drawing.Size(95, 12)
         Me.MemoryUsageRateBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
@@ -455,7 +455,7 @@ Partial Class SystemWorkStation
         Me.BatteryStatusLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.BatteryStatusLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.BatteryStatusLabel.ForeColor = System.Drawing.Color.White
-        Me.BatteryStatusLabel.Location = New System.Drawing.Point(891, 178)
+        Me.BatteryStatusLabel.Location = New System.Drawing.Point(1036, 178)
         Me.BatteryStatusLabel.Name = "BatteryStatusLabel"
         Me.BatteryStatusLabel.Size = New System.Drawing.Size(115, 20)
         Me.BatteryStatusLabel.TabIndex = 26
@@ -468,7 +468,7 @@ Partial Class SystemWorkStation
         Me.BatteryPercentLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.BatteryPercentLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.BatteryPercentLabel.ForeColor = System.Drawing.Color.White
-        Me.BatteryPercentLabel.Location = New System.Drawing.Point(891, 198)
+        Me.BatteryPercentLabel.Location = New System.Drawing.Point(1036, 198)
         Me.BatteryPercentLabel.Name = "BatteryPercentLabel"
         Me.BatteryPercentLabel.Size = New System.Drawing.Size(115, 20)
         Me.BatteryPercentLabel.TabIndex = 27
@@ -481,7 +481,7 @@ Partial Class SystemWorkStation
         Me.PowerLineLabel.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.PowerLineLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.PowerLineLabel.ForeColor = System.Drawing.Color.White
-        Me.PowerLineLabel.Location = New System.Drawing.Point(891, 158)
+        Me.PowerLineLabel.Location = New System.Drawing.Point(1036, 158)
         Me.PowerLineLabel.Name = "PowerLineLabel"
         Me.PowerLineLabel.Size = New System.Drawing.Size(115, 20)
         Me.PowerLineLabel.TabIndex = 28
@@ -495,7 +495,7 @@ Partial Class SystemWorkStation
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_09
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(1018, 459)
+        Me.ClientSize = New System.Drawing.Size(874, 387)
         Me.ContextMenuStrip = Me.DesktopMenuStrip
         Me.Controls.Add(Me.PowerLineLabel)
         Me.Controls.Add(Me.BatteryPercentLabel)
