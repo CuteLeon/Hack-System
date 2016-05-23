@@ -1,5 +1,6 @@
 # Hack-System
 ### An interesting and cool simulation operating system.
+#### 这是一个有趣而炫酷的模拟操作系统
 
 > __Here are some Screenshots :__
 

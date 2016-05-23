@@ -77,7 +77,7 @@ Public Class ShutdowningUI
 
         '开始隐藏
         Dim ThreadHideMe As Thread = New Thread(AddressOf HideMe)
-        ThreadHideMe.Start(True)
+        ThreadHideMe.Start()
         ThreadHideMe.Join()
 
         '程序退出！！！

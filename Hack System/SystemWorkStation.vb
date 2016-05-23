@@ -179,7 +179,7 @@ Public Class SystemWorkStation
         MouseDownLocation = e.Location
         MouseDragForm.Size = New Size(0, 0)
         MouseDragForm.Visible = True
-        '注册鼠标移动事件，开时监听鼠标移动'
+        '注册鼠标移动事件，开时监听鼠标移动
         AddHandler Me.MouseMove, AddressOf SystemWorkStation_MouseMove
     End Sub
 
@@ -280,7 +280,7 @@ Public Class SystemWorkStation
             '为语音引擎绑定事件
             AddHandler MySpeechRecognitionEngine.AudioLevelUpdated, AddressOf SpeechRecognitionEngine_AudioLevelUpdated
             AddHandler MySpeechRecognitionEngine.SpeechRecognized, AddressOf SpeechRecognitionEngine_SpeechRecognized
-            'AddHandler MySpeechRecognitionEngine.AudioStateChanged, AddressOf SpeechRecognitionEngine_AudioStateChanged'
+            'AddHandler MySpeechRecognitionEngine.AudioStateChanged, AddressOf SpeechRecognitionEngine_AudioStateChanged
             '开启语音识别引擎
             MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
         Catch ex As Exception
@@ -392,7 +392,7 @@ Public Class SystemWorkStation
                 If Not (AboutMeForm.Visible) Then AboutMeForm.Show(Me)
                 SetForegroundWindow(AboutMeForm.Handle)
             Case "解锁"
-                '占空处理， 防止“解锁”进入[Case Else]'
+                '占空处理， 防止“解锁”进入[Case Else]
             Case Else
                 Dim ScriptIndex As Integer = Array.IndexOf(ScriptSpeechGrammar, e.Result.Text)
                 If ScriptIndex > -1 Then LoadScript(ScriptIndex)
@@ -413,15 +413,15 @@ Public Class SystemWorkStation
         LastVoiceLevel = e.AudioLevel
     End Sub
 
-    'Private Sub SpeechRecognitionEngine_AudioStateChanged(sender As Object, e As AudioStateChangedEventArgs)'
-    '    If e.AudioState = AudioState.Silence Then'
-    '        Debug.Print("识别引擎开启")'
-    '    ElseIf e.AudioState = AudioState.Speech Then'
-    '        Debug.Print("引擎识别到结果")'
-    '    ElseIf e.AudioState = AudioState.Stopped Then'
-    '        Debug.Print("识别引擎关闭")'
-    '    End If'
-    'End Sub'
+    'Private Sub SpeechRecognitionEngine_AudioStateChanged(sender As Object, e As AudioStateChangedEventArgs)
+    '    If e.AudioState = AudioState.Silence Then
+    '        Debug.Print("识别引擎开启")
+    '    ElseIf e.AudioState = AudioState.Speech Then
+    '        Debug.Print("引擎识别到结果")
+    '    ElseIf e.AudioState = AudioState.Stopped Then
+    '        Debug.Print("识别引擎关闭")
+    '    End If
+    'End Sub
 #End Region
 
 #Region "桌面图标"
@@ -704,6 +704,7 @@ Public Class SystemWorkStation
         Try '防止语音引擎出错，需要容错处理
             If SpeechRecognitionMode Then
                 '关闭语音识别
+                MicroPhoneTimer.Stop()
                 MySpeechRecognitionEngine.RecognizeAsyncStop()
                 VoiceLevelBar.Value = 0
                 SpeechRecognitionMode = False
