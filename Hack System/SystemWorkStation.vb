@@ -19,7 +19,7 @@ Public Class SystemWorkStation
     Public Const ScriptUpperBound As Int16 = 22 '脚本窗体数组的下标
     Public Const IconWidth As Integer = 65 '桌面图标的宽度(不适用Size类型：结构体类型无法定义为常量)
     Public Const IconHeight As Integer = 90 '桌面图标的高度
-    Public Const MainHomeURL As String = "http://wwwwwwwww.jodi.org/" '浏览器默认主页(http://wwwwwwwww.jodi.org/ 是一个很奇怪的网站)
+    Public Const MainHomeURL As String = "https://www.zoomeye.org/" ''浏览器默认主页 //("http://wwwwwwwww.jodi.org" 是一个很奇怪的网站)
     Private Const WallpaperUpperBound As Int16 = 18 '桌面壁纸数组的下标
 
     '以默认语言创建语音识别引擎

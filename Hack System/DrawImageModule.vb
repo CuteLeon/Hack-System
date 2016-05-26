@@ -2,16 +2,18 @@
 
 Module DrawImageModule
 
-    '服务于扫雷游戏，使用Alpha通道绘制图像
+    '服务于系统内所有需要绘制Alpha通道绘制图像的窗体
+    '被绘制的窗体需要覆写：
+    'Protected Overloads Overrides ReadOnly Property CreateParams() As CreateParams
 
 #Region "声明区"
 
-    Private Const ULW_COLORKEY As Int32 = &H1
-    Public Const ULW_ALPHA As Int32 = &H2
-    Private Const ULW_OPAQUE As Int32 = &H4
-    Public Const WS_EX_LAYERED As Int32 = &H80000
     Public Const AC_SRC_OVER As Byte = &H0
     Public Const AC_SRC_ALPHA As Byte = &H1
+    Public Const ULW_ALPHA As Int32 = &H2
+    Public Const WS_EX_LAYERED As Int32 = &H80000
+    Private Const ULW_COLORKEY As Int32 = &H1
+    Private Const ULW_OPAQUE As Int32 = &H4
 
     <StructLayout(LayoutKind.Sequential)>
     Public Structure mySize

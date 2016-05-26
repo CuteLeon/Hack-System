@@ -115,7 +115,6 @@ Public Class LoginAndLockUI
         If Math.Abs(Me.Left) < 15 Then '当拖动距离超过15像素时不切换壁纸
             If WallpaperIndex = WallpaperCount - 1 Then WallpaperIndex = 0 Else WallpaperIndex += 1
             Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
-            UserNameControl.Text = WallpaperIndex & "," & CBool(Me.BackgroundImage Is Nothing)
             My.Settings.LoginWallpaperIndex = WallpaperIndex
             My.Settings.Save()
         End If
@@ -232,6 +231,7 @@ Public Class LoginAndLockUI
             My.Settings.UserNameBitmap = UserNameString
             My.Settings.UserHead = vbNullString
             My.Settings.Save()
+
             '弹出提示浮窗
             If Not TipsForm.Visible Then TipsForm.Show(Me)
             TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Reset head successfully")
