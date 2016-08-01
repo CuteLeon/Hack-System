@@ -343,6 +343,9 @@ Public Class SystemWorkStation
         PowerLineLabel.Text = SystemInformation.PowerStatus.PowerLineStatus.ToString
         BatteryStatusLabel.Text = SystemInformation.PowerStatus.BatteryChargeStatus.ToString
         BatteryPercentLabel.Text = SystemInformation.PowerStatus.BatteryLifePercent * 100 & "%"
+
+        '强制每秒回收内存
+        GC.Collect()
     End Sub
 
     Private Sub IPAndAddressLabel_Click(sender As Object, e As EventArgs) Handles IPLabel.Click, AddressLabel.Click

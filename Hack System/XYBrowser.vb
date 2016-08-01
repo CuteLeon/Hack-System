@@ -328,6 +328,9 @@ Public Class XYBrowser
         MainWebBrowser.Dispose()
         SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
         Me.Close()
+
+        '强制每秒回收内存
+        GC.Collect()
     End Sub
 
     Private Sub NavigateToAddress()
