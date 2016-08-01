@@ -157,6 +157,7 @@ Public Class SystemWorkStation
             ShowShutdownWindow()
         ElseIf KeyAscii = 96 Or KeyAscii = -24156 Then
             '按下~键，显示控制台
+            If Not CommandConsole.Visible Then CommandConsole.Show(Me)
             CommandConsole.ShowConsole()
         Else
             '其它按键Asc码对脚本总数求余当做脚本标识，加载脚本
@@ -297,7 +298,7 @@ Public Class SystemWorkStation
 
     Private Sub SystemWorkStation_Activated(sender As Object, e As EventArgs) Handles Me.Activated
         '不要使用Timer值守置前，因为会影响输入法的候选词窗体
-        Me.TopMost = True
+        Me.TopMost = MenuTopMost.Checked
     End Sub
 
 #End Region

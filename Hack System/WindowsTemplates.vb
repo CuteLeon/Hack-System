@@ -6,7 +6,6 @@ Public Class WindowsTemplates
 
 #Region "声明区"
 
-    Private Declare Function GetNextWindow Lib "user32" Alias "GetWindow" (ByVal hwnd As Integer, ByVal wFlag As Integer) As Integer
     '允许鼠标通过控件拖动窗体的API
     Public Declare Function ReleaseCapture Lib "user32" () As Integer
     Public Declare Function SendMessageA Lib "user32" (ByVal hwnd As Integer, ByVal wMsg As Integer, ByVal wParam As Integer, lParam As VariantType) As Integer

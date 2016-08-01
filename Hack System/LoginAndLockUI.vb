@@ -216,27 +216,9 @@ Public Class LoginAndLockUI
     Private Sub ExchangeUI()
         If PasswordControl.Text.ToLower = "resetuser" Then
             '密码输入框输入"resetuser"可以恢复初始头像和用户名
-            UserHead = Nothing
-            UserName = "Leon"
-            SystemWorkStation.MenuUserName.Text = UserName
-            UserNameString = vbNullString
-            UserNameBitmap = Nothing
-            UserHeadString = vbNullString
-
-            UserNameControl.Image = My.Resources.SystemAssets.DefaultUserName
-            UserNameControl.Size = New Size(300, UserNameControl.Image.Height)
-            HeadPictureBox.BackgroundImage = My.Resources.SystemAssets.DefaultUserHead
-
-            My.Settings.UserName = UserName
-            My.Settings.UserNameBitmap = UserNameString
-            My.Settings.UserHead = vbNullString
-            My.Settings.Save()
-
-            '弹出提示浮窗
-            If Not TipsForm.Visible Then TipsForm.Show(Me)
-            TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Reset head successfully")
-
-            Me.Activate()
+            ResetUserConfig()
+            PasswordControl.Text = "LoginMeIn"
+            PasswordControl.SelectionStart = 9
         Else
             '可以在这里设置判断登录密码
             If LockScreenMode Then
@@ -255,6 +237,30 @@ Public Class LoginAndLockUI
             AddHandler Me.MouseUp, AddressOf LoginAndLockUI_MouseUp
             AddHandler Me.MouseDown, AddressOf LoginAndLockUI_MouseDown
         End If
+    End Sub
+
+    Private Sub ResetUserConfig()
+        UserHead = Nothing
+        UserName = "Leon"
+        SystemWorkStation.MenuUserName.Text = UserName
+        UserNameString = vbNullString
+        UserNameBitmap = Nothing
+        UserHeadString = vbNullString
+
+        UserNameControl.Image = My.Resources.SystemAssets.DefaultUserName
+        UserNameControl.Size = New Size(300, UserNameControl.Image.Height)
+        HeadPictureBox.BackgroundImage = My.Resources.SystemAssets.DefaultUserHead
+
+        My.Settings.UserName = UserName
+        My.Settings.UserNameBitmap = UserNameString
+        My.Settings.UserHead = vbNullString
+        My.Settings.Save()
+
+        '弹出提示浮窗
+        If Not TipsForm.Visible Then TipsForm.Show(Me)
+        TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Reset head successfully")
+
+        Me.Activate()
     End Sub
 
     Private Sub ReSetMyLocation()
