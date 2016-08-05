@@ -424,7 +424,6 @@
     <None Include="Resources\FullScreen_N.png" />
     <None Include="Resources\FullScreen_E.png" />
     <None Include="Resources\FullScreen_D.png" />
-    <None Include="Resources\DragBlock.png" />
     <None Include="Resources\ShutdownBGI.png" />
     <None Include="Resources\CommandTipBGI.png" />
     <None Include="Resources\ShowConsole.wav" />
