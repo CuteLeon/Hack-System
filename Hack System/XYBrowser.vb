@@ -11,11 +11,10 @@ Public Class XYBrowser
     Private Declare Function ReleaseCapture Lib "user32" () As Integer
     Private Declare Function SendMessageA Lib "user32" (ByVal hwnd As Integer, ByVal wMsg As Integer, ByVal wParam As Integer, lParam As VariantType) As Integer
     Private Const DefaultPixelFormat As Imaging.PixelFormat = Imaging.PixelFormat.Format32bppArgb
-    Private Const BorderWidth As Integer = 1 '窗体边框
+    Private Const WS_THICKFRAME As Int32 = &H40000
+    Private Const BorderWidth As Integer = 14 'WS_THICKFRAME 样式会让窗体产生14像素的边框
     Public GoingToExit As Boolean '窗体正在退出
     Dim BtnRectangle() As Rectangle = {New Rectangle(0, 0, 28, 28), New Rectangle(28, 0, 28, 28), New Rectangle(56, 0, 28, 28), New Rectangle(84, 0, 28, 28)} '动态按钮显示的图片区域
-    Dim MouseDowned As Boolean '鼠标按下的开关
-    Dim DistancePoint As Point '鼠标在窗口右下角拖动块里按下的坐标
     Dim NowButton As Label '当前响应的动态按钮
     Dim FullScreenMode As Boolean '全屏模式开关
 #End Region
@@ -54,8 +53,8 @@ Public Class XYBrowser
     Private Sub XYBrowser_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         If Me.WindowState = FormWindowState.Normal And Btn_Restore.Visible Then Btn_Max.Show() : Btn_Restore.Hide()
         If Me.WindowState = FormWindowState.Maximized And Btn_Max.Visible Then Btn_Restore.Show() : Btn_Max.Hide()
-        TopPanel.Location = New Point(BorderWidth, BorderWidth)
-        TopPanel.Width = Me.Width - 2 * BorderWidth
+        TopPanel.Location = New Point(0, 0)
+        TopPanel.Width = Me.Width - BorderWidth
         Btn_FullScreen.Left = TopPanel.Width - 84
         Btn_Restore.Left = Btn_FullScreen.Right
         Btn_Max.Left = Btn_Restore.Left
@@ -68,12 +67,23 @@ Public Class XYBrowser
         SearchTextBox.Left = Btn_GoNavigate.Right
         SearchTextBox.Width = Btn_Search.Left - SearchTextBox.Left
 
-        BrowserState.Location = New Point(BorderWidth, Me.Height - BrowserState.Height - BorderWidth)
-        BrowserState.Width = TopPanel.Width - Btn_DragBlock.Width
-        Btn_DragBlock.Location = New Point(Me.Width - Btn_DragBlock.Width - BorderWidth, Me.Height - Btn_DragBlock.Height - BorderWidth)
-        MainWebBrowser.Location = New Point(BorderWidth, TopPanel.Bottom)
-        MainWebBrowser.Size = New Point(Me.Width - 2 * BorderWidth, BrowserState.Top - TopPanel.Bottom)
+        BrowserState.Location = New Point(0, Me.Height - BrowserState.Height - BorderWidth)
+        BrowserState.Width = TopPanel.Width
+        MainWebBrowser.Location = New Point(0, TopPanel.Bottom)
+        MainWebBrowser.Size = New Point(TopPanel.Width, BrowserState.Top - TopPanel.Bottom)
     End Sub
+
+    Protected Overloads Overrides ReadOnly Property CreateParams() As CreateParams
+        Get '浏览器控件会使 WS_THICKFRAME 样式失效，所以需要监听
+            If Not DesignMode Then
+                Dim cp As CreateParams = MyBase.CreateParams
+                cp.Style = cp.Style Or WS_THICKFRAME
+                Return cp
+            Else
+                Return MyBase.CreateParams
+            End If
+        End Get
+    End Property
 
 #End Region
 
@@ -171,15 +181,15 @@ Public Class XYBrowser
                     Btn_FullScreen.Parent = TopPanel
                     Btn_FullScreen.BorderStyle = BorderStyle.None
                     Btn_FullScreen.Location = New Point(TopPanel.Width - 3 * Btn_FullScreen.Width, 0)
-                    MainWebBrowser.Location = New Point(BorderWidth, TopPanel.Bottom)
-                    MainWebBrowser.Size = New Point(Me.Width - 2 * BorderWidth, BrowserState.Top - TopPanel.Bottom)
-                Else
+                    MainWebBrowser.Location = New Point(0, TopPanel.Bottom)
+                    MainWebBrowser.Size = New Point(TopPanel.Width, BrowserState.Top - TopPanel.Bottom)
+                Else '进入全屏
                     Me.WindowState = FormWindowState.Maximized
                     Btn_FullScreen.Parent = MainWebBrowser
                     Btn_FullScreen.BorderStyle = BorderStyle.FixedSingle
-                    Btn_FullScreen.Location = New Point(Me.Width - Btn_FullScreen.Width, 0)
+                    Btn_FullScreen.Location = New Point(Me.Width - Btn_FullScreen.Width - BorderWidth, 0)
                     MainWebBrowser.Location = New Point(0, 0)
-                    MainWebBrowser.Size = Me.Size
+                    MainWebBrowser.Size = New Size(Me.Width - BorderWidth, Me.Height - BorderWidth)
                     Btn_FullScreen.BringToFront()
                 End If
                 Btn_FullScreen.Image = My.Resources.XYBrowserRes.FullScreen_N
@@ -281,36 +291,6 @@ Public Class XYBrowser
 
     Private Sub BrowserAddress_LostFocus(sender As Object, e As EventArgs) Handles BrowserAddress.LostFocus
         BrowserAddress.ForeColor = Color.DimGray
-    End Sub
-#End Region
-
-#Region "鼠标拖动右下角方块改变窗体大小"
-
-    Private Sub Btn_DragBlock_MouseDown(sender As Object, e As MouseEventArgs) Handles Btn_DragBlock.MouseDown
-        If Me.WindowState = FormWindowState.Maximized Then Exit Sub
-        MouseDowned = True
-        Btn_DragBlock.BackColor = Color.Silver
-        DistancePoint.X = Btn_DragBlock.Width - e.X
-        DistancePoint.Y = Btn_DragBlock.Height - e.Y
-    End Sub
-
-    Private Sub Btn_DragBlock_MouseUp(sender As Object, e As MouseEventArgs) Handles Btn_DragBlock.MouseUp
-        MouseDowned = False
-        Btn_DragBlock.BackColor = Color.LightGray
-    End Sub
-
-    Private Sub Btn_DragBlock_MouseMove(sender As Object, e As MouseEventArgs) Handles Btn_DragBlock.MouseMove
-        If Not MouseDowned Then Exit Sub
-        Me.Width = MousePosition.X - Me.Left + DistancePoint.X
-        Me.Height = MousePosition.Y - Me.Top + DistancePoint.Y
-    End Sub
-
-    Private Sub Btn_DragBlock_MouseEnter(sender As Object, e As EventArgs) Handles Btn_DragBlock.MouseEnter
-        Btn_DragBlock.BackColor = Color.LightGray
-    End Sub
-
-    Private Sub Btn_DragBlock_MouseLeave(sender As Object, e As EventArgs) Handles Btn_DragBlock.MouseLeave
-        Btn_DragBlock.BackColor = Color.White
     End Sub
 #End Region
 

@@ -39,26 +39,25 @@ Partial Class XYBrowser
         Me.Btn_Home = New System.Windows.Forms.Label()
         Me.Btn_NowStop = New System.Windows.Forms.Label()
         Me.Btn_Restore = New System.Windows.Forms.Label()
-        Me.Btn_DragBlock = New System.Windows.Forms.Label()
         Me.TopPanel.SuspendLayout()
         Me.SuspendLayout()
         '
         'MainWebBrowser
         '
-        Me.MainWebBrowser.Location = New System.Drawing.Point(1, 57)
+        Me.MainWebBrowser.Location = New System.Drawing.Point(0, 57)
         Me.MainWebBrowser.MinimumSize = New System.Drawing.Size(20, 20)
         Me.MainWebBrowser.Name = "MainWebBrowser"
         Me.MainWebBrowser.ScriptErrorsSuppressed = True
-        Me.MainWebBrowser.Size = New System.Drawing.Size(798, 524)
+        Me.MainWebBrowser.Size = New System.Drawing.Size(800, 525)
         Me.MainWebBrowser.TabIndex = 0
         '
         'BrowserState
         '
         Me.BrowserState.BackColor = System.Drawing.Color.White
         Me.BrowserState.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.BrowserState.Location = New System.Drawing.Point(1, 581)
+        Me.BrowserState.Location = New System.Drawing.Point(0, 582)
         Me.BrowserState.Name = "BrowserState"
-        Me.BrowserState.Size = New System.Drawing.Size(780, 18)
+        Me.BrowserState.Size = New System.Drawing.Size(800, 18)
         Me.BrowserState.TabIndex = 9
         Me.BrowserState.Text = "XY Browser"
         '
@@ -66,11 +65,8 @@ Partial Class XYBrowser
         '
         Me.TopPanel.BackColor = System.Drawing.Color.White
         Me.TopPanel.Controls.Add(Me.Btn_FullScreen)
-        Me.TopPanel.Controls.Add(Me.SearchTextBox)
         Me.TopPanel.Controls.Add(Me.Btn_Max)
         Me.TopPanel.Controls.Add(Me.Btn_GoForward)
-        Me.TopPanel.Controls.Add(Me.Btn_Search)
-        Me.TopPanel.Controls.Add(Me.Btn_GoNavigate)
         Me.TopPanel.Controls.Add(Me.BrowserAddress)
         Me.TopPanel.Controls.Add(Me.BrowserTitle)
         Me.TopPanel.Controls.Add(Me.Btn_Close)
@@ -79,16 +75,19 @@ Partial Class XYBrowser
         Me.TopPanel.Controls.Add(Me.Btn_Home)
         Me.TopPanel.Controls.Add(Me.Btn_NowStop)
         Me.TopPanel.Controls.Add(Me.Btn_Restore)
-        Me.TopPanel.Location = New System.Drawing.Point(1, 1)
+        Me.TopPanel.Controls.Add(Me.Btn_GoNavigate)
+        Me.TopPanel.Controls.Add(Me.SearchTextBox)
+        Me.TopPanel.Controls.Add(Me.Btn_Search)
+        Me.TopPanel.Location = New System.Drawing.Point(0, 0)
         Me.TopPanel.Name = "TopPanel"
-        Me.TopPanel.Size = New System.Drawing.Size(798, 57)
+        Me.TopPanel.Size = New System.Drawing.Size(800, 57)
         Me.TopPanel.TabIndex = 16
         '
         'Btn_FullScreen
         '
         Me.Btn_FullScreen.BackColor = System.Drawing.Color.White
         Me.Btn_FullScreen.Image = Global.HackSystem.My.Resources.XYBrowserRes.FullScreen_N
-        Me.Btn_FullScreen.Location = New System.Drawing.Point(714, 0)
+        Me.Btn_FullScreen.Location = New System.Drawing.Point(716, 0)
         Me.Btn_FullScreen.Name = "Btn_FullScreen"
         Me.Btn_FullScreen.Size = New System.Drawing.Size(28, 28)
         Me.Btn_FullScreen.TabIndex = 30
@@ -99,7 +98,7 @@ Partial Class XYBrowser
         Me.SearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.SearchTextBox.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.SearchTextBox.ForeColor = System.Drawing.Color.DimGray
-        Me.SearchTextBox.Location = New System.Drawing.Point(620, 30)
+        Me.SearchTextBox.Location = New System.Drawing.Point(622, 30)
         Me.SearchTextBox.Name = "SearchTextBox"
         Me.SearchTextBox.Size = New System.Drawing.Size(150, 23)
         Me.SearchTextBox.TabIndex = 26
@@ -109,7 +108,7 @@ Partial Class XYBrowser
         '
         Me.Btn_Max.BackColor = System.Drawing.Color.White
         Me.Btn_Max.Image = Global.HackSystem.My.Resources.XYBrowserRes.Max_N
-        Me.Btn_Max.Location = New System.Drawing.Point(742, 0)
+        Me.Btn_Max.Location = New System.Drawing.Point(744, 0)
         Me.Btn_Max.Name = "Btn_Max"
         Me.Btn_Max.Size = New System.Drawing.Size(28, 28)
         Me.Btn_Max.TabIndex = 22
@@ -127,7 +126,7 @@ Partial Class XYBrowser
         'Btn_Search
         '
         Me.Btn_Search.BackColor = System.Drawing.Color.White
-        Me.Btn_Search.Location = New System.Drawing.Point(770, 28)
+        Me.Btn_Search.Location = New System.Drawing.Point(772, 28)
         Me.Btn_Search.Name = "Btn_Search"
         Me.Btn_Search.Size = New System.Drawing.Size(28, 28)
         Me.Btn_Search.TabIndex = 27
@@ -136,7 +135,7 @@ Partial Class XYBrowser
         'Btn_GoNavigate
         '
         Me.Btn_GoNavigate.BackColor = System.Drawing.Color.White
-        Me.Btn_GoNavigate.Location = New System.Drawing.Point(592, 28)
+        Me.Btn_GoNavigate.Location = New System.Drawing.Point(594, 28)
         Me.Btn_GoNavigate.Name = "Btn_GoNavigate"
         Me.Btn_GoNavigate.Size = New System.Drawing.Size(28, 28)
         Me.Btn_GoNavigate.TabIndex = 25
@@ -149,7 +148,7 @@ Partial Class XYBrowser
         Me.BrowserAddress.FormattingEnabled = True
         Me.BrowserAddress.Location = New System.Drawing.Point(113, 29)
         Me.BrowserAddress.Name = "BrowserAddress"
-        Me.BrowserAddress.Size = New System.Drawing.Size(478, 25)
+        Me.BrowserAddress.Size = New System.Drawing.Size(480, 25)
         Me.BrowserAddress.TabIndex = 24
         '
         'BrowserTitle
@@ -170,7 +169,7 @@ Partial Class XYBrowser
         '
         Me.Btn_Close.BackColor = System.Drawing.Color.White
         Me.Btn_Close.Image = Global.HackSystem.My.Resources.XYBrowserRes.Close_N
-        Me.Btn_Close.Location = New System.Drawing.Point(770, 0)
+        Me.Btn_Close.Location = New System.Drawing.Point(772, 0)
         Me.Btn_Close.Name = "Btn_Close"
         Me.Btn_Close.Size = New System.Drawing.Size(28, 28)
         Me.Btn_Close.TabIndex = 21
@@ -224,25 +223,13 @@ Partial Class XYBrowser
         Me.Btn_Restore.Tag = "Restore"
         Me.Btn_Restore.Visible = False
         '
-        'Btn_DragBlock
-        '
-        Me.Btn_DragBlock.BackColor = System.Drawing.Color.White
-        Me.Btn_DragBlock.Cursor = System.Windows.Forms.Cursors.SizeNWSE
-        Me.Btn_DragBlock.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Btn_DragBlock.Image = Global.HackSystem.My.Resources.XYBrowserRes.DragBlock
-        Me.Btn_DragBlock.Location = New System.Drawing.Point(781, 581)
-        Me.Btn_DragBlock.Name = "Btn_DragBlock"
-        Me.Btn_DragBlock.Size = New System.Drawing.Size(18, 18)
-        Me.Btn_DragBlock.TabIndex = 17
-        '
         'XYBrowser
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.DimGray
+        Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(800, 600)
         Me.Controls.Add(Me.MainWebBrowser)
-        Me.Controls.Add(Me.Btn_DragBlock)
         Me.Controls.Add(Me.BrowserState)
         Me.Controls.Add(Me.TopPanel)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -273,6 +260,5 @@ Partial Class XYBrowser
     Friend WithEvents SearchTextBox As TextBox
     Friend WithEvents Btn_Restore As Label
     Friend WithEvents Btn_GoForward As Label
-    Friend WithEvents Btn_DragBlock As Label
     Friend WithEvents Btn_FullScreen As Label
 End Class
