@@ -51,8 +51,12 @@ Public Class XYBrowser
     End Sub
 
     Private Sub XYBrowser_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-        If Me.WindowState = FormWindowState.Normal And Btn_Restore.Visible Then Btn_Max.Show() : Btn_Restore.Hide()
-        If Me.WindowState = FormWindowState.Maximized And Btn_Max.Visible Then Btn_Restore.Show() : Btn_Max.Hide()
+        If Me.WindowState = FormWindowState.Normal And Btn_Restore.Visible Then
+            Btn_Max.Show() : Btn_Restore.Hide()
+            If FullScreenMode Then ExitFullScreenMode()
+        ElseIf Me.WindowState = FormWindowState.Maximized And Btn_Max.Visible Then
+            Btn_Restore.Show() : Btn_Max.Hide()
+        End If
         TopPanel.Location = New Point(0, 0)
         TopPanel.Width = Me.Width - BorderWidth
         Btn_FullScreen.Left = TopPanel.Width - 84
@@ -178,12 +182,12 @@ Public Class XYBrowser
             Case "FullScreen"
                 If FullScreenMode Then '退出全屏
                     Me.WindowState = FormWindowState.Normal
-                    Btn_FullScreen.Parent = TopPanel
-                    Btn_FullScreen.BorderStyle = BorderStyle.None
-                    Btn_FullScreen.Location = New Point(TopPanel.Width - 3 * Btn_FullScreen.Width, 0)
+                    ExitFullScreenMode()
+                    Btn_FullScreen.Location = New Point(TopPanel.Width - 84, 0)
                     MainWebBrowser.Location = New Point(0, TopPanel.Bottom)
                     MainWebBrowser.Size = New Point(TopPanel.Width, BrowserState.Top - TopPanel.Bottom)
                 Else '进入全屏
+                    FullScreenMode = True
                     Me.WindowState = FormWindowState.Maximized
                     Btn_FullScreen.Parent = MainWebBrowser
                     Btn_FullScreen.BorderStyle = BorderStyle.FixedSingle
@@ -193,10 +197,16 @@ Public Class XYBrowser
                     Btn_FullScreen.BringToFront()
                 End If
                 Btn_FullScreen.Image = My.Resources.XYBrowserRes.FullScreen_N
-                FullScreenMode = Not FullScreenMode
             Case "Close" '关闭
                 CloseBrowser()
         End Select
+    End Sub
+
+    Private Sub ExitFullScreenMode()
+        '退出全屏模式，全屏模式时窗体右边界和下边界仍可使用鼠标拖动，因此需要在全屏模式时拖动鼠标改变窗体尺寸时需要退出全屏模式
+        FullScreenMode = False
+        Btn_FullScreen.Parent = TopPanel
+        Btn_FullScreen.BorderStyle = BorderStyle.None
     End Sub
 
     Private Sub Btn_GoNavigate_Click(sender As Object, e As EventArgs) Handles Btn_GoNavigate.Click
@@ -323,6 +333,7 @@ Public Class XYBrowser
         '导航
         MainWebBrowser.Navigate(TempString)
     End Sub
+
 #End Region
 
 End Class
