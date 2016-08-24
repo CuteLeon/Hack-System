@@ -818,7 +818,6 @@ Public Class SystemWorkStation
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ShowConsole"), AudioPlayMode.Background)
         If LoginAndLockUI.Visible Then Exit Sub
         LoginAndLockUI.LockScreenMode = True
-        LoginAndLockUI.Opacity = 0
         LoginAndLockUI.Show(Me)
         LoginAndLockUI.ShowLockScreen()
         SetForegroundWindow(LoginAndLockUI.Handle)

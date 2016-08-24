@@ -229,6 +229,7 @@ Public Class LoginAndLockUI
             Else
                 '登录
                 SystemWorkStation.Show()
+                Me.Opacity = 0
                 Me.Hide()
             End If
             SystemWorkStation.Focus()
