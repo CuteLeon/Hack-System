@@ -6,6 +6,7 @@ Partial Class MineSweeperForm
     <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
+            If MinefieldBitmap IsNot Nothing Then MinefieldBitmap.Dispose()
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
             End If

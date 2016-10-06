@@ -6,6 +6,7 @@ Partial Class StartingUpUI
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
+            If SystemCursor IsNot Nothing Then SystemCursor.Dispose()
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
             End If

@@ -6,6 +6,10 @@ Partial Class TipsForm
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
+            If TitleFont IsNot Nothing Then TitleFont.Dispose()
+            If TitleBrush IsNot Nothing Then TitleBrush.Dispose()
+            If BodyFont IsNot Nothing Then BodyFont.Dispose()
+            If BodyBrush IsNot Nothing Then BodyBrush.Dispose()
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
             End If

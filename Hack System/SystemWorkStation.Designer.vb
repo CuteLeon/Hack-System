@@ -6,6 +6,8 @@ Partial Class SystemWorkStation
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
+            If UserNameFont IsNot Nothing Then UserNameFont.Dispose()
+            If MySpeechRecognitionEngine IsNot Nothing Then MySpeechRecognitionEngine.Dispose()
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
             End If
