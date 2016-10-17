@@ -109,6 +109,51 @@ Public Class WindowsTemplates
         ReleaseCapture()
         SendMessageA(Me.Handle, &HA1, 2, 0&)
     End Sub
+
+    Private Sub HideMe() '动态关闭特效的线程
+        '计算窗体位置和尺寸没每次应该变化的数值
+        Dim EachXDis, EachYDis, EachWidthDis, EachHeightDis As Integer
+        EachXDis = (Me.Left - IconLocation.X) \ 7
+        EachYDis = (Me.Top - IconLocation.Y) \ 7
+        EachWidthDis = (Me.Width - SystemWorkStation.IconWidth) \ 7
+        EachHeightDis = (Me.Height - SystemWorkStation.IconHeight) \ 7
+        '开始特效，窗口透明度为0.3时正式关闭
+        Do While Me.Opacity > 0
+            '降低透明度
+            Me.Opacity -= 0.1
+            '缩小GIF控件
+            GIFControl.Width -= EachWidthDis
+            GIFControl.Height -= EachHeightDis
+            '缩小自身窗体
+            Me.Width -= EachWidthDis
+            Me.Height -= EachHeightDis
+            '窗体向桌面图标移动
+            Me.Left -= EachXDis
+            Me.Top -= EachYDis
+            '关闭按钮向左移动
+            CloseButtonControl.Left = Me.Width - CloseButtonControl.Width
+            '线程暂停30毫秒
+            Thread.Sleep(30)
+        Loop
+        '取消桌面图标高亮效果
+        IconControl.Image = IconImage
+        Me.Hide()
+    End Sub
+
+    Private Sub SetMeToDefaultSetting()
+        '根据脚本GIF设置控件和窗体尺寸
+        GIFControl.Size = GIFControl.Image.Size
+        Me.Width = GIFControl.Width + 2 * BorderWidth
+        Me.Height = GIFControl.Height + TitleHeight + 2 * BorderWidth
+        '恢复GIF控件和关闭按钮位置
+        GIFControl.Top = TitleHeight + BorderWidth
+        CloseButtonControl.Location = New Point(Me.Width - CloseButtonControl.Width, 0)
+        '脚本窗体随机定位到桌面右侧
+        VBMath.Randomize()
+        Me.Left = (SystemWorkStation.Width - Me.Width - SystemWorkStation.RightestLoction) * VBMath.Rnd + SystemWorkStation.RightestLoction
+        Me.Top = (SystemWorkStation.Height - Me.Height) * VBMath.Rnd
+    End Sub
+
 #End Region
 
 #Region "接口函数"
@@ -207,53 +252,6 @@ Public Class WindowsTemplates
         SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
         '启动动态关闭特效的线程
         ThreadPool.QueueUserWorkItem(New WaitCallback(AddressOf HideMe))
-    End Sub
-#End Region
-
-#Region "功能函数"
-
-    Private Sub HideMe() '动态关闭特效的线程
-        '计算窗体位置和尺寸没每次应该变化的数值
-        Dim EachXDis, EachYDis, EachWidthDis, EachHeightDis As Integer
-        EachXDis = (Me.Left - IconLocation.X) \ 7
-        EachYDis = (Me.Top - IconLocation.Y) \ 7
-        EachWidthDis = (Me.Width - SystemWorkStation.IconWidth) \ 7
-        EachHeightDis = (Me.Height - SystemWorkStation.IconHeight) \ 7
-        '开始特效，窗口透明度为0.3时正式关闭
-        Do While Me.Opacity > 0
-            '降低透明度
-            Me.Opacity -= 0.1
-            '缩小GIF控件
-            GIFControl.Width -= EachWidthDis
-            GIFControl.Height -= EachHeightDis
-            '缩小自身窗体
-            Me.Width -= EachWidthDis
-            Me.Height -= EachHeightDis
-            '窗体向桌面图标移动
-            Me.Left -= EachXDis
-            Me.Top -= EachYDis
-            '关闭按钮向左移动
-            CloseButtonControl.Left = Me.Width - CloseButtonControl.Width
-            '线程暂停30毫秒
-            Thread.Sleep(30)
-        Loop
-        '取消桌面图标高亮效果
-        IconControl.Image = IconImage
-        Me.Hide()
-    End Sub
-
-    Private Sub SetMeToDefaultSetting()
-        '根据脚本GIF设置控件和窗体尺寸
-        GIFControl.Size = GIFControl.Image.Size
-        Me.Width = GIFControl.Width + 2 * BorderWidth
-        Me.Height = GIFControl.Height + TitleHeight + 2 * BorderWidth
-        '恢复GIF控件和关闭按钮位置
-        GIFControl.Top = TitleHeight + BorderWidth
-        CloseButtonControl.Location = New Point(Me.Width - CloseButtonControl.Width, 0)
-        '脚本窗体随机定位到桌面右侧
-        VBMath.Randomize()
-        Me.Left = (SystemWorkStation.Width - Me.Width - SystemWorkStation.RightestLoction) * VBMath.Rnd + SystemWorkStation.RightestLoction
-        Me.Top = (SystemWorkStation.Height - Me.Height) * VBMath.Rnd
     End Sub
 #End Region
 

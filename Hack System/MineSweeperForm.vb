@@ -102,6 +102,13 @@
     End Sub
 
     Private Sub MineSweeperForm_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
+        '点击关闭按钮，退出程序
+        If CloseRectangle.Contains(e.X, e.Y) Then
+            Me.Close()
+            SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+            Exit Sub
+        End If
+
         '初始化背景
         BackgroundBitmap = My.Resources.MineSweeperAssets.Background
         BackgroundGraphics = Graphics.FromImage(BackgroundBitmap)
@@ -116,9 +123,7 @@
     End Sub
 
     Private Sub MineSweeperForm_MouseClick(sender As Object, e As MouseEventArgs) Handles Me.MouseClick
-        '点击关闭按钮，退出程序
-        If CloseRectangle.Contains(e.X, e.Y) Then Me.Close()
-        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+
     End Sub
 #End Region
 
@@ -217,7 +222,7 @@
         '初始化背景和画笔
         BackgroundBitmap = My.Resources.MineSweeperAssets.Background
         BackgroundGraphics = Graphics.FromImage(BackgroundBitmap)
-        MinefieldBitmap = New Bitmap(320, 320, DefaultPixelFormat)
+        MinefieldBitmap = New Bitmap(320, 320)
         MinefieldGraphics = Graphics.FromImage(MinefieldBitmap)
         '绘制关闭按钮
         BackgroundGraphics.DrawImage(CloseBitmap, CloseRectangle)
@@ -285,7 +290,7 @@
         RemoveHandler MinefieldPanel.MouseLeave, AddressOf MinefieldPanel_MouseLeave
         BackgroundBitmap = My.Resources.MineSweeperAssets.Background
         BackgroundGraphics = Graphics.FromImage(BackgroundBitmap)
-        MinefieldBitmap = New Bitmap(320, 320, DefaultPixelFormat)
+        MinefieldBitmap = New Bitmap(320, 320)
         MinefieldGraphics = Graphics.FromImage(MinefieldBitmap)
         If GameResult Then
             '胜利
