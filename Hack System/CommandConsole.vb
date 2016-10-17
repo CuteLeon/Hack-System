@@ -260,6 +260,12 @@ Public Class CommandConsole
             Case "mine" '运行扫雷游戏
                 If Not MineSweeperForm.Visible Then MineSweeperForm.Show(SystemWorkStation)
                 SystemWorkStation.SetForegroundWindow(MineSweeperForm.Handle)
+            Case "1010"
+                If Not Game1010Form.Visible Then Game1010Form.Show(SystemWorkStation)
+                SystemWorkStation.SetForegroundWindow(Game1010Form.Handle)
+            Case "2048"
+                If Not Game2048Form.Visible Then Game2048Form.Show(SystemWorkStation)
+                SystemWorkStation.SetForegroundWindow(Game2048Form.Handle)
             Case "browser" '运行浏览器
                 SystemWorkStation.LoadNewBrowser()
             Case "mail" '打开邮件发送程序
@@ -303,7 +309,7 @@ Public Class CommandConsole
                 CommandInputBox.SelectAll()
                 SetLastCommandColor(False)
                 '输出已经支持的指令
-                CommandPast.AppendText(vbCrLf & "    Supported：" & vbCrLf & "      Speak、Shutdown、Shell、" & vbCrLf & "      About、Weather、Lock、Melt" & vbCrLf & "      Mail、Browser、Mine")
+                CommandPast.AppendText(vbCrLf & "    Supported：" & vbCrLf & "      Speak、Shutdown、Shell、" & vbCrLf & "      About、Weather、Lock、Melt" & vbCrLf & "      Mail、Browser、Mine、1010、2048")
         End Select
     End Sub
 

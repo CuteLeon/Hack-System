@@ -80,6 +80,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="1010Form.designer.vb">
+      <DependentUpon>1010Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="1010Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="2048Form.designer.vb">
+      <DependentUpon>2048Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="2048Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="CommandConsole.Designer.vb">
       <DependentUpon>CommandConsole.vb</DependentUpon>
@@ -88,6 +100,11 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DrawImageModule.vb" />
+    <Compile Include="GameResource.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="LoginAndLockUI.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -199,8 +216,19 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="1010Form.resx">
+      <DependentUpon>1010Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="2048Form.resx">
+      <DependentUpon>2048Form.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CommandConsole.resx">
       <DependentUpon>CommandConsole.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameResource.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GameResource.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginAndLockUI.resx">
       <DependentUpon>LoginAndLockUI.vb</DependentUpon>
@@ -327,6 +355,35 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\Game2048Icon.ico" />
+    <None Include="Resources\Game1010Icon.ico" />
+    <None Include="Resources\Mask.png" />
+    <None Include="Resources\GameClose_2.png" />
+    <None Include="Resources\GameClose_1.png" />
+    <None Include="Resources\GameClose_0.png" />
+    <None Include="Resources\DirectiionKey.png" />
+    <None Include="Resources\Card131072.png" />
+    <None Include="Resources\Card65536.png" />
+    <None Include="Resources\Card32768.png" />
+    <None Include="Resources\Card16384.png" />
+    <None Include="Resources\Card8192.png" />
+    <None Include="Resources\Card4096.png" />
+    <None Include="Resources\Card2048.png" />
+    <None Include="Resources\Card1024.png" />
+    <None Include="Resources\Card512.png" />
+    <None Include="Resources\Card256.png" />
+    <None Include="Resources\Card128.png" />
+    <None Include="Resources\Card64.png" />
+    <None Include="Resources\Card32.png" />
+    <None Include="Resources\Card16.png" />
+    <None Include="Resources\Card8.png" />
+    <None Include="Resources\Card4.png" />
+    <None Include="Resources\Card2.png" />
+    <None Include="Resources\Card0.png" />
+    <None Include="Resources\2048Game.ico" />
+    <None Include="Resources\1010.ico" />
+    <None Include="Resources\Game2048Background.jpg" />
+    <None Include="Resources\Game1010Background.jpg" />
     <None Include="Resources\MicroPhone_3.png" />
     <None Include="Resources\MicroPhone_2.png" />
     <None Include="Resources\MicroPhone_1.png" />

@@ -405,6 +405,15 @@ Public Class SystemWorkStation
             Case "扫雷"
                 If Not MineSweeperForm.Visible Then MineSweeperForm.Show(Me)
                 SetForegroundWindow(MineSweeperForm.Handle)
+            Case "二零四八"
+                If Not Game2048Form.Visible Then Game2048Form.Show(Me)
+                SetForegroundWindow(Game2048Form.Handle)
+            Case "一零一零"
+                If Not Game1010Form.Visible Then Game1010Form.Show(Me)
+                SetForegroundWindow(Game1010Form.Handle)
+            Case "妖零妖零"
+                If Not Game1010Form.Visible Then Game1010Form.Show(Me)
+                SetForegroundWindow(Game1010Form.Handle)
             Case "浏览器"
                 LoadNewBrowser()
             Case "锁屏"
@@ -841,6 +850,9 @@ Public Class SystemWorkStation
         Grammars.Add("屏幕融化关闭")
         Grammars.Add("关机")
         Grammars.Add("扫雷")
+        Grammars.Add("二零四八")
+        Grammars.Add("一零一零")
+        Grammars.Add("妖零妖零")
         Grammars.Add("浏览器")
         Grammars.Add("锁屏")
         Grammars.Add("解锁")

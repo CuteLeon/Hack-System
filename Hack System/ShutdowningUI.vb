@@ -62,6 +62,8 @@ Public Class ShutdowningUI
         If XYMail.Visible Then XYMail.Hide()
         If AboutMeForm.Visible Then AboutMeForm.Hide()
         If MineSweeperForm.Visible Then MineSweeperForm.Hide()
+        If Game1010Form.Visible Then Game1010Form.Hide()
+        If Game2048Form.Visible Then Game2048Form.Hide()
         '遍历关闭脚本窗口
         For Each ChildForm As Form In SystemWorkStation.ScriptForm
             If Not (ChildForm Is Nothing) Then
