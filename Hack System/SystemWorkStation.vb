@@ -5,8 +5,8 @@ Imports Microsoft.VisualBasic.Devices
 Public Class SystemWorkStation
 
 #Region "声明区"
-
     Public Declare Function SetForegroundWindow Lib "user32" Alias "SetForegroundWindow" (ByVal hwnd As Integer) As Integer
+    Private Declare Function IsWindow Lib "user32" Alias "IsWindow" (ByVal hWnd As IntPtr) As Integer '判断一个窗口句柄是否有效，置后显示时检测桌面容器是否意外关闭
     Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Integer
     Private Declare Function FindWindowEx Lib "user32" Alias "FindWindowExA" (ByVal hWnd1 As Integer, ByVal hWnd2 As Integer, ByVal lpsz1 As String, ByVal lpsz2 As String) As Integer
     Private Declare Function GetDesktopWindow Lib "user32" Alias "GetDesktopWindow" () As IntPtr
@@ -38,6 +38,7 @@ Public Class SystemWorkStation
     Public SystemClosing As Boolean '系统正在关闭
     Public SpeechRecognitionMode As Boolean = True '语音识别引擎的状态
 
+    Dim DesktopIconHandle As IntPtr '记录物理桌面容器的句柄
     Dim UserNameFont As Font = New Font("微软雅黑", 36.0) '用户名显示字体
     Dim MouseDownLocation As Point '鼠标按下的坐标(用于显示桌面拖动蓝色矩形)
     Dim XDistance, YDistance As Integer '鼠标按下后移动的距离
@@ -131,13 +132,14 @@ Public Class SystemWorkStation
             End If
         End If
 
-        '启动、初始化控制台窗体并将其隐藏在屏幕右侧
+        '初始化控制台窗体并将其隐藏在屏幕右侧
         CommandConsole.Show(Me)
         CommandConsole.Height = My.Computer.Screen.Bounds.Height
         CommandConsole.Location = New Point(My.Computer.Screen.Bounds.Width, 0)
         CommandConsole.CommandPast.Height = My.Computer.Screen.Bounds.Height - 120
         CommandConsole.CommandTip.Top = My.Computer.Screen.Bounds.Height - 100
         CommandConsole.CommandInputBox.Top = My.Computer.Screen.Bounds.Height - 40
+        CommandConsole.Hide()
         '设置自定义壁纸选取控件的初始路径为系统图库路径
         CustomImageDialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
 
@@ -308,6 +310,12 @@ Public Class SystemWorkStation
 #Region "性能计数器区域"
 
     Private Sub PerformanceCounterTimer_Tick(sender As Object, e As EventArgs) Handles PerformanceCounterTimer.Tick
+        '置后显示时检测桌面容器是否意外关闭，意外关闭时需要恢复窗体置顶显示
+        If MenuTopMost.Checked = False AndAlso IsWindow(DesktopIconHandle) = False Then
+            MenuTopMost.Checked = True
+            'SetParent(Me.Handle, GetDesktopWindow)
+        End If
+
         '计算内存使用率
         MemoryUsageRate = (CmptInfo.TotalPhysicalMemory - CmptInfo.AvailablePhysicalMemory) / CmptInfo.TotalPhysicalMemory * 100
         '初始化总下载和上传速度
@@ -364,6 +372,7 @@ Public Class SystemWorkStation
 
         Select Case e.Result.Text
             Case "控制台"
+                If Not CommandConsole.Visible Then CommandConsole.Show(Me)
                 CommandConsole.ShowConsole()
             Case "确定"
                 SendKeys.Send(Chr(Keys.Enter))
@@ -584,7 +593,7 @@ Public Class SystemWorkStation
         Else
             '置后显示，需要把SystemWorkStation嵌入到物理桌面，并移除拥有的子窗体，否则子窗体会集中在一层显示
             Me.TopMost = False
-            Dim DesktopIconHandle As IntPtr = GetDesktopIconHandle()
+            DesktopIconHandle = GetDesktopIconHandle()
             If DesktopIconHandle = IntPtr.Zero Then
                 '如果查找DesktopIconHandle句柄失败时，无法置后显示，需要弹窗提示并取消任务
                 If Not TipsForm.Visible Then TipsForm.Show(Me)
@@ -707,6 +716,7 @@ Public Class SystemWorkStation
 
     Private Sub ConsoleButtonControl_Click(sender As Object, e As EventArgs) Handles ConsoleButtonControl.Click
         '显示控制台
+        If Not CommandConsole.Visible Then CommandConsole.Show(Me)
         CommandConsole.ShowConsole()
     End Sub
 
@@ -848,6 +858,7 @@ Public Class SystemWorkStation
         If ScriptForm(ScriptIndex) Is Nothing Then
             ScriptForm(ScriptIndex) = New WindowsTemplates
             ScriptForm(ScriptIndex).Tag = ScriptIndex.ToString("00")
+            ScriptForm(ScriptIndex).Text = ScriptInfomation(ScriptIndex)
         End If
         '脚本在关闭状态
         If Not (ScriptForm(ScriptIndex).Visible) And Not (ScriptFormVisible(ScriptIndex)) Then

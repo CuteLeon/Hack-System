@@ -57,6 +57,7 @@ Public Class CommandConsole
         Loop
         Me.Left = My.Computer.Screen.Bounds.Width
         ConsoleHiding = False
+        Me.Hide()
     End Sub
 #End Region
 

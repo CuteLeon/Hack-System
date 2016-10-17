@@ -70,7 +70,6 @@ Partial Class WindowsTemplates
         Me.Controls.Add(Me.GIFControl)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "WindowsTemplates"
-        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.Tag = "00"
         Me.Text = "Windows"

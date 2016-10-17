@@ -31,6 +31,7 @@ Public Class WindowsTemplates
         System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
         MyScriptIndex = Int(Me.Tag)
         '设置GIF控件左距离和图像
+        Me.Icon = Icon.FromHandle(CType(My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & MyScriptIndex.ToString("00")), Bitmap).GetHicon)
         With GIFControl
             .Left = BorderWidth
             .Image = My.Resources.SystemAssets.ResourceManager.GetObject("HackScript_" & Me.Tag)
