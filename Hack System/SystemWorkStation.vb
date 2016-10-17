@@ -295,7 +295,7 @@ Public Class SystemWorkStation
         End Try
 
         '首次获取IP和地址
-        GetIPAndAddress(True)
+        GetIPAndAddress(False)
     End Sub
 
     Private Sub SystemWorkStation_Activated(sender As Object, e As EventArgs) Handles Me.Activated
@@ -312,8 +312,18 @@ Public Class SystemWorkStation
     Private Sub PerformanceCounterTimer_Tick(sender As Object, e As EventArgs) Handles PerformanceCounterTimer.Tick
         '置后显示时检测桌面容器是否意外关闭，意外关闭时需要恢复窗体置顶显示
         If MenuTopMost.Checked = False AndAlso IsWindow(DesktopIconHandle) = False Then
-            MenuTopMost.Checked = True
-            'SetParent(Me.Handle, GetDesktopWindow)
+            MenuTopMost.PerformClick() '模拟点击一次 MenuTopMost
+            '恢复后所有Label会丢失Text属性，需要重新赋值
+            For ScriptIndex As Integer = 0 To ScriptUpperBound
+                ScriptIcons(ScriptIndex).Text = ScriptInfomation(ScriptIndex)
+            Next
+            InfoTitle.Text = "CPU：" & vbCrLf & "RAM：" & vbCrLf & "DiskRead：" & vbCrLf & "DiskWrite：" & vbCrLf & "Upload：" & vbCrLf & "Download：" & vbCrLf & "PowerLine：" & vbCrLf & "BatteryStatus：" & vbCrLf & "BatteryPercent：" & vbCrLf & "IP：" & vbCrLf & "Address："
+            XYBrowserButtonControl.Text = "Browser"
+            ConsoleButtonControl.Text = "Console"
+            ShutdownButtonControl.Text = "Shutdown"
+            XYMailButtonControl.Text = "Mail"
+            SettingButtonControl.Text = "About"
+            GetIPAndAddress(False) '刷新IP和地址信息
         End If
 
         '计算内存使用率
@@ -358,7 +368,7 @@ Public Class SystemWorkStation
 
     Private Sub IPAndAddressLabel_Click(sender As Object, e As EventArgs) Handles IPLabel.Click, AddressLabel.Click
         '点击IP和地址标签可以重新获取IP和地址
-        GetIPAndAddress()
+        GetIPAndAddress(True)
     End Sub
 #End Region
 
@@ -585,20 +595,21 @@ Public Class SystemWorkStation
         '改变系统的置前和置后状态
         If MenuTopMost.Checked Then
             '置前显示，需要重新拥有子窗体，使它们永远在SystemWorkStation前面显示
-            Me.TopMost = True
+            If Me.TopMost = False Then Me.TopMost = True
             For Each OwnedForm As Form In Application.OpenForms
                 If OwnedForm IsNot Me Then Me.AddOwnedForm(OwnedForm)
             Next
             SetParent(Me.Handle, GetDesktopWindow())
         Else
-            '置后显示，需要把SystemWorkStation嵌入到物理桌面，并移除拥有的子窗体，否则子窗体会集中在一层显示
-            Me.TopMost = False
+            '把SystemWorkStation嵌入到物理桌面，首先查找物理桌面句柄，查找到之后置后显示并移除拥有的子窗体，否则子窗体会集中在一层显示
             DesktopIconHandle = GetDesktopIconHandle()
             If DesktopIconHandle = IntPtr.Zero Then
                 '如果查找DesktopIconHandle句柄失败时，无法置后显示，需要弹窗提示并取消任务
                 If Not TipsForm.Visible Then TipsForm.Show(Me)
                 TipsForm.PopupTips("Can't find", TipsForm.TipsIconType.Infomation, "the Physical-Desktop!")
+                MenuTopMost.Checked = True '不改变 MenuTopMost 的勾选状态，防止重复响应 Click 事件
             Else
+                Me.TopMost = False
                 For Each OwnedForm As Form In Me.OwnedForms
                     Me.RemoveOwnedForm(OwnedForm)
                 Next
@@ -895,7 +906,7 @@ Public Class SystemWorkStation
         SetForegroundWindow(ShutdownTips.Handle)
     End Sub
 
-    Public Sub GetIPAndAddress(Optional ByVal IsFirstTime As Boolean = False)
+    Public Sub GetIPAndAddress(ByVal ShowTipsForm As Boolean)
         Try
             '网络未连接时程序会陷入等待假死，需要事先ping一下目标网站用于连接测试
             If (My.Computer.Network.Ping("ip.chinaz.com")) Then
@@ -908,7 +919,7 @@ Public Class SystemWorkStation
                 AddressLabel.Text = Replace(Strings.Mid(WebString, IPLabel.Text.Length + 17, WebString.Length - IPLabel.Text.Length - 18), Chr(32), vbCrLf)
                 IPWebClient.Dispose()
                 '首次获取时(即程序启动时)不弹出提示浮窗
-                If Not IsFirstTime Then
+                If ShowTipsForm Then
                     If Not TipsForm.Visible Then TipsForm.Show(Me)
                     TipsForm.PopupTips("Successfully :", TipsForm.TipsIconType.Exclamation, "Get IP and address !")
                 End If
@@ -921,7 +932,7 @@ Public Class SystemWorkStation
         '出错或网络未连接时显示错误信息
         IPLabel.Text = "127.0.0.1" : AddressLabel.Text = "Click to get."
         '首次获取时(即程序启动时)不弹出提示浮窗
-        If Not IsFirstTime Then
+        If ShowTipsForm Then
             If Not TipsForm.Visible Then TipsForm.Show(Me)
             TipsForm.PopupTips("Error :", TipsForm.TipsIconType.Exclamation, "Can't get IP and Address.")
         End If

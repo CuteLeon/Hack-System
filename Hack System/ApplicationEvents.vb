@@ -11,7 +11,7 @@ Namespace My
     Partial Friend Class MyApplication
         Private Sub MyApplication_NetworkAvailabilityChanged(sender As Object, e As NetworkAvailableEventArgs) Handles Me.NetworkAvailabilityChanged
             '重新联接网络后自动读取IP和城市定位
-            If My.Computer.Network.IsAvailable Then SystemWorkStation.GetIPAndAddress()
+            If My.Computer.Network.IsAvailable Then SystemWorkStation.GetIPAndAddress(True)
         End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
