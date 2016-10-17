@@ -7,7 +7,6 @@ Module DrawImageModule
     'Protected Overloads Overrides ReadOnly Property CreateParams() As CreateParams
 
 #Region "声明区"
-
     Public Const AC_SRC_OVER As Byte = &H0
     Public Const AC_SRC_ALPHA As Byte = &H1
     Public Const ULW_ALPHA As Int32 = &H2

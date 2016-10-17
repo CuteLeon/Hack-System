@@ -26,11 +26,8 @@ Partial Class XYBrowser
         Me.BrowserState = New System.Windows.Forms.Label()
         Me.TopPanel = New System.Windows.Forms.Panel()
         Me.Btn_FullScreen = New System.Windows.Forms.Label()
-        Me.SearchTextBox = New System.Windows.Forms.TextBox()
         Me.Btn_Max = New System.Windows.Forms.Label()
         Me.Btn_GoForward = New System.Windows.Forms.Label()
-        Me.Btn_Search = New System.Windows.Forms.Label()
-        Me.Btn_GoNavigate = New System.Windows.Forms.Label()
         Me.BrowserAddress = New System.Windows.Forms.ComboBox()
         Me.BrowserTitle = New System.Windows.Forms.Label()
         Me.Btn_Close = New System.Windows.Forms.Label()
@@ -39,6 +36,9 @@ Partial Class XYBrowser
         Me.Btn_Home = New System.Windows.Forms.Label()
         Me.Btn_NowStop = New System.Windows.Forms.Label()
         Me.Btn_Restore = New System.Windows.Forms.Label()
+        Me.Btn_GoNavigate = New System.Windows.Forms.Label()
+        Me.SearchTextBox = New System.Windows.Forms.TextBox()
+        Me.Btn_Search = New System.Windows.Forms.Label()
         Me.TopPanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -93,17 +93,6 @@ Partial Class XYBrowser
         Me.Btn_FullScreen.TabIndex = 30
         Me.Btn_FullScreen.Tag = "FullScreen"
         '
-        'SearchTextBox
-        '
-        Me.SearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.SearchTextBox.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.SearchTextBox.ForeColor = System.Drawing.Color.DimGray
-        Me.SearchTextBox.Location = New System.Drawing.Point(622, 30)
-        Me.SearchTextBox.Name = "SearchTextBox"
-        Me.SearchTextBox.Size = New System.Drawing.Size(150, 23)
-        Me.SearchTextBox.TabIndex = 26
-        Me.SearchTextBox.Text = "Search..."
-        '
         'Btn_Max
         '
         Me.Btn_Max.BackColor = System.Drawing.Color.White
@@ -122,24 +111,6 @@ Partial Class XYBrowser
         Me.Btn_GoForward.Size = New System.Drawing.Size(28, 28)
         Me.Btn_GoForward.TabIndex = 28
         Me.Btn_GoForward.Tag = "GoForward"
-        '
-        'Btn_Search
-        '
-        Me.Btn_Search.BackColor = System.Drawing.Color.White
-        Me.Btn_Search.Location = New System.Drawing.Point(772, 28)
-        Me.Btn_Search.Name = "Btn_Search"
-        Me.Btn_Search.Size = New System.Drawing.Size(28, 28)
-        Me.Btn_Search.TabIndex = 27
-        Me.Btn_Search.Tag = "Search"
-        '
-        'Btn_GoNavigate
-        '
-        Me.Btn_GoNavigate.BackColor = System.Drawing.Color.White
-        Me.Btn_GoNavigate.Location = New System.Drawing.Point(594, 28)
-        Me.Btn_GoNavigate.Name = "Btn_GoNavigate"
-        Me.Btn_GoNavigate.Size = New System.Drawing.Size(28, 28)
-        Me.Btn_GoNavigate.TabIndex = 25
-        Me.Btn_GoNavigate.Tag = "GoNavigate"
         '
         'BrowserAddress
         '
@@ -223,6 +194,35 @@ Partial Class XYBrowser
         Me.Btn_Restore.Tag = "Restore"
         Me.Btn_Restore.Visible = False
         '
+        'Btn_GoNavigate
+        '
+        Me.Btn_GoNavigate.BackColor = System.Drawing.Color.White
+        Me.Btn_GoNavigate.Location = New System.Drawing.Point(594, 28)
+        Me.Btn_GoNavigate.Name = "Btn_GoNavigate"
+        Me.Btn_GoNavigate.Size = New System.Drawing.Size(28, 28)
+        Me.Btn_GoNavigate.TabIndex = 25
+        Me.Btn_GoNavigate.Tag = "GoNavigate"
+        '
+        'SearchTextBox
+        '
+        Me.SearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.SearchTextBox.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.SearchTextBox.ForeColor = System.Drawing.Color.DimGray
+        Me.SearchTextBox.Location = New System.Drawing.Point(622, 30)
+        Me.SearchTextBox.Name = "SearchTextBox"
+        Me.SearchTextBox.Size = New System.Drawing.Size(150, 23)
+        Me.SearchTextBox.TabIndex = 26
+        Me.SearchTextBox.Text = "Search..."
+        '
+        'Btn_Search
+        '
+        Me.Btn_Search.BackColor = System.Drawing.Color.White
+        Me.Btn_Search.Location = New System.Drawing.Point(772, 28)
+        Me.Btn_Search.Name = "Btn_Search"
+        Me.Btn_Search.Size = New System.Drawing.Size(28, 28)
+        Me.Btn_Search.TabIndex = 27
+        Me.Btn_Search.Tag = "Search"
+        '
         'XYBrowser
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -234,8 +234,6 @@ Partial Class XYBrowser
         Me.Controls.Add(Me.TopPanel)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "XYBrowser"
-        Me.ShowIcon = False
-        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "XY浏览器"
         Me.TopPanel.ResumeLayout(False)

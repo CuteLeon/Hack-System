@@ -259,7 +259,6 @@ Public Class CommandConsole
             Case "mine" '运行扫雷游戏
                 If Not MineSweeperForm.Visible Then MineSweeperForm.Show(SystemWorkStation)
                 SystemWorkStation.SetForegroundWindow(MineSweeperForm.Handle)
-                'MineSweeperForm.TopMost = False
             Case "browser" '运行浏览器
                 SystemWorkStation.LoadNewBrowser()
             Case "mail" '打开邮件发送程序

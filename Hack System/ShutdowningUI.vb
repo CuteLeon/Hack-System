@@ -56,6 +56,7 @@ Public Class ShutdowningUI
         ThreadShowMe.Start()
         ThreadShowMe.Join()
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Shutdown"), AudioPlayMode.WaitToComplete)
+        If CommandConsole.Visible Then CommandConsole.Hide()
         '直接关闭提示浮窗，因为CancelTips函数要等待线程结束，退出程序时会出错
         If TipsForm.Visible Then TipsForm.CloseMe = True : TipsForm.Close()
         If XYMail.Visible Then XYMail.Hide()
@@ -81,6 +82,7 @@ Public Class ShutdowningUI
         ThreadHideMe.Join()
 
         '程序退出！！！
+        GC.Collect()
         Application.Exit()
     End Sub
 #End Region

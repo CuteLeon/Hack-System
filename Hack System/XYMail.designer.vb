@@ -157,11 +157,8 @@ Partial Class XYMail
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "XYMail"
-        Me.ShowIcon = False
-        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "小眼邮箱轰炸机"
-        Me.TopMost = True
         Me.TransparencyKey = System.Drawing.Color.Aqua
         Me.ResumeLayout(False)
         Me.PerformLayout()

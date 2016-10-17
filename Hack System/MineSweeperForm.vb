@@ -46,6 +46,7 @@
     Private Sub MineSweeperForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         '启用双缓冲绘图技术，加快绘制速度，防止闪烁
         Me.DoubleBuffered = True
+        Me.Icon = Icon.FromHandle(My.Resources.MineSweeperAssets.Mine.GetHicon)
         SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
         '设置鼠标样式
         Me.Cursor = SystemWorkStation.Cursor

@@ -11,6 +11,7 @@ Public Class XYMail
 
     Private Sub XYMail_Load(sender As Object, e As EventArgs) Handles Me.Load
         CheckForIllegalCrossThreadCalls = False
+        Me.Icon = Icon.FromHandle(My.Resources.SystemAssets.Mailcon_0.GetHicon)
         Txt_ToAddress.SelectionLength = 0
     End Sub
 

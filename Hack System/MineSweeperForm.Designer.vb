@@ -44,10 +44,8 @@ Partial Class MineSweeperForm
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "MineSweeperForm"
-        Me.ShowIcon = False
-        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Mine Sweeper"
+        Me.Text = "扫雷"
         Me.ResumeLayout(False)
 
     End Sub

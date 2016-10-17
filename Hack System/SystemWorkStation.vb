@@ -376,7 +376,6 @@ Public Class SystemWorkStation
             Case "发送邮件"
                 If Not XYMail.Visible Then XYMail.Show(Me)
                 SetForegroundWindow(XYMail.Handle)
-                XYMail.TopMost = False
             Case "屏幕融化开启"
                 ScreenMelt.StartMelt()
             Case "屏幕融化关闭"
@@ -387,7 +386,6 @@ Public Class SystemWorkStation
             Case "扫雷"
                 If Not MineSweeperForm.Visible Then MineSweeperForm.Show(Me)
                 SetForegroundWindow(MineSweeperForm.Handle)
-                MineSweeperForm.TopMost = False
             Case "浏览器"
                 LoadNewBrowser()
             Case "锁屏"
@@ -576,8 +574,28 @@ Public Class SystemWorkStation
 
     Private Sub MenuTopMost_Click(sender As Object, e As EventArgs) Handles MenuTopMost.Click
         '改变系统的置前和置后状态
-        SetParent(Me.Handle, IIf(MenuTopMost.Checked, GetDesktopWindow(), GetDesktopIconHandle()))
-        Me.TopMost = MenuTopMost.Checked
+        If MenuTopMost.Checked Then
+            '置前显示，需要重新拥有子窗体，使它们永远在SystemWorkStation前面显示
+            Me.TopMost = True
+            For Each OwnedForm As Form In Application.OpenForms
+                If OwnedForm IsNot Me Then Me.AddOwnedForm(OwnedForm)
+            Next
+            SetParent(Me.Handle, GetDesktopWindow())
+        Else
+            '置后显示，需要把SystemWorkStation嵌入到物理桌面，并移除拥有的子窗体，否则子窗体会集中在一层显示
+            Me.TopMost = False
+            Dim DesktopIconHandle As IntPtr = GetDesktopIconHandle()
+            If DesktopIconHandle = IntPtr.Zero Then
+                '如果查找DesktopIconHandle句柄失败时，无法置后显示，需要弹窗提示并取消任务
+                If Not TipsForm.Visible Then TipsForm.Show(Me)
+                TipsForm.PopupTips("Can't find", TipsForm.TipsIconType.Infomation, "the Physical-Desktop!")
+            Else
+                For Each OwnedForm As Form In Me.OwnedForms
+                    Me.RemoveOwnedForm(OwnedForm)
+                Next
+                SetParent(Me.Handle, DesktopIconHandle)
+            End If
+        End If
     End Sub
 
     Private Sub MenuCustomWallpaper_Click(sender As Object, e As EventArgs) Handles MenuCustomWallpaper.Click
@@ -837,14 +855,15 @@ Public Class SystemWorkStation
             SenderControl = ScriptIcons(ScriptIndex)
             If HighLightIcon(ScriptIndex) Is Nothing Then
                 HighLightIcon(ScriptIndex) = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
-                IconGraphics = Graphics.FromImage(HighLightIcon(ScriptIndex))
-                IconGraphics.DrawImage(My.Resources.SystemAssets.MouseEnter, 0, 0)
-                IconGraphics.Dispose()
+                Using IconGraphics = Graphics.FromImage(HighLightIcon(ScriptIndex))
+                    IconGraphics.DrawImage(My.Resources.SystemAssets.MouseEnter, 0, 0)
+                End Using
             End If
             SenderControl.Image = HighLightIcon(ScriptIndex)
             '显示脚本窗体并记录
             ScriptFormVisible(ScriptIndex) = True
-            ScriptForm(ScriptIndex).Show(Me)
+            '置后显示时不允许为.Show()赋予拥有者参数，否则子窗口会集中在一层显示
+            If Me.MenuTopMost.Checked Then ScriptForm(ScriptIndex).Show(Me) Else ScriptForm(ScriptIndex).Show()
         End If
         '脚本在打开状态
         If ScriptForm(ScriptIndex).Visible And ScriptFormVisible(ScriptIndex) Then
@@ -929,7 +948,7 @@ Public Class SystemWorkStation
             HandleSHELLDLL_DefView = FindWindowEx(HandleTop, 0, "SHELLDLL_DefView", vbNullString)
             If HandleSHELLDLL_DefView > 0 Then HandleSysListView32 = FindWindowEx(HandleSHELLDLL_DefView, 0, "SysListView32", "FolderView")
             LastHandleTop = HandleTop
-            If LastHandleTop = 0 Then Exit Do : Return 0
+            If LastHandleTop = 0 Then Exit Do : Return IntPtr.Zero
         Loop
         Return HandleSysListView32
     End Function
@@ -939,9 +958,8 @@ Public Class SystemWorkStation
         Dim NewXYBrowser As Form = New XYBrowser
         NewXYBrowser.Tag = HomeURL
         BrowserForms.Add(NewXYBrowser)
-        NewXYBrowser.Show(Me)
+        If Me.MenuTopMost.Checked Then NewXYBrowser.Show(Me) Else NewXYBrowser.Show()
         SetForegroundWindow(NewXYBrowser.Handle)
-        NewXYBrowser.TopMost = False
     End Sub
 
     Private Sub SetLabelForecolor(ByVal ForeColor As Color)
