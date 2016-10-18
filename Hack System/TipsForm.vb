@@ -116,6 +116,13 @@ Public Class TipsForm
 
 #Region "接口函数"
 
+    ''' <summary>
+    ''' 弹出信息浮窗
+    ''' </summary>
+    ''' <param name="TipTitle">浮窗标题</param>
+    ''' <param name="TipIcon">浮窗图标种类</param>
+    ''' <param name="TipBody">浮窗消息文本</param>
+    ''' <param name="TimeOut">浮窗自动隐藏超时</param>
     Public Sub PopupTips(ByVal TipTitle As String, ByVal TipIcon As TipsIconType, ByVal TipBody As String, Optional ByVal TimeOut As Integer = 5000)
         '弹出浮窗函数
         Me.TopMost = True
@@ -170,8 +177,10 @@ Public Class TipsForm
         WaitThread.Start()
     End Sub
 
+    ''' <summary>
+    ''' 收回浮窗
+    ''' </summary>
     Public Sub CancelTip()
-        '收回浮窗
         If Not Me.Visible Then Exit Sub
 
         CloseMe = True
@@ -227,8 +236,10 @@ Public Class TipsForm
 
 #Region "功能函数"
 
+    ''' <summary>
+    ''' 等待自动收回浮窗
+    ''' </summary>
     Private Sub WaitForHiding()
-        '等待自动收回浮窗
         Threading.Thread.Sleep(TipsTimeOut)
         If WaitThread IsNot Nothing AndAlso WaitThread.ThreadState = Threading.ThreadState.Running Then
             HideThread = New Threading.Thread(AddressOf HideTips)

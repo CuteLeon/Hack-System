@@ -55,6 +55,11 @@ Module DrawImageModule
 
 #Region "执行函数"
 
+    ''' <summary>
+    ''' 使用 UpdateLayeredWindow 把带有Alpha通道的图像绘制在窗体
+    ''' </summary>
+    ''' <param name="FormToDraw">要绘制到的窗体</param>
+    ''' <param name="AlphaImage">带Alpha通道的图像</param>
     Public Sub DrawImage(ByVal FormToDraw As Form, ByVal AlphaImage As Bitmap)
         On Error Resume Next
         Dim hDC1 As IntPtr = GetDC(IntPtr.Zero)

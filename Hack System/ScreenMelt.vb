@@ -25,16 +25,20 @@
 
 #Region "接口函数"
 
+    ''' <summary>
+    ''' 开启融化线程
+    ''' </summary>
     Public Sub StartMelt()
-        '开启融化线程
         If Melting Then Exit Sub
         Melting = True
         ThreadMelt = New Threading.Thread(AddressOf Melt)
         ThreadMelt.Start()
     End Sub
 
+    ''' <summary>
+    ''' 关闭融化线程
+    ''' </summary>
     Public Sub StopMelt()
-        '关闭融化线程
         If Not Melting Then Exit Sub
         ThreadMelt.Abort()
         Melting = False

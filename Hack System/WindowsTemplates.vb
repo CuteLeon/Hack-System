@@ -101,17 +101,20 @@ Public Class WindowsTemplates
             SetMeToDefaultSetting()
         End If
     End Sub
-#End Region
-
-#Region "功能函数"
 
     Private Sub MoveWindow(sender As Object, e As MouseEventArgs) Handles Me.MouseDown, GIFControl.MouseDown
         '鼠标通过控件拖动窗体
         ReleaseCapture()
         SendMessageA(Me.Handle, &HA1, 2, 0&)
     End Sub
+#End Region
 
-    Private Sub HideMe() '动态关闭特效的线程
+#Region "功能函数"
+
+    ''' <summary>
+    ''' 动态关闭特效的线程
+    ''' </summary>
+    Private Sub HideMe()
         '计算窗体位置和尺寸没每次应该变化的数值
         Dim EachXDis, EachYDis, EachWidthDis, EachHeightDis As Integer
         EachXDis = (Me.Left - IconLocation.X) \ 7
@@ -141,6 +144,9 @@ Public Class WindowsTemplates
         Me.Hide()
     End Sub
 
+    ''' <summary>
+    ''' 把脚本窗体设置为初始状态
+    ''' </summary>
     Private Sub SetMeToDefaultSetting()
         '根据脚本GIF设置控件和窗体尺寸
         GIFControl.Size = GIFControl.Image.Size
@@ -159,6 +165,9 @@ Public Class WindowsTemplates
 
 #Region "接口函数"
 
+    ''' <summary>
+    ''' 开启/关闭 呼吸效果
+    ''' </summary>
     Public Sub Breath()
         If BreathTimer.Enabled Then
             BreathTimer.Stop()
@@ -214,7 +223,10 @@ Public Class WindowsTemplates
 
 #Region "动态隐藏"
 
-    Private Sub CloseScript() '关闭脚本过程
+    ''' <summary>
+    ''' 关闭脚本
+    ''' </summary>
+    Private Sub CloseScript()
         '记录脚本状态
         SystemWorkStation.ScriptFormVisible(MyScriptIndex) = False
         '读取自身的脚本标识和需要的在桌面环境里的数据

@@ -837,6 +837,9 @@ Public Class SystemWorkStation
 
 #Region "功能函数"
 
+    ''' <summary>
+    ''' 为语音引擎导入要识别的指令语法
+    ''' </summary>
     Private Sub LoadGrammar()
         '加载语音识别引擎语法表
         Dim Grammars As Choices = New Choices()
@@ -864,8 +867,10 @@ Public Class SystemWorkStation
         MySpeechRecognitionEngine.LoadGrammar(GrammarList)
     End Sub
 
+    ''' <summary>
+    ''' 切换到锁屏状态
+    ''' </summary>
     Public Sub LockScreen()
-        '锁屏函数
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ShowConsole"), AudioPlayMode.Background)
         If LoginAndLockUI.Visible Then Exit Sub
         LoginAndLockUI.LockScreenMode = True
@@ -874,7 +879,11 @@ Public Class SystemWorkStation
         SetForegroundWindow(LoginAndLockUI.Handle)
     End Sub
 
-    Public Sub LoadScript(ByVal ScriptIndex As Integer) '加载脚本
+    ''' <summary>
+    ''' 加载制定下标的脚本
+    ''' </summary>
+    ''' <param name="ScriptIndex"></param>
+    Public Sub LoadScript(ByVal ScriptIndex As Integer)
         '播放脚本启动音效
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ScriptStarting"), AudioPlayMode.Background)
         '如果脚本未被加载过，先创建脚本窗体对象并设定脚本标识
@@ -909,6 +918,9 @@ Public Class SystemWorkStation
         End If
     End Sub
 
+    ''' <summary>
+    ''' 试图关闭系统，弹出提示窗
+    ''' </summary>
     Public Sub ShowShutdownWindow()
         If LoginAndLockUI.Visible Then Exit Sub
         '播放提示音
@@ -918,6 +930,10 @@ Public Class SystemWorkStation
         SetForegroundWindow(ShutdownTips.Handle)
     End Sub
 
+    ''' <summary>
+    ''' 获取IP并从第三方网站获取物理地址
+    ''' </summary>
+    ''' <param name="ShowTipsForm">是否使用TipsForm弹出查询结果</param>
     Public Sub GetIPAndAddress(ByVal ShowTipsForm As Boolean)
         Try
             '网络未连接时程序会陷入等待假死，需要事先ping一下目标网站用于连接测试
@@ -950,6 +966,11 @@ Public Class SystemWorkStation
         End If
     End Sub
 
+    ''' <summary>
+    ''' 格式化速度文本并添加单位
+    ''' </summary>
+    ''' <param name="LoadSpeed">传入的无符号整型速度</param>
+    ''' <returns></returns>
     Private Function FormatSpeedString(ByVal LoadSpeed As ULong) As String
         '格式化速度
         If LoadSpeed < 1048576 Then
@@ -959,8 +980,11 @@ Public Class SystemWorkStation
         End If
     End Function
 
+    ''' <summary>
+    ''' 获取物理系统桌面图标的句柄，用于嵌入实现置后显示
+    ''' </summary>
+    ''' <returns>物理桌面容器句柄</returns>
     Private Function GetDesktopIconHandle() As IntPtr
-        '获取物理系统桌面图标的句柄，用于嵌入实现置后显示
         Dim HandleDesktop As Integer = GetDesktopWindow
         Dim HandleTop As Integer = 0
         Dim LastHandleTop As Integer = 0
@@ -987,8 +1011,11 @@ Public Class SystemWorkStation
         Return HandleSysListView32
     End Function
 
+    ''' <summary>
+    ''' 加载新浏览器窗口
+    ''' </summary>
+    ''' <param name="HomeURL">自动打开的网址(包括系统主页和在新窗口打开的链接)</param>
     Public Sub LoadNewBrowser(Optional ByVal HomeURL As String = MainHomeURL)
-        '加载新浏览器窗口
         Dim NewXYBrowser As Form = New XYBrowser
         NewXYBrowser.Tag = HomeURL
         BrowserForms.Add(NewXYBrowser)
@@ -996,8 +1023,11 @@ Public Class SystemWorkStation
         SetForegroundWindow(NewXYBrowser.Handle)
     End Sub
 
+    ''' <summary>
+    ''' 设置桌面图标文本颜色
+    ''' </summary>
+    ''' <param name="ForeColor">字体颜色</param>
     Private Sub SetLabelForecolor(ByVal ForeColor As Color)
-        '设置桌面图标文本颜色
         For Each ScriptIcon As Label In ScriptIcons
             ScriptIcon.ForeColor = LabelForecolor
         Next
@@ -1021,6 +1051,11 @@ Public Class SystemWorkStation
         SettingButtonControl.ForeColor = LabelForecolor
     End Sub
 
+    ''' <summary>
+    ''' 把图像转换为Base64文本
+    ''' </summary>
+    ''' <param name="Image">要转换的图像</param>
+    ''' <returns>转换出的文本</returns>
     Private Function BitmapToString(ByVal Image As Bitmap) As String
         '把图像转换为Base64编码
         Dim BitmapStream As IO.MemoryStream = New IO.MemoryStream()
@@ -1029,8 +1064,13 @@ Public Class SystemWorkStation
         Return Convert.ToBase64String(EncryptByte)
     End Function
 
+    ''' <summary>
+    ''' 把原始头像图像裁剪为原型
+    ''' </summary>
+    ''' <param name="InitialBitmap">原始的头像图像</param>
+    ''' <param name="BitmapSize">图像尺寸</param>
+    ''' <returns>裁剪为圆形的头像</returns>
     Private Function MakeCircularBitmap(ByVal InitialBitmap As Bitmap, ByVal BitmapSize As Size) As Bitmap
-        '把原始头像图像裁剪为原型
         With InitialBitmap
             If .Width > .Height Then
                 InitialBitmap = .Clone(New Rectangle((.Width - .Height) / 2, 0, .Height, .Height), InitialBitmap.PixelFormat)
@@ -1057,6 +1097,17 @@ Public Class SystemWorkStation
         Return CircularBitmap
     End Function
 
+    ''' <summary>
+    ''' 为文本绘制阴影（对文本图像模糊处理）
+    ''' </summary>
+    ''' <param name="DrawText">要绘制的文本</param>
+    ''' <param name="TextFont">文本字体</param>
+    ''' <param name="ShadowRadius">阴影半径</param>
+    ''' <param name="ForeColor">文本颜色</param>
+    ''' <param name="ShadowColor">阴影颜色</param>
+    ''' <param name="StrokeColor">描边颜色</param>
+    ''' <param name="BitmapSize">图像尺寸</param>
+    ''' <returns></returns>
     Private Function TextShadowStroke(ByVal DrawText As String, ByVal TextFont As Font, ByVal ShadowRadius As Integer, ByVal ForeColor As Color, ByVal ShadowColor As Color, ByVal StrokeColor As Color, ByVal BitmapSize As Size) As Bitmap
         '返回文本描边加阴影后的图像
         Dim DoubleRadius As Integer = ShadowRadius * 2

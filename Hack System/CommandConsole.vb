@@ -168,6 +168,9 @@ Public Class CommandConsole
 
 #Region "主执行函数"
 
+    ''' <summary>
+    ''' 用于根据 CommandInputBox.Text 执行对应的指令
+    ''' </summary>
     Private Sub RunCommand()
         '运行指令
         CommandInputBox.Text = CommandInputBox.Text.TrimStart
@@ -313,6 +316,10 @@ Public Class CommandConsole
         End Select
     End Sub
 
+    ''' <summary>
+    ''' 用于设置 CommandPast.Text 里命令记录的文本颜色
+    ''' </summary>
+    ''' <param name="CommandResult"></param>
     Private Sub SetLastCommandColor(ByVal CommandResult As Boolean)
         '格式化文本颜色
         Dim LineIndex As Integer = CommandPast.GetLineFromCharIndex(CommandPast.TextLength)
@@ -325,6 +332,10 @@ Public Class CommandConsole
         CommandPast.SelectionColor = Color.SlateGray
     End Sub
 
+    ''' <summary>
+    ''' 单独线程朗读文本，防止在主线程里朗读会造成程序无响应
+    ''' </summary>
+    ''' <param name="CommandParameter">要朗读的文本</param>
     Private Sub SpeakVoice(ByVal CommandParameter As String)
         '语音朗读
         Dim Wscript As Object = CreateObject("Wscript.shell")
@@ -335,6 +346,10 @@ Public Class CommandConsole
 
 #Region "天气功能"
 
+    ''' <summary>
+    ''' 获取对应城市的天气
+    ''' </summary>
+    ''' <param name="CityData">城市的名称或CityID</param>
     Private Sub ShowWeather(ByVal CityData As String)
         On Error Resume Next
         '在常量里查询城市名称或常量
@@ -388,10 +403,10 @@ Public Class CommandConsole
                 CommandPast.SelectionColor = Color.Yellow
 
                 '输出基本参数信息
-                CommandPast.AppendText(vbCrLf & "             City：" & getValue(WebPage, "city").PadRight(10) & "Update：" & getValue(WebPage, "updatetime"))
-                CommandPast.AppendText(vbCrLf & "             Temp：" & (getValue(WebPage, "wendu") & " ℃").PadRight(10) & "HUM： " & getValue(WebPage, "shidu"))
-                CommandPast.AppendText(vbCrLf & "             WindP：" & getValue(WebPage, "fengli").PadRight(10) & "WindD：" & getValue(WebPage, "fengxiang"))
-                CommandPast.AppendText(vbCrLf & "            Sunrise：" & getValue(WebPage, "sunrise_1").PadRight(10) & "Sunset：" & getValue(WebPage, "sunset_1"))
+                CommandPast.AppendText(vbCrLf & "             City：" & GetValue(WebPage, "city").PadRight(10) & "Update：" & GetValue(WebPage, "updatetime"))
+                CommandPast.AppendText(vbCrLf & "             Temp：" & (GetValue(WebPage, "wendu") & " ℃").PadRight(10) & "HUM： " & GetValue(WebPage, "shidu"))
+                CommandPast.AppendText(vbCrLf & "             WindP：" & GetValue(WebPage, "fengli").PadRight(10) & "WindD：" & GetValue(WebPage, "fengxiang"))
+                CommandPast.AppendText(vbCrLf & "            Sunrise：" & GetValue(WebPage, "sunrise_1").PadRight(10) & "Sunset：" & GetValue(WebPage, "sunset_1"))
                 '设置颜色为 PaleGreen
                 CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex + 1)
                 CommandPast.SelectionLength = CommandPast.TextLength - CommandPast.SelectionStart
@@ -400,7 +415,7 @@ Public Class CommandConsole
                 '格式化天气信息
                 Dim ForecastBlock As String
                 Dim WeatherBlock(4) As String
-                ForecastBlock = getValue(WebPage, "forecast")
+                ForecastBlock = GetValue(WebPage, "forecast")
                 Dim DayBlock As String, NightBlock, HighTemperature, LowTemperature As String
                 CommandPast.AppendText(vbCrLf & "         Today and Future：———————")
                 '设置颜色为 Yellow
@@ -410,24 +425,24 @@ Public Class CommandConsole
                 CommandPast.SelectionColor = Color.Yellow
 
                 For Index As Int16 = 0 To 4
-                    WeatherBlock(Index) = getValue(ForecastBlock, "weather")
-                    DayBlock = getValue(WeatherBlock(Index), "day")
-                    NightBlock = getValue(WeatherBlock(Index), "night")
+                    WeatherBlock(Index) = GetValue(ForecastBlock, "weather")
+                    DayBlock = GetValue(WeatherBlock(Index), "day")
+                    NightBlock = GetValue(WeatherBlock(Index), "night")
                     '输出日期
-                    CommandPast.AppendText(vbCrLf & "         > Date：" & getValue(WeatherBlock(Index), "date"))
+                    CommandPast.AppendText(vbCrLf & "         > Date：" & GetValue(WeatherBlock(Index), "date"))
                     '设置颜色为 Pink
                     LineIndex = CommandPast.GetLineFromCharIndex(CommandPast.TextLength)
                     CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex)
                     CommandPast.SelectionLength = CommandPast.Lines(LineIndex).Length
                     CommandPast.SelectionColor = Color.Pink
                     '输出未来几天的天气信息
-                    HighTemperature = getValue(WeatherBlock(Index), "high")
+                    HighTemperature = GetValue(WeatherBlock(Index), "high")
                     HighTemperature = Strings.Mid(HighTemperature, 4, HighTemperature.Length - 3)
-                    LowTemperature = getValue(WeatherBlock(Index), "low")
+                    LowTemperature = GetValue(WeatherBlock(Index), "low")
                     LowTemperature = Strings.Mid(LowTemperature, 4, LowTemperature.Length - 3)
                     CommandPast.AppendText(vbCrLf & "            Temp：" & LowTemperature & " ~ " & HighTemperature)
-                    CommandPast.AppendText(vbCrLf & "               Day：" & getValue(DayBlock, "type") & " (" & getValue(DayBlock, "fengli") & "  " & getValue(DayBlock, "fengxiang") & ")")
-                    CommandPast.AppendText(vbCrLf & "            Night：" & getValue(NightBlock, "type") & " (" & getValue(NightBlock, "fengli") & "  " & getValue(NightBlock, "fengxiang") & ")")
+                    CommandPast.AppendText(vbCrLf & "               Day：" & GetValue(DayBlock, "type") & " (" & GetValue(DayBlock, "fengli") & "  " & GetValue(DayBlock, "fengxiang") & ")")
+                    CommandPast.AppendText(vbCrLf & "            Night：" & GetValue(NightBlock, "type") & " (" & GetValue(NightBlock, "fengli") & "  " & GetValue(NightBlock, "fengxiang") & ")")
                     '设置颜色为 PaleGreen
                     CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex + 1)
                     CommandPast.SelectionLength = CommandPast.TextLength - CommandPast.SelectionStart
@@ -437,7 +452,7 @@ Public Class CommandConsole
                 Next
                 '输出环境数据
                 Dim EnvironmentBlock As String
-                EnvironmentBlock = getValue(WebPage, "environment")
+                EnvironmentBlock = GetValue(WebPage, "environment")
                 CommandPast.AppendText(vbCrLf & "         Environment：————————")
                 '设置颜色为 Yellow
                 LineIndex = CommandPast.GetLineFromCharIndex(CommandPast.TextLength)
@@ -445,9 +460,9 @@ Public Class CommandConsole
                 CommandPast.SelectionLength = CommandPast.Lines(LineIndex).Length
                 CommandPast.SelectionColor = Color.Yellow
                 '输出空气质量信息
-                CommandPast.AppendText(vbCrLf & “             AQI：” & getValue(EnvironmentBlock, "aqi"))
-                CommandPast.AppendText(vbCrLf & "         PM2.5：" & getValue(EnvironmentBlock, "pm25"))
-                CommandPast.AppendText(vbCrLf & "        Quality：" & getValue(EnvironmentBlock, "quality"))
+                CommandPast.AppendText(vbCrLf & “             AQI：” & GetValue(EnvironmentBlock, "aqi"))
+                CommandPast.AppendText(vbCrLf & "         PM2.5：" & GetValue(EnvironmentBlock, "pm25"))
+                CommandPast.AppendText(vbCrLf & "        Quality：" & GetValue(EnvironmentBlock, "quality"))
                 ''设置颜色为 PaleGreen
                 CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex + 1)
                 CommandPast.SelectionLength = CommandPast.TextLength - CommandPast.SelectionStart
@@ -456,7 +471,13 @@ Public Class CommandConsole
         End If
     End Sub
 
-    Public Function getValue(ByVal WebPage As String, ByVal LabelName As String) As String
+    ''' <summary>
+    ''' 从Web页面读取标签的参数
+    ''' </summary>
+    ''' <param name="WebPage">Web页面的源代码</param>
+    ''' <param name="LabelName">标签名字</param>
+    ''' <returns></returns>
+    Public Function GetValue(ByVal WebPage As String, ByVal LabelName As String) As String
         Dim StartP As Integer, EndP As Integer
         Try '从网页数据提取标签数据
             StartP = InStr(WebPage, "<" & LabelName & ">")
@@ -468,7 +489,12 @@ Public Class CommandConsole
         End Try
     End Function
 
-    Private Function getWeatherPage(ByVal UrlLink As String) As String
+    ''' <summary>
+    ''' 读取天气Web页面的源代码
+    ''' </summary>
+    ''' <param name="UrlLink">获取天气信息的URL</param>
+    ''' <returns>包含天气数据的Web页面源代码</returns>
+    Private Function GetWeatherPage(ByVal UrlLink As String) As String
         '从网络读取网页
         Try
             Dim XmlHTTP As Object

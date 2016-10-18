@@ -29,6 +29,12 @@ Public Class XYMail
             End If
         End If
     End Sub
+
+    Private Sub MoveWindow(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
+        '鼠标通过控件拖动窗体
+        WindowsTemplates.ReleaseCapture()
+        WindowsTemplates.SendMessageA(Me.Handle, &HA1, 2, 0&)
+    End Sub
 #End Region
 
 #Region "控件"
@@ -98,6 +104,9 @@ Public Class XYMail
 
 #Region "功能函数"
 
+    ''' <summary>
+    ''' 发送邮件
+    ''' </summary>
     Private Sub SendMail()
         Try
             Dim Mail As New Net.Mail.MailMessage()
@@ -127,12 +136,6 @@ Public Class XYMail
         End Try
 
         Btn_Send.Enabled = True
-    End Sub
-
-    Private Sub MoveWindow(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
-        '鼠标通过控件拖动窗体
-        WindowsTemplates.ReleaseCapture()
-        WindowsTemplates.SendMessageA(Me.Handle, &HA1, 2, 0&)
     End Sub
 #End Region
 

@@ -101,6 +101,9 @@ Public Class ShutdownTips
 
 #Region "功能函数"
 
+    ''' <summary>
+    ''' 确认关机，做关机前的准备
+    ''' </summary>
     Private Sub Shutdown()
         '关机
         SystemWorkStation.SystemClosing = True
@@ -109,6 +112,9 @@ Public Class ShutdownTips
         SystemWorkStation.SetForegroundWindow(ShutdowningUI.Handle)
     End Sub
 
+    ''' <summary>
+    ''' 取消关机
+    ''' </summary>
     Private Sub CancelShutdown()
         '取消关机
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)

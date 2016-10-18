@@ -309,6 +309,9 @@ Public Class XYBrowser
 
 #Region "功能函数"
 
+    ''' <summary>
+    ''' 关闭浏览器窗口
+    ''' </summary>
     Private Sub CloseBrowser()
         'Closing方法放行
         GoingToExit = True
@@ -324,8 +327,10 @@ Public Class XYBrowser
         GC.Collect()
     End Sub
 
+    ''' <summary>
+    ''' 导航：访问地址下拉框里的网址
+    ''' </summary>
     Private Sub NavigateToAddress()
-        '导航到网址
         '如果下拉框已经存在目标网址，将其删掉，重新添加到第一个，否则直接添加到第一个
         Dim TempString As String = BrowserAddress.Text
         Dim Index As Integer = BrowserAddress.Items.IndexOf(BrowserAddress.Text)

@@ -123,9 +123,6 @@
         BackgroundGraphics.Dispose()
     End Sub
 
-    Private Sub MineSweeperForm_MouseClick(sender As Object, e As MouseEventArgs) Handles Me.MouseClick
-
-    End Sub
 #End Region
 
 #Region "控件"
@@ -190,8 +187,10 @@
 
 #Region "功能函数"
 
+    ''' <summary>
+    ''' 初始化雷区状态
+    ''' </summary>
     Private Sub ResetMinefield()
-        '初始化雷区状态
         ClickTimes = 0
         ReDim CellState(9, 9)
         ReDim MineState(9, 9)
@@ -219,8 +218,10 @@
         DrawUI()
     End Sub
 
+    ''' <summary>
+    ''' 初始化背景和画笔
+    ''' </summary>
     Private Sub DrawUI()
-        '初始化背景和画笔
         BackgroundBitmap = My.Resources.MineSweeperAssets.Background
         BackgroundGraphics = Graphics.FromImage(BackgroundBitmap)
         MinefieldBitmap = New Bitmap(320, 320)
@@ -255,6 +256,11 @@
         BackgroundGraphics.Dispose()
     End Sub
 
+    ''' <summary>
+    ''' [递归] 挖掘指定坐标的方格
+    ''' </summary>
+    ''' <param name="RowIndex">横坐标</param>
+    ''' <param name="ColumnIndex">纵坐标</param>
     Private Sub SweepCell(ByVal RowIndex As Integer, ColumnIndex As Integer)
         If CellState(RowIndex, ColumnIndex) = 2 Then Exit Sub '已被挖掘，不处理
         CellState(RowIndex, ColumnIndex) = 2
@@ -273,6 +279,12 @@
         If ClickTimes = 100 - MineCount Then GameOver(True) Else DrawUI()
     End Sub
 
+    ''' <summary>
+    ''' 获取当前方格周围的地雷数量
+    ''' </summary>
+    ''' <param name="RowIndex">横坐标</param>
+    ''' <param name="ColumnIndex">纵坐标</param>
+    ''' <returns>周围地雷数量</returns>
     Private Function GetAroundCount(ByVal RowIndex As Integer, ColumnIndex As Integer) As Integer
         Dim AroundCount As Int16 = 0
         For X As Int16 = RowIndex - 1 To RowIndex + 1
@@ -285,6 +297,10 @@
         Return AroundCount
     End Function
 
+    ''' <summary>
+    ''' 游戏结束
+    ''' </summary>
+    ''' <param name="GameResult">传入游戏是胜利还是失败</param>
     Private Sub GameOver(ByVal GameResult As Boolean)
         RemoveHandler MinefieldPanel.MouseMove, AddressOf MinefieldPanel_MouseMove
         RemoveHandler MinefieldPanel.MouseClick, AddressOf MinefieldPanel_MouseClick

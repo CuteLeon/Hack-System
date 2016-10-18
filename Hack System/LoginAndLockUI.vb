@@ -168,6 +168,10 @@ Public Class LoginAndLockUI
         Next
     End Sub
 
+    ''' <summary>
+    ''' 动态隐藏锁屏界面
+    ''' </summary>
+    ''' <param name="ToRight">指定向左隐藏还是向右隐藏</param>
     Public Sub HideLockScreen(ByVal ToRight As Boolean)
         '动态隐藏
         If ThreadHideMe IsNot Nothing AndAlso ThreadHideMe.ThreadState = ThreadState.Running Then Exit Sub
@@ -202,6 +206,11 @@ Public Class LoginAndLockUI
 
 #Region "功能函数"
 
+    ''' <summary>
+    ''' 把 Base64 加密的文本转换为图像
+    ''' </summary>
+    ''' <param name="Base64"></param>
+    ''' <returns>转换出的图像</returns>
     Public Function StringToBitmap(ByVal Base64 As String) As Bitmap
         Try '把Base64编码转换为图像
             Dim EncryptByte() As Byte = Convert.FromBase64String(Base64)
@@ -213,6 +222,9 @@ Public Class LoginAndLockUI
         End Try
     End Function
 
+    ''' <summary>
+    ''' 登录时切换工作窗口
+    ''' </summary>
     Private Sub ExchangeUI()
         If PasswordControl.Text.ToLower = "resetuser" Then
             '密码输入框输入"resetuser"可以恢复初始头像和用户名
@@ -240,6 +252,9 @@ Public Class LoginAndLockUI
         End If
     End Sub
 
+    ''' <summary>
+    ''' 初始化用户配置
+    ''' </summary>
     Private Sub ResetUserConfig()
         UserHead = Nothing
         UserName = "Leon"
@@ -264,8 +279,10 @@ Public Class LoginAndLockUI
         Me.Activate()
     End Sub
 
+    ''' <summary>
+    ''' 鼠标拖动距离太少不足以解锁时用于恢复锁屏状态
+    ''' </summary>
     Private Sub ReSetMyLocation()
-        '鼠标拖动距离太少不足以解锁时用于恢复锁屏状态
         If Me.Left > 0 Then
             Do While Me.Left > MoveDistance
                 Me.Left -= MoveDistance
