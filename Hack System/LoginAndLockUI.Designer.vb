@@ -23,10 +23,11 @@ Partial Class LoginAndLockUI
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.LoginAreaControl = New System.Windows.Forms.PictureBox()
-        Me.PasswordControl = New System.Windows.Forms.TextBox()
+        Me.PasswordTextBox = New System.Windows.Forms.TextBox()
         Me.LoginButtonControl = New System.Windows.Forms.PictureBox()
         Me.HeadPictureBox = New System.Windows.Forms.PictureBox()
         Me.UserNameControl = New System.Windows.Forms.Label()
+        Me.PasswordLabel = New System.Windows.Forms.Label()
         CType(Me.LoginAreaControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LoginButtonControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.HeadPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -42,20 +43,20 @@ Partial Class LoginAndLockUI
         Me.LoginAreaControl.TabIndex = 6
         Me.LoginAreaControl.TabStop = False
         '
-        'PasswordControl
+        'PasswordTextBox
         '
-        Me.PasswordControl.BackColor = System.Drawing.Color.FromArgb(CType(CType(235, Byte), Integer), CType(CType(235, Byte), Integer), CType(CType(235, Byte), Integer))
-        Me.PasswordControl.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.PasswordControl.Cursor = System.Windows.Forms.Cursors.IBeam
-        Me.PasswordControl.Font = New System.Drawing.Font("微软雅黑", 13.5!, System.Drawing.FontStyle.Bold)
-        Me.PasswordControl.ForeColor = System.Drawing.Color.Black
-        Me.PasswordControl.Location = New System.Drawing.Point(376, 260)
-        Me.PasswordControl.MaxLength = 11
-        Me.PasswordControl.Name = "PasswordControl"
-        Me.PasswordControl.PasswordChar = Global.Microsoft.VisualBasic.ChrW(1422)
-        Me.PasswordControl.Size = New System.Drawing.Size(198, 24)
-        Me.PasswordControl.TabIndex = 4
-        Me.PasswordControl.Text = "HackSystem"
+        Me.PasswordTextBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(235, Byte), Integer), CType(CType(235, Byte), Integer), CType(CType(235, Byte), Integer))
+        Me.PasswordTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.PasswordTextBox.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.PasswordTextBox.Font = New System.Drawing.Font("微软雅黑", 13.5!, System.Drawing.FontStyle.Bold)
+        Me.PasswordTextBox.ForeColor = System.Drawing.Color.Black
+        Me.PasswordTextBox.Location = New System.Drawing.Point(376, 260)
+        Me.PasswordTextBox.MaxLength = 10
+        Me.PasswordTextBox.Name = "PasswordTextBox"
+        Me.PasswordTextBox.PasswordChar = Global.Microsoft.VisualBasic.ChrW(1422)
+        Me.PasswordTextBox.Size = New System.Drawing.Size(0, 24)
+        Me.PasswordTextBox.TabIndex = 4
+        Me.PasswordTextBox.Text = "Leon.ID"
         '
         'LoginButtonControl
         '
@@ -89,6 +90,19 @@ Partial Class LoginAndLockUI
         Me.UserNameControl.TabIndex = 8
         Me.UserNameControl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'PasswordLabel
+        '
+        Me.PasswordLabel.BackColor = System.Drawing.Color.Transparent
+        Me.PasswordLabel.Font = New System.Drawing.Font("微软雅黑", 13.5!, System.Drawing.FontStyle.Bold)
+        Me.PasswordLabel.ForeColor = System.Drawing.Color.White
+        Me.PasswordLabel.Image = Global.HackSystem.My.Resources.SystemAssets.PasswordInputBox_Normal
+        Me.PasswordLabel.Location = New System.Drawing.Point(367, 253)
+        Me.PasswordLabel.Name = "PasswordLabel"
+        Me.PasswordLabel.Size = New System.Drawing.Size(220, 40)
+        Me.PasswordLabel.TabIndex = 9
+        Me.PasswordLabel.Text = "֎֎֎֎֎֎֎"
+        Me.PasswordLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'LoginAndLockUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -97,10 +111,11 @@ Partial Class LoginAndLockUI
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_14
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(812, 440)
+        Me.Controls.Add(Me.PasswordLabel)
         Me.Controls.Add(Me.UserNameControl)
         Me.Controls.Add(Me.HeadPictureBox)
         Me.Controls.Add(Me.LoginButtonControl)
-        Me.Controls.Add(Me.PasswordControl)
+        Me.Controls.Add(Me.PasswordTextBox)
         Me.Controls.Add(Me.LoginAreaControl)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -117,7 +132,8 @@ Partial Class LoginAndLockUI
     End Sub
     Friend WithEvents LoginAreaControl As PictureBox
     Friend WithEvents LoginButtonControl As PictureBox
-    Friend WithEvents PasswordControl As TextBox
+    Friend WithEvents PasswordTextBox As TextBox
     Friend WithEvents HeadPictureBox As PictureBox
     Friend WithEvents UserNameControl As Label
+    Friend WithEvents PasswordLabel As Label
 End Class

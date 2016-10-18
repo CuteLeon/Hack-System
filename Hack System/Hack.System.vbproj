@@ -355,6 +355,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\PasswordInputBox_Down.png" />
+    <None Include="Resources\PasswordInputBox_Enter.png" />
+    <None Include="Resources\PasswordInputBox_Normal.png" />
     <None Include="Resources\Game2048Icon.ico" />
     <None Include="Resources\Game1010Icon.ico" />
     <None Include="Resources\Mask.png" />
@@ -380,8 +383,6 @@
     <None Include="Resources\Card4.png" />
     <None Include="Resources\Card2.png" />
     <None Include="Resources\Card0.png" />
-    <None Include="Resources\2048Game.ico" />
-    <None Include="Resources\1010.ico" />
     <None Include="Resources\Game2048Background.jpg" />
     <None Include="Resources\Game1010Background.jpg" />
     <None Include="Resources\MicroPhone_3.png" />

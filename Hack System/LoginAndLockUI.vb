@@ -56,18 +56,18 @@ Public Class LoginAndLockUI
 
         '使用Panel控件可以简化设计，但是Panel会闪烁，所以继续使用PictureBox
         HeadPictureBox.Location = New Point(-3, -3)
-        PasswordControl.Parent = LoginAreaControl
+        PasswordLabel.Parent = LoginAreaControl
         LoginButtonControl.Parent = LoginAreaControl
         HeadPictureBox.Parent = LoginAreaControl
         UserNameControl.Parent = LoginAreaControl
-        PasswordControl.Location = New Point(281, 113)
+        PasswordLabel.Location = New Point(272, 105)
         LoginButtonControl.Location = New Point(507, 48)
         UserNameControl.Location = New Point(HeadPictureBox.Right, 20)
         LoginAreaControl.Left = (My.Computer.Screen.Bounds.Width - LoginAreaControl.Width) / 2
         LoginAreaControl.Top = (My.Computer.Screen.Bounds.Height - LoginAreaControl.Height) / 2
         '不选中密码
-        PasswordControl.SelectionStart = PasswordControl.TextLength
-        PasswordControl.SelectionLength = 0
+        PasswordTextBox.SelectionStart = PasswordTextBox.TextLength
+        PasswordTextBox.SelectionLength = 0
 
         Me.Cursor = StartingUpUI.SystemCursor
     End Sub
@@ -144,7 +144,7 @@ Public Class LoginAndLockUI
         ExchangeUI()
     End Sub
 
-    Private Sub PasswordControl_KeyPress(sender As Object, e As KeyPressEventArgs) Handles PasswordControl.KeyPress
+    Private Sub PasswordControl_KeyPress(sender As Object, e As KeyPressEventArgs) Handles PasswordTextBox.KeyPress
         '敲回车键登录系统
         If Asc(e.KeyChar) = Keys.Enter Then ExchangeUI()
     End Sub
@@ -226,11 +226,11 @@ Public Class LoginAndLockUI
     ''' 登录时切换工作窗口
     ''' </summary>
     Private Sub ExchangeUI()
-        If PasswordControl.Text.ToLower = "resetuser" Then
+        If PasswordTextBox.Text.ToLower = "resetuser" Then
             '密码输入框输入"resetuser"可以恢复初始头像和用户名
             ResetUserConfig()
-            PasswordControl.Text = "LoginMeIn"
-            PasswordControl.SelectionStart = 9
+            PasswordTextBox.Text = "LoginMeIn"
+            PasswordTextBox.SelectionStart = 9
         Else
             '可以在这里设置判断登录密码
             If LockScreenMode Then
@@ -298,6 +298,36 @@ Public Class LoginAndLockUI
             Loop
             Me.Left = 0
         End If
+    End Sub
+
+#End Region
+
+#Region "使用 TextBox 在后台为前台的 Label 响应按键操作"
+
+    Private Sub PasswordTextBox_TextChanged(sender As Object, e As EventArgs) Handles PasswordTextBox.TextChanged
+        '使 PasswordLabel 显示 PasswordTextBox 显示的文本
+        PasswordLabel.Text = Strings.StrDup(PasswordTextBox.Text.Length, PasswordTextBox.PasswordChar)
+    End Sub
+
+    Private Sub PasswordTextBox_LostFocus(sender As Object, e As EventArgs) Handles PasswordTextBox.LostFocus
+        '防止 PasswordTextBox 失去焦点导致无法接收按键消息
+        PasswordTextBox.Focus()
+    End Sub
+
+    Private Sub PasswordLabel_MouseEnter(sender As Object, e As EventArgs) Handles PasswordLabel.MouseEnter
+        PasswordLabel.Image = My.Resources.SystemAssets.PasswordInputBox_Enter
+    End Sub
+
+    Private Sub PasswordLabel_MouseLeave(sender As Object, e As EventArgs) Handles PasswordLabel.MouseLeave
+        PasswordLabel.Image = My.Resources.SystemAssets.PasswordInputBox_Normal
+    End Sub
+
+    Private Sub PasswordLabel_MouseUp(sender As Object, e As MouseEventArgs) Handles PasswordLabel.MouseUp
+        PasswordLabel.Image = My.Resources.SystemAssets.PasswordInputBox_Enter
+    End Sub
+
+    Private Sub PasswordLabel_MouseDown(sender As Object, e As MouseEventArgs) Handles PasswordLabel.MouseDown
+        PasswordLabel.Image = My.Resources.SystemAssets.PasswordInputBox_Down
     End Sub
 
 #End Region
