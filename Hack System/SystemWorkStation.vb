@@ -610,7 +610,7 @@ Public Class SystemWorkStation
             Else
                 Me.TopMost = False
                 For Each OwnedForm As Form In Me.OwnedForms
-                    Me.RemoveOwnedForm(OwnedForm)
+                    If OwnedForm IsNot TipsForm Then Me.RemoveOwnedForm(OwnedForm)
                 Next
                 SetParent(Me.Handle, DesktopIconHandle)
             End If

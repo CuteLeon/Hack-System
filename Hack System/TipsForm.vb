@@ -142,8 +142,8 @@ HiddenLabel:
         HideThread.Join()
         HideThread.DisableComObjectEagerCleanup()
         IconTimer.Stop()
-        GC.Collect()
         MyState = TipsState.Hidden
+        GC.Collect()
         Me.Close()
     End Sub
 #End Region
@@ -180,6 +180,7 @@ HiddenLabel:
             HideThread.Join()
             IconTimer.Stop()
             GC.Collect()
+            MyState = TipsState.Hidden
             Me.Close()
         End If
     End Sub
@@ -244,6 +245,7 @@ HiddenLabel:
     End Sub
 
     Private Sub TipsForm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        If MyState = TipsState.Hidden Then Exit Sub
         e.Cancel = True
         CancelTip()
     End Sub
