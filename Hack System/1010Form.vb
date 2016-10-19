@@ -358,8 +358,7 @@
     ''' </summary>
     Private Sub GameOver()
         '游戏结束的自定义过程，用以重置游戏
-        If Not TipsForm.Visible Then TipsForm.Show(SystemWorkStation)
-        TipsForm.PopupTips("Game Over !", TipsForm.TipsIconType.Infomation, "Score： " & Score)
+        TipsForm.PopupTips(SystemWorkStation, "Game Over !", TipsForm.TipsIconType.Infomation, "Score： " & Score)
         '分数清零
         Score = 0
         ScoreLabel.Text = "0"

@@ -154,7 +154,7 @@ Public Class LoginAndLockUI
 
     Public Sub ShowLockScreen()
         '进入锁屏状态
-        If TipsForm.Visible Then TipsForm.CancelTip()
+        TipsForm.CancelTip()
         If ThreadShowMe IsNot Nothing AndAlso ThreadShowMe.ThreadState = ThreadState.Running Then Exit Sub
         ThreadShowMe = New Thread(AddressOf ShowMe)
         ThreadShowMe.Start()
@@ -244,8 +244,9 @@ Public Class LoginAndLockUI
                 Me.Opacity = 0
                 Me.Hide()
             End If
-            SystemWorkStation.Focus()
-
+            SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+            '切换界面时需要交换 TipsForm 的拥有者窗体
+            If TipsForm.Visible Then TipsForm.Owner = SystemWorkStation
             '非锁屏状态时，不允许通过鼠标拖动的方式登录系统，所以首先登录一次绑定事件
             AddHandler Me.MouseUp, AddressOf LoginAndLockUI_MouseUp
             AddHandler Me.MouseDown, AddressOf LoginAndLockUI_MouseDown
@@ -273,8 +274,7 @@ Public Class LoginAndLockUI
         My.Settings.Save()
 
         '弹出提示浮窗
-        If Not TipsForm.Visible Then TipsForm.Show(Me)
-        TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Reset head successfully")
+        TipsForm.PopupTips(Me, "Successfully !", TipsForm.TipsIconType.Infomation, "Reset head successfully")
 
         Me.Activate()
     End Sub

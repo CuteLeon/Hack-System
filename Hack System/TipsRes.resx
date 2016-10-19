@@ -133,8 +133,41 @@
   <data name="TipsCloseButton_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\TipsCloseButton_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TipsIconBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\TipsIconBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TipsIconBackground_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TipsIconBackground_0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TipsIconBackground_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TipsIconBackground_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TipsIconBackground_10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TipsIconBackground_10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TipsIconBackground_11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TipsIconBackground_11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TipsIconBackground_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TipsIconBackground_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TipsIconBackground_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TipsIconBackground_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TipsIconBackground_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TipsIconBackground_4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TipsIconBackground_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TipsIconBackground_5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TipsIconBackground_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TipsIconBackground_6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TipsIconBackground_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TipsIconBackground_7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TipsIconBackground_8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TipsIconBackground_8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TipsIconBackground_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TipsIconBackground_9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TipsIcons" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\TipsIcons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -18,8 +18,10 @@ Public Class CommandConsole
 
     Public Sub ShowConsole()
         '提示浮窗显示时需要先隐藏浮窗
-        If TipsForm.Visible Then TipsForm.CancelTip()
-
+        TipsForm.CancelTip()
+        If Not Me.Visible Then Me.Show(SystemWorkStation)
+        Me.Height = My.Computer.Screen.Bounds.Height
+        Me.Top = 0
         SystemWorkStation.SetForegroundWindow(Me.Handle)
         CommandInputBox.Focus()
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ShowConsole"), AudioPlayMode.Background)
@@ -40,6 +42,7 @@ Public Class CommandConsole
     End Sub
 
     Private Sub SubShowConsole()
+        Me.Left = My.Computer.Screen.Bounds.Width
         '显示控制台
         Do While Me.Left + Me.Width > My.Computer.Screen.Bounds.Width
             Me.Left -= 30
@@ -291,16 +294,15 @@ Public Class CommandConsole
                 CommandInputBox.SelectAll()
                 SetLastCommandColor(True)
             Case "melt" '开启或关闭屏幕融化
-                If Not TipsForm.Visible Then TipsForm.Show(SystemWorkStation)
                 If ScreenMelt.Melting Then
                     ScreenMelt.StopMelt()
                     CommandTip.Text = "Stop melting."
                     SystemWorkStation.Refresh()
-                    TipsForm.PopupTips("Tips", TipsForm.TipsIconType.Infomation, "Stop melting.")
+                    TipsForm.PopupTips(SystemWorkStation, "Tips", TipsForm.TipsIconType.Infomation, "Stop melting.")
                 Else
                     ScreenMelt.StartMelt()
                     CommandTip.Text = "Start melting."
-                    TipsForm.PopupTips("Tips", TipsForm.TipsIconType.Infomation, "Start melting.")
+                    TipsForm.PopupTips(SystemWorkStation, "Tips", TipsForm.TipsIconType.Infomation, "Start melting.")
                 End If
                 '显示消息并设置颜色
                 CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | " & CommandTip.Text)
@@ -512,6 +514,13 @@ Public Class CommandConsole
             Return ("Can not get the web page.")
         End Try
     End Function
+
+    Private Sub CommandConsole_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        CommandPast.Height = My.Computer.Screen.Bounds.Height - 120
+        CommandTip.Top = My.Computer.Screen.Bounds.Height - 100
+        CommandInputBox.Top = My.Computer.Screen.Bounds.Height - 40
+    End Sub
+
 #End Region
 
 End Class

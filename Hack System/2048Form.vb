@@ -253,8 +253,7 @@
     ''' </summary>
     Private Sub GameOver()
         DrawForm()
-        If Not TipsForm.Visible Then TipsForm.Show(SystemWorkStation)
-        TipsForm.PopupTips("Game Over !", TipsForm.TipsIconType.Infomation, "Score： " & Score)
+        TipsForm.PopupTips(SystemWorkStation, "Game Over !", TipsForm.TipsIconType.Infomation, "Score： " & Score)
         ScoreLabel.Text = "0"
         Score = 0
         ReDim CardData(3, 3)

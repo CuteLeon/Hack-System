@@ -6,10 +6,6 @@ Partial Class TipsForm
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
-            If TitleFont IsNot Nothing Then TitleFont.Dispose()
-            If TitleBrush IsNot Nothing Then TitleBrush.Dispose()
-            If BodyFont IsNot Nothing Then BodyFont.Dispose()
-            If BodyBrush IsNot Nothing Then BodyBrush.Dispose()
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
             End If
@@ -38,14 +34,13 @@ Partial Class TipsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(358, 108)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Location = New System.Drawing.Point(-368, -118)
         Me.Name = "TipsForm"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
-        Me.Text = "Tips"
+        Me.Text = "Tips："
         Me.TopMost = True
         Me.ResumeLayout(False)
 

@@ -132,14 +132,6 @@ Public Class SystemWorkStation
             End If
         End If
 
-        '初始化控制台窗体并将其隐藏在屏幕右侧
-        CommandConsole.Show(Me)
-        CommandConsole.Height = My.Computer.Screen.Bounds.Height
-        CommandConsole.Location = New Point(My.Computer.Screen.Bounds.Width, 0)
-        CommandConsole.CommandPast.Height = My.Computer.Screen.Bounds.Height - 120
-        CommandConsole.CommandTip.Top = My.Computer.Screen.Bounds.Height - 100
-        CommandConsole.CommandInputBox.Top = My.Computer.Screen.Bounds.Height - 40
-        CommandConsole.Hide()
         '设置自定义壁纸选取控件的初始路径为系统图库路径
         CustomImageDialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
 
@@ -159,7 +151,6 @@ Public Class SystemWorkStation
             ShowShutdownWindow()
         ElseIf KeyAscii = 96 Or KeyAscii = -24156 Then
             '按下~键，显示控制台
-            If Not CommandConsole.Visible Then CommandConsole.Show(Me)
             CommandConsole.ShowConsole()
         Else
             '其它按键Asc码对脚本总数求余当做脚本标识，加载脚本
@@ -614,8 +605,7 @@ Public Class SystemWorkStation
             DesktopIconHandle = GetDesktopIconHandle()
             If DesktopIconHandle = IntPtr.Zero Then
                 '如果查找DesktopIconHandle句柄失败时，无法置后显示，需要弹窗提示并取消任务
-                If Not TipsForm.Visible Then TipsForm.Show(Me)
-                TipsForm.PopupTips("Can't find", TipsForm.TipsIconType.Infomation, "the Physical-Desktop!")
+                TipsForm.PopupTips(Me, "Can't find", TipsForm.TipsIconType.Infomation, "the Physical-Desktop!")
                 MenuTopMost.Checked = True '不改变 MenuTopMost 的勾选状态，防止重复响应 Click 事件
             Else
                 Me.TopMost = False
@@ -635,9 +625,8 @@ Public Class SystemWorkStation
             Try '我为了方便，给过滤器加了"*.*"，但是啊，有些用户，Ta贱！非得作死，比如故意选取一个txt文件。需要容错处理！
                 CustomWallpaperBitmap = Bitmap.FromFile(CustomImageDialog.FileName)
                 Me.BackgroundImage = CustomWallpaperBitmap
-                If Not TipsForm.Visible Then TipsForm.Show(Me)
                 '弹出提示浮窗
-                TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Set wallpaper successfully")
+                TipsForm.PopupTips(Me, "Successfully !", TipsForm.TipsIconType.Infomation, "Set wallpaper successfully")
                 WallpaperIndex = -1
                 '保存壁纸标识和自定义壁纸的Base64编码到存档
                 My.Settings.DesktopWallpaperIndex = WallpaperIndex
@@ -645,8 +634,7 @@ Public Class SystemWorkStation
                 My.Settings.Save()
             Catch ex As Exception
                 '出错时弹出提示浮窗
-                If Not TipsForm.Visible Then TipsForm.Show(Me)
-                TipsForm.PopupTips("Error reading image", TipsForm.TipsIconType.Critical, "Please select again.")
+                TipsForm.PopupTips(Me, "Error reading image", TipsForm.TipsIconType.Critical, "Please select again.")
             End Try
         Else
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
@@ -681,12 +669,10 @@ Public Class SystemWorkStation
                 My.Settings.UserHead = LoginAndLockUI.UserHeadString
                 My.Settings.Save()
                 '弹出提示浮窗
-                If Not TipsForm.Visible Then TipsForm.Show(Me)
-                TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Set user head successfully")
+                TipsForm.PopupTips(Me, "Successfully !", TipsForm.TipsIconType.Infomation, "Set user head successfully")
             Catch ex As Exception
                 '出错时弹出提示浮窗
-                If Not TipsForm.Visible Then TipsForm.Show(Me)
-                TipsForm.PopupTips("Error reading image", TipsForm.TipsIconType.Critical, "Please select again.")
+                TipsForm.PopupTips(Me, "Error reading image", TipsForm.TipsIconType.Critical, "Please select again.")
             End Try
         Else
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
@@ -714,8 +700,7 @@ Public Class SystemWorkStation
             LoginAndLockUI.UserNameControl.Text = vbNullString
             LoginAndLockUI.UserNameControl.Size = New Size(300, LoginAndLockUI.UserNameControl.Image.Height)
             '处理完毕弹出提示浮窗
-            If Not TipsForm.Visible Then TipsForm.Show(Me)
-            TipsForm.PopupTips("Successfully !", TipsForm.TipsIconType.Infomation, "Set user name successfully")
+            TipsForm.PopupTips(Me, "Successfully !", TipsForm.TipsIconType.Infomation, "Set user name successfully")
             '将用户名图像转换为Base64编码存进存档
             LoginAndLockUI.UserNameString = BitmapToString(LoginAndLockUI.UserNameBitmap)
             My.Settings.UserName = LoginAndLockUI.UserName
@@ -762,21 +747,18 @@ Public Class SystemWorkStation
                 SpeechRecognitionMode = False
                 SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_Off
                 '关闭成功弹出提示浮窗
-                If Not TipsForm.Visible Then TipsForm.Show(Me)
-                TipsForm.PopupTips("Shuted the", TipsForm.TipsIconType.Exclamation, "RecognitionEngine off.")
+                TipsForm.PopupTips(Me, "Shuted the", TipsForm.TipsIconType.Exclamation, "RecognitionEngine off.")
             Else
                 '开启语音识别
                 MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
                 SpeechRecognitionMode = True
                 SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_On
                 '开启成功弹出提示浮窗
-                If Not TipsForm.Visible Then TipsForm.Show(Me)
-                TipsForm.PopupTips("Started the", TipsForm.TipsIconType.Infomation, "SpeechRecognitionEngine.")
+                TipsForm.PopupTips(Me, "Started the", TipsForm.TipsIconType.Infomation, "SpeechRecognitionEngine.")
             End If
         Catch ex As Exception
             '操作失败，弹出提示浮窗
-            If Not TipsForm.Visible Then TipsForm.Show(Me)
-            TipsForm.PopupTips("Failed to control the", TipsForm.TipsIconType.Critical, "SpeechRecognitionEngine")
+            TipsForm.PopupTips(Me, "Failed to control the", TipsForm.TipsIconType.Critical, "SpeechRecognitionEngine")
         End Try
     End Sub
 
@@ -948,8 +930,7 @@ Public Class SystemWorkStation
                 IPWebClient.Dispose()
                 '首次获取时(即程序启动时)不弹出提示浮窗
                 If ShowTipsForm Then
-                    If Not TipsForm.Visible Then TipsForm.Show(Me)
-                    TipsForm.PopupTips("Successfully :", TipsForm.TipsIconType.Exclamation, "Get IP and address !")
+                    TipsForm.PopupTips(Me, "Successfully :", TipsForm.TipsIconType.Exclamation, "Get IP and address !")
                 End If
                 '成功读取IP和地址，跳出过程
                 Exit Sub
@@ -961,8 +942,7 @@ Public Class SystemWorkStation
         IPLabel.Text = "127.0.0.1" : AddressLabel.Text = "Click to get."
         '首次获取时(即程序启动时)不弹出提示浮窗
         If ShowTipsForm Then
-            If Not TipsForm.Visible Then TipsForm.Show(Me)
-            TipsForm.PopupTips("Error :", TipsForm.TipsIconType.Exclamation, "Can't get IP and Address.")
+            TipsForm.PopupTips(Me, "Error :", TipsForm.TipsIconType.Exclamation, "Can't get IP and Address.")
         End If
     End Sub
 
