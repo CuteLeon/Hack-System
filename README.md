@@ -39,6 +39,9 @@
 * HackSystem 置后显示(嵌入到物理系统的桌面内)，你可以正常操作其他应用程序的窗口。
 ![image](./Screenshot/thumb/CuteLeon.Hack-System.S10.jpg)
 ***
+* HackSystem 内附带的1010和2048小游戏(上图的扫雷也是内置的)。
+![image](./Screenshot/thumb/CuteLeon.Hack-System.S12.jpg)
+***
 * HackSystem 关闭。
 ![image](./Screenshot/thumb/CuteLeon.Hack-System.S11.jpg)
 
