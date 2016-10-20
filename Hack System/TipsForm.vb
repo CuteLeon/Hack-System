@@ -175,6 +175,7 @@ HiddenLabel:
     Private Sub WaitForHiding()
         Threading.Thread.Sleep(TipsTimeOut)
         If MyState = TipsState.Waitting Then
+            MyState = TipsState.Hiding
             HideThread = New Threading.Thread(AddressOf HideTips)
             HideThread.Start()
             HideThread.Join()
