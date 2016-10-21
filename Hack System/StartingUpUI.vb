@@ -18,6 +18,7 @@ Public Class StartingUpUI
         LoginAndLockUI.Icon = My.Resources.SystemAssets.HackSystem
         SystemWorkStation.Icon = My.Resources.SystemAssets.HackSystem
         WindowsTemplates.Icon = My.Resources.SystemAssets.HackSystem
+        ShutdowningUI.Icon = My.Resources.SystemAssets.HackSystem
         '初始化界面
         Dim LocationX As Integer = (My.Computer.Screen.Bounds.Width - StartingUpControl.Width) / 2
         Dim LocationY As Integer = (My.Computer.Screen.Bounds.Height - StartingUpControl.Height) * 0.85
