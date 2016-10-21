@@ -939,7 +939,7 @@ Public Class SystemWorkStation
         End Try
 
         '出错或网络未连接时显示错误信息
-        IPLabel.Text = "127.0.0.1" : AddressLabel.Text = "Click to get."
+        IPLabel.Text = "LocalHost" : AddressLabel.Text = "Click to get."
         '首次获取时(即程序启动时)不弹出提示浮窗
         If ShowTipsForm Then
             TipsForm.PopupTips(Me, "Error :", TipsForm.TipsIconType.Exclamation, "Can't get IP and Address.")

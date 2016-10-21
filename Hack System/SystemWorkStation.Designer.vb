@@ -398,7 +398,7 @@ Partial Class SystemWorkStation
         Me.IPLabel.Name = "IPLabel"
         Me.IPLabel.Size = New System.Drawing.Size(115, 20)
         Me.IPLabel.TabIndex = 19
-        Me.IPLabel.Text = "127.0.0.1"
+        Me.IPLabel.Text = "LocalHost"
         Me.IPLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.IPLabel.UseMnemonic = False
         '
