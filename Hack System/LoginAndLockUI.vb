@@ -158,6 +158,8 @@ Public Class LoginAndLockUI
         If ThreadShowMe IsNot Nothing AndAlso ThreadShowMe.ThreadState = ThreadState.Running Then Exit Sub
         ThreadShowMe = New Thread(AddressOf ShowMe)
         ThreadShowMe.Start()
+        ThreadShowMe.Join()
+        SystemWorkStation.Hide()
     End Sub
 
     Private Sub ShowMe()
@@ -232,21 +234,22 @@ Public Class LoginAndLockUI
             PasswordTextBox.Text = "LoginMeIn"
             PasswordTextBox.SelectionStart = 9
         Else
-            '可以在这里设置判断登录密码
+            '可以在这里设置判断登录密码或设计彩！蛋！
+            '切换界面时需要收回隐藏 TipsForm 浮窗
+            If TipsForm.Visible Then TipsForm.CancelTip()
+            SystemWorkStation.Show()
             If LockScreenMode Then
                 '解锁
                 My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
+                SystemWorkStation.Refresh()
                 HideLockScreen(True)
                 LockScreenMode = False
             Else
                 '登录
-                SystemWorkStation.Show()
                 Me.Opacity = 0
                 Me.Hide()
             End If
             SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
-            '切换界面时需要交换 TipsForm 的拥有者窗体
-            If TipsForm.Visible Then TipsForm.Owner = SystemWorkStation
             '非锁屏状态时，不允许通过鼠标拖动的方式登录系统，所以首先登录一次绑定事件
             AddHandler Me.MouseUp, AddressOf LoginAndLockUI_MouseUp
             AddHandler Me.MouseDown, AddressOf LoginAndLockUI_MouseDown
