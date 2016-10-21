@@ -289,8 +289,9 @@ Public Class SystemWorkStation
         GetIPAndAddress(False)
     End Sub
 
-    Private Sub SystemWorkStation_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+    Public Sub SystemWorkStation_Activated(sender As Object, e As EventArgs)
         '不要使用Timer值守置前，因为会影响输入法的候选词窗体
+        'SystemWorkStation 初次显示时会自动 Activated 并置前显示，导致登录界面的 FirstLoginIn() 特效无法置前显示，所以需要特效结束后再注册事件
         Me.TopMost = MenuTopMost.Checked
     End Sub
 

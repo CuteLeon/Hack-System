@@ -100,13 +100,17 @@ Public Class LoginAndLockUI
     Private Sub LoginAndLockUI_MouseUp(sender As Object, e As MouseEventArgs)
         '鼠标抬起，判断时候解锁或回复锁屏状态
         RemoveHandler Me.MouseMove, AddressOf LoginAndLockUI_MouseMove
+        If TipsForm.Visible Then TipsForm.CancelTip()
         If Me.Left > Me.Width \ 3 Then
             HideLockScreen(True)
         ElseIf Me.Left < -Me.Width \ 3 Then
             HideLockScreen(False)
         Else
             Threading.ThreadPool.QueueUserWorkItem(New Threading.WaitCallback(AddressOf ReSetMyLocation))
+            Exit Sub
         End If
+        LockScreenMode = False
+        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
     Private Sub LoginAndLockUI_Click(sender As Object, e As EventArgs) Handles Me.Click
@@ -152,14 +156,15 @@ Public Class LoginAndLockUI
 
 #Region "动态显示和隐藏"
 
+    ''' <summary>
+    ''' 动态显示锁屏界面
+    ''' </summary>
     Public Sub ShowLockScreen()
-        '进入锁屏状态
-        TipsForm.CancelTip()
+        If TipsForm.Visible Then TipsForm.CancelTip()
         If ThreadShowMe IsNot Nothing AndAlso ThreadShowMe.ThreadState = ThreadState.Running Then Exit Sub
         ThreadShowMe = New Thread(AddressOf ShowMe)
         ThreadShowMe.Start()
         ThreadShowMe.Join()
-        SystemWorkStation.Hide()
     End Sub
 
     Private Sub ShowMe()
@@ -204,6 +209,23 @@ Public Class LoginAndLockUI
         Me.Location = New Point(0, 0)
         Me.Hide()
     End Sub
+
+    ''' <summary>
+    ''' 初次登录的切换特效
+    ''' </summary>
+    Private Sub FirstLoginIn()
+        SystemWorkStation.Top = Me.Height
+        Do While Me.Bottom > 0
+            Me.Top -= MoveDistance
+            Me.Opacity = 0.5 * (1 - Me.Bottom / Me.Height) + 0.5
+            SystemWorkStation.Top = Me.Bottom
+            Thread.Sleep(15)
+        Loop
+        SystemWorkStation.Top = 0
+        Me.Opacity = 0
+        Me.Location = New Point(0, 0)
+        Me.Hide()
+    End Sub
 #End Region
 
 #Region "功能函数"
@@ -241,15 +263,17 @@ Public Class LoginAndLockUI
             If LockScreenMode Then
                 '解锁
                 My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
-                SystemWorkStation.Refresh()
                 HideLockScreen(True)
                 LockScreenMode = False
             Else
                 '登录
-                Me.Opacity = 0
-                Me.Hide()
+                ThreadHideMe = New Thread(AddressOf FirstLoginIn)
+                ThreadHideMe.Start()
+                ThreadHideMe.Join()
             End If
             SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+            'SystemWorkStation 初次显示时会自动 Activated 并置前显示，导致 FirstLoginIn() 特效无法置前显示，所以需要特效结束后注册事件
+            AddHandler SystemWorkStation.Activated, AddressOf SystemWorkStation.SystemWorkStation_Activated
             '非锁屏状态时，不允许通过鼠标拖动的方式登录系统，所以首先登录一次绑定事件
             AddHandler Me.MouseUp, AddressOf LoginAndLockUI_MouseUp
             AddHandler Me.MouseDown, AddressOf LoginAndLockUI_MouseDown
