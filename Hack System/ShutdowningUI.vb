@@ -5,7 +5,9 @@ Public Class ShutdowningUI
 
 #Region "声明区"
     '线程每次移动的距离
-    Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Width \ 50
+    Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Height \ 300
+    Dim DoubleMoveDistance As Integer = MoveDistance * 2
+    Dim ShutdownBGI As Bitmap = New Bitmap(My.Resources.SystemAssets.ShutdownBGI, My.Computer.Screen.Bounds.Size)
 #End Region
 
 #Region "动态显示和隐藏"
@@ -19,12 +21,15 @@ Public Class ShutdowningUI
     End Sub
 
     Private Sub HideMe()
-        '动态隐藏关机界面
-        Do Until Me.Left > My.Computer.Screen.Bounds.Width
+        '动态隐藏关机界面（不要把 BackgroundImageLayout 设置为 Stretch，否则会卡顿）
+        For Index As Integer = 0 To 50
             Me.Left += MoveDistance
-            Me.Opacity = 0.5 * (1 - Me.Left / My.Computer.Screen.Bounds.Width) + 0.5
-            Thread.Sleep(10)
-        Loop
+            Me.Top -= MoveDistance
+            Me.Width -= DoubleMoveDistance
+            Me.Height -= DoubleMoveDistance
+            Me.Opacity = (50 - Index) / 50
+            Thread.Sleep(15)
+        Next
     End Sub
 #End Region
 
@@ -37,7 +42,11 @@ Public Class ShutdowningUI
         Me.Location = New Point(0, 0)
         Me.Size = My.Computer.Screen.Bounds.Size
         Me.Cursor = StartingUpUI.SystemCursor
-        StartUpLogo.Location = New Point((My.Computer.Screen.Bounds.Width - My.Resources.SystemAssets.HackSystemLogo.Width) \ 2, My.Computer.Screen.Bounds.Height \ 4)
+        Dim HackSystemLogo As Bitmap = My.Resources.SystemAssets.HackSystemLogo
+        Using ShutdownGraphics As Graphics = Graphics.FromImage(ShutdownBGI)
+            ShutdownGraphics.DrawImage(HackSystemLogo, New Rectangle((My.Computer.Screen.Bounds.Width - HackSystemLogo.Width) \ 2, My.Computer.Screen.Bounds.Height \ 4, HackSystemLogo.Width, HackSystemLogo.Height))
+        End Using
+        Me.BackgroundImage = ShutdownBGI
         '结束屏幕融化线程，否则程序无法退出
         If ScreenMelt.Melting Then ScreenMelt.StopMelt()
         '释放语音识别引擎(容错处理)

@@ -22,17 +22,7 @@ Partial Class ShutdowningUI
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.StartUpLogo = New System.Windows.Forms.Label()
         Me.SuspendLayout()
-        '
-        'StartUpLogo
-        '
-        Me.StartUpLogo.BackColor = System.Drawing.Color.Transparent
-        Me.StartUpLogo.Image = Global.HackSystem.My.Resources.SystemAssets.HackSystemLogo
-        Me.StartUpLogo.Location = New System.Drawing.Point(60, 121)
-        Me.StartUpLogo.Name = "StartUpLogo"
-        Me.StartUpLogo.Size = New System.Drawing.Size(487, 100)
-        Me.StartUpLogo.TabIndex = 4
         '
         'ShutdowningUI
         '
@@ -40,9 +30,7 @@ Partial Class ShutdowningUI
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.ShutdownBGI
-        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(606, 343)
-        Me.Controls.Add(Me.StartUpLogo)
+        Me.ClientSize = New System.Drawing.Size(690, 358)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "ShutdowningUI"
@@ -54,6 +42,4 @@ Partial Class ShutdowningUI
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents StartUpLogo As Label
 End Class
