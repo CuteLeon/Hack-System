@@ -217,7 +217,7 @@ Public Class LoginAndLockUI
         SystemWorkStation.Top = Me.Height
         Do While Me.Bottom > 0
             Me.Top -= MoveDistance
-            Me.Opacity = 0.5 * (1 - Me.Bottom / Me.Height) + 0.5
+            Me.Opacity = Me.Bottom / Me.Height
             SystemWorkStation.Top = Me.Bottom
             Thread.Sleep(15)
         Loop

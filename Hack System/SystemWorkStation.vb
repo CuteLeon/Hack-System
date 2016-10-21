@@ -257,12 +257,15 @@ Public Class SystemWorkStation
         RightestLoction = ScriptIcons(ScriptUpperBound).Left + IconWidth
 
         '初始化网卡计数器
-        For Index As Integer = 0 To UBoundOfPCCategory
-            DownloadCounter(Index) = New PerformanceCounter("Network Interface", "Bytes Received/sec", PCCategory.GetInstanceNames(Index))
-            UploadCounter(Index) = New PerformanceCounter("Network Interface", "Bytes Sent/sec", PCCategory.GetInstanceNames(Index))
-            DownloadValueOld(Index) = DownloadCounter(Index).NextSample().RawValue
-            UploadValueOld(Index) = UploadCounter(Index).NextSample().RawValue
-        Next
+        Try
+            For Index As Integer = 0 To UBoundOfPCCategory
+                DownloadCounter(Index) = New PerformanceCounter("Network Interface", "Bytes Received/sec", PCCategory.GetInstanceNames(Index))
+                UploadCounter(Index) = New PerformanceCounter("Network Interface", "Bytes Sent/sec", PCCategory.GetInstanceNames(Index))
+                DownloadValueOld(Index) = DownloadCounter(Index).NextSample().RawValue
+                UploadValueOld(Index) = UploadCounter(Index).NextSample().RawValue
+            Next
+        Catch ex As Exception
+        End Try
         '开启性能计数器"引擎"
         PerformanceCounterTimer.Enabled = True
 
