@@ -214,14 +214,11 @@ Public Class LoginAndLockUI
     ''' 初次登录的切换特效
     ''' </summary>
     Private Sub FirstLoginIn()
-        SystemWorkStation.Top = Me.Height
         Do While Me.Bottom > 0
             Me.Top -= MoveDistance
             Me.Opacity = Me.Bottom / Me.Height
-            SystemWorkStation.Top = Me.Bottom
             Thread.Sleep(15)
         Loop
-        SystemWorkStation.Top = 0
         Me.Opacity = 0
         Me.Location = New Point(0, 0)
         Me.Hide()
