@@ -55,6 +55,7 @@ Public Class StartingUpUI
             StartingUpTimer.Enabled = False
             ExchangeUITimer.Enabled = True
             LoginAndLockUI.Show()
+            Me.Owner = LoginAndLockUI
             Me.Focus()
         End If
     End Sub
