@@ -27,9 +27,8 @@ Partial Class StartingUpUI
         Me.StartingUpTimer = New System.Windows.Forms.Timer(Me.components)
         Me.ExchangeUITimer = New System.Windows.Forms.Timer(Me.components)
         Me.StartingUpLable = New System.Windows.Forms.Label()
-        Me.StartingUpControl = New System.Windows.Forms.PictureBox()
         Me.StartUpLogo = New System.Windows.Forms.Label()
-        CType(Me.StartingUpControl, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.StartingUpControl = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'StartingUpTimer
@@ -53,16 +52,6 @@ Partial Class StartingUpUI
         Me.StartingUpLable.Text = "Hack System Loading... (0%)"
         Me.StartingUpLable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'StartingUpControl
-        '
-        Me.StartingUpControl.BackColor = System.Drawing.Color.Transparent
-        Me.StartingUpControl.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.StartingUp
-        Me.StartingUpControl.Location = New System.Drawing.Point(322, 148)
-        Me.StartingUpControl.Name = "StartingUpControl"
-        Me.StartingUpControl.Size = New System.Drawing.Size(200, 200)
-        Me.StartingUpControl.TabIndex = 0
-        Me.StartingUpControl.TabStop = False
-        '
         'StartUpLogo
         '
         Me.StartUpLogo.BackColor = System.Drawing.Color.Transparent
@@ -72,6 +61,15 @@ Partial Class StartingUpUI
         Me.StartUpLogo.Size = New System.Drawing.Size(487, 100)
         Me.StartUpLogo.TabIndex = 3
         '
+        'StartingUpControl
+        '
+        Me.StartingUpControl.BackColor = System.Drawing.Color.Transparent
+        Me.StartingUpControl.Image = Global.HackSystem.My.Resources.SystemAssets.StartingUp_0
+        Me.StartingUpControl.Location = New System.Drawing.Point(318, 148)
+        Me.StartingUpControl.Name = "StartingUpControl"
+        Me.StartingUpControl.Size = New System.Drawing.Size(200, 200)
+        Me.StartingUpControl.TabIndex = 5
+        '
         'StartingUpUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -80,9 +78,9 @@ Partial Class StartingUpUI
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.StartingUIWallpaper
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(768, 390)
+        Me.Controls.Add(Me.StartingUpControl)
         Me.Controls.Add(Me.StartUpLogo)
         Me.Controls.Add(Me.StartingUpLable)
-        Me.Controls.Add(Me.StartingUpControl)
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -90,13 +88,12 @@ Partial Class StartingUpUI
         Me.Text = "Hack System Loading... (0%)"
         Me.TopMost = True
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
-        CType(Me.StartingUpControl, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents StartingUpControl As PictureBox
     Friend WithEvents StartingUpTimer As Timer
     Friend WithEvents ExchangeUITimer As Timer
     Friend WithEvents StartingUpLable As Label
     Friend WithEvents StartUpLogo As Label
+    Friend WithEvents StartingUpControl As Label
 End Class

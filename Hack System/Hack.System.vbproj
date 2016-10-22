@@ -364,6 +364,66 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\StartingUp_59.png" />
+    <None Include="Resources\StartingUp_58.png" />
+    <None Include="Resources\StartingUp_57.png" />
+    <None Include="Resources\StartingUp_56.png" />
+    <None Include="Resources\StartingUp_55.png" />
+    <None Include="Resources\StartingUp_54.png" />
+    <None Include="Resources\StartingUp_53.png" />
+    <None Include="Resources\StartingUp_52.png" />
+    <None Include="Resources\StartingUp_51.png" />
+    <None Include="Resources\StartingUp_50.png" />
+    <None Include="Resources\StartingUp_49.png" />
+    <None Include="Resources\StartingUp_48.png" />
+    <None Include="Resources\StartingUp_47.png" />
+    <None Include="Resources\StartingUp_46.png" />
+    <None Include="Resources\StartingUp_45.png" />
+    <None Include="Resources\StartingUp_44.png" />
+    <None Include="Resources\StartingUp_43.png" />
+    <None Include="Resources\StartingUp_42.png" />
+    <None Include="Resources\StartingUp_41.png" />
+    <None Include="Resources\StartingUp_40.png" />
+    <None Include="Resources\StartingUp_39.png" />
+    <None Include="Resources\StartingUp_38.png" />
+    <None Include="Resources\StartingUp_37.png" />
+    <None Include="Resources\StartingUp_36.png" />
+    <None Include="Resources\StartingUp_35.png" />
+    <None Include="Resources\StartingUp_34.png" />
+    <None Include="Resources\StartingUp_33.png" />
+    <None Include="Resources\StartingUp_32.png" />
+    <None Include="Resources\StartingUp_31.png" />
+    <None Include="Resources\StartingUp_30.png" />
+    <None Include="Resources\StartingUp_29.png" />
+    <None Include="Resources\StartingUp_28.png" />
+    <None Include="Resources\StartingUp_27.png" />
+    <None Include="Resources\StartingUp_26.png" />
+    <None Include="Resources\StartingUp_25.png" />
+    <None Include="Resources\StartingUp_24.png" />
+    <None Include="Resources\StartingUp_23.png" />
+    <None Include="Resources\StartingUp_22.png" />
+    <None Include="Resources\StartingUp_21.png" />
+    <None Include="Resources\StartingUp_20.png" />
+    <None Include="Resources\StartingUp_19.png" />
+    <None Include="Resources\StartingUp_18.png" />
+    <None Include="Resources\StartingUp_17.png" />
+    <None Include="Resources\StartingUp_16.png" />
+    <None Include="Resources\StartingUp_15.png" />
+    <None Include="Resources\StartingUp_14.png" />
+    <None Include="Resources\StartingUp_13.png" />
+    <None Include="Resources\StartingUp_12.png" />
+    <None Include="Resources\StartingUp_11.png" />
+    <None Include="Resources\StartingUp_10.png" />
+    <None Include="Resources\StartingUp_9.png" />
+    <None Include="Resources\StartingUp_8.png" />
+    <None Include="Resources\StartingUp_7.png" />
+    <None Include="Resources\StartingUp_6.png" />
+    <None Include="Resources\StartingUp_5.png" />
+    <None Include="Resources\StartingUp_4.png" />
+    <None Include="Resources\StartingUp_3.png" />
+    <None Include="Resources\StartingUp_2.png" />
+    <None Include="Resources\StartingUp_1.png" />
+    <None Include="Resources\StartingUp_0.png" />
     <None Include="Resources\PasswordInputBox_Down.png" />
     <None Include="Resources\PasswordInputBox_Enter.png" />
     <None Include="Resources\PasswordInputBox_Normal.png" />
@@ -562,7 +622,6 @@
     <None Include="Resources\HackScript_02.gif" />
     <None Include="Resources\HackScript_01.gif" />
     <None Include="Resources\StartingUIWallpaper.jpg" />
-    <None Include="Resources\StartingUp.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

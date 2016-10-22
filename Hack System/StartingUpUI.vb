@@ -20,16 +20,13 @@ Public Class StartingUpUI
         WindowsTemplates.Icon = My.Resources.SystemAssets.HackSystem
         ShutdowningUI.Icon = My.Resources.SystemAssets.HackSystem
         '初始化界面
-        Dim LocationX As Integer = (My.Computer.Screen.Bounds.Width - StartingUpControl.Width) / 2
-        Dim LocationY As Integer = (My.Computer.Screen.Bounds.Height - StartingUpControl.Height) * 0.85
-        StartingUpControl.Location = New Point(LocationX, LocationY)
-        StartingUpControl.Image = My.Resources.SystemAssets.StartingUp.Clone(New Rectangle(0, 0, 200, 200), Imaging.PixelFormat.Format32bppArgb)
+        StartingUpControl.Location = New Point((My.Computer.Screen.Bounds.Width - StartingUpControl.Width) / 2, (My.Computer.Screen.Bounds.Height - StartingUpControl.Height) * 0.85)
         StartUpLogo.Location = New Point((My.Computer.Screen.Bounds.Width - My.Resources.SystemAssets.HackSystemLogo.Width) \ 2, My.Computer.Screen.Bounds.Height \ 4)
 
         Me.Cursor = SystemCursor
 
         StartingUpLable.Left = (My.Computer.Screen.Bounds.Width - StartingUpLable.Width) / 2
-        StartingUpLable.Top = LocationY + 210
+        StartingUpLable.Top = StartingUpControl.Bottom + 10
         '播放开机音效
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("StartedUp"), AudioPlayMode.Background)
     End Sub
@@ -44,8 +41,8 @@ Public Class StartingUpUI
 
     Private Sub StartingUpTimer_Tick(sender As Object, e As EventArgs) Handles StartingUpTimer.Tick
         '前50帧用于播放加载进度动画
-        Static FrameIndex As Integer = 1
-        StartingUpControl.Image = My.Resources.SystemAssets.StartingUp.Clone(New Rectangle(0, FrameIndex * 200, 200, 200), Imaging.PixelFormat.Format32bppArgb)
+        Static FrameIndex As Integer = 0
+        StartingUpControl.Image = My.Resources.SystemAssets.ResourceManager.GetObject("StartingUp_" & FrameIndex)
         FrameIndex += 1
 
         StartingUpLable.Text = "Hack System Loading... (" & 2 * FrameIndex & "%)"
@@ -63,7 +60,7 @@ Public Class StartingUpUI
     Private Sub ExchangeUITimer_Tick(sender As Object, e As EventArgs) Handles ExchangeUITimer.Tick
         '后10帧用于淡出淡入切换界面
         Static FrameIndex As Integer = 50
-        StartingUpControl.Image = My.Resources.SystemAssets.StartingUp.Clone(New Rectangle(0, FrameIndex * 200, 200, 200), Imaging.PixelFormat.Format32bppArgb)
+        StartingUpControl.Image = My.Resources.SystemAssets.ResourceManager.GetObject("StartingUp_" & FrameIndex)
         FrameIndex += 1
         Me.Opacity -= 0.1
 
