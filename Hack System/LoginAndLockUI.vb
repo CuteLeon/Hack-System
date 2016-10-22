@@ -23,6 +23,7 @@ Public Class LoginAndLockUI
     Dim WallpaperIndex As Integer = 14 '初始壁纸标识
     Dim FirstPoint As POINTAPI '鼠标按下时坐标
     Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Width \ 50 '自移动线程每次移动的距离
+    Dim SplitDistance As Integer = My.Computer.Screen.Bounds.Height \ 50 '分离特效每次移动的距离
     Dim ThreadShowMe As Thread '显示线程
     Dim ThreadHideMe As Thread '隐藏线程
 #End Region
@@ -58,9 +59,11 @@ Public Class LoginAndLockUI
         HeadPictureBox.Location = New Point(-3, -3)
         PasswordLabel.Parent = LoginAreaControl
         LoginButtonControl.Parent = LoginAreaControl
+        PasswordTextBox.Parent = LoginAreaControl
         HeadPictureBox.Parent = LoginAreaControl
         UserNameControl.Parent = LoginAreaControl
         PasswordLabel.Location = New Point(272, 105)
+        PasswordTextBox.Location = PasswordLabel.Location
         LoginButtonControl.Location = New Point(507, 48)
         UserNameControl.Location = New Point(HeadPictureBox.Right, 20)
         LoginAreaControl.Left = (My.Computer.Screen.Bounds.Width - LoginAreaControl.Width) / 2
@@ -176,7 +179,7 @@ Public Class LoginAndLockUI
     End Sub
 
     ''' <summary>
-    ''' 动态隐藏锁屏界面
+    ''' 鼠标向左或向右动态隐藏锁屏界面
     ''' </summary>
     ''' <param name="ToRight">指定向左隐藏还是向右隐藏</param>
     Public Sub HideLockScreen(ByVal ToRight As Boolean)
@@ -211,21 +214,54 @@ Public Class LoginAndLockUI
     End Sub
 
     ''' <summary>
-    ''' 初次登录的切换特效
+    ''' 上下分割窗体的登录特效
     ''' </summary>
-    Private Sub FirstLoginIn()
+    Public Sub SplitLoginIn()
+        ShowSplitForm()
         Do While Me.Bottom > 0
-            Me.Top -= MoveDistance
-            Me.Opacity = Me.Bottom / Me.Height
+            Me.Top -= SplitDistance
+            LockSplitForm.Top += SplitDistance
+            Me.Opacity = 0.5 * (Me.Bottom / Me.Height) + 0.5
+            LockSplitForm.Opacity = Me.Opacity
             Thread.Sleep(15)
         Loop
         Me.Opacity = 0
-        Me.Location = New Point(0, 0)
+        Me.Location = New Point(0, -My.Computer.Screen.Bounds.Height)
+        LoginAreaControl.Show()
+        Me.Height = My.Computer.Screen.Bounds.Height
+        Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
+        Me.Refresh()
         Me.Hide()
+        Me.Location = New Point(0, 0)
+        LockSplitForm.Close()
     End Sub
 #End Region
 
 #Region "功能函数"
+
+    ''' <summary>
+    ''' 为分离登陆特效显示下半部分窗体
+    ''' </summary>
+    Private Sub ShowSplitForm()
+        Dim MyScreenShot As Bitmap = CopyFromMe()
+        LoginAreaControl.Hide()
+        LockSplitForm.Show(SystemWorkStation)
+        LockSplitForm.BackgroundImage = MyScreenShot.Clone(New Rectangle(0, LockSplitForm.Top - 1, LockSplitForm.Width, LockSplitForm.Height), MyScreenShot.PixelFormat)
+        LockSplitForm.Refresh()
+        Me.Height = Me.Height / 2
+        Me.BackgroundImage = MyScreenShot.Clone(New Rectangle(0, 0, Me.Width, Me.Height), MyScreenShot.PixelFormat)
+    End Sub
+
+    ''' <summary>
+    ''' 制作当前窗口的截图
+    ''' </summary>
+    ''' <returns>当前窗口的截图</returns>
+    Private Function CopyFromMe() As Bitmap
+        Dim MyScreenShot As Bitmap = New Bitmap(Me.BackgroundImage, Me.Size)
+        LoginAreaControl.DrawToBitmap(MyScreenShot, New Rectangle(LoginAreaControl.Location, LoginAreaControl.Size))
+        Return MyScreenShot
+    End Function
+
 
     ''' <summary>
     ''' 把 Base64 加密的文本转换为图像
@@ -257,16 +293,15 @@ Public Class LoginAndLockUI
             '切换界面时需要收回隐藏 TipsForm 浮窗
             If TipsForm.Visible Then TipsForm.CancelTip()
             SystemWorkStation.Show()
+
+            ThreadHideMe = New Thread(AddressOf SplitLoginIn)
+            ThreadHideMe.Start()
+            ThreadHideMe.Join()
+
             If LockScreenMode Then
                 '解锁
                 My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
-                HideLockScreen(True)
                 LockScreenMode = False
-            Else
-                '登录
-                ThreadHideMe = New Thread(AddressOf FirstLoginIn)
-                ThreadHideMe.Start()
-                ThreadHideMe.Join()
             End If
             SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
             'SystemWorkStation 初次显示时会自动 Activated 并置前显示，导致 FirstLoginIn() 特效无法置前显示，所以需要特效结束后注册事件

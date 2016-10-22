@@ -371,7 +371,7 @@ Public Class SystemWorkStation
 
     Private Sub SpeechRecognitionEngine_SpeechRecognized(sender As Object, e As SpeechRecognizedEventArgs)
         If LoginAndLockUI.Visible Then
-            If e.Result.Text = "解锁" Then LoginAndLockUI.HideLockScreen(True)
+            If e.Result.Text = "解锁" Then LoginAndLockUI.SplitLoginIn()
             Exit Sub
         End If
 
