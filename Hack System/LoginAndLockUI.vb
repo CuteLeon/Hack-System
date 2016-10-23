@@ -12,14 +12,6 @@ Public Class LoginAndLockUI
         Dim Y As Int16
     End Structure
 
-    Private Const WallpaperCount As Int16 = 19 '壁纸总数
-    Public HeadSize As Size = New Size(159, 159) '头像图像尺寸
-    Public UserHead As Bitmap '用户头像图像
-    Public UserName As String '用户名
-    Public UserNameBitmap As Bitmap '用户名图像
-    Public UserHeadString As String '用户头像图像Base64编码
-    Public UserNameString As String '用户名图像Base64编码
-    Public LockScreenMode As Boolean = False '锁屏模式或者登录模式
     Dim WallpaperIndex As Integer = 14 '初始壁纸标识
     Dim FirstPoint As POINTAPI '鼠标按下时坐标
     Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Width \ 50 '自移动线程每次移动的距离
@@ -74,7 +66,7 @@ Public Class LoginAndLockUI
         PasswordTextBox.SelectionStart = PasswordTextBox.TextLength
         PasswordTextBox.SelectionLength = 0
 
-        Me.Cursor = StartingUpUI.SystemCursor
+        Me.Cursor = UnityModule.SystemCursor
     End Sub
 
     Private Sub LoginAndLockUI_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
@@ -115,7 +107,7 @@ Public Class LoginAndLockUI
             Exit Sub
         End If
         LockScreenMode = False
-        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+        UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
 #End Region
@@ -152,9 +144,9 @@ Public Class LoginAndLockUI
         '点击切换壁纸
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         If CType(sender, Label).Tag = "Last" Then
-            WallpaperIndex = IIf(WallpaperIndex = 0, WallpaperCount - 1, WallpaperIndex - 1) '上一张
+            WallpaperIndex = IIf(WallpaperIndex = 0, UnityModule.WallpaperUBound, WallpaperIndex - 1) '上一张
         Else
-            WallpaperIndex = (WallpaperIndex + 1) Mod WallpaperCount '下一张
+            WallpaperIndex = (WallpaperIndex + 1) Mod (UnityModule.WallpaperUBound + 1) '下一张
         End If
         Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
         My.Settings.LoginWallpaperIndex = WallpaperIndex
@@ -185,7 +177,11 @@ Public Class LoginAndLockUI
     ''' 动态显示锁屏界面
     ''' </summary>
     Public Sub ShowLockScreen()
+        UnityModule.LockScreenMode = True
+        If Me.Visible Then Exit Sub Else Me.Show(SystemWorkStation)
+        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ShowConsole"), AudioPlayMode.Background)
         If TipsForm.Visible Then TipsForm.CancelTip()
+        UnityModule.SetForegroundWindow(Me.Handle)
         If ThreadShowMe IsNot Nothing AndAlso ThreadShowMe.ThreadState = ThreadState.Running Then Exit Sub
         ThreadShowMe = New Thread(AddressOf ShowMe)
         ThreadShowMe.Start()
@@ -210,7 +206,7 @@ Public Class LoginAndLockUI
         ThreadHideMe = New Thread(AddressOf HideMe)
         ThreadHideMe.Start(ToRight)
         ThreadHideMe.Join()
-        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+        UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
     Private Sub HideMe(ByVal ToRight As Boolean)
@@ -327,7 +323,7 @@ Public Class LoginAndLockUI
                 My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
                 LockScreenMode = False
             End If
-            SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+            UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
             'SystemWorkStation 初次显示时会自动 Activated 并置前显示，导致 FirstLoginIn() 特效无法置前显示，所以需要特效结束后注册事件
             AddHandler SystemWorkStation.Activated, AddressOf SystemWorkStation.SystemWorkStation_Activated
             '非锁屏状态时，不允许通过鼠标拖动的方式登录系统，所以首先登录一次绑定事件

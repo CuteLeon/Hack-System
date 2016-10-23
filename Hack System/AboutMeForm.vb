@@ -9,20 +9,20 @@
         WebLink.Parent = AboutMeControl
         OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(0, 0, 140, 49), Imaging.PixelFormat.Format32bppArgb)
 
-        Me.Cursor = StartingUpUI.SystemCursor
+        Me.Cursor = UnityModule.SystemCursor
     End Sub
 
     Private Sub AboutMeControl_MouseDown(sender As Object, e As MouseEventArgs) Handles AboutMeControl.MouseDown
         '允许鼠标拖动窗体
-        WindowsTemplates.ReleaseCapture()
-        WindowsTemplates.SendMessageA(Me.Handle, &HA1, 2, 0&)
+        UnityModule.ReleaseCapture()
+        UnityModule.SendMessageA(Me.Handle, &HA1, 2, 0&)
     End Sub
 
     Private Sub OKButtonControl_Click(sender As Object, e As EventArgs) Handles OKButtonControl.Click
         '点击按钮隐藏
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         Me.Hide()
-        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+        UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
     Private Sub AboutMe_KeyPress(sender As Object, e As KeyPressEventArgs) Handles AboutMeControl.KeyPress, Me.KeyPress, WebLink.KeyPress
@@ -31,7 +31,7 @@
         If KeyAscii = 27 Or KeyAscii = 13 Then
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
             Me.Hide()
-            SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+            UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
         End If
     End Sub
 

@@ -5,7 +5,6 @@ Imports Microsoft.VisualBasic.Devices
 Public Class SystemWorkStation
 
 #Region "声明区"
-    Public Declare Function SetForegroundWindow Lib "user32" Alias "SetForegroundWindow" (ByVal hwnd As Integer) As Integer
     Private Declare Function IsWindow Lib "user32" Alias "IsWindow" (ByVal hWnd As IntPtr) As Integer '判断一个窗口句柄是否有效，置后显示时检测桌面容器是否意外关闭
     Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Integer
     Private Declare Function FindWindowEx Lib "user32" Alias "FindWindowExA" (ByVal hWnd1 As Integer, ByVal hWnd2 As Integer, ByVal lpsz1 As String, ByVal lpsz2 As String) As Integer
@@ -14,29 +13,6 @@ Public Class SystemWorkStation
     Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As IntPtr, ByVal nIndex As Integer, ByVal dwNewLong As Integer) As IntPtr
     Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hwnd As IntPtr, ByVal nIndex As Integer) As Integer
     Private Declare Function SetLayeredWindowAttributes Lib "user32" (ByVal hwnd As IntPtr, ByVal crKey As Integer, ByVal bAlpha As Integer, ByVal dwFlags As Integer) As Integer
-
-    Public Const AeroPeekOpacity As Double = 0.15 'AeroPeek视图时，未激活的脚本窗口的透明度
-    Public Const ScriptUpperBound As Int16 = 22 '脚本窗体数组的下标
-    Public Const IconWidth As Integer = 65 '桌面图标的宽度(不适用Size类型：结构体类型无法定义为常量)
-    Public Const IconHeight As Integer = 90 '桌面图标的高度
-    Public Const MainHomeURL As String = "https://www.zoomeye.org/" ''浏览器默认主页 //("http://wwwwwwwww.jodi.org" 是一个很奇怪的网站)
-    Private Const WallpaperUpperBound As Int16 = 18 '桌面壁纸数组的下标
-
-    '以默认语言创建语音识别引擎
-    Public MySpeechRecognitionEngine As SpeechRecognitionEngine
-    '桌面图标对应的文本
-    Public ScriptInfomation() As String = {"Digital Rain", "Network Attack", "Air Defence", "Iron Man", "Attack Data", "3D Map", "Ballistic Missile", "Missile", "Action Indication", "Zone Isolation", "Waiting...", "Life Support", "Agent Info.", "Graphic SO", "Face 3DModel", "Driving System", "Thinking Export", "ARToolkit", "Combat", "UAV Camera", "NOVA 6", "Satellite", "Decrypt"}
-    '桌面图标(脚本)对应的语音命令
-    Public ScriptSpeechGrammar() As String = {"打开数字雨", "打开网络攻击", "打开防空系统", "打开钢铁侠", "打开攻击数据", "打开三维地图", "打开弹道导弹", "打开导弹部署", "打开行动指示", "打开区域隔离", "打开等待连接", "打开生命维护系统", "打开特工信息", "打开示波器", "打开面部模型", "打开驱动系统", "打开思维导出系统", "打开增强现实", "打开作战部署", "打开无人机", "打开新星", "打开近地卫星", "打开解密"}
-    Public AeroPeekModel As Boolean 'AeroPeek视图的开关
-    Public ScriptForm(ScriptUpperBound) As WindowsTemplates '脚本窗口
-    Public BrowserForms As New ArrayList  '开启的浏览器窗口
-    Public ScriptFormVisible(ScriptUpperBound) As Boolean '脚本开启状态(不同于Form.Visible，两者配合判断脚本的状态)
-    Public ScriptIcons(ScriptUpperBound) As Label
-    Public NowIconIndex As Integer = -1 '鼠标进入的桌面图标标识(鼠标离开为-1)
-    Public RightestLoction As Integer '最右图标的横坐标(作为脚本随机位置的左界)
-    Public SystemClosing As Boolean '系统正在关闭
-    Public SpeechRecognitionMode As Boolean = True '语音识别引擎的状态
 
     Dim DesktopIconHandle As IntPtr '记录物理桌面容器的句柄
     Dim UserNameFont As Font = New Font("微软雅黑", 36.0) '用户名显示字体
@@ -101,15 +77,15 @@ Public Class SystemWorkStation
         SpeechButtonControl.Location = New Point(ConsoleButtonControl.Left - IntervalDistance - SpeechButtonControl.Width, ConsoleButtonControl.Top)
         VoiceLevelBar.Location = New Point(5, SpeechButtonControl.Height - 12)
         '设置桌面控件鼠标样式
-        Me.Cursor = StartingUpUI.SystemCursor
-        InfoTitle.Cursor = StartingUpUI.SystemCursor
-        CPUCounterBar.Cursor = StartingUpUI.SystemCursor
-        MemoryUsageRateBar.Cursor = StartingUpUI.SystemCursor
-        DiskReadCounterLabel.Cursor = StartingUpUI.SystemCursor
-        DiskWriteCounterLabel.Cursor = StartingUpUI.SystemCursor
-        UploadSpeedCountLabel.Cursor = StartingUpUI.SystemCursor
-        DownloadSpeedCountLabel.Cursor = StartingUpUI.SystemCursor
-        DateTimeLabel.Cursor = StartingUpUI.SystemCursor
+        Me.Cursor = UnityModule.SystemCursor
+        InfoTitle.Cursor = UnityModule.SystemCursor
+        CPUCounterBar.Cursor = UnityModule.SystemCursor
+        MemoryUsageRateBar.Cursor = UnityModule.SystemCursor
+        DiskReadCounterLabel.Cursor = UnityModule.SystemCursor
+        DiskWriteCounterLabel.Cursor = UnityModule.SystemCursor
+        UploadSpeedCountLabel.Cursor = UnityModule.SystemCursor
+        DownloadSpeedCountLabel.Cursor = UnityModule.SystemCursor
+        DateTimeLabel.Cursor = UnityModule.SystemCursor
         '把IP和地址的鼠标设置为"手"的形状，提示用户可以点击
         IPLabel.Cursor = Cursors.Hand
         AddressLabel.Cursor = Cursors.Hand
@@ -388,7 +364,7 @@ Public Class SystemWorkStation
                 SendKeys.Send("%{TAB}")
             Case "发送邮件"
                 If Not XYMail.Visible Then XYMail.Show(Me)
-                SetForegroundWindow(XYMail.Handle)
+                UnityModule.SetForegroundWindow(XYMail.Handle)
             Case "屏幕融化开启"
                 ScreenMelt.StartMelt()
             Case "屏幕融化关闭"
@@ -411,7 +387,7 @@ Public Class SystemWorkStation
             Case "浏览器"
                 LoadNewBrowser()
             Case "锁屏"
-                LockScreen()
+                LoginAndLockUI.ShowLockScreen()
             Case "about"
                 If Not (AboutMeForm.Visible) Then AboutMeForm.Show(Me)
                 SetForegroundWindow(AboutMeForm.Handle)
@@ -483,7 +459,7 @@ Public Class SystemWorkStation
         If AeroPeekModel Then
             '遍历脚本窗体，还原在AeroPeek模式下被透明的窗体的透明度
             For ScriptIndex = 0 To ScriptUpperBound
-                If ScriptFormVisible(ScriptIndex) Then ScriptForm(ScriptIndex).Opacity = WindowsTemplates.NegativeOpacity
+                If ScriptFormVisible(ScriptIndex) Then ScriptForm(ScriptIndex).Opacity = UnityModule.NegativeOpacity
             Next
             '关闭AeroPeek模式
             AeroPeekModel = False
@@ -560,7 +536,7 @@ Public Class SystemWorkStation
             WallpaperIndex = -1
             Me.BackgroundImage = CustomWallpaperBitmap
         Else
-            WallpaperIndex = IIf(WallpaperIndex <= 0, WallpaperUpperBound, WallpaperIndex - 1)
+            WallpaperIndex = IIf(WallpaperIndex <= 0, UnityModule.WallpaperUBound, WallpaperIndex - 1)
             Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
         End If
         '保存壁纸标识
@@ -571,12 +547,12 @@ Public Class SystemWorkStation
     Private Sub MenuNextWallpaper_Click(sender As Object, e As EventArgs) Handles MenuNextWallpaper.Click
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         '桌面右键菜单之下一张壁纸'
-        If WallpaperIndex = WallpaperUpperBound AndAlso (CustomWallpaperBitmap IsNot Nothing) Then
+        If WallpaperIndex = UnityModule.WallpaperUBound AndAlso (CustomWallpaperBitmap IsNot Nothing) Then
             '允许显示用户自定义壁纸
             WallpaperIndex = -1
             Me.BackgroundImage = CustomWallpaperBitmap
         Else
-            WallpaperIndex = IIf(WallpaperIndex = WallpaperUpperBound Or WallpaperIndex = -1, 0, WallpaperIndex + 1)
+            WallpaperIndex = IIf(WallpaperIndex = UnityModule.WallpaperUBound Or WallpaperIndex = -1, 0, WallpaperIndex + 1)
             Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
         End If
         '保存壁纸标识
@@ -586,7 +562,7 @@ Public Class SystemWorkStation
 
     Private Sub MenuLockScreen_Click(sender As Object, e As EventArgs) Handles MenuLockScreen.Click
         '锁屏
-        LockScreen()
+        LoginAndLockUI.ShowLockScreen()
     End Sub
 
     Private Sub MenuShutdown_Click(sender As Object, e As EventArgs) Handles MenuShutdown.Click
@@ -665,11 +641,11 @@ Public Class SystemWorkStation
         If (CustomImageDialog.ShowDialog = DialogResult.OK) Then
             Try '同上，防止用户找茬设置容错处理
                 '将图像裁剪成圆形，装载到登录框里
-                LoginAndLockUI.UserHead = MakeCircularBitmap(Bitmap.FromFile(CustomImageDialog.FileName), LoginAndLockUI.HeadSize)
-                LoginAndLockUI.HeadPictureBox.BackgroundImage = LoginAndLockUI.UserHead
+                UnityModule.UserHead = MakeCircularBitmap(Bitmap.FromFile(CustomImageDialog.FileName), New Size(159, 159))
+                LoginAndLockUI.HeadPictureBox.BackgroundImage = UnityModule.UserHead
                 '头像转换为Base64编码后存进存档
-                LoginAndLockUI.UserHeadString = BitmapToString(LoginAndLockUI.UserHead)
-                My.Settings.UserHead = LoginAndLockUI.UserHeadString
+                UnityModule.UserHeadString = BitmapToString(UnityModule.UserHead)
+                My.Settings.UserHead = UnityModule.UserHeadString
                 My.Settings.Save()
                 '弹出提示浮窗
                 TipsForm.PopupTips(Me, "Successfully !", TipsForm.TipsIconType.Infomation, "Set user head successfully")
@@ -686,28 +662,28 @@ Public Class SystemWorkStation
         '在菜单里敲击回车键时设置用户名
         If e.KeyChar = Chr(Keys.Enter) Then
             '用户名未改变不处理
-            If LoginAndLockUI.UserName = MenuUserName.Text Then Exit Sub
+            If UnityModule.UserName = MenuUserName.Text Then Exit Sub
             '用户名背后阴影的模糊半径
             Dim ShadowRadius As Integer = 10
             Dim DoubleRadius As Integer = ShadowRadius * 2
-            LoginAndLockUI.UserName = MenuUserName.Text
+            UnityModule.UserName = MenuUserName.Text
             LoginAndLockUI.UserNameControl.AutoSize = True
             LoginAndLockUI.UserNameControl.Font = UserNameFont
             LoginAndLockUI.UserNameControl.Text = MenuUserName.Text
             '绘制用户名的描边加阴影图像
-            LoginAndLockUI.UserNameBitmap = TextShadowStroke(MenuUserName.Text, UserNameFont,
+            UnityModule.UserNameBitmap = TextShadowStroke(MenuUserName.Text, UserNameFont,
                 ShadowRadius, Color.White, Color.Red, Color.Black,
                 New Size(LoginAndLockUI.UserNameControl.Width + DoubleRadius, LoginAndLockUI.UserNameControl.Height + DoubleRadius))
-            LoginAndLockUI.UserNameControl.Image = LoginAndLockUI.UserNameBitmap
+            LoginAndLockUI.UserNameControl.Image = UnityModule.UserNameBitmap
             LoginAndLockUI.UserNameControl.AutoSize = False
             LoginAndLockUI.UserNameControl.Text = vbNullString
             LoginAndLockUI.UserNameControl.Size = New Size(300, LoginAndLockUI.UserNameControl.Image.Height)
             '处理完毕弹出提示浮窗
             TipsForm.PopupTips(Me, "Successfully !", TipsForm.TipsIconType.Infomation, "Set user name successfully")
             '将用户名图像转换为Base64编码存进存档
-            LoginAndLockUI.UserNameString = BitmapToString(LoginAndLockUI.UserNameBitmap)
-            My.Settings.UserName = LoginAndLockUI.UserName
-            My.Settings.UserNameBitmap = LoginAndLockUI.UserNameString
+            UnityModule.UserNameString = BitmapToString(UnityModule.UserNameBitmap)
+            My.Settings.UserName = UnityModule.UserName
+            My.Settings.UserNameBitmap = UnityModule.UserNameString
             My.Settings.Save()
         End If
     End Sub
@@ -849,18 +825,6 @@ Public Class SystemWorkStation
         Next
         Dim GrammarList As Grammar = New Grammar(New GrammarBuilder(Grammars))
         MySpeechRecognitionEngine.LoadGrammar(GrammarList)
-    End Sub
-
-    ''' <summary>
-    ''' 切换到锁屏状态
-    ''' </summary>
-    Public Sub LockScreen()
-        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ShowConsole"), AudioPlayMode.Background)
-        If LoginAndLockUI.Visible Then Exit Sub
-        LoginAndLockUI.LockScreenMode = True
-        LoginAndLockUI.Show(Me)
-        LoginAndLockUI.ShowLockScreen()
-        SetForegroundWindow(LoginAndLockUI.Handle)
     End Sub
 
     ''' <summary>

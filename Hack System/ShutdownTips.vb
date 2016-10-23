@@ -15,7 +15,7 @@ Public Class ShutdownTips
         ShutdownAreaControl.Parent = ShutdownWallpaperControl
         ShutdownButtonControl.Parent = ShutdownAreaControl
         CancelButtonControl.Parent = ShutdownAreaControl
-        Me.Cursor = StartingUpUI.SystemCursor
+        Me.Cursor = UnityModule.SystemCursor
         '圆角窗体
         Dim RoundRectangle As Integer = CreateRoundRectRgn(2, 2, Me.Width + 1, Me.Height + 1, Me.Height, Me.Height)
         SetWindowRgn(Me.Handle, RoundRectangle, True)
@@ -23,7 +23,7 @@ Public Class ShutdownTips
 
     Private Sub ShutdownWindows_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         '系统试图关闭时不拦截窗体关闭消息
-        If Not SystemWorkStation.SystemClosing Then
+        If Not UnityModule.SystemClosing Then
             e.Cancel = True
             CancelShutdown()
         End If
@@ -106,10 +106,10 @@ Public Class ShutdownTips
     ''' </summary>
     Private Sub Shutdown()
         '关机
-        SystemWorkStation.SystemClosing = True
+        UnityModule.SystemClosing = True
         Me.Hide()
         ShutdowningUI.Show(SystemWorkStation)
-        SystemWorkStation.SetForegroundWindow(ShutdowningUI.Handle)
+        UnityModule.SetForegroundWindow(ShutdowningUI.Handle)
     End Sub
 
     ''' <summary>
@@ -119,7 +119,7 @@ Public Class ShutdownTips
         '取消关机
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         Me.Hide()
-        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+        UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
 #End Region

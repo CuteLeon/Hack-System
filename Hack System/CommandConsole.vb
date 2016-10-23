@@ -12,6 +12,7 @@ Public Class CommandConsole
     Dim ThreadHideConsole As Thread '隐藏线程
     Dim ThreadWeather As Thread = New Threading.Thread(AddressOf ShowWeather) '获取天气的线程
     Dim ThreadSpeak As Thread = New Threading.Thread(AddressOf SpeakVoice) '语音命令的线程
+
 #End Region
 
 #Region "动态显示和隐藏"
@@ -19,12 +20,11 @@ Public Class CommandConsole
     Public Sub ShowConsole()
         '提示浮窗显示时需要先隐藏浮窗
         TipsForm.CancelTip()
-        Me.Left = My.Computer.Screen.Bounds.Width
-        Me.Refresh()
-        If Not Me.Visible Then Me.Show(SystemWorkStation)
+        If Not Me.Visible Then Me.Show() 'Location跳变
+        Me.Owner = SystemWorkStation
+        Me.Location = New Point(My.Computer.Screen.Bounds.Width, 0)
         Me.Height = My.Computer.Screen.Bounds.Height
-        Me.Top = 0
-        SystemWorkStation.SetForegroundWindow(Me.Handle)
+        UnityModule.SetForegroundWindow(Me.Handle)
         CommandInputBox.Focus()
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ShowConsole"), AudioPlayMode.Background)
         '开启显示线程
@@ -75,7 +75,7 @@ Public Class CommandConsole
         CommandButton.Parent = CommandInputBoxBGI
         CommandInputBox.Location = New Point(15, 10)
         CommandButton.Location = New Point(CommandInputBox.Right, CommandInputBox.Top)
-        Me.Cursor = StartingUpUI.SystemCursor
+        Me.Cursor = UnityModule.SystemCursor
         CommandPast.Cursor = Me.Cursor
         CommandButton.Cursor = Me.Cursor
     End Sub
@@ -86,7 +86,7 @@ Public Class CommandConsole
         If KeyAscii = 96 Or KeyAscii = -24156 Or KeyAscii = 27 Then
             e.KeyChar = vbNullChar
             '激活其他窗口，即可触发Deactive()事件导致控制台自动隐藏
-            SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+            UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
         ElseIf KeyAscii = 13 Then
             '[Enter]  运行指令
             RunCommand()
@@ -101,12 +101,16 @@ Public Class CommandConsole
     Private Sub CommandConsole_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         '不关闭控制台只隐藏在屏幕右侧
         e.Cancel = True
-        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+        UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
     Private Sub CommandConsole_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
         CommandTip.Top = CommandInputBoxBGI.Top - CommandTip.Height - 10
         CommandPast.Height = CommandTip.Top - CommandPast.Top
+    End Sub
+
+    Private Sub CommandConsole_LocationChanged(sender As Object, e As EventArgs) Handles Me.LocationChanged
+        Debug.Print(Me.Location.ToString)
     End Sub
 
 #End Region
@@ -129,7 +133,7 @@ Public Class CommandConsole
         '按 [~] 或 [Esc] 隐藏控制台
         If KeyAscii = 96 Or KeyAscii = -24156 Or KeyAscii = 27 Then
             e.KeyChar = vbNullChar
-            SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+            UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
         Else
             '其他键激活输入框
             CommandInputBox.Focus()
@@ -238,14 +242,14 @@ Public Class CommandConsole
                         CommandInputBox.SelectionStart = 6
                         CommandInputBox.SelectionLength = CommandInputBox.TextLength - 6
                         '显示消息并设置颜色
-                        CommandTip.Text = "Pleasue input a number between [0 ~ " & SystemWorkStation.ScriptUpperBound & "]"
+                        CommandTip.Text = "Pleasue input a number between [0 ~ " & UnityModule.ScriptUpperBound & "]"
                         CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load.")
                         SetLastCommandColor(False)
                     Else
                         '参数转换为数字
                         ScriptIndex = Int(CommandParameter)
                         '检查脚本标识存在
-                        If 0 <= ScriptIndex And ScriptIndex <= SystemWorkStation.ScriptUpperBound Then
+                        If 0 <= ScriptIndex And ScriptIndex <= UnityModule.ScriptUpperBound Then
                             '显示消息并设置颜色
                             CommandTip.Text = "Script " & CommandParameter & " is loaded！"
                             CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Load script： " & CommandParameter)
@@ -257,7 +261,7 @@ Public Class CommandConsole
                             CommandInputBox.SelectionStart = 6
                             CommandInputBox.SelectionLength = CommandInputBox.TextLength - 6
                             '显示消息并设置颜色
-                            CommandTip.Text = "Pleasue input a number between [0 ~ " & SystemWorkStation.ScriptUpperBound & "]"
+                            CommandTip.Text = "Pleasue input a number between [0 ~ " & UnityModule.ScriptUpperBound & "]"
                             CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load.")
                             SetLastCommandColor(False)
                         End If
@@ -268,26 +272,26 @@ Public Class CommandConsole
                     CommandInputBox.SelectionLength = CommandInputBox.TextLength - 6
 
                     '显示消息并设置颜色
-                    CommandTip.Text = "Pleasue input a number between [0 ~ " & SystemWorkStation.ScriptUpperBound & "]"
+                    CommandTip.Text = "Pleasue input a number between [0 ~ " & UnityModule.ScriptUpperBound & "]"
                     CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load.")
                     SetLastCommandColor(False)
                 End If
             Case "mine" '运行扫雷游戏
                 If Not MineSweeperForm.Visible Then MineSweeperForm.Show(SystemWorkStation)
-                SystemWorkStation.SetForegroundWindow(MineSweeperForm.Handle)
+                UnityModule.SetForegroundWindow(MineSweeperForm.Handle)
             Case "1010"
                 If Not Game1010Form.Visible Then Game1010Form.Show(SystemWorkStation)
-                SystemWorkStation.SetForegroundWindow(Game1010Form.Handle)
+                UnityModule.SetForegroundWindow(Game1010Form.Handle)
             Case "2048"
                 If Not Game2048Form.Visible Then Game2048Form.Show(SystemWorkStation)
-                SystemWorkStation.SetForegroundWindow(Game2048Form.Handle)
+                UnityModule.SetForegroundWindow(Game2048Form.Handle)
             Case "browser" '运行浏览器
                 SystemWorkStation.LoadNewBrowser()
             Case "mail" '打开邮件发送程序
                 If XYMail.Visible Then XYMail.Hide() Else XYMail.Show(SystemWorkStation)
             Case "about" '显示关于
                 If Not (AboutMeForm.Visible) Then AboutMeForm.Show(SystemWorkStation)
-                SystemWorkStation.SetForegroundWindow(AboutMeForm.Handle)
+                UnityModule.SetForegroundWindow(AboutMeForm.Handle)
             Case "weather" '获取天气
                 If Trim(CommandParameter) = vbNullString Then Exit Sub
                 '不重复创建线程
@@ -296,7 +300,7 @@ Public Class CommandConsole
                     ThreadWeather.Start(CommandParameter)
                 End If
             Case "lock" '锁屏
-                SystemWorkStation.LockScreen()
+                LoginAndLockUI.ShowLockScreen()
                 '显示消息并设置颜色
                 CommandTip.Text = "Lock Screen"
                 CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Lock Screen")

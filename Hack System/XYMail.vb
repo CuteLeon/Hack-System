@@ -32,8 +32,8 @@ Public Class XYMail
 
     Private Sub MoveWindow(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         '鼠标通过控件拖动窗体
-        WindowsTemplates.ReleaseCapture()
-        WindowsTemplates.SendMessageA(Me.Handle, &HA1, 2, 0&)
+        UnityModule.ReleaseCapture()
+        UnityModule.SendMessageA(Me.Handle, &HA1, 2, 0&)
     End Sub
 #End Region
 

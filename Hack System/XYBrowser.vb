@@ -8,12 +8,10 @@ Public Class XYBrowser
 #Region "声明区"
 
     '鼠标拖动
-    Private Declare Function ReleaseCapture Lib "user32" () As Integer
-    Private Declare Function SendMessageA Lib "user32" (ByVal hwnd As Integer, ByVal wMsg As Integer, ByVal wParam As Integer, lParam As VariantType) As Integer
     Private Const DefaultPixelFormat As Imaging.PixelFormat = Imaging.PixelFormat.Format32bppArgb
     Private Const WS_THICKFRAME As Int32 = &H40000
     Private Const BorderWidth As Integer = 14 'WS_THICKFRAME 样式会让窗体产生14像素的边框
-    Public GoingToExit As Boolean '窗体正在退出
+    Dim GoingToExit As Boolean '窗体正在退出
     Dim BtnRectangle() As Rectangle = {New Rectangle(0, 0, 28, 28), New Rectangle(28, 0, 28, 28), New Rectangle(56, 0, 28, 28), New Rectangle(84, 0, 28, 28)} '动态按钮显示的图片区域
     Dim NowButton As Label '当前响应的动态按钮
     Dim FullScreenMode As Boolean '全屏模式开关
@@ -31,7 +29,7 @@ Public Class XYBrowser
         Btn_NowStop.Image = My.Resources.XYBrowserRes.NowStop.Clone(BtnRectangle(3), DefaultPixelFormat)
         Btn_GoNavigate.Image = My.Resources.XYBrowserRes.GoNavigate.Clone(BtnRectangle(0), DefaultPixelFormat)
         Btn_Search.Image = My.Resources.XYBrowserRes.Search.Clone(BtnRectangle(0), DefaultPixelFormat)
-        BrowserAddress.Items.Add(IIf(Me.Tag = vbNullString, SystemWorkStation.MainHomeURL, Me.Tag))
+        BrowserAddress.Items.Add(IIf(Me.Tag = vbNullString, UnityModule.MainHomeURL, Me.Tag))
         '添加浏览地址
         BrowserAddress.Text = BrowserAddress.Items(0).ToString
         '访问指定的网络地址
@@ -159,7 +157,7 @@ Public Class XYBrowser
                 Btn_NowStop.Visible = False
                 If Me.Text <> MainWebBrowser.DocumentTitle Then Me.Text = MainWebBrowser.DocumentTitle : BrowserTitle.Text = MainWebBrowser.DocumentTitle
             Case "Home" '主页
-                MainWebBrowser.Navigate(SystemWorkStation.MainHomeURL)
+                MainWebBrowser.Navigate(UnityModule.MainHomeURL)
             Case "Refresh" '刷新
                 MainWebBrowser.Refresh()
         End Select
@@ -310,17 +308,28 @@ Public Class XYBrowser
 #Region "功能函数"
 
     ''' <summary>
+    ''' 从关机界面关闭浏览器
+    ''' </summary>
+    Public Sub CloseFormShutdown()
+        GoingToExit = True
+        MainWebBrowser.Stop()
+        MainWebBrowser.Navigate("about:blank ")
+        MainWebBrowser.Dispose()
+        Me.Close()
+    End Sub
+
+    ''' <summary>
     ''' 关闭浏览器窗口
     ''' </summary>
     Private Sub CloseBrowser()
         'Closing方法放行
         GoingToExit = True
         '浏览器窗口数组里移出当前
-        SystemWorkStation.BrowserForms.Remove(Me)
+        UnityModule.BrowserForms.Remove(Me)
         MainWebBrowser.Stop()
         MainWebBrowser.Navigate("about:blank ")
         MainWebBrowser.Dispose()
-        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+        UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
         Me.Close()
 
         '强制每秒回收内存

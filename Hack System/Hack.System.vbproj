@@ -197,6 +197,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TipsRes.resx</DependentUpon>
     </Compile>
+    <Compile Include="UnityModule.vb" />
     <Compile Include="WindowsTemplates.Designer.vb">
       <DependentUpon>WindowsTemplates.vb</DependentUpon>
     </Compile>

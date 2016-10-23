@@ -5,14 +5,9 @@ Imports System.Threading
 Public Class WindowsTemplates
 
 #Region "声明区"
-
-    '允许鼠标通过控件拖动窗体的API
-    Public Declare Function ReleaseCapture Lib "user32" () As Integer
-    Public Declare Function SendMessageA Lib "user32" (ByVal hwnd As Integer, ByVal wMsg As Integer, ByVal wParam As Integer, lParam As VariantType) As Integer
     '常量
     Private Const TitleHeight As Integer = 25 '上边界多出的标题栏高度
     Private Const BorderWidth As Integer = 2 'GIF控件与窗体的基本边界距离
-    Public Const NegativeOpacity As Double = 0.8 '窗体失活时的透明度（需要考虑{停止呼吸}里的Me.Opacity保留小数点的位数）
     '变量
     Dim TitleTextBrush As Brush = Brushes.White '标题文本颜色
     Dim BoundaryPen As Pen = Pens.Red '窗体边界线条的颜色
@@ -40,8 +35,8 @@ Public Class WindowsTemplates
         SetMeToDefaultSetting()
         '设置窗体背景色、标题、鼠标样式
         Me.BackColor = BorderColor_Active
-        Me.Name = SystemWorkStation.ScriptInfomation(Me.Tag)
-        Me.Cursor = StartingUpUI.SystemCursor
+        Me.Name = UnityModule.ScriptInfomation(Me.Tag)
+        Me.Cursor = UnityModule.SystemCursor
         '初始化关闭按钮
         CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(0, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
         '注册桌面环境的按键事件，和桌面响应同样的按键事件
@@ -52,14 +47,14 @@ Public Class WindowsTemplates
         WindowsGraphics.SmoothingMode = SmoothingMode.HighQuality
         WindowsGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality
         WindowsGraphics.DrawImage(My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & Me.Tag), BorderWidth, BorderWidth, 24, 24)
-        WindowsGraphics.DrawString(SystemWorkStation.ScriptInfomation(Me.Tag), CloseButtonControl.Font, TitleTextBrush, 30, (TitleHeight + BorderWidth - FontHeight) / 2)
+        WindowsGraphics.DrawString(UnityModule.ScriptInfomation(Me.Tag), CloseButtonControl.Font, TitleTextBrush, 30, (TitleHeight + BorderWidth - FontHeight) / 2)
         WindowsGraphics.DrawRectangle(BoundaryPen, 0, 0, Me.Width, Me.Height)
         Me.BackgroundImage = WindowsBitmap
         WindowsGraphics.Dispose()
     End Sub
 
     Private Sub WindowsTemplates_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        If Not SystemWorkStation.SystemClosing Then
+        If Not UnityModule.SystemClosing Then
             '不是退出程序时，关闭窗体调用关闭过程
             e.Cancel = True
             CloseScript()
@@ -68,8 +63,8 @@ Public Class WindowsTemplates
 
     Private Sub WindowsTemplates_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
         '窗体失去焦点时，如果不是AeroPeek模式也不是正在退出程序，就降低窗口透明度
-        If Not (SystemWorkStation.AeroPeekModel) AndAlso Not SystemWorkStation.SystemClosing _
-            AndAlso SystemWorkStation.ScriptFormVisible(MyScriptIndex) = True Then Me.Opacity = NegativeOpacity
+        If Not (UnityModule.AeroPeekModel) AndAlso Not UnityModule.SystemClosing _
+            AndAlso UnityModule.ScriptFormVisible(MyScriptIndex) = True Then Me.Opacity = NegativeOpacity
         '改变窗体背景色
         Me.BackColor = BorderColor_Negative
         '隐藏标题栏
@@ -81,9 +76,9 @@ Public Class WindowsTemplates
 
     Private Sub WindowsTemplates_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
         '防止在显示动态关闭特效时被激活
-        If Not SystemWorkStation.ScriptFormVisible(MyScriptIndex) Then Exit Sub
+        If Not UnityModule.ScriptFormVisible(MyScriptIndex) Then Exit Sub
         '判断AeroPeek模式状态和当前脚本标识，设置窗体透明度
-        Me.Opacity = IIf(SystemWorkStation.AeroPeekModel And SystemWorkStation.NowIconIndex <> MyScriptIndex, SystemWorkStation.AeroPeekOpacity, 1)
+        Me.Opacity = IIf(UnityModule.AeroPeekModel And UnityModule.NowIconIndex <> MyScriptIndex, UnityModule.AeroPeekOpacity, 1)
         '改变背景色
         Me.BackColor = BorderColor_Active
         '优先显示系统弹出框
@@ -119,8 +114,8 @@ Public Class WindowsTemplates
         Dim EachXDis, EachYDis, EachWidthDis, EachHeightDis As Integer
         EachXDis = (Me.Left - IconLocation.X) \ 7
         EachYDis = (Me.Top - IconLocation.Y) \ 7
-        EachWidthDis = (Me.Width - SystemWorkStation.IconWidth) \ 7
-        EachHeightDis = (Me.Height - SystemWorkStation.IconHeight) \ 7
+        EachWidthDis = (Me.Width - UnityModule.IconWidth) \ 7
+        EachHeightDis = (Me.Height - UnityModule.IconHeight) \ 7
         '开始特效，窗口透明度为0.3时正式关闭
         Do While Me.Opacity > 0
             '降低透明度
@@ -157,7 +152,7 @@ Public Class WindowsTemplates
         CloseButtonControl.Location = New Point(Me.Width - CloseButtonControl.Width, 0)
         '脚本窗体随机定位到桌面右侧
         VBMath.Randomize()
-        Me.Left = (SystemWorkStation.Width - Me.Width - SystemWorkStation.RightestLoction) * VBMath.Rnd + SystemWorkStation.RightestLoction
+        Me.Left = (SystemWorkStation.Width - Me.Width - UnityModule.RightestLoction) * VBMath.Rnd + UnityModule.RightestLoction
         Me.Top = (SystemWorkStation.Height - Me.Height) * VBMath.Rnd
     End Sub
 
@@ -228,41 +223,41 @@ Public Class WindowsTemplates
     ''' </summary>
     Private Sub CloseScript()
         '记录脚本状态
-        SystemWorkStation.ScriptFormVisible(MyScriptIndex) = False
+        UnityModule.ScriptFormVisible(MyScriptIndex) = False
         '读取自身的脚本标识和需要的在桌面环境里的数据
-        IconLocation.X = SystemWorkStation.ScriptIcons(MyScriptIndex).Left
-        IconLocation.Y = SystemWorkStation.ScriptIcons(MyScriptIndex).Top
+        IconLocation.X = UnityModule.ScriptIcons(MyScriptIndex).Left
+        IconLocation.Y = UnityModule.ScriptIcons(MyScriptIndex).Top
         IconImage = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & Me.Tag)
-        IconControl = SystemWorkStation.ScriptIcons(MyScriptIndex)
+        IconControl = UnityModule.ScriptIcons(MyScriptIndex)
         '关闭呼吸
         BreathTimer.Stop()
         UnBreathTimer.Stop()
         '播放提示音
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ScriptStoped"), AudioPlayMode.Background)
         '遍历脚本窗体，将焦点交给下一个标识的脚本窗体
-        For ScriptIndex As Integer = SystemWorkStation.ScriptUpperBound To 0 Step -1
-            If SystemWorkStation.ScriptFormVisible(ScriptIndex) Then
+        For ScriptIndex As Integer = UnityModule.ScriptUpperBound To 0 Step -1
+            If UnityModule.ScriptFormVisible(ScriptIndex) Then
                 '如果当前窗口正在被AeroPeek模式高亮显示，关闭后应退出AeroPeek模式
-                If SystemWorkStation.AeroPeekModel And SystemWorkStation.NowIconIndex = MyScriptIndex Then
+                If UnityModule.AeroPeekModel And UnityModule.NowIconIndex = MyScriptIndex Then
                     '遍历脚本窗体
-                    For TempScriptIndex As Integer = 0 To SystemWorkStation.ScriptUpperBound
+                    For TempScriptIndex As Integer = 0 To UnityModule.ScriptUpperBound
                         '还原在AeroPeek模式下被隐藏的窗体的透明度
-                        If SystemWorkStation.ScriptFormVisible(TempScriptIndex) Then SystemWorkStation.ScriptForm(TempScriptIndex).Opacity = WindowsTemplates.NegativeOpacity
+                        If UnityModule.ScriptFormVisible(TempScriptIndex) Then UnityModule.ScriptForm(TempScriptIndex).Opacity = UnityModule.NegativeOpacity
                     Next
                     '关闭AeroPeek模式
-                    SystemWorkStation.AeroPeekModel = False
+                    UnityModule.AeroPeekModel = False
                     '被激活的窗体不被透明
                     If Not (ActiveForm Is Nothing) Then ActiveForm.Opacity = 1
                 End If
                 '启动动态关闭特效的线程
                 ThreadPool.QueueUserWorkItem(New WaitCallback(AddressOf HideMe))
                 '找到了，激活下一个标识的脚本窗体
-                SystemWorkStation.SetForegroundWindow(SystemWorkStation.ScriptForm(ScriptIndex).Handle)
+                UnityModule.SetForegroundWindow(UnityModule.ScriptForm(ScriptIndex).Handle)
                 Exit Sub
             End If
         Next
         '未找到，将焦点交给桌面
-        SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+        UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
         '启动动态关闭特效的线程
         ThreadPool.QueueUserWorkItem(New WaitCallback(AddressOf HideMe))
     End Sub

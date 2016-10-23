@@ -1,9 +1,6 @@
 ﻿Public Class MineSweeperForm
 
 #Region "声明区"
-
-    Private Declare Function ReleaseCapture Lib "user32" () As Integer
-    Private Declare Function SendMessageA Lib "user32" (ByVal hwnd As Integer, ByVal wMsg As Integer, ByVal wParam As Integer, lParam As VariantType) As Integer
     Private Const DefaultPixelFormat As Integer = Imaging.PixelFormat.Format32bppArgb
 
     Dim CloseBitmap As Bitmap = My.Resources.MineSweeperAssets.MineClose_N  '初始关闭按钮
@@ -106,7 +103,7 @@
         '点击关闭按钮，退出程序
         If CloseRectangle.Contains(e.X, e.Y) Then
             Me.Close()
-            SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
+            UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
             Exit Sub
         End If
 

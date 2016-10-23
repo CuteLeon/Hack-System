@@ -41,7 +41,7 @@ Public Class ShutdowningUI
         '初始化界面
         Me.Location = New Point(0, 0)
         Me.Size = My.Computer.Screen.Bounds.Size
-        Me.Cursor = StartingUpUI.SystemCursor
+        Me.Cursor = UnityModule.SystemCursor
         Dim HackSystemLogo As Bitmap = My.Resources.SystemAssets.HackSystemLogo
         Using ShutdownGraphics As Graphics = Graphics.FromImage(ShutdownBGI)
             ShutdownGraphics.DrawImage(HackSystemLogo, New Rectangle((My.Computer.Screen.Bounds.Width - HackSystemLogo.Width) \ 2, My.Computer.Screen.Bounds.Height \ 4, HackSystemLogo.Width, HackSystemLogo.Height))
@@ -50,10 +50,10 @@ Public Class ShutdowningUI
         '结束屏幕融化线程，否则程序无法退出
         If ScreenMelt.Melting Then ScreenMelt.StopMelt()
         '释放语音识别引擎(容错处理)
-        If SystemWorkStation.SpeechRecognitionMode Then
+        If UnityModule.SpeechRecognitionMode Then
             Try
-                SystemWorkStation.MySpeechRecognitionEngine.RecognizeAsyncStop()
-                SystemWorkStation.MySpeechRecognitionEngine.Dispose()
+                UnityModule.MySpeechRecognitionEngine.RecognizeAsyncStop()
+                UnityModule.MySpeechRecognitionEngine.Dispose()
             Catch ex As Exception
             End Try
         End If
@@ -74,15 +74,14 @@ Public Class ShutdowningUI
         If Game1010Form.Visible Then Game1010Form.Hide()
         If Game2048Form.Visible Then Game2048Form.Hide()
         '遍历关闭脚本窗口
-        For Each ChildForm As Form In SystemWorkStation.ScriptForm
+        For Each ChildForm As Form In UnityModule.ScriptForm
             If Not (ChildForm Is Nothing) Then
                 ChildForm.Close()
             End If
         Next
         '遍历关闭浏览器
-        For Each BrowserForm In SystemWorkStation.BrowserForms
-            CType(BrowserForm, XYBrowser).GoingToExit = True
-            CType(BrowserForm, XYBrowser).Close()
+        For Each BrowserForm In UnityModule.BrowserForms
+            CType(BrowserForm, XYBrowser).CloseFormShutdown()
         Next
         '隐藏主桌面
         SystemWorkStation.Hide()

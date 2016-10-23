@@ -1,12 +1,6 @@
 ﻿Imports System.ComponentModel
 
 Public Class StartingUpUI
-
-#Region "声明区"
-    '整个系统都要用的鼠标图标
-    Public SystemCursor As Cursor = New Cursor(My.Resources.SystemAssets.MouseCursor.GetHicon)
-#End Region
-
 #Region "窗体"
 
     Private Sub StartingUpUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -68,7 +62,7 @@ Public Class StartingUpUI
             '完成切换
             ExchangeUITimer.Enabled = False
             Me.Hide()
-            SystemWorkStation.SetForegroundWindow(LoginAndLockUI.Handle)
+            UnityModule.SetForegroundWindow(LoginAndLockUI.Handle)
         End If
     End Sub
 #End Region
