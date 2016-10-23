@@ -709,4 +709,22 @@
   <data name="StartingUp_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\StartingUp_9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Last_Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Last_Down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Last_Enter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Last_Enter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Last_Normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Last_Normal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Next_Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Next_Down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Next_Enter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Next_Enter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Next_Normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Next_Normal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

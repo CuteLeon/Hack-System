@@ -68,6 +68,8 @@ Public Class LoginAndLockUI
         UserNameControl.Location = New Point(HeadPictureBox.Right, 20)
         LoginAreaControl.Left = (My.Computer.Screen.Bounds.Width - LoginAreaControl.Width) / 2
         LoginAreaControl.Top = (My.Computer.Screen.Bounds.Height - LoginAreaControl.Height) / 2
+        LastWallpaperButton.Location = New Point(My.Computer.Screen.Bounds.Width - LastWallpaperButton.Width * 2 - 90, My.Computer.Screen.Bounds.Height - LastWallpaperButton.Height - 40)
+        NextWallpaperButton.Location = New Point(LastWallpaperButton.Right - 1, LastWallpaperButton.Top)
         '不选中密码
         PasswordTextBox.SelectionStart = PasswordTextBox.TextLength
         PasswordTextBox.SelectionLength = 0
@@ -116,16 +118,6 @@ Public Class LoginAndLockUI
         SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
-    Private Sub LoginAndLockUI_Click(sender As Object, e As EventArgs) Handles Me.Click
-        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
-        '点击切换壁纸
-        If Math.Abs(Me.Left) < 15 Then '当拖动距离超过15像素时不切换壁纸
-            If WallpaperIndex = WallpaperCount - 1 Then WallpaperIndex = 0 Else WallpaperIndex += 1
-            Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
-            My.Settings.LoginWallpaperIndex = WallpaperIndex
-            My.Settings.Save()
-        End If
-    End Sub
 #End Region
 
 #Region "控件"
@@ -155,6 +147,36 @@ Public Class LoginAndLockUI
         '敲回车键登录系统
         If Asc(e.KeyChar) = Keys.Enter Then ExchangeUI()
     End Sub
+
+    Private Sub WallpaperButton_Click(sender As Object, e As EventArgs) Handles LastWallpaperButton.Click, NextWallpaperButton.Click
+        '点击切换壁纸
+        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
+        If CType(sender, Label).Tag = "Last" Then
+            WallpaperIndex = IIf(WallpaperIndex = 0, WallpaperCount - 1, WallpaperIndex - 1) '上一张
+        Else
+            WallpaperIndex = (WallpaperIndex + 1) Mod WallpaperCount '下一张
+        End If
+        Me.BackgroundImage = My.Resources.SystemAssets.ResourceManager.GetObject("SystemWallpaper_" & WallpaperIndex.ToString("00"))
+        My.Settings.LoginWallpaperIndex = WallpaperIndex
+        My.Settings.Save()
+    End Sub
+
+    Private Sub WallpaperButton_MouseDown(sender As Object, e As MouseEventArgs) Handles LastWallpaperButton.MouseDown, NextWallpaperButton.MouseDown
+        CType(sender, Label).Image = My.Resources.SystemAssets.ResourceManager.GetObject(CType(sender, Label).Tag & "_Down")
+    End Sub
+
+    Private Sub WallpaperButton_MouseEnter(sender As Object, e As EventArgs) Handles LastWallpaperButton.MouseEnter, NextWallpaperButton.MouseEnter
+        CType(sender, Label).Image = My.Resources.SystemAssets.ResourceManager.GetObject(CType(sender, Label).Tag & "_Enter")
+    End Sub
+
+    Private Sub WallpaperButton_MouseLeave(sender As Object, e As EventArgs) Handles LastWallpaperButton.MouseLeave, NextWallpaperButton.MouseLeave
+        CType(sender, Label).Image = My.Resources.SystemAssets.ResourceManager.GetObject(CType(sender, Label).Tag & "_Normal")
+    End Sub
+
+    Private Sub WallpaperButton_MouseUp(sender As Object, e As MouseEventArgs) Handles LastWallpaperButton.MouseUp, NextWallpaperButton.MouseUp
+        CType(sender, Label).Image = My.Resources.SystemAssets.ResourceManager.GetObject(CType(sender, Label).Tag & "_Enter")
+    End Sub
+
 #End Region
 
 #Region "动态显示和隐藏"
@@ -259,6 +281,8 @@ Public Class LoginAndLockUI
     Private Function CopyFromMe() As Bitmap
         Dim MyScreenShot As Bitmap = New Bitmap(Me.BackgroundImage, Me.Size)
         LoginAreaControl.DrawToBitmap(MyScreenShot, New Rectangle(LoginAreaControl.Location, LoginAreaControl.Size))
+        LastWallpaperButton.DrawToBitmap(MyScreenShot, New Rectangle(LastWallpaperButton.Location, LastWallpaperButton.Size))
+        NextWallpaperButton.DrawToBitmap(MyScreenShot, New Rectangle(NextWallpaperButton.Location, NextWallpaperButton.Size))
         Return MyScreenShot
     End Function
 

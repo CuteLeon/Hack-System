@@ -364,6 +364,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\Next_Normal.png" />
+    <None Include="Resources\Next_Enter.png" />
+    <None Include="Resources\Next_Down.png" />
+    <None Include="Resources\Right_Normal.png" />
+    <None Include="Resources\Right_Enter.png" />
+    <None Include="Resources\Right_Down.png" />
+    <None Include="Resources\Last_Normal.png" />
+    <None Include="Resources\Last_Enter.png" />
+    <None Include="Resources\Last_Down.png" />
     <None Include="Resources\StartingUp_59.png" />
     <None Include="Resources\StartingUp_58.png" />
     <None Include="Resources\StartingUp_57.png" />
@@ -476,7 +485,6 @@
     <None Include="Resources\TipsCloseButton_0.png" />
     <None Include="Resources\TipsCloseButton_1.png" />
     <None Include="Resources\TipsCloseButton_2.png" />
-    <None Include="Resources\TipsIconBackground.png" />
     <None Include="Resources\TipsIcons.png" />
     <None Include="Resources\CleanCommandPast_0.png" />
     <None Include="Resources\CleanCommandPast_1.png" />

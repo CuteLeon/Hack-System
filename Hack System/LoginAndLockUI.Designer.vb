@@ -28,6 +28,8 @@ Partial Class LoginAndLockUI
         Me.HeadPictureBox = New System.Windows.Forms.PictureBox()
         Me.UserNameControl = New System.Windows.Forms.Label()
         Me.PasswordLabel = New System.Windows.Forms.Label()
+        Me.LastWallpaperButton = New System.Windows.Forms.Label()
+        Me.NextWallpaperButton = New System.Windows.Forms.Label()
         CType(Me.LoginAreaControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LoginButtonControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.HeadPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -103,6 +105,26 @@ Partial Class LoginAndLockUI
         Me.PasswordLabel.Text = "֎֎֎֎֎֎֎"
         Me.PasswordLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'LastWallpaperButton
+        '
+        Me.LastWallpaperButton.BackColor = System.Drawing.Color.Transparent
+        Me.LastWallpaperButton.Image = Global.HackSystem.My.Resources.SystemAssets.Last_Normal
+        Me.LastWallpaperButton.Location = New System.Drawing.Point(611, 366)
+        Me.LastWallpaperButton.Name = "LastWallpaperButton"
+        Me.LastWallpaperButton.Size = New System.Drawing.Size(95, 65)
+        Me.LastWallpaperButton.TabIndex = 10
+        Me.LastWallpaperButton.Tag = "Last"
+        '
+        'NextWallpaperButton
+        '
+        Me.NextWallpaperButton.BackColor = System.Drawing.Color.Transparent
+        Me.NextWallpaperButton.Image = Global.HackSystem.My.Resources.SystemAssets.Next_Normal
+        Me.NextWallpaperButton.Location = New System.Drawing.Point(705, 366)
+        Me.NextWallpaperButton.Name = "NextWallpaperButton"
+        Me.NextWallpaperButton.Size = New System.Drawing.Size(95, 65)
+        Me.NextWallpaperButton.TabIndex = 11
+        Me.NextWallpaperButton.Tag = "Next"
+        '
         'LoginAndLockUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -111,6 +133,8 @@ Partial Class LoginAndLockUI
         Me.BackgroundImage = Global.HackSystem.My.Resources.SystemAssets.SystemWallpaper_14
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(812, 440)
+        Me.Controls.Add(Me.NextWallpaperButton)
+        Me.Controls.Add(Me.LastWallpaperButton)
         Me.Controls.Add(Me.PasswordLabel)
         Me.Controls.Add(Me.UserNameControl)
         Me.Controls.Add(Me.HeadPictureBox)
@@ -136,4 +160,6 @@ Partial Class LoginAndLockUI
     Friend WithEvents HeadPictureBox As PictureBox
     Friend WithEvents UserNameControl As Label
     Friend WithEvents PasswordLabel As Label
+    Friend WithEvents LastWallpaperButton As Label
+    Friend WithEvents NextWallpaperButton As Label
 End Class
