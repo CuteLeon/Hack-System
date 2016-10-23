@@ -377,7 +377,6 @@ Public Class SystemWorkStation
 
         Select Case e.Result.Text
             Case "控制台"
-                If Not CommandConsole.Visible Then CommandConsole.Show(Me)
                 CommandConsole.ShowConsole()
             Case "确定"
                 SendKeys.Send(Chr(Keys.Enter))
@@ -725,7 +724,6 @@ Public Class SystemWorkStation
 
     Private Sub ConsoleButtonControl_Click(sender As Object, e As EventArgs) Handles ConsoleButtonControl.Click
         '显示控制台
-        If Not CommandConsole.Visible Then CommandConsole.Show(Me)
         CommandConsole.ShowConsole()
     End Sub
 

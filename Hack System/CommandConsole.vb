@@ -19,6 +19,8 @@ Public Class CommandConsole
     Public Sub ShowConsole()
         '提示浮窗显示时需要先隐藏浮窗
         TipsForm.CancelTip()
+        Me.Left = My.Computer.Screen.Bounds.Width
+        Me.Refresh()
         If Not Me.Visible Then Me.Show(SystemWorkStation)
         Me.Height = My.Computer.Screen.Bounds.Height
         Me.Top = 0
@@ -42,8 +44,8 @@ Public Class CommandConsole
     End Sub
 
     Private Sub SubShowConsole()
-        Me.Left = My.Computer.Screen.Bounds.Width
         '显示控制台
+        Me.Left = My.Computer.Screen.Bounds.Width
         Do While Me.Left + Me.Width > My.Computer.Screen.Bounds.Width
             Me.Left -= 30
             Thread.Sleep(10)
