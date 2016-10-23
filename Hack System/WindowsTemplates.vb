@@ -63,7 +63,7 @@ Public Class WindowsTemplates
 
     Private Sub WindowsTemplates_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
         '窗体失去焦点时，如果不是AeroPeek模式也不是正在退出程序，就降低窗口透明度
-        If Not (UnityModule.AeroPeekModel) AndAlso Not UnityModule.SystemClosing _
+        If Not (UnityModule.AeroPeekMode) AndAlso Not UnityModule.SystemClosing _
             AndAlso UnityModule.ScriptFormVisible(MyScriptIndex) = True Then Me.Opacity = NegativeOpacity
         '改变窗体背景色
         Me.BackColor = BorderColor_Negative
@@ -78,7 +78,7 @@ Public Class WindowsTemplates
         '防止在显示动态关闭特效时被激活
         If Not UnityModule.ScriptFormVisible(MyScriptIndex) Then Exit Sub
         '判断AeroPeek模式状态和当前脚本标识，设置窗体透明度
-        Me.Opacity = IIf(UnityModule.AeroPeekModel And UnityModule.NowIconIndex <> MyScriptIndex, UnityModule.AeroPeekOpacity, 1)
+        Me.Opacity = IIf(UnityModule.AeroPeekMode And UnityModule.NowIconIndex <> MyScriptIndex, UnityModule.AeroPeekOpacity, 1)
         '改变背景色
         Me.BackColor = BorderColor_Active
         '优先显示系统弹出框
@@ -238,14 +238,14 @@ Public Class WindowsTemplates
         For ScriptIndex As Integer = UnityModule.ScriptUpperBound To 0 Step -1
             If UnityModule.ScriptFormVisible(ScriptIndex) Then
                 '如果当前窗口正在被AeroPeek模式高亮显示，关闭后应退出AeroPeek模式
-                If UnityModule.AeroPeekModel And UnityModule.NowIconIndex = MyScriptIndex Then
+                If UnityModule.AeroPeekMode And UnityModule.NowIconIndex = MyScriptIndex Then
                     '遍历脚本窗体
                     For TempScriptIndex As Integer = 0 To UnityModule.ScriptUpperBound
                         '还原在AeroPeek模式下被隐藏的窗体的透明度
                         If UnityModule.ScriptFormVisible(TempScriptIndex) Then UnityModule.ScriptForm(TempScriptIndex).Opacity = UnityModule.NegativeOpacity
                     Next
                     '关闭AeroPeek模式
-                    UnityModule.AeroPeekModel = False
+                    UnityModule.AeroPeekMode = False
                     '被激活的窗体不被透明
                     If Not (ActiveForm Is Nothing) Then ActiveForm.Opacity = 1
                 End If

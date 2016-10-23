@@ -456,13 +456,13 @@ Public Class SystemWorkStation
         Dim ScriptIndex As Integer = Int(CType(sender, Label).Tag)
         'NowIconIndex = -1
         If Not (ScriptFormVisible(ScriptIndex)) Then SenderControl.Image = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
-        If AeroPeekModel Then
+        If AeroPeekMode Then
             '遍历脚本窗体，还原在AeroPeek模式下被透明的窗体的透明度
             For ScriptIndex = 0 To ScriptUpperBound
                 If ScriptFormVisible(ScriptIndex) Then ScriptForm(ScriptIndex).Opacity = UnityModule.NegativeOpacity
             Next
             '关闭AeroPeek模式
-            AeroPeekModel = False
+            AeroPeekMode = False
             '被激活的窗体不被透明
             If Not (ActiveForm Is Nothing) Then If Not (ActiveForm Is CommandConsole) Then ActiveForm.Opacity = 1
         End If
@@ -485,7 +485,7 @@ Public Class SystemWorkStation
         '鼠标悬停时如果脚本是打开状态，则显示AeroPeek视图
         If Not (ScriptFormVisible(NowIconIndex)) Or ShutdownTips.Visible Or AboutMeForm.Visible Then Exit Sub
 
-        AeroPeekModel = True
+        AeroPeekMode = True
         Dim StartIndex, EndIndex, ScriptIndex As Integer
         EndIndex = NowIconIndex - 1
         StartIndex = NowIconIndex + 1

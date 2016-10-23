@@ -369,9 +369,6 @@
     <None Include="Resources\Next_Normal.png" />
     <None Include="Resources\Next_Enter.png" />
     <None Include="Resources\Next_Down.png" />
-    <None Include="Resources\Right_Normal.png" />
-    <None Include="Resources\Right_Enter.png" />
-    <None Include="Resources\Right_Down.png" />
     <None Include="Resources\Last_Normal.png" />
     <None Include="Resources\Last_Enter.png" />
     <None Include="Resources\Last_Down.png" />

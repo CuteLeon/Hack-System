@@ -11,7 +11,10 @@ Public Class LoginAndLockUI
         Dim X As Int16
         Dim Y As Int16
     End Structure
-
+    ''' <summary>
+    ''' 当前系统处于锁屏状态（用于判断是否播放解锁音效）
+    ''' </summary>
+    Dim LockState As Boolean = False
     Dim WallpaperIndex As Integer = 14 '初始壁纸标识
     Dim FirstPoint As POINTAPI '鼠标按下时坐标
     Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Width \ 50 '自移动线程每次移动的距离
@@ -106,7 +109,6 @@ Public Class LoginAndLockUI
             Threading.ThreadPool.QueueUserWorkItem(New Threading.WaitCallback(AddressOf ReSetMyLocation))
             Exit Sub
         End If
-        LockScreenMode = False
         UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
 
@@ -177,9 +179,9 @@ Public Class LoginAndLockUI
     ''' 动态显示锁屏界面
     ''' </summary>
     Public Sub ShowLockScreen()
-        UnityModule.LockScreenMode = True
         If Me.Visible Then Exit Sub Else Me.Show(SystemWorkStation)
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ShowConsole"), AudioPlayMode.Background)
+        LockState = True
         If TipsForm.Visible Then TipsForm.CancelTip()
         UnityModule.SetForegroundWindow(Me.Handle)
         If ThreadShowMe IsNot Nothing AndAlso ThreadShowMe.ThreadState = ThreadState.Running Then Exit Sub
@@ -203,6 +205,8 @@ Public Class LoginAndLockUI
     Public Sub HideLockScreen(ByVal ToRight As Boolean)
         '动态隐藏
         If ThreadHideMe IsNot Nothing AndAlso ThreadHideMe.ThreadState = ThreadState.Running Then Exit Sub
+        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
+        LockState = False
         ThreadHideMe = New Thread(AddressOf HideMe)
         ThreadHideMe.Start(ToRight)
         ThreadHideMe.Join()
@@ -312,19 +316,18 @@ Public Class LoginAndLockUI
             '可以在这里设置判断登录密码或设计彩！蛋！
             '切换界面时需要收回隐藏 TipsForm 浮窗
             If TipsForm.Visible Then TipsForm.CancelTip()
-            SystemWorkStation.Show()
+            If LockState Then
+                My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
+            Else
+                SystemWorkStation.Show()
+            End If
 
             ThreadHideMe = New Thread(AddressOf SplitLoginIn)
             ThreadHideMe.Start()
             ThreadHideMe.Join()
 
-            If LockScreenMode Then
-                '解锁
-                My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("Tips"), AudioPlayMode.Background)
-                LockScreenMode = False
-            End If
             UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
-            'SystemWorkStation 初次显示时会自动 Activated 并置前显示，导致 FirstLoginIn() 特效无法置前显示，所以需要特效结束后注册事件
+            'SystemWorkStation 初次显示时会自动 Activated 并置前显示，导致分离登录特效无法置前显示，所以需要特效结束后注册事件
             AddHandler SystemWorkStation.Activated, AddressOf SystemWorkStation.SystemWorkStation_Activated
             '非锁屏状态时，不允许通过鼠标拖动的方式登录系统，所以首先登录一次绑定事件
             AddHandler Me.MouseUp, AddressOf LoginAndLockUI_MouseUp
