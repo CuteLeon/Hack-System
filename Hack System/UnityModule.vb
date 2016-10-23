@@ -78,6 +78,10 @@ Module UnityModule
     ''' '窗体失活时的透明度（需要考虑{停止呼吸}里的Me.Opacity保留小数点的位数）
     ''' </summary>
     Public Const NegativeOpacity As Double = 0.8
+    ''' <summary>
+    ''' 默认的像素格式
+    ''' </summary>
+    Public Const DefaultPixelFormat As Imaging.PixelFormat = Imaging.PixelFormat.Format32bppArgb
 #End Region
 
 #Region "全局变量"

@@ -1,9 +1,17 @@
 Public Class XYMail
 
 #Region "声明区"
-    '返回结果信息的颜色
+    ''' <summary>
+    ''' 正常返回结果信息的颜色
+    ''' </summary>
     Dim NormalColor As Color = Color.FromArgb(19, 132, 205)
+    ''' <summary>
+    ''' 失败返回结果信息的颜色
+    ''' </summary>
     Dim FailColor As Color = Color.FromArgb(248, 97, 97)
+    ''' <summary>
+    ''' 发送邮件的线程
+    ''' </summary>
     Dim MailThread As Threading.Thread = New Threading.Thread(AddressOf SendMail)
 #End Region
 

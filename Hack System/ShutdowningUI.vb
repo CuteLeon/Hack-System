@@ -4,9 +4,17 @@ Imports System.Threading
 Public Class ShutdowningUI
 
 #Region "声明区"
-    '线程每次移动的距离
+    ''' <summary>
+    ''' 线程每次移动的距离
+    ''' </summary>
     Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Height \ 300
+    ''' <summary>
+    ''' 双倍的移动距离
+    ''' </summary>
     Dim DoubleMoveDistance As Integer = MoveDistance * 2
+    ''' <summary>
+    ''' 拉伸为窗口尺寸的背景图
+    ''' </summary>
     Dim ShutdownBGI As Bitmap = New Bitmap(My.Resources.SystemAssets.ShutdownBGI, My.Computer.Screen.Bounds.Size)
 #End Region
 

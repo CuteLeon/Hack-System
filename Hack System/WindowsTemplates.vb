@@ -5,18 +5,46 @@ Imports System.Threading
 Public Class WindowsTemplates
 
 #Region "声明区"
-    '常量
-    Private Const TitleHeight As Integer = 25 '上边界多出的标题栏高度
-    Private Const BorderWidth As Integer = 2 'GIF控件与窗体的基本边界距离
-    '变量
-    Dim TitleTextBrush As Brush = Brushes.White '标题文本颜色
-    Dim BoundaryPen As Pen = Pens.Red '窗体边界线条的颜色
-    Dim BorderColor_Active As Color = Color.DarkSlateGray '窗体激活时边框颜色
-    Dim BorderColor_Negative As Color = Color.Black '窗体失活时边框颜色
-    Dim MyScriptIndex As Integer '自己对应的脚本标识
-    Dim IconLocation As Point '与自己对应的图标在桌面上的位置
-    Dim IconImage As Image '图标图像
-    Dim IconControl As Label '在桌面环境里对应的图标控件
+    ''' <summary>
+    ''' 上边界多出的标题栏高度
+    ''' </summary>
+    Private Const TitleHeight As Integer = 25
+    ''' <summary>
+    ''' GIF控件与窗体的基本边界距离
+    ''' </summary>
+    Private Const BorderWidth As Integer = 2
+    ''' <summary>
+    ''' 标题文本颜色
+    ''' </summary>
+    Dim TitleTextBrush As Brush = Brushes.White
+    ''' <summary>
+    ''' 窗体边界线条的颜色
+    ''' </summary>
+    Dim BoundaryPen As Pen = Pens.Red
+    ''' <summary>
+    ''' 窗体激活时边框颜色
+    ''' </summary>
+    Dim BorderColor_Active As Color = Color.DarkSlateGray
+    ''' <summary>
+    ''' 窗体失活时边框颜色
+    ''' </summary>
+    Dim BorderColor_Negative As Color = Color.Black
+    ''' <summary>
+    ''' 自己对应的脚本标识
+    ''' </summary>
+    Dim MyScriptIndex As Integer
+    ''' <summary>
+    ''' 与自己对应的图标在桌面上的位置
+    ''' </summary>
+    Dim IconLocation As Point
+    ''' <summary>
+    ''' 图标图像
+    ''' </summary>
+    Dim IconImage As Image
+    ''' <summary>
+    ''' 在桌面环境里对应的图标控件
+    ''' </summary>
+    Dim IconControl As Label
 #End Region
 
 #Region "窗体"
@@ -38,7 +66,7 @@ Public Class WindowsTemplates
         Me.Name = UnityModule.ScriptInfomation(Me.Tag)
         Me.Cursor = UnityModule.SystemCursor
         '初始化关闭按钮
-        CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(0, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
+        CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(0, 0, 27, 27), UnityModule.DefaultPixelFormat)
         '注册桌面环境的按键事件，和桌面响应同样的按键事件
         AddHandler Me.KeyPress, AddressOf SystemWorkStation.SystemWorkStation_KeyPress
         '为窗体绘制左上角图标、标题文字和边界线条
@@ -198,19 +226,19 @@ Public Class WindowsTemplates
 #Region "关闭按钮动态效果"
 
     Private Sub CloseButtonControl_MouseEnter(sender As Object, e As EventArgs) Handles CloseButtonControl.MouseEnter
-        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(27, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
+        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(27, 0, 27, 27), UnityModule.DefaultPixelFormat)
     End Sub
 
     Private Sub CloseButtonControl_MouseLeave(sender As Object, e As EventArgs) Handles CloseButtonControl.MouseLeave
-        CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(0, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
+        CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(0, 0, 27, 27), UnityModule.DefaultPixelFormat)
     End Sub
 
     Private Sub CloseButtonControl_MouseUp(sender As Object, e As MouseEventArgs) Handles CloseButtonControl.MouseUp
-        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(27, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
+        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(27, 0, 27, 27), UnityModule.DefaultPixelFormat)
     End Sub
 
     Private Sub CloseButtonControl_MouseDown(sender As Object, e As MouseEventArgs) Handles CloseButtonControl.MouseDown
-        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(54, 0, 27, 27), Imaging.PixelFormat.Format32bppArgb)
+        If Not (ShutdownTips.Visible) And Not (AboutMeForm.Visible) Then CloseButtonControl.Image = My.Resources.SystemAssets.CloseButton.Clone(New Rectangle(54, 0, 27, 27), UnityModule.DefaultPixelFormat)
     End Sub
 #End Region
 

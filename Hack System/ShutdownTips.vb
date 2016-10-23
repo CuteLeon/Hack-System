@@ -3,9 +3,13 @@
 Public Class ShutdownTips
 
 #Region "声明区"
-
-    '圆角窗体
+    ''' <summary>
+    ''' 创建自定义区域
+    ''' </summary>
     Private Declare Function CreateRoundRectRgn Lib "gdi32" Alias "CreateRoundRectRgn" (ByVal X1 As Int32, ByVal Y1 As Int32, ByVal X2 As Int32, ByVal Y2 As Int32, ByVal X3 As Int32, ByVal Y3 As Int32) As Int32
+    ''' <summary>
+    ''' 把自定义区域应用到窗体
+    ''' </summary>
     Private Declare Function SetWindowRgn Lib "user32" Alias "SetWindowRgn" (ByVal hWnd As Int32, ByVal hRgn As Int32, ByVal bRedraw As Boolean) As Int32
 #End Region
 

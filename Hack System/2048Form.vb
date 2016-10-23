@@ -1,8 +1,23 @@
 ﻿Public Class Game2048Form
-    Private Const TitleHeight As Integer = 40 '标题栏高度
-    Private Const PaddingSize As Integer = 60 '裁片集中区域与窗体边框的距离
-    Dim Score As Integer = 0 '分数
-    Dim Moved As Boolean '定义一个标识，记录是否发生了移动，以确定操作是否有效
+    ''' <summary>
+    ''' 标题栏高度
+    ''' </summary>
+    Private Const TitleHeight As Integer = 40
+    ''' <summary>
+    ''' 裁片集中区域与窗体边框的距离
+    ''' </summary>
+    Private Const PaddingSize As Integer = 60
+    ''' <summary>
+    ''' 分数
+    ''' </summary>
+    Dim Score As Integer = 0
+    ''' <summary>
+    ''' 记录是否发生了移动，以确定操作是否有效
+    ''' </summary>
+    Dim Moved As Boolean
+    ''' <summary>
+    ''' 记录每个方格存放数据的状态
+    ''' </summary>
     Dim CardData(3, 3) As Long
 
     Private Sub GameForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load

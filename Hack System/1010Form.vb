@@ -1,15 +1,47 @@
 ﻿Public Class Game1010Form
-    Private Const TitleHeight As Integer = 70 '标题栏高度
-    Private Const MarginSize As Integer = 2 '卡片之间的间距
-    Private Const PaddingSize As Integer = 30 '裁片集中区域与窗体边框的距离
-    Private Const CardSize As Integer = 26 '卡片尺寸
+    ''' <summary>
+    ''' 标题栏高度
+    ''' </summary>
+    Private Const TitleHeight As Integer = 70
+    ''' <summary>
+    ''' 卡片之间的间距
+    ''' </summary>
+    Private Const MarginSize As Integer = 2
+    ''' <summary>
+    ''' 裁片集中区域与窗体边框的距离
+    ''' </summary>
+    Private Const PaddingSize As Integer = 30
+    ''' <summary>
+    ''' 卡片尺寸
+    ''' </summary>
+    Private Const CardSize As Integer = 26
+    ''' <summary>
+    ''' 同时消除的行数对应的得分
+    ''' </summary>
     Dim ScoreList() As Integer = {0, 10, 30, 60, 100, 150, 210}
+    ''' <summary>
+    ''' 在 ObjectModel 里代表不存在的坐标（区别于 Point.Empty）
+    ''' </summary>
     Dim EmptyPoint As Point = New Point(-1, -1)
-    Dim MousePointInLabel As Point '用于记录鼠标拖动标签时鼠标坐标与标签起点差值
-    Dim Score As Integer = 0 '分数
-    Dim Moved As Boolean '定义一个标识，记录是否发生了移动，以确定操作是否有效
+    ''' <summary>
+    ''' 鼠标拖动标签时鼠标坐标与标签起点差值
+    ''' </summary>
+    Dim MousePointInLabel As Point
+    ''' <summary>
+    ''' 分数
+    ''' </summary>
+    Dim Score As Integer = 0
+    ''' <summary>
+    ''' 空区域背景颜色
+    ''' </summary>
     Dim BlankColor As Color = Color.FromArgb(100, Color.DarkGray)
+    ''' <summary>
+    ''' 新产生的三个物体Label的坐标
+    ''' </summary>
     Dim ObjectLabelLocation() As Point
+    ''' <summary>
+    ''' 物体颜色
+    ''' </summary>
     Dim CardColor() As Color = {
         Color.FromArgb(255, 121, 136, 191),
         Color.FromArgb(255, 254, 198, 61),
@@ -20,15 +52,41 @@
         Color.FromArgb(255, 90, 190, 226),
         Color.FromArgb(255, 76, 212, 174)
         }
+    ''' <summary>
+    ''' 记录每个方格的状态（是否放置了物体）
+    ''' </summary>
     Dim CardData(9, 9) As Boolean
+    ''' <summary>
+    ''' 记录每个方格的物体颜色
+    ''' </summary>
     Dim ColorData(9, 9) As Color
-    Dim ObjectType(2) As Integer '记录新产生的三个物体类型在 ObjectModel 里的标识
-    Dim ObjectColor(2) As Color '记录新产生的三个物体的颜色
-    Dim ObjectImage(2) As Bitmap  '记录新产生的三个物体的图像
-    Dim ObjectCount As Integer '还没有被放入游戏区的物体个数
+    ''' <summary>
+    ''' 记录新产生的三个物体类型在 ObjectModel 里的标识
+    ''' </summary>
+    Dim ObjectType(2) As Integer
+    ''' <summary>
+    ''' 记录新产生的三个物体的颜色
+    ''' </summary>
+    Dim ObjectColor(2) As Color
+    ''' <summary>
+    ''' 记录新产生的三个物体的图像
+    ''' </summary>
+    Dim ObjectImage(2) As Bitmap
+    ''' <summary>
+    ''' 还没有被放入游戏区的物体个数
+    ''' </summary>
+    Dim ObjectCount As Integer
+    ''' <summary>
+    ''' 用于存放新产生物体的Label
+    ''' </summary>
     Dim ObjectLabels() As Label
-    '记录每个魔性占用的行和列数，用以生成对应尺寸的图像
+    ''' <summary>
+    ''' 记录每个魔性占用的行和列数，用以生成对应尺寸的图像
+    ''' </summary>
     Dim ObjectSize() As Size = {New Size(1, 1), New Size(1, 2), New Size(2, 1), New Size(2, 2), New Size(2, 2), New Size(2, 2), New Size(2, 2), New Size(1, 3), New Size(3, 1), New Size(2, 2), New Size(1, 4), New Size(4, 1), New Size(3, 3), New Size(3, 3), New Size(3, 3), New Size(3, 3), New Size(1, 5), New Size(5, 1), New Size(3, 3)}
+    ''' <summary>
+    ''' 物体模型
+    ''' </summary>
     Dim ObjectModel(,) As Point = {
         {New Point(0, 0), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'单个方格
         {New Point(0, 0), New Point(1, 0), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'垂直排列的两个方格

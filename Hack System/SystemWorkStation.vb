@@ -5,42 +5,142 @@ Imports Microsoft.VisualBasic.Devices
 Public Class SystemWorkStation
 
 #Region "声明区"
+    ''' <summary>
+    ''' 检测句柄是否有效（置后显示时检测物理桌面是否崩溃）
+    ''' </summary>
     Private Declare Function IsWindow Lib "user32" Alias "IsWindow" (ByVal hWnd As IntPtr) As Integer '判断一个窗口句柄是否有效，置后显示时检测桌面容器是否意外关闭
-    Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Integer
+    ''' <summary>
+    ''' 用于查找物理桌面句柄
+    ''' </summary>
     Private Declare Function FindWindowEx Lib "user32" Alias "FindWindowExA" (ByVal hWnd1 As Integer, ByVal hWnd2 As Integer, ByVal lpsz1 As String, ByVal lpsz2 As String) As Integer
+    ''' <summary>
+    ''' 获取桌面句柄
+    ''' </summary>
     Private Declare Function GetDesktopWindow Lib "user32" Alias "GetDesktopWindow" () As IntPtr
+    ''' <summary>
+    ''' 设置窗口的父窗口句柄
+    ''' </summary>
     Private Declare Function SetParent Lib "user32" Alias "SetParent" (ByVal hWndChild As IntPtr, ByVal hWndNewParent As IntPtr) As Integer
+    ''' <summary>
+    ''' 设置窗体样式
+    ''' </summary>
     Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As IntPtr, ByVal nIndex As Integer, ByVal dwNewLong As Integer) As IntPtr
+    ''' <summary>
+    ''' 获取窗体样式
+    ''' </summary>
     Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hwnd As IntPtr, ByVal nIndex As Integer) As Integer
+    ''' <summary>
+    ''' 设置窗体半透明度
+    ''' </summary>
     Private Declare Function SetLayeredWindowAttributes Lib "user32" (ByVal hwnd As IntPtr, ByVal crKey As Integer, ByVal bAlpha As Integer, ByVal dwFlags As Integer) As Integer
-
-    Dim DesktopIconHandle As IntPtr '记录物理桌面容器的句柄
-    Dim UserNameFont As Font = New Font("微软雅黑", 36.0) '用户名显示字体
-    Dim MouseDownLocation As Point '鼠标按下的坐标(用于显示桌面拖动蓝色矩形)
-    Dim XDistance, YDistance As Integer '鼠标按下后移动的距离
-    Dim ColumnIconCount As Integer = Int(My.Computer.Screen.Bounds.Height / IconHeight) - 1 '计算桌面每列显示图标的数量
-    Dim IntervalDistance As Integer = (My.Computer.Screen.Bounds.Height - ColumnIconCount * IconHeight) / (ColumnIconCount + 1) '两个桌面图标间的距离
-    Dim WallpaperIndex As Integer = 9 '初始桌面壁纸的标识
-    Dim CustomWallpaperBitmap As Bitmap '用户自定义壁纸
-    Dim CustomWallpaperString As String '用户自定义壁纸-Base64字符串
-    Dim HighLightIcon(ScriptUpperBound) As Bitmap '高亮的桌面图标
-    Dim MouseDownIcon(ScriptUpperBound) As Bitmap '鼠标按下的桌面图标
-    Dim LabelForecolor As Color = Color.Aqua '初始文本标签颜色
-    Dim IconGraphics As Graphics '桌面图标画笔
-    Dim SenderControl As Label '用于记录触发事件的控件。
-    Dim CPUCounter As New PerformanceCounter("Processor", "% Processor Time", "_Total") 'CPU性能计数器
-    Dim DiskReadCounter As New PerformanceCounter("PhysicalDisk", "Disk Read Bytes/sec", "_Total") '内存性能计数器
-    Dim DiskWriteCounter As New PerformanceCounter("PhysicalDisk", "Disk Write Bytes/sec", "_Total") '硬盘性能计数器
-    Dim PCCategory As New PerformanceCounterCategory("Network Interface") '网络性能计数器
-    Dim CmptInfo As New ComputerInfo() '计算机信息
-    Dim MemoryUsageRate As Integer '内存使用率
+    ''' <summary>
+    ''' 记录物理桌面容器的句柄
+    ''' </summary>
+    Dim DesktopIconHandle As IntPtr
+    ''' <summary>
+    ''' 用户名显示字体
+    ''' </summary>
+    Dim UserNameFont As Font = New Font("微软雅黑", 36.0)
+    ''' <summary>
+    ''' 鼠标按下的坐标(用于显示桌面拖动蓝色矩形)
+    ''' </summary>
+    Dim MouseDownLocation As Point
+    ''' <summary>
+    ''' 鼠标按下后移动的距离
+    ''' </summary>
+    Dim XDistance, YDistance As Integer
+    ''' <summary>
+    ''' 计算桌面每列显示图标的数量
+    ''' </summary>
+    Dim ColumnIconCount As Integer = Int(My.Computer.Screen.Bounds.Height / IconHeight) - 1
+    ''' <summary>
+    ''' 两个桌面图标间的距离
+    ''' </summary>
+    Dim IntervalDistance As Integer = (My.Computer.Screen.Bounds.Height - ColumnIconCount * IconHeight) / (ColumnIconCount + 1)
+    ''' <summary>
+    ''' 初始桌面壁纸的标识
+    ''' </summary>
+    Dim WallpaperIndex As Integer = 9
+    ''' <summary>
+    ''' 用户自定义壁纸
+    ''' </summary>
+    Dim CustomWallpaperBitmap As Bitmap
+    ''' <summary>
+    ''' 用户自定义壁纸-Base64字符串
+    ''' </summary>
+    Dim CustomWallpaperString As String
+    ''' <summary>
+    ''' 高亮的桌面图标
+    ''' </summary>
+    Dim HighLightIcon(ScriptUpperBound) As Bitmap
+    ''' <summary>
+    ''' 鼠标按下的桌面图标
+    ''' </summary>
+    Dim MouseDownIcon(ScriptUpperBound) As Bitmap
+    ''' <summary>
+    ''' 初始文本标签颜色
+    ''' </summary>
+    Dim LabelForecolor As Color = Color.Aqua
+    ''' <summary>
+    ''' 桌面图标画笔
+    ''' </summary>
+    Dim IconGraphics As Graphics
+    ''' <summary>
+    ''' 用于记录触发事件的控件
+    ''' </summary>
+    Dim SenderControl As Label
+    ''' <summary>
+    ''' CPU性能计数器
+    ''' </summary>
+    Dim CPUCounter As New PerformanceCounter("Processor", "% Processor Time", "_Total")
+    ''' <summary>
+    ''' 内存性能计数器
+    ''' </summary>
+    Dim DiskReadCounter As New PerformanceCounter("PhysicalDisk", "Disk Read Bytes/sec", "_Total")
+    ''' <summary>
+    ''' 硬盘性能计数器
+    ''' </summary>
+    Dim DiskWriteCounter As New PerformanceCounter("PhysicalDisk", "Disk Write Bytes/sec", "_Total")
+    ''' <summary>
+    ''' 网络性能计数器
+    ''' </summary>
+    Dim PCCategory As New PerformanceCounterCategory("Network Interface")
+    ''' <summary>
+    ''' 计算机信息
+    ''' </summary>
+    Dim CmptInfo As New ComputerInfo()
+    ''' <summary>
+    ''' 内存使用率
+    ''' </summary>
+    Dim MemoryUsageRate As Integer
     '为每块网卡创建单独的性能计数器，防止某块网卡突然仅用时，网速出现负数情况
-    Dim UBoundOfPCCategory As UInteger = PCCategory.GetInstanceNames.Count - 1 '网卡数组的下标
+    ''' <summary>
+    ''' 网卡数组的下标
+    ''' </summary>
+    Dim UBoundOfPCCategory As UInteger = PCCategory.GetInstanceNames.Count - 1
+    ''' <summary>
+    ''' 下载计数器
+    ''' </summary>
     Dim DownloadCounter(UBoundOfPCCategory) As PerformanceCounter
+    ''' <summary>
+    ''' 上传计数器
+    ''' </summary>
     Dim UploadCounter(UBoundOfPCCategory) As PerformanceCounter
+    ''' <summary>
+    ''' 下载速度；上传速度
+    ''' </summary>
     Dim DownloadSpeed(UBoundOfPCCategory) As ULong, UploadSpeed(UBoundOfPCCategory) As ULong
+    ''' <summary>
+    ''' 下载字节数；上传字节数
+    ''' </summary>
     Dim DownloadValue(UBoundOfPCCategory) As ULong, UploadValue(UBoundOfPCCategory) As ULong
+    ''' <summary>
+    ''' 上一次记录的下载字节数；上一次记录的上传字节数
+    ''' </summary>
     Dim DownloadValueOld(UBoundOfPCCategory) As ULong, UploadValueOld(UBoundOfPCCategory) As ULong
+    ''' <summary>
+    ''' 总下载速度；总上传速度
+    ''' </summary>
     Dim DownloadSpeedCount As ULong, UploadSpeedCount As ULong
 #End Region
 

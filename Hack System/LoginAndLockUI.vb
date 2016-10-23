@@ -4,9 +4,13 @@ Imports System.Threading
 Public Class LoginAndLockUI
 
 #Region "声明区"
-
+    ''' <summary>
+    ''' 获取鼠标坐标（需要传入 POINTAPI 地址）
+    ''' </summary>
     Private Declare Function GetCursorPos Lib "user32" (ByRef lpPoint As POINTAPI) As Integer
-
+    ''' <summary>
+    ''' GetCursorPos-API 所用结构体(内部变量为两个字节，与.NetInteger 四个字节不同)
+    ''' </summary>
     Private Structure POINTAPI
         Dim X As Int16
         Dim Y As Int16
@@ -15,12 +19,30 @@ Public Class LoginAndLockUI
     ''' 当前系统处于锁屏状态（用于判断是否播放解锁音效）
     ''' </summary>
     Dim LockState As Boolean = False
-    Dim WallpaperIndex As Integer = 14 '初始壁纸标识
-    Dim FirstPoint As POINTAPI '鼠标按下时坐标
-    Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Width \ 50 '自移动线程每次移动的距离
-    Dim SplitDistance As Integer = My.Computer.Screen.Bounds.Height \ 50 '分离特效每次移动的距离
-    Dim ThreadShowMe As Thread '显示线程
-    Dim ThreadHideMe As Thread '隐藏线程
+    ''' <summary>
+    ''' 初始壁纸标识
+    ''' </summary>
+    Dim WallpaperIndex As Integer = 14
+    ''' <summary>
+    ''' 鼠标按下时坐标
+    ''' </summary>
+    Dim FirstPoint As POINTAPI
+    ''' <summary>
+    ''' 自移动线程每次移动的距离
+    ''' </summary>
+    Dim MoveDistance As Integer = My.Computer.Screen.Bounds.Width \ 50
+    ''' <summary>
+    ''' 分离特效每次移动的距离
+    ''' </summary>
+    Dim SplitDistance As Integer = My.Computer.Screen.Bounds.Height \ 50
+    ''' <summary>
+    ''' 显示线程
+    ''' </summary>
+    Dim ThreadShowMe As Thread
+    ''' <summary>
+    ''' 隐藏线程
+    ''' </summary>
+    Dim ThreadHideMe As Thread
 #End Region
 
 #Region "窗体"

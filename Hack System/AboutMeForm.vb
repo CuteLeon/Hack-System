@@ -7,7 +7,7 @@
         AboutMeControl.Parent = AboutMeWallpaperControl
         OKButtonControl.Parent = AboutMeControl
         WebLink.Parent = AboutMeControl
-        OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(0, 0, 140, 49), Imaging.PixelFormat.Format32bppArgb)
+        OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(0, 0, 140, 49), UnityModule.DefaultPixelFormat)
 
         Me.Cursor = UnityModule.SystemCursor
     End Sub
@@ -45,19 +45,19 @@
 #Region "按钮动态效果"
 
     Private Sub OKButtonControl_MouseDown(sender As Object, e As MouseEventArgs) Handles OKButtonControl.MouseDown
-        OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(280, 0, 140, 49), Imaging.PixelFormat.Format32bppArgb)
+        OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(280, 0, 140, 49), UnityModule.DefaultPixelFormat)
     End Sub
 
     Private Sub OKButtonControl_MouseEnter(sender As Object, e As EventArgs) Handles OKButtonControl.MouseEnter
-        OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(140, 0, 140, 49), Imaging.PixelFormat.Format32bppArgb)
+        OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(140, 0, 140, 49), UnityModule.DefaultPixelFormat)
     End Sub
 
     Private Sub OKButtonControl_MouseLeave(sender As Object, e As EventArgs) Handles OKButtonControl.MouseLeave
-        OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(0, 0, 140, 49), Imaging.PixelFormat.Format32bppArgb)
+        OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(0, 0, 140, 49), UnityModule.DefaultPixelFormat)
     End Sub
 
     Private Sub OKButtonControl_MouseUp(sender As Object, e As MouseEventArgs) Handles OKButtonControl.MouseUp
-        OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(140, 0, 140, 49), Imaging.PixelFormat.Format32bppArgb)
+        OKButtonControl.Image = My.Resources.SystemAssets.OKButton.Clone(New Rectangle(140, 0, 140, 49), UnityModule.DefaultPixelFormat)
     End Sub
 #End Region
 

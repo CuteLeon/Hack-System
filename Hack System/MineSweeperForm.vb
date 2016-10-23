@@ -1,28 +1,70 @@
 ﻿Public Class MineSweeperForm
 
 #Region "声明区"
-    Private Const DefaultPixelFormat As Integer = Imaging.PixelFormat.Format32bppArgb
-
-    Dim CloseBitmap As Bitmap = My.Resources.MineSweeperAssets.MineClose_N  '初始关闭按钮
-    Dim CloseRectangle As New Rectangle(308, 2, CloseBitmap.Width, CloseBitmap.Height) '关闭按钮的位置
-    Dim CloseState As Boolean '关闭按钮的状态
-
-    Dim CellBitmap As Bitmap '单元图像
-    Dim CellRectangle As Rectangle '单元图像的位置
-    Dim LastHLIndex As New PointF(-1, -1) '上一个高亮标识
-
-    Dim BackgroundBitmap As Bitmap '背景图
-    Dim BackgroundGraphics As Graphics '背景画笔
-
-    Dim MinefieldBitmap As Bitmap '雷区图
-    Dim MinefieldGraphics As Graphics '雷区画笔
-    Dim MinefieldRectangle As Rectangle = New Rectangle(10, 27, 320, 320) '雷区位置
-
-    Dim MineCount As Int16 = 15 '地雷总数
-    Dim MineState(9, 9) As Boolean '布雷位置
-    Dim CellState(9, 9) As Int16  '地雷状态(0：未知；1：标记；2：无雷；3：高亮；4：高亮_标记)
-    Dim CellAroundCount(9, 9) As Int16 '周围地雷数
-    Dim ClickTimes As Integer = 0 '点击次数
+    ''' <summary>
+    ''' 关闭按钮图像
+    ''' </summary>
+    Dim CloseBitmap As Bitmap = My.Resources.MineSweeperAssets.MineClose_N
+    ''' <summary>
+    ''' 关闭按钮的位置
+    ''' </summary>
+    Dim CloseRectangle As New Rectangle(308, 2, CloseBitmap.Width, CloseBitmap.Height)
+    ''' <summary>
+    ''' 关闭按钮的状态
+    ''' </summary>
+    Dim CloseState As Boolean
+    ''' <summary>
+    ''' 单元图像
+    ''' </summary>
+    Dim CellBitmap As Bitmap
+    ''' <summary>
+    ''' 单元图像的位置
+    ''' </summary>
+    Dim CellRectangle As Rectangle
+    ''' <summary>
+    ''' 上一个高亮标识
+    ''' </summary>
+    Dim LastHLIndex As New PointF(-1, -1)
+    ''' <summary>
+    ''' 背景图
+    ''' </summary>
+    Dim BackgroundBitmap As Bitmap
+    ''' <summary>
+    ''' 背景画笔
+    ''' </summary>
+    Dim BackgroundGraphics As Graphics
+    ''' <summary>
+    ''' 雷区图
+    ''' </summary>
+    Dim MinefieldBitmap As Bitmap
+    ''' <summary>
+    ''' 雷区画笔
+    ''' </summary>
+    Dim MinefieldGraphics As Graphics
+    ''' <summary>
+    ''' 雷区位置
+    ''' </summary>
+    Dim MinefieldRectangle As Rectangle = New Rectangle(10, 27, 320, 320)
+    ''' <summary>
+    ''' 地雷总数
+    ''' </summary>
+    Dim MineCount As Int16 = 15
+    ''' <summary>
+    ''' 布雷位置
+    ''' </summary>
+    Dim MineState(9, 9) As Boolean
+    ''' <summary>
+    ''' 地雷状态(0：未知；1：标记；2：无雷；3：高亮；4：高亮_标记)
+    ''' </summary>
+    Dim CellState(9, 9) As Int16
+    ''' <summary>
+    ''' 周围地雷数
+    ''' </summary>
+    Dim CellAroundCount(9, 9) As Int16
+    ''' <summary>
+    ''' 点击次数
+    ''' </summary>
+    Dim ClickTimes As Integer = 0
 #End Region
 
 #Region "窗体"

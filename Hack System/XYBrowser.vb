@@ -6,15 +6,30 @@
 Public Class XYBrowser
 
 #Region "声明区"
-
-    '鼠标拖动
-    Private Const DefaultPixelFormat As Imaging.PixelFormat = Imaging.PixelFormat.Format32bppArgb
+    ''' <summary>
+    ''' 使窗口保持允许鼠标拖动改变大小的样式常量
+    ''' </summary>
     Private Const WS_THICKFRAME As Int32 = &H40000
-    Private Const BorderWidth As Integer = 14 'WS_THICKFRAME 样式会让窗体产生14像素的边框
-    Dim GoingToExit As Boolean '窗体正在退出
+    ''' <summary>
+    ''' WS_THICKFRAME 样式会让窗体产生14像素的边框
+    ''' </summary>
+    Private Const BorderWidth As Integer = 14
+    ''' <summary>
+    ''' 使用外部方法关闭窗体
+    ''' </summary>
+    Dim GoingToExit As Boolean
+    ''' <summary>
+    ''' 按钮坐标数组
+    ''' </summary>
     Dim BtnRectangle() As Rectangle = {New Rectangle(0, 0, 28, 28), New Rectangle(28, 0, 28, 28), New Rectangle(56, 0, 28, 28), New Rectangle(84, 0, 28, 28)} '动态按钮显示的图片区域
-    Dim NowButton As Label '当前响应的动态按钮
-    Dim FullScreenMode As Boolean '全屏模式开关
+    ''' <summary>
+    ''' 当前响应的动态按钮
+    ''' </summary>
+    Dim NowButton As Label
+    ''' <summary>
+    ''' 全屏模式开关
+    ''' </summary>
+    Dim FullScreenMode As Boolean
 #End Region
 
 #Region "窗体"

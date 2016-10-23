@@ -3,36 +3,105 @@
 Public Class TipsForm
 
 #Region "声明区"
-    '置前显示，之所以不用TopMost是因为TopMost会让窗体激活，在Timer里值守置前会影响脚本窗口获取焦点
+    ''' <summary>
+    ''' 置前显示（使用 TopMost 会让窗体激活，在Timer里值守置前会影响脚本窗口获取焦点）
+    ''' </summary>
     Private Declare Sub SetWindowPos Lib "User32" (ByVal hWnd As Integer, ByVal hWndInsertAfter As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal cx As Integer, ByVal cy As Integer, ByVal wFlags As Integer)
+    ''' <summary>
+    ''' 当前窗体状态（用于调度动态显示和隐藏）
+    ''' </summary>
     Dim MyState As ActiveFormState = ActiveFormState.Hidden
+    ''' <summary>
+    ''' 显示线程
+    ''' </summary>
     Dim ShowThread As Threading.Thread ' = New Threading.Thread(AddressOf ShowTips)
+    ''' <summary>
+    ''' 隐藏线程
+    ''' </summary>
     Dim HideThread As Threading.Thread ' = New Threading.Thread(AddressOf HideTips)
+    ''' <summary>
+    ''' 等待隐藏线程
+    ''' </summary>
     Dim WaitThread As Threading.Thread ' = New Threading.Thread(AddressOf WaitForHiding)
-
+    ''' <summary>
+    ''' 消息标题字体
+    ''' </summary>
     Dim TitleFont As Font = New Font("微软雅黑", 18.0!, System.Drawing.FontStyle.Bold)
+    ''' <summary>
+    ''' 消息标题位置
+    ''' </summary>
     Dim TitlePoint As PointF = New PointF(0, 18)
+    ''' <summary>
+    ''' 消息标题颜色
+    ''' </summary>
     Dim TitleColor As Color = Color.FromArgb(235, 100, 60)
+    ''' <summary>
+    ''' 消息标题笔刷
+    ''' </summary>
     Dim TitleBrush As Brush = New SolidBrush(TitleColor)
-
+    ''' <summary>
+    ''' 消息内容字体
+    ''' </summary>
     Dim BodyFont As Font = New Font("微软雅黑", 16.0!, System.Drawing.FontStyle.Regular)
+    ''' <summary>
+    ''' 消息内容位置
+    ''' </summary>
     Dim BodyPoint As PointF = New PointF(0, 48)
+    ''' <summary>
+    ''' 消息内容颜色
+    ''' </summary>
     Dim BodyColor As Color = Color.FromArgb(120, 140, 150)
+    ''' <summary>
+    ''' 消息内容笔刷
+    ''' </summary>
     Dim BodyBrush As Brush = New SolidBrush(BodyColor)
-
+    ''' <summary>
+    ''' 浮窗的图像
+    ''' </summary>
     Dim TipsBitmap As Bitmap
+    ''' <summary>
+    ''' 浮窗的消息区域图像
+    ''' </summary>
     Dim TipsInfoAera As Bitmap
+    ''' <summary>
+    ''' 消息区域的坐标和尺寸
+    ''' </summary>
     Dim InfoAeraRectangle As Rectangle = New Rectangle(95, 5, 203, 88)
+    ''' <summary>
+    ''' 图标背景的坐标和尺寸
+    ''' </summary>
     Dim IconBackgroundRectangle As Rectangle = New Rectangle(18, 14, 70, 70)
+    ''' <summary>
+    ''' 图标的坐标和尺寸
+    ''' </summary>
     Dim IconRectangle As Rectangle = New Rectangle(26, 22, 54, 54)
+    ''' <summary>
+    ''' 图标图像
+    ''' </summary>
     Dim TipsIcon As Bitmap
+    ''' <summary>
+    ''' 关闭按钮的区域
+    ''' </summary>
     Dim CloseRecangle As Rectangle = New Rectangle(311, 41, 25, 25)
+    ''' <summary>
+    ''' 关闭按钮的图像
+    ''' </summary>
     Dim CloseBitmap As Bitmap = My.Resources.TipsRes.TipsCloseButton_0
+    ''' <summary>
+    ''' 等待自动隐藏的超时（单位：毫秒）
+    ''' </summary>
     Dim TipsTimeOut As Integer
-
+    ''' <summary>
+    ''' 隐藏到的位置
+    ''' </summary>
     Dim HiddenLocation As Point
+    ''' <summary>
+    ''' 显示到的位置
+    ''' </summary>
     Dim ShownLocation As Point
-
+    ''' <summary>
+    ''' 浮窗图标类型枚举
+    ''' </summary>
     Public Enum TipsIconType
         Infomation = 0     '消息
         Question = 1        '询问
@@ -81,9 +150,9 @@ HiddenLabel:
         MyState = ActiveFormState.Showing
 
         TipsBitmap = My.Resources.TipsRes.TipsBackground
-        TipsInfoAera = My.Resources.TipsRes.TipsBackground.Clone(InfoAeraRectangle, Imaging.PixelFormat.Format32bppArgb)
+        TipsInfoAera = My.Resources.TipsRes.TipsBackground.Clone(InfoAeraRectangle, UnityModule.DefaultPixelFormat)
         TipsTimeOut = TimeOut
-        TipsIcon = My.Resources.TipsRes.TipsIcons.Clone(New Rectangle(TipIcon * IconRectangle.Width, 0, IconRectangle.Width, IconRectangle.Height), Imaging.PixelFormat.Format32bppArgb)
+        TipsIcon = My.Resources.TipsRes.TipsIcons.Clone(New Rectangle(TipIcon * IconRectangle.Width, 0, IconRectangle.Width, IconRectangle.Height), UnityModule.DefaultPixelFormat)
         Using TipsInfoGraphics As Graphics = Graphics.FromImage(TipsInfoAera)
             TipsInfoGraphics.DrawString(TipTitle, TitleFont, TitleBrush, TitlePoint)
             TipsInfoGraphics.DrawString(TipBody, BodyFont, BodyBrush, BodyPoint)
