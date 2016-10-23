@@ -700,6 +700,7 @@ Public Class SystemWorkStation
 
     Private Sub ConsoleButtonControl_Click(sender As Object, e As EventArgs) Handles ConsoleButtonControl.Click
         '显示控制台
+        UnityModule.SetForegroundWindow(CommandConsole.Handle)
         CommandConsole.ShowConsole()
     End Sub
 
