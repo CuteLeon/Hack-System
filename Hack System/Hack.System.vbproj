@@ -364,6 +364,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\CommandInputBox.png" />
     <None Include="Resources\Next_Normal.png" />
     <None Include="Resources\Next_Enter.png" />
     <None Include="Resources\Next_Down.png" />

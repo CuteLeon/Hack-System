@@ -69,9 +69,10 @@ Public Class CommandConsole
     Private Sub CommandConsole_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         '允许多线程访问UI
         System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
-
-        CommandButton.Parent = CommandInputBox
-        CommandButton.Location = New Point(CommandInputBox.Width - CommandButton.Width - 1, 1)
+        CommandInputBox.Parent = CommandInputBoxBGI
+        CommandButton.Parent = CommandInputBoxBGI
+        CommandInputBox.Location = New Point(15, 10)
+        CommandButton.Location = New Point(CommandInputBox.Right, CommandInputBox.Top)
         Me.Cursor = StartingUpUI.SystemCursor
         CommandPast.Cursor = Me.Cursor
         CommandButton.Cursor = Me.Cursor
@@ -100,6 +101,12 @@ Public Class CommandConsole
         e.Cancel = True
         SystemWorkStation.SetForegroundWindow(SystemWorkStation.Handle)
     End Sub
+
+    Private Sub CommandConsole_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        CommandTip.Top = CommandInputBoxBGI.Top - CommandTip.Height - 10
+        CommandPast.Height = CommandTip.Top - CommandPast.Top
+    End Sub
+
 #End Region
 
 #Region "控件"
@@ -331,7 +338,7 @@ Public Class CommandConsole
 
         CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex - 2)
         CommandPast.SelectionLength = CommandPast.Lines(LineIndex - 2).Length
-        CommandPast.SelectionColor = Color.SlateGray
+        CommandPast.SelectionColor = Color.CornflowerBlue
     End Sub
 
     ''' <summary>
@@ -514,12 +521,6 @@ Public Class CommandConsole
             Return ("Can not get the web page.")
         End Try
     End Function
-
-    Private Sub CommandConsole_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
-        CommandPast.Height = My.Computer.Screen.Bounds.Height - 120
-        CommandTip.Top = My.Computer.Screen.Bounds.Height - 100
-        CommandInputBox.Top = My.Computer.Screen.Bounds.Height - 40
-    End Sub
 
 #End Region
 

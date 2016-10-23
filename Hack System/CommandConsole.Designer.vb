@@ -27,18 +27,19 @@ Partial Class CommandConsole
         Me.CommandPast = New System.Windows.Forms.RichTextBox()
         Me.CommandButton = New System.Windows.Forms.Label()
         Me.CleanButton = New System.Windows.Forms.Label()
+        Me.CommandInputBoxBGI = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'CommandInputBox
         '
         Me.CommandInputBox.BackColor = System.Drawing.Color.White
-        Me.CommandInputBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.CommandInputBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.CommandInputBox.Font = New System.Drawing.Font("微软雅黑", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.CommandInputBox.ForeColor = System.Drawing.Color.Gray
         Me.CommandInputBox.ImeMode = System.Windows.Forms.ImeMode.[On]
-        Me.CommandInputBox.Location = New System.Drawing.Point(12, 321)
+        Me.CommandInputBox.Location = New System.Drawing.Point(15, 331)
         Me.CommandInputBox.Name = "CommandInputBox"
-        Me.CommandInputBox.Size = New System.Drawing.Size(336, 27)
+        Me.CommandInputBox.Size = New System.Drawing.Size(300, 20)
         Me.CommandInputBox.TabIndex = 2
         Me.CommandInputBox.Text = "Please input command..."
         '
@@ -48,7 +49,7 @@ Partial Class CommandConsole
         Me.CommandTip.ForeColor = System.Drawing.Color.Cyan
         Me.CommandTip.Image = Global.HackSystem.My.Resources.SystemAssets.CommandTipBGI
         Me.CommandTip.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CommandTip.Location = New System.Drawing.Point(12, 265)
+        Me.CommandTip.Location = New System.Drawing.Point(12, 280)
         Me.CommandTip.Name = "CommandTip"
         Me.CommandTip.Size = New System.Drawing.Size(336, 40)
         Me.CommandTip.TabIndex = 3
@@ -67,7 +68,7 @@ Partial Class CommandConsole
         Me.CommandPast.ReadOnly = True
         Me.CommandPast.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
         Me.CommandPast.ShortcutsEnabled = False
-        Me.CommandPast.Size = New System.Drawing.Size(325, 242)
+        Me.CommandPast.Size = New System.Drawing.Size(325, 265)
         Me.CommandPast.TabIndex = 5
         Me.CommandPast.Text = "Console："
         Me.CommandPast.WordWrap = False
@@ -76,9 +77,10 @@ Partial Class CommandConsole
         '
         Me.CommandButton.BackColor = System.Drawing.Color.White
         Me.CommandButton.Image = Global.HackSystem.My.Resources.SystemAssets.CommandButton_0
-        Me.CommandButton.Location = New System.Drawing.Point(322, 323)
+        Me.CommandButton.Location = New System.Drawing.Point(315, 330)
         Me.CommandButton.Name = "CommandButton"
-        Me.CommandButton.Size = New System.Drawing.Size(23, 23)
+        Me.CommandButton.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.CommandButton.Size = New System.Drawing.Size(30, 20)
         Me.CommandButton.TabIndex = 6
         Me.CommandButton.Tag = "CommandButton_"
         '
@@ -92,6 +94,16 @@ Partial Class CommandConsole
         Me.CleanButton.TabIndex = 7
         Me.CleanButton.Tag = "CleanCommandPast_"
         '
+        'CommandInputBoxBGI
+        '
+        Me.CommandInputBoxBGI.BackColor = System.Drawing.Color.Transparent
+        Me.CommandInputBoxBGI.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.CommandInputBoxBGI.Image = Global.HackSystem.My.Resources.SystemAssets.CommandInputBox
+        Me.CommandInputBoxBGI.Location = New System.Drawing.Point(0, 320)
+        Me.CommandInputBoxBGI.Name = "CommandInputBoxBGI"
+        Me.CommandInputBoxBGI.Size = New System.Drawing.Size(360, 40)
+        Me.CommandInputBoxBGI.TabIndex = 8
+        '
         'CommandConsole
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -103,9 +115,11 @@ Partial Class CommandConsole
         Me.Controls.Add(Me.CommandPast)
         Me.Controls.Add(Me.CommandTip)
         Me.Controls.Add(Me.CommandInputBox)
+        Me.Controls.Add(Me.CommandInputBoxBGI)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Location = New System.Drawing.Point(-360, 0)
         Me.Name = "CommandConsole"
-        Me.Opacity = 0.8R
+        Me.Opacity = 0.9R
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.Tag = ""
@@ -121,4 +135,5 @@ Partial Class CommandConsole
     Friend WithEvents CommandPast As RichTextBox
     Friend WithEvents CommandButton As Label
     Friend WithEvents CleanButton As Label
+    Friend WithEvents CommandInputBoxBGI As Label
 End Class
