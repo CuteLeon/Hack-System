@@ -1015,6 +1015,8 @@ Public Class SystemWorkStation
         For Each ScriptIcon As Label In ScriptIcons
             ScriptIcon.ForeColor = LabelForecolor
         Next
+        '设置控制台Label颜色
+        CommandConsole.CommandTip.ForeColor = LabelForecolor
         '设置右上角性能计数器文本颜色
         InfoTitle.ForeColor = LabelForecolor
         DiskReadCounterLabel.ForeColor = LabelForecolor

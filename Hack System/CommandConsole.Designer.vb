@@ -50,7 +50,7 @@ Partial Class CommandConsole
         Me.CommandTip.ImageAlign = System.Drawing.ContentAlignment.TopCenter
         Me.CommandTip.Location = New System.Drawing.Point(12, 265)
         Me.CommandTip.Name = "CommandTip"
-        Me.CommandTip.Size = New System.Drawing.Size(336, 45)
+        Me.CommandTip.Size = New System.Drawing.Size(336, 40)
         Me.CommandTip.TabIndex = 3
         Me.CommandTip.Text = "Hello,Welcome to Hack System !"
         Me.CommandTip.TextAlign = System.Drawing.ContentAlignment.BottomCenter
