@@ -28,6 +28,7 @@ Partial Class CommandConsole
         Me.CommandButton = New System.Windows.Forms.Label()
         Me.CleanButton = New System.Windows.Forms.Label()
         Me.CommandInputBoxBGI = New System.Windows.Forms.Label()
+        Me.ConsoleTitleLabel = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'CommandInputBox
@@ -49,7 +50,7 @@ Partial Class CommandConsole
         Me.CommandTip.ForeColor = System.Drawing.Color.Cyan
         Me.CommandTip.Image = Global.HackSystem.My.Resources.SystemAssets.CommandTipBGI
         Me.CommandTip.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CommandTip.Location = New System.Drawing.Point(12, 280)
+        Me.CommandTip.Location = New System.Drawing.Point(12, 268)
         Me.CommandTip.Name = "CommandTip"
         Me.CommandTip.Size = New System.Drawing.Size(336, 40)
         Me.CommandTip.TabIndex = 3
@@ -63,14 +64,14 @@ Partial Class CommandConsole
         Me.CommandPast.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.CommandPast.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.CommandPast.ForeColor = System.Drawing.Color.DarkOrange
-        Me.CommandPast.Location = New System.Drawing.Point(20, 12)
+        Me.CommandPast.Location = New System.Drawing.Point(12, 35)
         Me.CommandPast.Name = "CommandPast"
         Me.CommandPast.ReadOnly = True
         Me.CommandPast.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
         Me.CommandPast.ShortcutsEnabled = False
-        Me.CommandPast.Size = New System.Drawing.Size(325, 265)
+        Me.CommandPast.Size = New System.Drawing.Size(336, 230)
         Me.CommandPast.TabIndex = 5
-        Me.CommandPast.Text = "Console："
+        Me.CommandPast.Text = ""
         Me.CommandPast.WordWrap = False
         '
         'CommandButton
@@ -80,7 +81,7 @@ Partial Class CommandConsole
         Me.CommandButton.Location = New System.Drawing.Point(315, 330)
         Me.CommandButton.Name = "CommandButton"
         Me.CommandButton.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.CommandButton.Size = New System.Drawing.Size(30, 20)
+        Me.CommandButton.Size = New System.Drawing.Size(23, 20)
         Me.CommandButton.TabIndex = 6
         Me.CommandButton.Tag = "CommandButton_"
         '
@@ -88,9 +89,9 @@ Partial Class CommandConsole
         '
         Me.CleanButton.BackColor = System.Drawing.Color.Transparent
         Me.CleanButton.Image = Global.HackSystem.My.Resources.SystemAssets.CleanCommandPast_0
-        Me.CleanButton.Location = New System.Drawing.Point(300, 18)
+        Me.CleanButton.Location = New System.Drawing.Point(323, 7)
         Me.CleanButton.Name = "CleanButton"
-        Me.CleanButton.Size = New System.Drawing.Size(45, 23)
+        Me.CleanButton.Size = New System.Drawing.Size(25, 25)
         Me.CleanButton.TabIndex = 7
         Me.CleanButton.Tag = "CleanCommandPast_"
         '
@@ -104,12 +105,24 @@ Partial Class CommandConsole
         Me.CommandInputBoxBGI.Size = New System.Drawing.Size(360, 40)
         Me.CommandInputBoxBGI.TabIndex = 8
         '
+        'ConsoleTitleLabel
+        '
+        Me.ConsoleTitleLabel.AutoSize = True
+        Me.ConsoleTitleLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.ConsoleTitleLabel.ForeColor = System.Drawing.Color.Cyan
+        Me.ConsoleTitleLabel.Location = New System.Drawing.Point(12, 13)
+        Me.ConsoleTitleLabel.Name = "ConsoleTitleLabel"
+        Me.ConsoleTitleLabel.Size = New System.Drawing.Size(78, 19)
+        Me.ConsoleTitleLabel.TabIndex = 9
+        Me.ConsoleTitleLabel.Text = "Console："
+        '
         'CommandConsole
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DimGray
         Me.ClientSize = New System.Drawing.Size(360, 360)
+        Me.Controls.Add(Me.ConsoleTitleLabel)
         Me.Controls.Add(Me.CleanButton)
         Me.Controls.Add(Me.CommandButton)
         Me.Controls.Add(Me.CommandPast)
@@ -136,4 +149,5 @@ Partial Class CommandConsole
     Friend WithEvents CommandButton As Label
     Friend WithEvents CleanButton As Label
     Friend WithEvents CommandInputBoxBGI As Label
+    Friend WithEvents ConsoleTitleLabel As Label
 End Class

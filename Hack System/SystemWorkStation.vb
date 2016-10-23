@@ -1017,6 +1017,7 @@ Public Class SystemWorkStation
         Next
         '设置控制台Label颜色
         CommandConsole.CommandTip.ForeColor = LabelForecolor
+        CommandConsole.ConsoleTitleLabel.ForeColor = LabelForecolor
         '设置右上角性能计数器文本颜色
         InfoTitle.ForeColor = LabelForecolor
         DiskReadCounterLabel.ForeColor = LabelForecolor

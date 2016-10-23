@@ -112,7 +112,7 @@ Public Class CommandConsole
 #Region "控件"
     Private Sub CleanButton_Click(sender As Object, e As EventArgs) Handles CleanButton.Click
         '清空控制台
-        CommandPast.Text = "Console："
+        CommandPast.Clear()
     End Sub
 
     Private Sub CommandPast_TextChanged(sender As Object, e As EventArgs) Handles CommandPast.TextChanged
