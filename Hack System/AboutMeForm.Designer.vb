@@ -26,6 +26,7 @@ Partial Class AboutMeForm
         Me.AboutMeControl = New System.Windows.Forms.PictureBox()
         Me.OKButtonControl = New System.Windows.Forms.Label()
         Me.WebLink = New System.Windows.Forms.LinkLabel()
+        Me.CheckUpdateLabel = New System.Windows.Forms.Label()
         CType(Me.AboutMeWallpaperControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.AboutMeControl, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -81,12 +82,25 @@ Partial Class AboutMeForm
         Me.WebLink.Text = "访问：http://www.HackSystem.icoc.in/"
         Me.WebLink.UseCompatibleTextRendering = True
         '
+        'CheckUpdateLabel
+        '
+        Me.CheckUpdateLabel.AutoSize = True
+        Me.CheckUpdateLabel.BackColor = System.Drawing.Color.Transparent
+        Me.CheckUpdateLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.CheckUpdateLabel.ForeColor = System.Drawing.Color.White
+        Me.CheckUpdateLabel.Location = New System.Drawing.Point(328, 197)
+        Me.CheckUpdateLabel.Name = "CheckUpdateLabel"
+        Me.CheckUpdateLabel.Size = New System.Drawing.Size(65, 20)
+        Me.CheckUpdateLabel.TabIndex = 14
+        Me.CheckUpdateLabel.Text = "检查更新"
+        '
         'AboutMeForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(520, 250)
+        Me.Controls.Add(Me.CheckUpdateLabel)
         Me.Controls.Add(Me.WebLink)
         Me.Controls.Add(Me.OKButtonControl)
         Me.Controls.Add(Me.AboutMeControl)
@@ -108,4 +122,5 @@ Partial Class AboutMeForm
     Friend WithEvents AboutMeControl As PictureBox
     Friend WithEvents OKButtonControl As Label
     Friend WithEvents WebLink As LinkLabel
+    Friend WithEvents CheckUpdateLabel As Label
 End Class
