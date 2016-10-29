@@ -38,7 +38,7 @@ Partial Class AboutMeForm
         Me.AboutMeWallpaperControl.Image = Global.HackSystem.My.Resources.SystemAssets.SystemMsgBGI
         Me.AboutMeWallpaperControl.Location = New System.Drawing.Point(0, 0)
         Me.AboutMeWallpaperControl.Name = "AboutMeWallpaperControl"
-        Me.AboutMeWallpaperControl.Size = New System.Drawing.Size(520, 250)
+        Me.AboutMeWallpaperControl.Size = New System.Drawing.Size(500, 300)
         Me.AboutMeWallpaperControl.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.AboutMeWallpaperControl.TabIndex = 10
         Me.AboutMeWallpaperControl.TabStop = False
@@ -50,7 +50,7 @@ Partial Class AboutMeForm
         Me.AboutMeControl.Image = Global.HackSystem.My.Resources.SystemAssets.AboutMe
         Me.AboutMeControl.Location = New System.Drawing.Point(0, 0)
         Me.AboutMeControl.Name = "AboutMeControl"
-        Me.AboutMeControl.Size = New System.Drawing.Size(520, 250)
+        Me.AboutMeControl.Size = New System.Drawing.Size(500, 300)
         Me.AboutMeControl.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.AboutMeControl.TabIndex = 11
         Me.AboutMeControl.TabStop = False
@@ -59,11 +59,12 @@ Partial Class AboutMeForm
         '
         Me.OKButtonControl.BackColor = System.Drawing.Color.Transparent
         Me.OKButtonControl.Font = New System.Drawing.Font("新宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.OKButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.OKButton
-        Me.OKButtonControl.Location = New System.Drawing.Point(177, 177)
+        Me.OKButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.OKButton_0
+        Me.OKButtonControl.Location = New System.Drawing.Point(180, 235)
         Me.OKButtonControl.Name = "OKButtonControl"
         Me.OKButtonControl.Size = New System.Drawing.Size(140, 49)
         Me.OKButtonControl.TabIndex = 12
+        Me.OKButtonControl.Tag = "OKButton"
         Me.OKButtonControl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'WebLink
@@ -74,7 +75,7 @@ Partial Class AboutMeForm
         Me.WebLink.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.WebLink.LinkArea = New System.Windows.Forms.LinkArea(3, 33)
         Me.WebLink.LinkColor = System.Drawing.Color.Red
-        Me.WebLink.Location = New System.Drawing.Point(113, 146)
+        Me.WebLink.Location = New System.Drawing.Point(113, 150)
         Me.WebLink.Name = "WebLink"
         Me.WebLink.Size = New System.Drawing.Size(268, 24)
         Me.WebLink.TabIndex = 13
@@ -84,22 +85,24 @@ Partial Class AboutMeForm
         '
         'CheckUpdateLabel
         '
-        Me.CheckUpdateLabel.AutoSize = True
         Me.CheckUpdateLabel.BackColor = System.Drawing.Color.Transparent
         Me.CheckUpdateLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.CheckUpdateLabel.ForeColor = System.Drawing.Color.White
-        Me.CheckUpdateLabel.Location = New System.Drawing.Point(328, 197)
+        Me.CheckUpdateLabel.Image = Global.HackSystem.My.Resources.SystemAssets.CheckUpdate_0
+        Me.CheckUpdateLabel.Location = New System.Drawing.Point(197, 191)
         Me.CheckUpdateLabel.Name = "CheckUpdateLabel"
-        Me.CheckUpdateLabel.Size = New System.Drawing.Size(65, 20)
+        Me.CheckUpdateLabel.Size = New System.Drawing.Size(106, 40)
         Me.CheckUpdateLabel.TabIndex = 14
+        Me.CheckUpdateLabel.Tag = "CheckUpdate"
         Me.CheckUpdateLabel.Text = "检查更新"
+        Me.CheckUpdateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'AboutMeForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(520, 250)
+        Me.ClientSize = New System.Drawing.Size(500, 300)
         Me.Controls.Add(Me.CheckUpdateLabel)
         Me.Controls.Add(Me.WebLink)
         Me.Controls.Add(Me.OKButtonControl)

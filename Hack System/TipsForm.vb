@@ -214,7 +214,7 @@ HiddenLabel:
 
     Private Sub ShowTips()
         HiddenLocation = Nothing : ShownLocation = Nothing
-        HiddenLocation = New Point(My.Computer.Screen.Bounds.Width, 0.9 * (My.Computer.Screen.Bounds.Height - Me.Height))
+        HiddenLocation = New Point(My.Computer.Screen.Bounds.Width, 0.85 * (My.Computer.Screen.Bounds.Height - Me.Height))
         ShownLocation = New Point(HiddenLocation.X - Me.Width, HiddenLocation.Y)
 
         Me.Location = HiddenLocation

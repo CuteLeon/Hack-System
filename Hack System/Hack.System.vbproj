@@ -365,6 +365,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\CheckUpdate_2.png" />
+    <None Include="Resources\CheckUpdate_1.png" />
+    <None Include="Resources\CheckUpdate_0.png" />
+    <None Include="Resources\OKButton_0.png" />
+    <None Include="Resources\OKButton_1.png" />
+    <None Include="Resources\OKButton_2.png" />
     <None Include="Resources\CommandInputBox.png" />
     <None Include="Resources\Next_Normal.png" />
     <None Include="Resources\Next_Enter.png" />
@@ -561,7 +567,6 @@
     <None Include="Resources\ShutdownBGI.png" />
     <None Include="Resources\CommandTipBGI.png" />
     <None Include="Resources\ShowConsole.wav" />
-    <None Include="Resources\OKButton.png" />
     <None Include="Resources\AboutMe.png" />
     <None Include="Resources\MouseCursor.png" />
     <None Include="Resources\SettingButton_2.png" />
