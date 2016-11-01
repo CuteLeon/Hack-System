@@ -3,9 +3,10 @@
 #### An interesting and cool simulation operating system.
 #### 这是一个有趣而炫酷的模拟操作系统。
 
-> ### __[<u>下载地址<u/>](https://github.com/CuteLeon/FileRepository/tree/master/HackSystem-Execute)__
+> ### __[<u>Hack-System 下载地址<u/>](https://raw.githubusercontent.com/CuteLeon/FileRepository/master/HackSystem-Execute/Hack%20System.exe)__
 
-##### 内含两个版本，其中 [HackSystem-For-XP] 是 [.Net-4.0] 编译版本，支持 WinXp 系统
+#####  [HackSystem] 为 [.Net-4.0] 编译版本，同时支持 Win-XP\Vista\7\8\10 系统
+#####  需要安装 [<u>.Net Framework 4.0(点击下载)<u/>](https://raw.githubusercontent.com/CuteLeon/FileRepository/master/.Net%20Framework%20%204.0.exe)
 
 > __附上一些截图：__
 

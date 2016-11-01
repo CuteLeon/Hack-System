@@ -117,6 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Txt_MailBody.Text" xml:space="preserve">
+    <value>&lt;h1&gt;  Welcome to Hack System.&lt;/h1&gt;
+&lt;p&gt;An interesting and cool simulation operating system.&lt;/p&gt;
+&lt;p&gt;一款有趣而炫酷的模拟操作系统。&lt;/p&gt;
+&lt;hr/&gt;
+官方网站 &lt;a href="http://www.hacksystem.icoc.in/" target="_blank"&gt;http://www.hacksystem.icoc.in/&lt;/a&gt;
+&lt;br/&gt;
+手机版网站 &lt;a href="http://m.hacksystem.icoc.in/index.jsp" target="_blank"&gt;http://m.hacksystem.icoc.in/index.jsp&lt;/a&gt;
+&lt;br/&gt;
+GitHub &lt;a href="https://github.com/CuteLeon/Hack-System/" target="_blank"&gt;https://github.com/CuteLeon/Hack-System/&lt;/a&gt;
+&lt;br/&gt;
+GHPages &lt;a href="http://cuteleon.github.io/Hack-System/" target="_blank"&gt;http://cuteleon.github.io/Hack-System/&lt;/a&gt;</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

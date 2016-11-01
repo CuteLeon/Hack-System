@@ -100,9 +100,7 @@ Partial Class XYMail
         Me.Txt_MailBody.Name = "Txt_MailBody"
         Me.Txt_MailBody.Size = New System.Drawing.Size(270, 123)
         Me.Txt_MailBody.TabIndex = 4
-        Me.Txt_MailBody.Text = "<h1>  Welcome to Hack System.</h1>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<a href=""http://www.hacksystem.icoc.in/"" targ" &
-    "et=""_blank"">访问PC端官方网站</a>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<a href=""http://m.hacksystem.icoc.in/index.jsp" &
-    """ target=""_blank"">访问手机端官方网站</a>"
+        Me.Txt_MailBody.Text = resources.GetString("Txt_MailBody.Text")
         '
         'Btn_Send
         '

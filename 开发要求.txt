@@ -1,6 +1,3 @@
-1>每次在 FileRepository 仓库更新了可执行程序之后需要在 /HackSystem-Execute/Version.txt 里写入最新的文件版本，以提供新版本检测（文本编码：UTF-8）
-2>编译为 {.Net 4.5.2} 和 {.Net 4.0} 程序时，需要分别在 Application.ProductName 设置 GitHub 下载链接的文件名，以从 GitHub 提供更新
-    提示：(1)产品名不需要包含.exe扩展名;(2)产品名单词之间含有空格，HackSystem更新函数会自动替换空格为"%20"
-    .Net 4.5.2 => Hack System
-    .Net 4.0   => Hack System For XP
+﻿1>项目编译可执行程序上传在 FileRepository/HackSystem-Execute 里，文件名为“Hack System.exe”
+2>每次在 FileRepository 仓库更新了可执行程序之后需要在 /HackSystem-Execute/Version.txt 里写入最新的文件版本，以提供新版本检测（文本编码：UTF-8）
 3>公共的 API、变量、常量、结构体、枚举体、函数等需要放在 UnityModule 里

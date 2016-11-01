@@ -81,40 +81,40 @@
     ''' 检查更新（需要在 FileRepository/HackSystem-Execute/Version.txt 里记录最新的版本号）
     ''' </summary>
     Private Sub CheckUpdate()
-        Dim DownloadResult As Integer 'URLDownloadToFile 返回的下载结果
-        Try
-            If Not (My.Computer.Network.Ping("raw.githubusercontent.com")) Then Exit Sub
-            Dim VersionFileAdress As String = "https://raw.githubusercontent.com/CuteLeon/FileRepository/master/HackSystem-Execute/Version.txt"
-            Dim WebStream As IO.Stream = Net.WebRequest.Create(VersionFileAdress).GetResponse().GetResponseStream()
-            Dim WebStreamReader As IO.StreamReader = New IO.StreamReader(WebStream, System.Text.Encoding.UTF8)
-            Dim NewestVersion As String = WebStreamReader.ReadToEnd
-            WebStreamReader.Dispose()
-            If Application.ProductVersion = NewestVersion Then
-                TipsForm.PopupTips(SystemWorkStation, "自动更新：", TipsForm.TipsIconType.Infomation, "当前已经是最新版本！")
-            Else
-                TipsForm.PopupTips(SystemWorkStation, "自动更新：", TipsForm.TipsIconType.Question, "发现更新版本： " & NewestVersion)
-                If MsgBox("是否下载更新版本的 HackSystem [" & NewestVersion & "]？", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-                    Dim SaveDialog As SaveFileDialog = New SaveFileDialog With {
-                        .AddExtension = "exe",
-                        .CheckPathExists = True,
-                        .InitialDirectory = Application.StartupPath,
-                        .FileName = "HackSystem_New",
-                        .Title = "请选择新版本保存位置：",
-                        .ValidateNames = True
-                        }
-                    If SaveDialog.ShowDialog = DialogResult.OK Then
-                        DownloadResult = URLDownloadToFile(0, "https://raw.githubusercontent.com/CuteLeon/FileRepository/master/HackSystem-Execute/" & Application.ProductName.Replace(" ", "%20") & ".exe", SaveDialog.FileName, 0, 0)
-                        If DownloadResult = 0 Then
-                            TipsForm.PopupTips(SystemWorkStation, "更新成功！", TipsForm.TipsIconType.Question, "新版本更新成功！" & NewestVersion)
-                        Else
-                            TipsForm.PopupTips(SystemWorkStation, "更新失败！", TipsForm.TipsIconType.Question, "请更换保存路径或去GitHub下载！" & NewestVersion)
-                        End If
+        'Try
+        If Not (My.Computer.Network.Ping("raw.githubusercontent.com")) Then Exit Sub
+        Dim VersionFileAdress As String = "https://raw.githubusercontent.com/CuteLeon/FileRepository/master/HackSystem-Execute/Version.txt"
+        Dim WebStream As IO.Stream = Net.WebRequest.Create(VersionFileAdress).GetResponse().GetResponseStream()
+        Dim WebStreamReader As IO.StreamReader = New IO.StreamReader(WebStream, System.Text.Encoding.UTF8)
+        Dim NewestVersion As String = WebStreamReader.ReadToEnd
+        WebStreamReader.Dispose()
+        If Application.ProductVersion = NewestVersion Then
+            TipsForm.PopupTips(SystemWorkStation, "无需更新：", TipsForm.TipsIconType.Infomation, "当前已经是最新版本！")
+        Else
+            'TODO：在这里制作一个下载更新提示窗口，使用多线程下载，防止程序无响应，下载界面显示下载进度条
+            If MsgBox("是否下载更新版本的 HackSystem [" & NewestVersion & "]？", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                Dim SaveDialog As SaveFileDialog = New SaveFileDialog With {
+                    .AddExtension = True,
+                    .CheckPathExists = True,
+                    .InitialDirectory = Application.StartupPath,
+                    .FileName = "HackSystem_New",
+                    .Title = "请选择新版本保存位置：",
+                    .ValidateNames = True
+                    }
+                If SaveDialog.ShowDialog = DialogResult.OK Then
+                    Dim DownloadResult As Integer 'URLDownloadToFile 返回的下载结果
+                    DownloadResult = URLDownloadToFile(0, "https://raw.githubusercontent.com/CuteLeon/FileRepository/master/HackSystem-Execute/Hack%20System.exe", SaveDialog.FileName, 0, 0)
+                    If DownloadResult = 0 Then
+                        TipsForm.PopupTips(SystemWorkStation, "更新成功！", TipsForm.TipsIconType.Question, "新版本更新成功！" & NewestVersion)
+                    Else
+                        TipsForm.PopupTips(SystemWorkStation, "更新失败！", TipsForm.TipsIconType.Question, "请更换保存路径或去GitHub下载！" & NewestVersion)
                     End If
                 End If
             End If
-        Catch ex As Exception
-            TipsForm.PopupTips(SystemWorkStation, "更新错误：", TipsForm.TipsIconType.Critical, ex.Message)
-        End Try
+        End If
+        'Catch ex As Exception
+        '    TipsForm.PopupTips(SystemWorkStation, "更新错误：", TipsForm.TipsIconType.Critical, ex.Message)
+        'End Try
     End Sub
 #End Region
 
