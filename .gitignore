@@ -2,6 +2,7 @@
 # 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
 ################################################################################
 
-/Hack System/bin/Debug
-/Hack System/obj/Debug
 /.vs/Hack.System/v14
+/Hack System/obj/Debug/TempPE
+/Hack System/obj/Debug
+/Hack System/bin/Debug
