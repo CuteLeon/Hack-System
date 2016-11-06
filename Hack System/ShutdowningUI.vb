@@ -49,7 +49,6 @@ Public Class ShutdowningUI
         '初始化界面
         Me.Location = New Point(0, 0)
         Me.Size = My.Computer.Screen.Bounds.Size
-        Me.Cursor = UnityModule.SystemCursor
         Dim HackSystemLogo As Bitmap = My.Resources.SystemAssets.HackSystemLogo
         Using ShutdownGraphics As Graphics = Graphics.FromImage(ShutdownBGI)
             ShutdownGraphics.DrawImage(HackSystemLogo, New Rectangle((My.Computer.Screen.Bounds.Width - HackSystemLogo.Width) \ 2, My.Computer.Screen.Bounds.Height \ 4, HackSystemLogo.Width, HackSystemLogo.Height))
@@ -76,6 +75,7 @@ Public Class ShutdowningUI
         If CommandConsole.Visible Then CommandConsole.Hide()
         '直接关闭提示浮窗，因为CancelTips函数要等待线程结束，退出程序时会出错
         TipsForm.CancelTip()
+        If DownloaderForm.Visible Then DownloaderForm.Hide()
         If XYMail.Visible Then XYMail.Hide()
         If AboutMeForm.Visible Then AboutMeForm.Hide()
         If MineSweeperForm.Visible Then MineSweeperForm.Hide()

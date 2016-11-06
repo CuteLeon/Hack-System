@@ -9,20 +9,47 @@ Public Class StartingUpUI
         Me.Size = My.Computer.Screen.Bounds.Size
         '设置窗体图标
         Me.Icon = My.Resources.SystemAssets.HackSystem
-        LoginAndLockUI.Icon = My.Resources.SystemAssets.HackSystem
-        SystemWorkStation.Icon = My.Resources.SystemAssets.HackSystem
-        WindowsTemplates.Icon = My.Resources.SystemAssets.HackSystem
-        ShutdowningUI.Icon = My.Resources.SystemAssets.HackSystem
+        Me.Cursor = SystemCursor
         '初始化界面
         StartingUpControl.Location = New Point((My.Computer.Screen.Bounds.Width - StartingUpControl.Width) / 2, (My.Computer.Screen.Bounds.Height - StartingUpControl.Height) * 0.85)
         StartUpLogo.Location = New Point((My.Computer.Screen.Bounds.Width - My.Resources.SystemAssets.HackSystemLogo.Width) \ 2, My.Computer.Screen.Bounds.Height \ 4)
-
-        Me.Cursor = SystemCursor
 
         StartingUpLable.Left = (My.Computer.Screen.Bounds.Width - StartingUpLable.Width) / 2
         StartingUpLable.Top = StartingUpControl.Bottom + 10
         '播放开机音效
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("StartedUp"), AudioPlayMode.Background)
+    End Sub
+
+    Private Sub StartingUpUI_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        LoginAndLockUI.Icon = My.Resources.SystemAssets.HackSystem
+        SystemWorkStation.Icon = My.Resources.SystemAssets.HackSystem
+        WindowsTemplates.Icon = My.Resources.SystemAssets.HackSystem
+        ShutdowningUI.Icon = My.Resources.SystemAssets.HackSystem
+        DownloaderForm.Icon = My.Resources.SystemAssets.HackSystem
+
+        DownloaderForm.Cursor = SystemCursor
+        AboutMeForm.Cursor = SystemCursor
+        CommandConsole.Cursor = SystemCursor
+        CommandConsole.CommandPast.Cursor = SystemCursor
+        CommandConsole.CommandButton.Cursor = SystemCursor
+        LockSplitForm.Cursor = SystemCursor
+        XYMail.Cursor = SystemCursor
+        LoginAndLockUI.Cursor = SystemCursor
+        MineSweeperForm.Cursor = SystemCursor
+        Game1010Form.Cursor = SystemCursor
+        Game2048Form.Cursor = SystemCursor
+        ShutdownTips.Cursor = SystemCursor
+        ShutdowningUI.Cursor = SystemCursor
+        SystemWorkStation.Cursor = SystemCursor
+        SystemWorkStation.InfoTitle.Cursor = SystemCursor
+        SystemWorkStation.CPUCounterBar.Cursor = SystemCursor
+        SystemWorkStation.MemoryUsageRateBar.Cursor = SystemCursor
+        SystemWorkStation.DiskReadCounterLabel.Cursor = SystemCursor
+        SystemWorkStation.DiskWriteCounterLabel.Cursor = SystemCursor
+        SystemWorkStation.UploadSpeedCountLabel.Cursor = SystemCursor
+        SystemWorkStation.DownloadSpeedCountLabel.Cursor = SystemCursor
+        SystemWorkStation.DateTimeLabel.Cursor = SystemCursor
+        TipsForm.Cursor = SystemCursor
     End Sub
 
     Private Sub StartingUpUI_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
@@ -65,6 +92,7 @@ Public Class StartingUpUI
             UnityModule.SetForegroundWindow(LoginAndLockUI.Handle)
         End If
     End Sub
+
 #End Region
 
 End Class

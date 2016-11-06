@@ -100,6 +100,12 @@
     <Compile Include="CommandConsole.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="DownloaderForm.Designer.vb">
+      <DependentUpon>DownloaderForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DownloaderForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DrawImageModule.vb" />
     <Compile Include="GameResource.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -232,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CommandConsole.resx">
       <DependentUpon>CommandConsole.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DownloaderForm.resx">
+      <DependentUpon>DownloaderForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameResource.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
@@ -366,6 +375,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HackSystem.ico" />
+    <None Include="Resources\DownloadButton_2.png" />
+    <None Include="Resources\DownloadButton_1.png" />
+    <None Include="Resources\DownloadButton_0.png" />
+    <None Include="Resources\DownloadProgressPanel.png" />
+    <None Include="Resources\DownloadProgress.png" />
+    <None Include="Resources\DownloaderClose_2.png" />
+    <None Include="Resources\DownloaderClose_1.png" />
+    <None Include="Resources\DownloaderClose_0.png" />
+    <None Include="Resources\DownloaderBGI.png" />
     <None Include="Resources\CheckUpdate_2.png" />
     <None Include="Resources\CheckUpdate_1.png" />
     <None Include="Resources\CheckUpdate_0.png" />

@@ -90,8 +90,6 @@ Public Class LoginAndLockUI
         '不选中密码
         PasswordTextBox.SelectionStart = PasswordTextBox.TextLength
         PasswordTextBox.SelectionLength = 0
-
-        Me.Cursor = UnityModule.SystemCursor
     End Sub
 
     Private Sub LoginAndLockUI_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing

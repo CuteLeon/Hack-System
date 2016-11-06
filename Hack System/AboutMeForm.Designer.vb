@@ -89,9 +89,9 @@ Partial Class AboutMeForm
         Me.CheckUpdateLabel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.CheckUpdateLabel.ForeColor = System.Drawing.Color.White
         Me.CheckUpdateLabel.Image = Global.HackSystem.My.Resources.SystemAssets.CheckUpdate_0
-        Me.CheckUpdateLabel.Location = New System.Drawing.Point(197, 191)
+        Me.CheckUpdateLabel.Location = New System.Drawing.Point(197, 187)
         Me.CheckUpdateLabel.Name = "CheckUpdateLabel"
-        Me.CheckUpdateLabel.Size = New System.Drawing.Size(106, 40)
+        Me.CheckUpdateLabel.Size = New System.Drawing.Size(106, 44)
         Me.CheckUpdateLabel.TabIndex = 14
         Me.CheckUpdateLabel.Tag = "CheckUpdate"
         Me.CheckUpdateLabel.Text = "检查更新"

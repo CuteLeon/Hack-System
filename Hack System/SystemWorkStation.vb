@@ -176,16 +176,6 @@ Public Class SystemWorkStation
         ConsoleButtonControl.Location = New Point(XYMailButtonControl.Left - IntervalDistance - ConsoleButtonControl.Width, XYMailButtonControl.Top)
         SpeechButtonControl.Location = New Point(ConsoleButtonControl.Left - IntervalDistance - SpeechButtonControl.Width, ConsoleButtonControl.Top)
         VoiceLevelBar.Location = New Point(5, SpeechButtonControl.Height - 12)
-        '设置桌面控件鼠标样式
-        Me.Cursor = UnityModule.SystemCursor
-        InfoTitle.Cursor = UnityModule.SystemCursor
-        CPUCounterBar.Cursor = UnityModule.SystemCursor
-        MemoryUsageRateBar.Cursor = UnityModule.SystemCursor
-        DiskReadCounterLabel.Cursor = UnityModule.SystemCursor
-        DiskWriteCounterLabel.Cursor = UnityModule.SystemCursor
-        UploadSpeedCountLabel.Cursor = UnityModule.SystemCursor
-        DownloadSpeedCountLabel.Cursor = UnityModule.SystemCursor
-        DateTimeLabel.Cursor = UnityModule.SystemCursor
         '把IP和地址的鼠标设置为"手"的形状，提示用户可以点击
         IPLabel.Cursor = Cursors.Hand
         AddressLabel.Cursor = Cursors.Hand

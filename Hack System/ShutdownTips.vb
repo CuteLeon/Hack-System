@@ -19,7 +19,6 @@ Public Class ShutdownTips
         ShutdownAreaControl.Parent = ShutdownWallpaperControl
         ShutdownButtonControl.Parent = ShutdownAreaControl
         CancelButtonControl.Parent = ShutdownAreaControl
-        Me.Cursor = UnityModule.SystemCursor
         '圆角窗体
         Dim RoundRectangle As Integer = CreateRoundRectRgn(2, 2, Me.Width + 1, Me.Height + 1, Me.Height, Me.Height)
         SetWindowRgn(Me.Handle, RoundRectangle, True)

@@ -90,9 +90,6 @@ Public Class CommandConsole
         CommandButton.Parent = CommandInputBoxBGI
         CommandInputBox.Location = New Point(15, 10)
         CommandButton.Location = New Point(CommandInputBox.Right, CommandInputBox.Top)
-        Me.Cursor = UnityModule.SystemCursor
-        CommandPast.Cursor = Me.Cursor
-        CommandButton.Cursor = Me.Cursor
     End Sub
 
     Private Sub CommandConsole_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MyBase.KeyPress, CommandInputBox.KeyPress
@@ -227,7 +224,7 @@ Public Class CommandConsole
                     ThreadSpeak.Start(CommandParameter)
                     '显示消息并设置颜色
                     CommandTip.Text = "Speak"
-                    CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Speak： " & IIf(CommandParameter.Length > 15, Strings.Mid(CommandParameter, 1, 15) & "...", CommandParameter))
+                    CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Speak： " & IIf(CommandParameter.Length > 15, Strings.Mid(CommandParameter, 1, 15) & "...", CommandParameter) & vbCrLf)
                     SetLastCommandColor(True)
                     '选中参数部分，方便修改
                     If CommandInputBox.TextLength > 6 Then
@@ -240,7 +237,7 @@ Public Class CommandConsole
                 SystemWorkStation.ShowShutdownWindow()
                 '显示消息并设置颜色
                 CommandTip.Text = "Plan to Shudtown"
-                CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Plan to shutdown")
+                CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Plan to shutdown" & vbCrLf)
                 SetLastCommandColor(True)
             Case "shell" '运行脚本
                 '移除参数空格
@@ -254,7 +251,7 @@ Public Class CommandConsole
                         CommandInputBox.SelectionLength = CommandInputBox.TextLength - 6
                         '显示消息并设置颜色
                         CommandTip.Text = "Pleasue input a number between [0 ~ " & UnityModule.ScriptUpperBound & "]"
-                        CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load.")
+                        CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load." & vbCrLf & vbCrLf)
                         SetLastCommandColor(False)
                     Else
                         '参数转换为数字
@@ -263,7 +260,7 @@ Public Class CommandConsole
                         If 0 <= ScriptIndex And ScriptIndex <= UnityModule.ScriptUpperBound Then
                             '显示消息并设置颜色
                             CommandTip.Text = "Script " & CommandParameter & " is loaded！"
-                            CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Load script： " & CommandParameter)
+                            CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Load script： " & CommandParameter & vbCrLf)
                             SetLastCommandColor(True)
                             '加载脚本
                             SystemWorkStation.LoadScript(ScriptIndex)
@@ -273,7 +270,7 @@ Public Class CommandConsole
                             CommandInputBox.SelectionLength = CommandInputBox.TextLength - 6
                             '显示消息并设置颜色
                             CommandTip.Text = "Pleasue input a number between [0 ~ " & UnityModule.ScriptUpperBound & "]"
-                            CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load.")
+                            CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load." & vbCrLf)
                             SetLastCommandColor(False)
                         End If
                     End If
@@ -284,7 +281,7 @@ Public Class CommandConsole
 
                     '显示消息并设置颜色
                     CommandTip.Text = "Pleasue input a number between [0 ~ " & UnityModule.ScriptUpperBound & "]"
-                    CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load.")
+                    CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to load." & vbCrLf)
                     SetLastCommandColor(False)
                 End If
             Case "mine" '运行扫雷游戏
@@ -314,9 +311,11 @@ Public Class CommandConsole
                 LoginAndLockUI.ShowLockScreen()
                 '显示消息并设置颜色
                 CommandTip.Text = "Lock Screen"
-                CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Lock Screen")
+                CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Lock Screen" & vbCrLf)
                 CommandInputBox.SelectAll()
                 SetLastCommandColor(True)
+            Case "update" '检测升级
+                AboutMeForm.CheckUpdate()
             Case "melt" '开启或关闭屏幕融化
                 If ScreenMelt.Melting Then
                     ScreenMelt.StopMelt()
@@ -329,16 +328,16 @@ Public Class CommandConsole
                     TipsForm.PopupTips(SystemWorkStation, "Tips", TipsForm.TipsIconType.Infomation, "Start melting.")
                 End If
                 '显示消息并设置颜色
-                CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | " & CommandTip.Text)
+                CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | " & CommandTip.Text & vbCrLf)
                 SetLastCommandColor(True)
             Case Else '不支持的的命令
                 '显示消息并设置颜色
                 CommandTip.Text = "The command is unsupported"
-                CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Unsupported：  " & IIf(CommandType.Length > 9, Strings.Mid(CommandType, 1, 9) & "...", CommandType))
+                CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Unsupported：  " & IIf(CommandType.Length > 9, Strings.Mid(CommandType, 1, 9) & "...", CommandType) & vbCrLf)
                 CommandInputBox.SelectAll()
                 SetLastCommandColor(False)
                 '输出已经支持的指令
-                CommandPast.AppendText(vbCrLf & "    Supported：" & vbCrLf & "      Speak、Shutdown、Shell、" & vbCrLf & "      About、Weather、Lock、Melt" & vbCrLf & "      Mail、Browser、Mine、1010、2048")
+                CommandPast.AppendText("    Supported：" & vbCrLf & "      Speak、Shutdown、Shell、update、" & vbCrLf & "      About、Weather、Lock、Melt" & vbCrLf & "      Mail、Browser、Mine、1010、2048" & vbCrLf)
         End Select
     End Sub
 
@@ -348,7 +347,7 @@ Public Class CommandConsole
     ''' <param name="CommandResult"></param>
     Private Sub SetLastCommandColor(ByVal CommandResult As Boolean)
         '格式化文本颜色
-        Dim LineIndex As Integer = CommandPast.GetLineFromCharIndex(CommandPast.TextLength)
+        Dim LineIndex As Integer = CommandPast.GetLineFromCharIndex(CommandPast.TextLength) - 1
         CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex - 1)
         CommandPast.SelectionLength = CommandPast.TextLength - CommandPast.SelectionStart
         CommandPast.SelectionColor = IIf(CommandResult, Color.PaleGreen, Color.Tomato)
@@ -383,7 +382,7 @@ Public Class CommandConsole
         If CharIndex = 0 Then
             '未找到城市或ID
             CommandTip.Text = "Can't find the city or ID"
-            CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | City or ID not found.")
+            CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | City or ID not found." & vbCrLf)
             '显示消息并设置颜色
             CommandInputBox.Text = "weather "
             CommandInputBox.SelectionStart = 8
@@ -401,7 +400,7 @@ Public Class CommandConsole
             '获取天气失败
             CommandTip.Text = "Failed to get weather."
             '显示消息并设置颜色
-            CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to get weather")
+            CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Failed to get weather" & vbCrLf)
             CommandInputBox.SelectAll()
             SetLastCommandColor(False)
         Else
@@ -409,19 +408,19 @@ Public Class CommandConsole
                 '数据读取错误
                 CommandTip.Text = "City or ID not found."
                 '显示消息并设置颜色
-                CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | City or ID not found.")
+                CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | City or ID not found." & vbCrLf)
                 CommandInputBox.Text = "weather "
                 CommandInputBox.SelectionStart = 8
                 SetLastCommandColor(False)
             Else
                 '天气获取成功
                 CommandTip.Text = "Get weather Successfully"
-                CommandPast.AppendText(vbCrLf & "————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Get weather Successfully")
+                CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | Get weather Successfully" & vbCrLf)
                 SetLastCommandColor(True)
 
                 Dim LineIndex As Integer
                 '输出基本天气信息
-                CommandPast.AppendText(vbCrLf & "         Today：————————————")
+                CommandPast.AppendText("         Today：————————————" & vbCrLf)
                 '设置颜色为 Yellow
                 LineIndex = CommandPast.GetLineFromCharIndex(CommandPast.TextLength)
                 CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex)
@@ -429,10 +428,10 @@ Public Class CommandConsole
                 CommandPast.SelectionColor = Color.Yellow
 
                 '输出基本参数信息
-                CommandPast.AppendText(vbCrLf & "             City：" & GetValue(WebPage, "city").PadRight(10) & "Update：" & GetValue(WebPage, "updatetime"))
-                CommandPast.AppendText(vbCrLf & "             Temp：" & (GetValue(WebPage, "wendu") & " ℃").PadRight(10) & "HUM： " & GetValue(WebPage, "shidu"))
-                CommandPast.AppendText(vbCrLf & "             WindP：" & GetValue(WebPage, "fengli").PadRight(10) & "WindD：" & GetValue(WebPage, "fengxiang"))
-                CommandPast.AppendText(vbCrLf & "            Sunrise：" & GetValue(WebPage, "sunrise_1").PadRight(10) & "Sunset：" & GetValue(WebPage, "sunset_1"))
+                CommandPast.AppendText("             City：" & GetValue(WebPage, "city").PadRight(10) & "Update：" & GetValue(WebPage, "updatetime") & vbCrLf)
+                CommandPast.AppendText("             Temp：" & (GetValue(WebPage, "wendu") & " ℃").PadRight(10) & "HUM： " & GetValue(WebPage, "shidu") & vbCrLf)
+                CommandPast.AppendText("             WindP：" & GetValue(WebPage, "fengli").PadRight(10) & "WindD：" & GetValue(WebPage, "fengxiang") & vbCrLf)
+                CommandPast.AppendText("            Sunrise：" & GetValue(WebPage, "sunrise_1").PadRight(10) & "Sunset：" & GetValue(WebPage, "sunset_1") & vbCrLf)
                 '设置颜色为 PaleGreen
                 CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex + 1)
                 CommandPast.SelectionLength = CommandPast.TextLength - CommandPast.SelectionStart
@@ -443,7 +442,7 @@ Public Class CommandConsole
                 Dim WeatherBlock(4) As String
                 ForecastBlock = GetValue(WebPage, "forecast")
                 Dim DayBlock As String, NightBlock, HighTemperature, LowTemperature As String
-                CommandPast.AppendText(vbCrLf & "         Today and Future：———————")
+                CommandPast.AppendText("         Today and Future：———————" & vbCrLf)
                 '设置颜色为 Yellow
                 LineIndex = CommandPast.GetLineFromCharIndex(CommandPast.TextLength)
                 CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex)
@@ -455,7 +454,7 @@ Public Class CommandConsole
                     DayBlock = GetValue(WeatherBlock(Index), "day")
                     NightBlock = GetValue(WeatherBlock(Index), "night")
                     '输出日期
-                    CommandPast.AppendText(vbCrLf & "         > Date：" & GetValue(WeatherBlock(Index), "date"))
+                    CommandPast.AppendText("         > Date：" & GetValue(WeatherBlock(Index), "date") & vbCrLf)
                     '设置颜色为 Pink
                     LineIndex = CommandPast.GetLineFromCharIndex(CommandPast.TextLength)
                     CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex)
@@ -466,9 +465,9 @@ Public Class CommandConsole
                     HighTemperature = Strings.Mid(HighTemperature, 4, HighTemperature.Length - 3)
                     LowTemperature = GetValue(WeatherBlock(Index), "low")
                     LowTemperature = Strings.Mid(LowTemperature, 4, LowTemperature.Length - 3)
-                    CommandPast.AppendText(vbCrLf & "            Temp：" & LowTemperature & " ~ " & HighTemperature)
-                    CommandPast.AppendText(vbCrLf & "               Day：" & GetValue(DayBlock, "type") & " (" & GetValue(DayBlock, "fengli") & "  " & GetValue(DayBlock, "fengxiang") & ")")
-                    CommandPast.AppendText(vbCrLf & "            Night：" & GetValue(NightBlock, "type") & " (" & GetValue(NightBlock, "fengli") & "  " & GetValue(NightBlock, "fengxiang") & ")")
+                    CommandPast.AppendText("            Temp：" & LowTemperature & " ~ " & HighTemperature & vbCrLf)
+                    CommandPast.AppendText("               Day：" & GetValue(DayBlock, "type") & " (" & GetValue(DayBlock, "fengli") & "  " & GetValue(DayBlock, "fengxiang") & ")" & vbCrLf)
+                    CommandPast.AppendText("            Night：" & GetValue(NightBlock, "type") & " (" & GetValue(NightBlock, "fengli") & "  " & GetValue(NightBlock, "fengxiang") & ")" & vbCrLf)
                     '设置颜色为 PaleGreen
                     CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex + 1)
                     CommandPast.SelectionLength = CommandPast.TextLength - CommandPast.SelectionStart
@@ -479,16 +478,16 @@ Public Class CommandConsole
                 '输出环境数据
                 Dim EnvironmentBlock As String
                 EnvironmentBlock = GetValue(WebPage, "environment")
-                CommandPast.AppendText(vbCrLf & "         Environment：————————")
+                CommandPast.AppendText("         Environment：————————" & vbCrLf)
                 '设置颜色为 Yellow
                 LineIndex = CommandPast.GetLineFromCharIndex(CommandPast.TextLength)
                 CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex)
                 CommandPast.SelectionLength = CommandPast.Lines(LineIndex).Length
                 CommandPast.SelectionColor = Color.Yellow
                 '输出空气质量信息
-                CommandPast.AppendText(vbCrLf & “             AQI：” & GetValue(EnvironmentBlock, "aqi"))
-                CommandPast.AppendText(vbCrLf & "         PM2.5：" & GetValue(EnvironmentBlock, "pm25"))
-                CommandPast.AppendText(vbCrLf & "        Quality：" & GetValue(EnvironmentBlock, "quality"))
+                CommandPast.AppendText(“             AQI：” & GetValue(EnvironmentBlock, "aqi") & vbCrLf)
+                CommandPast.AppendText("         PM2.5：" & GetValue(EnvironmentBlock, "pm25") & vbCrLf)
+                CommandPast.AppendText("        Quality：" & GetValue(EnvironmentBlock, "quality") & vbCrLf)
                 ''设置颜色为 PaleGreen
                 CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex + 1)
                 CommandPast.SelectionLength = CommandPast.TextLength - CommandPast.SelectionStart

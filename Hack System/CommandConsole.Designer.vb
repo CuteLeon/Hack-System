@@ -18,7 +18,7 @@ Partial Class CommandConsole
     Private components As System.ComponentModel.IContainer
 
     '注意: 以下过程是 Windows 窗体设计器所必需的
-    '可以使用 Windows 窗体设计器修改它。  
+    '可以使用 Windows 窗体设计器修改它。
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
@@ -61,7 +61,7 @@ Partial Class CommandConsole
         '
         Me.CommandPast.BackColor = System.Drawing.Color.DimGray
         Me.CommandPast.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.CommandPast.Cursor = System.Windows.Forms.Cursors.Arrow
+        Me.CommandPast.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.CommandPast.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.CommandPast.ForeColor = System.Drawing.Color.DarkOrange
         Me.CommandPast.Location = New System.Drawing.Point(12, 35)

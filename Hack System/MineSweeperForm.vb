@@ -87,9 +87,6 @@
         Me.DoubleBuffered = True
         Me.Icon = Icon.FromHandle(My.Resources.MineSweeperAssets.Mine.GetHicon)
         SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
-        '设置鼠标样式
-        Me.Cursor = SystemWorkStation.Cursor
-        MinefieldPanel.Cursor = SystemWorkStation.Cursor
         '初始化
         ResetMinefield()
     End Sub
