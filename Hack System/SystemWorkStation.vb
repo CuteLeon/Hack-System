@@ -932,7 +932,7 @@ Public Class SystemWorkStation
             ScriptForm(ScriptIndex).Text = ScriptInfomation(ScriptIndex)
         End If
         '脚本在关闭状态
-        If Not (ScriptForm(ScriptIndex).Visible) And Not (ScriptFormVisible(ScriptIndex)) Then
+        If (ScriptForm(ScriptIndex).Visible) = False AndAlso (ScriptFormVisible(ScriptIndex) = False) Then
             '高亮显示脚本对应桌面图标
             SenderControl = ScriptIcons(ScriptIndex)
             If HighLightIcon(ScriptIndex) Is Nothing Then
@@ -946,14 +946,13 @@ Public Class SystemWorkStation
             ScriptFormVisible(ScriptIndex) = True
             '置后显示时不允许为.Show()赋予拥有者参数，否则子窗口会集中在一层显示
             If Me.MenuTopMost.Checked Then ScriptForm(ScriptIndex).Show(Me) Else ScriptForm(ScriptIndex).Show()
-        End If
-        '脚本在打开状态
-        If ScriptForm(ScriptIndex).Visible And ScriptFormVisible(ScriptIndex) Then
+            '脚本在打开状态
+        ElseIf ScriptForm(ScriptIndex).Visible And ScriptFormVisible(ScriptIndex) Then
             '图标右键菜单项设为可用
             MenuCloseScript.Enabled = True
             MenuBreath.Enabled = True
-            '激活脚本窗体
-            SetForegroundWindow(ScriptForm(ScriptIndex).Handle)
+            '震动脚本
+            Threading.ThreadPool.QueueUserWorkItem(New Threading.WaitCallback(AddressOf UnityModule.QQ_Vibration), ScriptForm(ScriptIndex))
         End If
     End Sub
 

@@ -77,8 +77,12 @@
     ''' 检查更新（需要在 FileRepository/HackSystem-Execute/Version.txt 里记录最新的版本号）
     ''' </summary>
     Public Sub CheckUpdate()
-        DownloaderForm.Show(SystemWorkStation)
-        Exit Sub
+        '防止重复检查更新
+        If DownloaderForm.Visible Then
+            My.Computer.Audio.Play(My.Resources.SystemAssets.ShowConsole, AudioPlayMode.Background)
+            Threading.ThreadPool.QueueUserWorkItem(New Threading.WaitCallback(AddressOf UnityModule.QQ_Vibration), DownloaderForm)
+            Exit Sub
+        End If
 
         Try
             If Not (My.Computer.Network.Ping("raw.githubusercontent.com")) Then Exit Sub
@@ -90,6 +94,7 @@
             If Application.ProductVersion = NewestVersion Then
                 TipsForm.PopupTips(SystemWorkStation, "无需更新：", TipsForm.TipsIconType.Infomation, "当前已经是最新版本！")
             Else
+                DownloaderForm.DownloadLabel.Text = "发现新版本（" & NewestVersion & "），是否更新？"
                 DownloaderForm.Show(SystemWorkStation)
             End If
         Catch ex As Exception

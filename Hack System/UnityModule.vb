@@ -159,4 +159,32 @@ Module UnityModule
     Public SpeechRecognitionMode As Boolean = True
 #End Region
 
+#Region "全局函数"
+    ''' <summary>
+    ''' 模拟 QQ 抖动窗体
+    ''' </summary>
+    ''' <param name="Radius">抖动半径</param>
+    ''' <param name="Count">抖动圈数</param>
+    Public Sub QQ_Vibration(Form As Form, Optional ByVal Radius As Integer = 2, Optional ByVal Count As Integer = 3)
+        Dim InitPoint As Point = Form.Location '记录原始窗体坐标
+        Form.Refresh()
+        UnityModule.SetForegroundWindow(Form.Handle)
+        For VibrationIndex As Integer = 0 To Count '抖动次数
+            For Index As Integer = -Radius To Radius
+                Dim X As Integer = Math.Sqrt(Radius * Radius - Index * Index)
+                Dim Y As Integer = Index
+                Form.Location = New Point(InitPoint.X + X, InitPoint.Y + Y)
+                Threading.Thread.Sleep(10)
+            Next
+            For Index As Integer = Radius To -Radius Step -1
+                Dim X As Integer = Math.Sqrt(Radius * Radius - Index * Index)
+                Dim Y As Integer = -Index
+                Form.Location = New Point(InitPoint.X - X, InitPoint.Y - Y)
+                Threading.Thread.Sleep(5)
+            Next
+        Next
+        Form.Location = InitPoint
+    End Sub
+#End Region
+
 End Module

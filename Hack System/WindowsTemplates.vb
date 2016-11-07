@@ -89,20 +89,7 @@ Public Class WindowsTemplates
         End If
     End Sub
 
-    Private Sub WindowsTemplates_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
-        '窗体失去焦点时，如果不是AeroPeek模式也不是正在退出程序，就降低窗口透明度
-        If Not (UnityModule.AeroPeekMode) AndAlso Not UnityModule.SystemClosing _
-            AndAlso UnityModule.ScriptFormVisible(MyScriptIndex) = True Then Me.Opacity = NegativeOpacity
-        '改变窗体背景色
-        Me.BackColor = BorderColor_Negative
-        '隐藏标题栏
-        GIFControl.Top = BorderWidth
-        CloseButtonControl.Hide()
-        Me.Height = GIFControl.Height + 2 * BorderWidth
-        Me.Top += TitleHeight
-    End Sub
-
-    Private Sub WindowsTemplates_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
+    Private Sub WindowsTemplates_Activated(sender As Object, e As EventArgs) Handles Me.Activated
         '防止在显示动态关闭特效时被激活
         If Not UnityModule.ScriptFormVisible(MyScriptIndex) Then Exit Sub
         '判断AeroPeek模式状态和当前脚本标识，设置窗体透明度
@@ -115,7 +102,18 @@ Public Class WindowsTemplates
         GIFControl.Top = TitleHeight + BorderWidth
         CloseButtonControl.Show()
         Me.Height = GIFControl.Height + TitleHeight + 2 * BorderWidth
-        Me.Top -= TitleHeight
+    End Sub
+
+    Private Sub WindowsTemplates_Deactivate(sender As Object, e As EventArgs) Handles Me.Deactivate
+        '窗体失去焦点时，如果不是AeroPeek模式也不是正在退出程序，就降低窗口透明度
+        If Not (UnityModule.AeroPeekMode) AndAlso Not UnityModule.SystemClosing _
+            AndAlso UnityModule.ScriptFormVisible(MyScriptIndex) = True Then Me.Opacity = NegativeOpacity
+        '改变窗体背景色
+        Me.BackColor = BorderColor_Negative
+        '隐藏标题栏
+        GIFControl.Top = BorderWidth
+        CloseButtonControl.Hide()
+        Me.Height = GIFControl.Height + 2 * BorderWidth
     End Sub
 
     Private Sub WindowsTemplates_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
@@ -289,6 +287,7 @@ Public Class WindowsTemplates
         '启动动态关闭特效的线程
         ThreadPool.QueueUserWorkItem(New WaitCallback(AddressOf HideMe))
     End Sub
+
 #End Region
 
 End Class

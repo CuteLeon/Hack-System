@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class DownloaderForm
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,15 +20,13 @@ Partial Class DownloaderForm
     '注意: 以下过程是 Windows 窗体设计器所必需的
     '可以使用 Windows 窗体设计器修改它。  
     '不要使用代码编辑器修改它。
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Me.CloseButton = New System.Windows.Forms.Label()
         Me.DLProgressBar = New System.Windows.Forms.PictureBox()
         Me.DownloadLabel = New System.Windows.Forms.Label()
         Me.DLOKButton = New System.Windows.Forms.Label()
         Me.DLCancelButton = New System.Windows.Forms.Label()
-        Me.CheckFileSizeTimer = New System.Windows.Forms.Timer(Me.components)
         CType(Me.DLProgressBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -93,10 +91,6 @@ Partial Class DownloaderForm
         Me.DLCancelButton.Text = "取消"
         Me.DLCancelButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'CheckFileSizeTimer
-        '
-        Me.CheckFileSizeTimer.Interval = 1000
-        '
         'DownloaderForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -125,5 +119,4 @@ Partial Class DownloaderForm
     Friend WithEvents DownloadLabel As Label
     Friend WithEvents DLOKButton As Label
     Friend WithEvents DLCancelButton As Label
-    Friend WithEvents CheckFileSizeTimer As Timer
 End Class

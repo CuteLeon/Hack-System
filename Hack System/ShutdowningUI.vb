@@ -75,7 +75,7 @@ Public Class ShutdowningUI
         If CommandConsole.Visible Then CommandConsole.Hide()
         '直接关闭提示浮窗，因为CancelTips函数要等待线程结束，退出程序时会出错
         TipsForm.CancelTip()
-        If DownloaderForm.Visible Then DownloaderForm.Hide()
+        If DownloaderForm.IsDownloading Then DownloaderForm.CancelDownload()
         If XYMail.Visible Then XYMail.Hide()
         If AboutMeForm.Visible Then AboutMeForm.Hide()
         If MineSweeperForm.Visible Then MineSweeperForm.Hide()

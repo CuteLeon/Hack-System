@@ -1,14 +1,16 @@
 ﻿Imports System.ComponentModel
+Imports System.Net
 Imports System.Threading
 
 Public Class DownloaderForm
-    '网络下载文件，提供从GitHub更新
-    Private Declare Function URLDownloadToFile Lib "urlmon" Alias "URLDownloadToFileA" (ByVal pCaller As Integer, ByVal szURL As String, ByVal szFileName As String, ByVal dwReserved As Integer, ByVal lpfnCB As Integer) As Integer
     ''' <summary>
     ''' 是否允许窗体关闭
     ''' </summary>
     Public CanClose As Boolean
-    Private IsDownloading As Boolean
+    Public IsDownloading As Boolean
+    Dim LastProgressPercentage As Integer = 0
+    Dim UpdateClient As WebClient
+
     ''' <summary>
     ''' 下次点击按钮的任务状态
     ''' </summary>
@@ -20,12 +22,10 @@ Public Class DownloaderForm
     End Enum
     Dim ButtonState = ClickToDo.DownloadUpdate
     Dim DLFilePath As String
-    Dim DownloadUpdateThread As Threading.Thread
-    Private BytesCount As Integer = 1024 * 1024 * 100
 
 #Region "窗体事件"
     Private Sub DownloaderForm_Load(sender As Object, e As EventArgs) Handles Me.Load
-        System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
+        CheckForIllegalCrossThreadCalls = False
     End Sub
 
     Private Sub MoveWindow(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
@@ -88,18 +88,10 @@ Public Class DownloaderForm
                 DownloadUpdateFunction()
             Case ClickToDo.CancelUpdate
                 DownloadLabel.Text = "正在停止下载..."
-
-                'TODO: 在这里使用 e_abort 终止下载任务
-                CheckFileSizeTimer.Stop()
-                DownloadUpdateThread.Abort()
-                DownloadUpdateThread = Nothing
-                'DeleteUrlCacheEntry
-                'TODO:这里需要清除缓存
-                'IO.File.Delete(DLFilePath)
-                CloseForm()
+                '终止下载任务
+                CancelDownload()
             Case ClickToDo.RetryToUpdate
                 '重新下载
-                DownloadLabel.Text = "正在重新下载..."
                 DownloadUpdateFunction()
             Case ClickToDo.Updated
                 DownloadLabel.Text = "正在关闭程序..."
@@ -113,7 +105,7 @@ Public Class DownloaderForm
             Case ClickToDo.DownloadUpdate
                 CloseForm()
             Case ClickToDo.CancelUpdate
-                DownloadLabel.Text = "正在下载更新..."
+                DownloadLabel.Text = "正在下载更新...(" & LastProgressPercentage & "%)"
                 DLOKButton.Hide()
                 DLCancelButton.Hide()
                 DLProgressBar.Show()
@@ -134,6 +126,20 @@ Public Class DownloaderForm
         Me.Close()
     End Sub
 
+    ''' <summary>
+    ''' 取消下载更新
+    ''' </summary>
+    Public Sub CancelDownload()
+        UpdateClient.CancelAsync()
+        UpdateClient.Dispose()
+        '清除缓存
+        Threading.ThreadPool.QueueUserWorkItem(New Threading.WaitCallback(AddressOf WaitToDeleteCacheFile))
+        CloseForm()
+    End Sub
+
+    ''' <summary>
+    ''' 开始下载更新
+    ''' </summary>
     Private Sub DownloadUpdateFunction()
         Dim SaveDialog As SaveFileDialog = New SaveFileDialog With {
             .AddExtension = True,
@@ -145,7 +151,7 @@ Public Class DownloaderForm
             .ValidateNames = True
         }
         If SaveDialog.ShowDialog = DialogResult.OK Then
-            DownloadLabel.Text = "正在下载更新..."
+            DownloadLabel.Text = "正在下载更新...(0%)"
             IsDownloading = True
             DLOKButton.Hide()
             DLCancelButton.Hide()
@@ -153,47 +159,58 @@ Public Class DownloaderForm
             DLFilePath = SaveDialog.FileName
             If IO.File.Exists(DLFilePath) Then IO.File.Delete(DLFilePath)
 
-            '这里使用多线程下载
-            DownloadUpdateThread = New Thread(AddressOf DownloadUpdate)
-            DownloadUpdateThread.Start()
-            '开始检测文件下载进度
-            CheckFileSizeTimer.Start()
+            '开始下载
+            UpdateClient = New WebClient
+            AddHandler UpdateClient.DownloadFileCompleted, AddressOf DownloadFileCompleted
+            AddHandler UpdateClient.DownloadProgressChanged, AddressOf DownloadProgressChanged
+            UpdateClient.DownloadFileAsync(New Uri("https://raw.githubusercontent.com/CuteLeon/FileRepository/master/HackSystem-Execute/Hack%20System.exe"), DLFilePath)
         End If
     End Sub
 
     ''' <summary>
-    ''' 由多线程调用的下载函数
+    ''' 文件下载结束
     ''' </summary>
-    Private Sub DownloadUpdate()
-        Dim DownloadResult As Integer 'URLDownloadToFile 返回的下载结果
-        DownloadResult = URLDownloadToFile(0, "https://raw.githubusercontent.com/CuteLeon/FileRepository/master/HackSystem-Execute/Hack%20System.exe", DLFilePath, 0, 0)
-        CheckFileSizeTimer.Stop()
+    Private Sub DownloadFileCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.AsyncCompletedEventArgs)
+        'e.Cancelled 成立时表示是取消了异步下载任务，不做完成处理
+        If e.Cancelled = True Then Exit Sub
         IsDownloading = False
-        If DownloadResult = 0 Then
+        If e.Error Is Nothing Then
+            My.Computer.Audio.Play(My.Resources.TipsRes.TipsAlarm, AudioPlayMode.Background)
             DownloadLabel.Text = "更新成功，请运行新版程序。" & vbCrLf & "确定要立即退出当前版本吗？"
             ButtonState = ClickToDo.Updated
         Else
+            My.Computer.Audio.Play(My.Resources.SystemAssets.ShowConsole, AudioPlayMode.Background)
+            IO.File.Delete(DLFilePath)
             DownloadLabel.Text = "更新失败，请检查网络或更换路径。" & vbCrLf & "确定要重试吗？"
             ButtonState = ClickToDo.RetryToUpdate
         End If
+
+        UpdateClient.Dispose()
         DLProgressBar.Hide()
         DLOKButton.Show()
         DLCancelButton.Show()
+        Threading.ThreadPool.QueueUserWorkItem(New Threading.WaitCallback(AddressOf UnityModule.QQ_Vibration), Me)
     End Sub
 
-    Private Sub CheckFileSizeTimer_Tick(sender As Object, e As EventArgs) Handles CheckFileSizeTimer.Tick
-        If Not IO.File.Exists(DLFilePath) Then Exit Sub
-        Dim FileInfo As IO.FileInfo = New IO.FileInfo(DLFilePath)
-        Dim ProgressBarWidth As Integer = 8 + (FileInfo.Length / BytesCount) * 234
-        Static LastWidth As Integer = 8
-        If ProgressBarWidth < 9 OrElse ProgressBarWidth > 234 Then Exit Sub
-        If ProgressBarWidth = LastWidth Then Exit Sub
-        LastWidth = ProgressBarWidth
-        'Debug.Print("文件下载进度： " & FileInfo.Length)
-        'Debug.Print("进度条长度：" & ProgressBarWidth)
+    ''' <summary>
+    ''' 文件下载进度更新
+    ''' </summary>
+    Private Sub DownloadProgressChanged(ByVal sender As Object, ByVal e As System.Net.DownloadProgressChangedEventArgs)
+        If e.ProgressPercentage = LastProgressPercentage Then Exit Sub
+        Dim ProgressBarWidth As Integer = 8 + (e.ProgressPercentage * 234) \ 100
+        DownloadLabel.Text = "正在下载更新...(" & e.ProgressPercentage & "%)"
         DLProgressBar.Image = My.Resources.SystemAssets.DownloadProgress.Clone(New Rectangle(0, 0, ProgressBarWidth, 19), Imaging.PixelFormat.Format32bppArgb)
+        LastProgressPercentage = e.ProgressPercentage
     End Sub
 
+    ''' <summary>
+    ''' 等待200毫秒删除取消下载的缓存文件
+    ''' </summary>
+    Private Sub WaitToDeleteCacheFile()
+        On Error Resume Next
+        Thread.Sleep(200)
+        IO.File.Delete(DLFilePath)
+    End Sub
 #End Region
 
 End Class
