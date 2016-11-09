@@ -204,12 +204,14 @@ Public Class DownloaderForm
     End Sub
 
     ''' <summary>
-    ''' 等待200毫秒删除取消下载的缓存文件
+    ''' 等待50毫秒尝试删除取消下载的缓存文件
     ''' </summary>
     Private Sub WaitToDeleteCacheFile()
         On Error Resume Next
-        Thread.Sleep(200)
-        IO.File.Delete(DLFilePath)
+        Do While (IO.File.Exists(DLFilePath))
+            IO.File.Delete(DLFilePath)
+            Thread.Sleep(50)
+        Loop
     End Sub
 #End Region
 
