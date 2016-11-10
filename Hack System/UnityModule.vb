@@ -1,6 +1,6 @@
 ﻿Imports System.Speech.Recognition
 
-Module UnityModule
+Public Module UnityModule
 #Region "API"
     ''' <summary>
     ''' 为当前的应用程序释放鼠标捕获
@@ -46,6 +46,16 @@ Module UnityModule
         ''' 已经完成动态隐藏
         ''' </summary>
         Hidden
+    End Enum
+
+    ''' <summary>
+    ''' 浮窗图标类型枚举
+    ''' </summary>
+    Public Enum TipsIconType
+        Infomation = 0     '消息
+        Question = 1        '询问
+        Exclamation = 2    '警告
+        Critical = 3            '错误
     End Enum
 #End Region
 
@@ -135,8 +145,11 @@ Module UnityModule
     Public BrowserForms As New ArrayList
     ''' <summary>
     ''' 脚本开启状态(不同于Form.Visible，两者配合判断脚本的状态)
+    ''' ScriptFormShown为真，Visible为假：窗体正在动态显示或隐藏
+    ''' ScriptFormShown为假，Visible为假：窗体已经关闭
+    ''' ScriptFormShown为真，Visible为真：窗体已经稳定显示
     ''' </summary>
-    Public ScriptFormVisible(ScriptUpperBound) As Boolean
+    Public ScriptFormShown(ScriptUpperBound) As Boolean
     ''' <summary>
     ''' 桌面脚本图标
     ''' </summary>

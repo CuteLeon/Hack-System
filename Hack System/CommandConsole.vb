@@ -321,11 +321,11 @@ Public Class CommandConsole
                     ScreenMelt.StopMelt()
                     CommandTip.Text = "Stop melting."
                     SystemWorkStation.Refresh()
-                    TipsForm.PopupTips(SystemWorkStation, "Tips", TipsForm.TipsIconType.Infomation, "Stop melting.")
+                    TipsForm.PopupTips(SystemWorkStation, "Tips", UnityModule.TipsIconType.Infomation, "Stop melting.")
                 Else
                     ScreenMelt.StartMelt()
                     CommandTip.Text = "Start melting."
-                    TipsForm.PopupTips(SystemWorkStation, "Tips", TipsForm.TipsIconType.Infomation, "Start melting.")
+                    TipsForm.PopupTips(SystemWorkStation, "Tips", UnityModule.TipsIconType.Infomation, "Start melting.")
                 End If
                 '显示消息并设置颜色
                 CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | " & CommandTip.Text & vbCrLf)

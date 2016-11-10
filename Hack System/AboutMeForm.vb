@@ -92,13 +92,13 @@
             Dim NewestVersion As String = WebStreamReader.ReadToEnd
             WebStreamReader.Dispose()
             If Application.ProductVersion = NewestVersion Then
-                TipsForm.PopupTips(SystemWorkStation, "无需更新：", TipsForm.TipsIconType.Infomation, "当前已经是最新版本！")
+                TipsForm.PopupTips(SystemWorkStation, "无需更新：", UnityModule.TipsIconType.Infomation, "当前已经是最新版本！")
             Else
                 DownloaderForm.DownloadLabel.Text = "发现新版本（" & NewestVersion & "），是否更新？"
                 DownloaderForm.Show(SystemWorkStation)
             End If
         Catch ex As Exception
-            TipsForm.PopupTips(SystemWorkStation, "更新错误：", TipsForm.TipsIconType.Critical, ex.Message)
+            TipsForm.PopupTips(SystemWorkStation, "更新错误：", UnityModule.TipsIconType.Critical, ex.Message)
         End Try
     End Sub
 #End Region

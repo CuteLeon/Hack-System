@@ -356,7 +356,7 @@
             Next
             MinefieldGraphics.DrawImage(IIf(GameResult, My.Resources.MineSweeperAssets.Win, My.Resources.MineSweeperAssets.Lost), 0, 0, 320, 320)
 
-            TipsForm.PopupTips(SystemWorkStation, "You Win!", TipsForm.TipsIconType.Infomation, "Nicely Done! Guy!")
+            TipsForm.PopupTips(SystemWorkStation, "You Win!", UnityModule.TipsIconType.Infomation, "Nicely Done! Guy!")
         Else
             '失败
             For RowIndex As Integer = 0 To 9
@@ -368,7 +368,7 @@
             Next
             MinefieldGraphics.DrawImage(IIf(GameResult, My.Resources.MineSweeperAssets.Win, My.Resources.MineSweeperAssets.Lost), 0, 0, 320, 320)
 
-            TipsForm.PopupTips(SystemWorkStation, "You Lost!", TipsForm.TipsIconType.Question, "Never despair! Try again!")
+            TipsForm.PopupTips(SystemWorkStation, "You Lost!", UnityModule.TipsIconType.Question, "Never despair! Try again!")
         End If
         BackgroundGraphics.DrawImage(CloseBitmap, CloseRectangle)
         BackgroundGraphics.DrawImage(MinefieldBitmap, MinefieldRectangle)

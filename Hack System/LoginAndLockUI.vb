@@ -376,7 +376,7 @@ Public Class LoginAndLockUI
         My.Settings.Save()
 
         '弹出提示浮窗
-        TipsForm.PopupTips(Me, "Successfully !", TipsForm.TipsIconType.Infomation, "Reset head successfully")
+        TipsForm.PopupTips(Me, "Successfully !", UnityModule.TipsIconType.Infomation, "Reset head successfully")
 
         Me.Activate()
     End Sub

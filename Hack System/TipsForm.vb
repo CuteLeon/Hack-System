@@ -99,15 +99,6 @@ Public Class TipsForm
     ''' 显示到的位置
     ''' </summary>
     Dim ShownLocation As Point
-    ''' <summary>
-    ''' 浮窗图标类型枚举
-    ''' </summary>
-    Public Enum TipsIconType
-        Infomation = 0     '消息
-        Question = 1        '询问
-        Exclamation = 2    '警告
-        Critical = 3            '错误
-    End Enum
 
 #End Region
 

@@ -91,7 +91,7 @@ Public Class WindowsTemplates
 
     Private Sub WindowsTemplates_Activated(sender As Object, e As EventArgs) Handles Me.Activated
         '防止在显示动态关闭特效时被激活
-        If Not UnityModule.ScriptFormVisible(MyScriptIndex) Then Exit Sub
+        If Not UnityModule.ScriptFormShown(MyScriptIndex) Then Exit Sub
         '判断AeroPeek模式状态和当前脚本标识，设置窗体透明度
         Me.Opacity = IIf(UnityModule.AeroPeekMode And UnityModule.NowIconIndex <> MyScriptIndex, UnityModule.AeroPeekOpacity, 1)
         '改变背景色
@@ -107,7 +107,7 @@ Public Class WindowsTemplates
     Private Sub WindowsTemplates_Deactivate(sender As Object, e As EventArgs) Handles Me.Deactivate
         '窗体失去焦点时，如果不是AeroPeek模式也不是正在退出程序，就降低窗口透明度
         If Not (UnityModule.AeroPeekMode) AndAlso Not UnityModule.SystemClosing _
-            AndAlso UnityModule.ScriptFormVisible(MyScriptIndex) = True Then Me.Opacity = NegativeOpacity
+            AndAlso UnityModule.ScriptFormShown(MyScriptIndex) = True Then Me.Opacity = NegativeOpacity
         '改变窗体背景色
         Me.BackColor = BorderColor_Negative
         '隐藏标题栏
@@ -249,7 +249,7 @@ Public Class WindowsTemplates
     ''' </summary>
     Private Sub CloseScript()
         '记录脚本状态
-        UnityModule.ScriptFormVisible(MyScriptIndex) = False
+        UnityModule.ScriptFormShown(MyScriptIndex) = False
         '读取自身的脚本标识和需要的在桌面环境里的数据
         IconLocation.X = UnityModule.ScriptIcons(MyScriptIndex).Left
         IconLocation.Y = UnityModule.ScriptIcons(MyScriptIndex).Top
@@ -262,13 +262,13 @@ Public Class WindowsTemplates
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("ScriptStoped"), AudioPlayMode.Background)
         '遍历脚本窗体，将焦点交给下一个标识的脚本窗体
         For ScriptIndex As Integer = UnityModule.ScriptUpperBound To 0 Step -1
-            If UnityModule.ScriptFormVisible(ScriptIndex) Then
+            If UnityModule.ScriptFormShown(ScriptIndex) Then
                 '如果当前窗口正在被AeroPeek模式高亮显示，关闭后应退出AeroPeek模式
                 If UnityModule.AeroPeekMode And UnityModule.NowIconIndex = MyScriptIndex Then
                     '遍历脚本窗体
                     For TempScriptIndex As Integer = 0 To UnityModule.ScriptUpperBound
                         '还原在AeroPeek模式下被隐藏的窗体的透明度
-                        If UnityModule.ScriptFormVisible(TempScriptIndex) Then UnityModule.ScriptForm(TempScriptIndex).Opacity = UnityModule.NegativeOpacity
+                        If UnityModule.ScriptFormShown(TempScriptIndex) Then UnityModule.ScriptForm(TempScriptIndex).Opacity = UnityModule.NegativeOpacity
                     Next
                     '关闭AeroPeek模式
                     UnityModule.AeroPeekMode = False

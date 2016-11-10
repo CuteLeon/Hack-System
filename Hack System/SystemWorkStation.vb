@@ -537,19 +537,19 @@ Public Class SystemWorkStation
         '记录鼠标下图标的标识
         NowIconIndex = Int(SenderControl.Tag)
         '设置图标右键菜单项可用
-        MenuCloseScript.Enabled = ScriptFormVisible(NowIconIndex)
-        MenuBreath.Enabled = ScriptFormVisible(NowIconIndex)
+        MenuCloseScript.Enabled = ScriptFormShown(NowIconIndex)
+        MenuBreath.Enabled = ScriptFormShown(NowIconIndex)
     End Sub
 
     Private Sub IconTemplates_MouseLeave(sender As Object, e As EventArgs)
         '鼠标离开图标时，如果脚本在关闭状态就取消高亮显示图标
         Dim ScriptIndex As Integer = Int(CType(sender, Label).Tag)
         'NowIconIndex = -1
-        If Not (ScriptFormVisible(ScriptIndex)) Then SenderControl.Image = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
+        If Not (ScriptFormShown(ScriptIndex)) Then SenderControl.Image = My.Resources.SystemAssets.ResourceManager.GetObject("ScriptIcon_" & SenderControl.Tag)
         If AeroPeekMode Then
             '遍历脚本窗体，还原在AeroPeek模式下被透明的窗体的透明度
             For ScriptIndex = 0 To ScriptUpperBound
-                If ScriptFormVisible(ScriptIndex) Then ScriptForm(ScriptIndex).Opacity = UnityModule.NegativeOpacity
+                If ScriptFormShown(ScriptIndex) Then ScriptForm(ScriptIndex).Opacity = UnityModule.NegativeOpacity
             Next
             '关闭AeroPeek模式
             AeroPeekMode = False
@@ -573,7 +573,7 @@ Public Class SystemWorkStation
 
     Private Sub IconTemplates_MouseHover(sender As Object, e As EventArgs)
         '鼠标悬停时如果脚本是打开状态，则显示AeroPeek视图
-        If Not (ScriptFormVisible(NowIconIndex)) Or ShutdownTips.Visible Or AboutMeForm.Visible Then Exit Sub
+        If Not (ScriptFormShown(NowIconIndex)) Or ShutdownTips.Visible Or AboutMeForm.Visible Then Exit Sub
 
         AeroPeekMode = True
         Dim StartIndex, EndIndex, ScriptIndex As Integer
@@ -582,11 +582,11 @@ Public Class SystemWorkStation
         ScriptForm(NowIconIndex).Opacity = 1
         '向前遍历隐藏脚本窗体
         For ScriptIndex = 0 To EndIndex
-            If ScriptFormVisible(ScriptIndex) Then ScriptForm(ScriptIndex).Opacity = AeroPeekOpacity
+            If ScriptFormShown(ScriptIndex) Then ScriptForm(ScriptIndex).Opacity = AeroPeekOpacity
         Next
         '向后遍历隐藏脚本窗体
         For ScriptIndex = StartIndex To ScriptUpperBound
-            If ScriptFormVisible(ScriptIndex) Then ScriptForm(ScriptIndex).Opacity = AeroPeekOpacity
+            If ScriptFormShown(ScriptIndex) Then ScriptForm(ScriptIndex).Opacity = AeroPeekOpacity
         Next
     End Sub
 
@@ -674,7 +674,7 @@ Public Class SystemWorkStation
             DesktopIconHandle = GetDesktopIconHandle()
             If DesktopIconHandle = IntPtr.Zero Then
                 '如果查找DesktopIconHandle句柄失败时，无法置后显示，需要弹窗提示并取消任务
-                TipsForm.PopupTips(Me, "Can't find", TipsForm.TipsIconType.Infomation, "the Physical-Desktop!")
+                TipsForm.PopupTips(Me, "Can't find", UnityModule.TipsIconType.Infomation, "the Physical-Desktop!")
                 MenuTopMost.Checked = True '不改变 MenuTopMost 的勾选状态，防止重复响应 Click 事件
             Else
                 Me.TopMost = False
@@ -695,7 +695,7 @@ Public Class SystemWorkStation
                 CustomWallpaperBitmap = Bitmap.FromFile(CustomImageDialog.FileName)
                 Me.BackgroundImage = CustomWallpaperBitmap
                 '弹出提示浮窗
-                TipsForm.PopupTips(Me, "Successfully !", TipsForm.TipsIconType.Infomation, "Set wallpaper successfully")
+                TipsForm.PopupTips(Me, "Successfully !", UnityModule.TipsIconType.Infomation, "Set wallpaper successfully")
                 WallpaperIndex = -1
                 '保存壁纸标识和自定义壁纸的Base64编码到存档
                 My.Settings.DesktopWallpaperIndex = WallpaperIndex
@@ -703,7 +703,7 @@ Public Class SystemWorkStation
                 My.Settings.Save()
             Catch ex As Exception
                 '出错时弹出提示浮窗
-                TipsForm.PopupTips(Me, "Error reading image", TipsForm.TipsIconType.Critical, "Please select again.")
+                TipsForm.PopupTips(Me, "Error reading image", UnityModule.TipsIconType.Critical, "Please select again.")
             End Try
         Else
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
@@ -738,10 +738,10 @@ Public Class SystemWorkStation
                 My.Settings.UserHead = UnityModule.UserHeadString
                 My.Settings.Save()
                 '弹出提示浮窗
-                TipsForm.PopupTips(Me, "Successfully !", TipsForm.TipsIconType.Infomation, "Set user head successfully")
+                TipsForm.PopupTips(Me, "Successfully !", UnityModule.TipsIconType.Infomation, "Set user head successfully")
             Catch ex As Exception
                 '出错时弹出提示浮窗
-                TipsForm.PopupTips(Me, "Error reading image", TipsForm.TipsIconType.Critical, "Please select again.")
+                TipsForm.PopupTips(Me, "Error reading image", UnityModule.TipsIconType.Critical, "Please select again.")
             End Try
         Else
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
@@ -769,7 +769,7 @@ Public Class SystemWorkStation
             LoginAndLockUI.UserNameControl.Text = vbNullString
             LoginAndLockUI.UserNameControl.Size = New Size(300, LoginAndLockUI.UserNameControl.Image.Height)
             '处理完毕弹出提示浮窗
-            TipsForm.PopupTips(Me, "Successfully !", TipsForm.TipsIconType.Infomation, "Set user name successfully")
+            TipsForm.PopupTips(Me, "Successfully !", UnityModule.TipsIconType.Infomation, "Set user name successfully")
             '将用户名图像转换为Base64编码存进存档
             UnityModule.UserNameString = BitmapToString(UnityModule.UserNameBitmap)
             My.Settings.UserName = UnityModule.UserName
@@ -816,18 +816,18 @@ Public Class SystemWorkStation
                 SpeechRecognitionMode = False
                 SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_Off
                 '关闭成功弹出提示浮窗
-                TipsForm.PopupTips(Me, "Shuted the", TipsForm.TipsIconType.Exclamation, "RecognitionEngine off.")
+                TipsForm.PopupTips(Me, "Shuted the", UnityModule.TipsIconType.Exclamation, "RecognitionEngine off.")
             Else
                 '开启语音识别
                 MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
                 SpeechRecognitionMode = True
                 SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_On
                 '开启成功弹出提示浮窗
-                TipsForm.PopupTips(Me, "Started the", TipsForm.TipsIconType.Infomation, "SpeechRecognitionEngine.")
+                TipsForm.PopupTips(Me, "Started the", UnityModule.TipsIconType.Infomation, "SpeechRecognitionEngine.")
             End If
         Catch ex As Exception
             '操作失败，弹出提示浮窗
-            TipsForm.PopupTips(Me, "Failed to control the", TipsForm.TipsIconType.Critical, "SpeechRecognitionEngine")
+            TipsForm.PopupTips(Me, "Failed to control the", UnityModule.TipsIconType.Critical, "SpeechRecognitionEngine")
         End Try
     End Sub
 
@@ -932,7 +932,7 @@ Public Class SystemWorkStation
             ScriptForm(ScriptIndex).Text = ScriptInfomation(ScriptIndex)
         End If
         '脚本在关闭状态
-        If (ScriptForm(ScriptIndex).Visible) = False AndAlso (ScriptFormVisible(ScriptIndex) = False) Then
+        If (ScriptForm(ScriptIndex).Visible) = False AndAlso (ScriptFormShown(ScriptIndex) = False) Then
             '高亮显示脚本对应桌面图标
             SenderControl = ScriptIcons(ScriptIndex)
             If HighLightIcon(ScriptIndex) Is Nothing Then
@@ -943,11 +943,11 @@ Public Class SystemWorkStation
             End If
             SenderControl.Image = HighLightIcon(ScriptIndex)
             '显示脚本窗体并记录
-            ScriptFormVisible(ScriptIndex) = True
+            ScriptFormShown(ScriptIndex) = True
             '置后显示时不允许为.Show()赋予拥有者参数，否则子窗口会集中在一层显示
             If Me.MenuTopMost.Checked Then ScriptForm(ScriptIndex).Show(Me) Else ScriptForm(ScriptIndex).Show()
             '脚本在打开状态
-        ElseIf ScriptForm(ScriptIndex).Visible And ScriptFormVisible(ScriptIndex) Then
+        ElseIf ScriptForm(ScriptIndex).Visible And ScriptFormShown(ScriptIndex) Then
             '图标右键菜单项设为可用
             MenuCloseScript.Enabled = True
             MenuBreath.Enabled = True
@@ -986,7 +986,7 @@ Public Class SystemWorkStation
                 IPWebClient.Dispose()
                 '首次获取时(即程序启动时)不弹出提示浮窗
                 If ShowTipsForm Then
-                    TipsForm.PopupTips(Me, "Successfully :", TipsForm.TipsIconType.Exclamation, "Get IP and address !")
+                    TipsForm.PopupTips(Me, "Successfully :", UnityModule.TipsIconType.Exclamation, "Get IP and address !")
                 End If
                 '成功读取IP和地址，跳出过程
                 Exit Sub
@@ -998,7 +998,7 @@ Public Class SystemWorkStation
         IPLabel.Text = "LocalHost" : AddressLabel.Text = "Click to get."
         '首次获取时(即程序启动时)不弹出提示浮窗
         If ShowTipsForm Then
-            TipsForm.PopupTips(Me, "Error :", TipsForm.TipsIconType.Exclamation, "Can't get IP and Address.")
+            TipsForm.PopupTips(Me, "Error :", UnityModule.TipsIconType.Exclamation, "Can't get IP and Address.")
         End If
     End Sub
 
