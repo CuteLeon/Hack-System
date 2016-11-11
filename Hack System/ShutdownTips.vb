@@ -107,7 +107,7 @@ Public Class ShutdownTips
     ''' <summary>
     ''' 确认关机，做关机前的准备
     ''' </summary>
-    Private Sub Shutdown()
+    Public Sub Shutdown()
         '关机
         UnityModule.SystemClosing = True
         Me.Hide()

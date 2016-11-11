@@ -95,8 +95,8 @@ Public Class DownloaderForm
                 DownloadUpdateFunction()
             Case ClickToDo.Updated
                 DownloadLabel.Text = "正在关闭程序..."
-                'TODO:关闭程序，打开新版程序
                 CloseForm()
+                ShutdownTips.Shutdown()
         End Select
     End Sub
 

@@ -16,8 +16,6 @@ Public Class StartingUpUI
 
         StartingUpLable.Left = (My.Computer.Screen.Bounds.Width - StartingUpLable.Width) / 2
         StartingUpLable.Top = StartingUpControl.Bottom + 10
-        '播放开机音效
-        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("StartedUp"), AudioPlayMode.Background)
     End Sub
 
     Private Sub StartingUpUI_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -50,6 +48,9 @@ Public Class StartingUpUI
         SystemWorkStation.DownloadSpeedCountLabel.Cursor = SystemCursor
         SystemWorkStation.DateTimeLabel.Cursor = SystemCursor
         TipsForm.Cursor = SystemCursor
+
+        '播放开机音效
+        My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("StartedUp"), AudioPlayMode.Background)
     End Sub
 
     Private Sub StartingUpUI_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
