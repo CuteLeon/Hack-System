@@ -106,6 +106,8 @@ Public Class DownloaderForm
                 CloseForm()
             Case ClickToDo.CancelUpdate
                 DownloadLabel.Text = "正在下载更新...(" & LastProgressPercentage & "%)"
+                Dim ProgressBarWidth As Integer = 8 + (LastProgressPercentage * 234) \ 100
+                DLProgressBar.Image = My.Resources.SystemAssets.DownloadProgress.Clone(New Rectangle(0, 0, ProgressBarWidth, 19), Imaging.PixelFormat.Format32bppArgb)
                 DLOKButton.Hide()
                 DLCancelButton.Hide()
                 DLProgressBar.Show()
@@ -197,10 +199,11 @@ Public Class DownloaderForm
     ''' </summary>
     Private Sub DownloadProgressChanged(ByVal sender As Object, ByVal e As System.Net.DownloadProgressChangedEventArgs)
         If e.ProgressPercentage = LastProgressPercentage Then Exit Sub
+        LastProgressPercentage = e.ProgressPercentage
+        If DLProgressBar.Visible = False Then Exit Sub
         Dim ProgressBarWidth As Integer = 8 + (e.ProgressPercentage * 234) \ 100
         DownloadLabel.Text = "正在下载更新...(" & e.ProgressPercentage & "%)"
         DLProgressBar.Image = My.Resources.SystemAssets.DownloadProgress.Clone(New Rectangle(0, 0, ProgressBarWidth, 19), Imaging.PixelFormat.Format32bppArgb)
-        LastProgressPercentage = e.ProgressPercentage
     End Sub
 
     ''' <summary>
