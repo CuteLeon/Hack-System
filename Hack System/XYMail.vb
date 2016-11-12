@@ -27,7 +27,7 @@ Public Class XYMail
         If Me.Visible Then
             '初始化界面
             ReturnInfo.ForeColor = NormalColor
-            ReturnInfo.Text = "Mail function is ready."
+            ReturnInfo.Text = "邮箱模块准备完毕！"
         Else
             '中断进程
             Btn_Send.Enabled = True
@@ -64,7 +64,7 @@ Public Class XYMail
         MailThread = New Threading.Thread(AddressOf SendMail)
         Btn_Send.Enabled = False
         ReturnInfo.ForeColor = NormalColor
-        ReturnInfo.Text = "Mail Sending ..."
+        ReturnInfo.Text = "正在发送邮件..."
         Application.DoEvents()
 
         MailThread.Start()
@@ -135,12 +135,12 @@ Public Class XYMail
             '发送邮件
             Smtp.Send(Mail)
             Mail.Dispose()
-            ReturnInfo.Text = "Sent Successfully"
+            ReturnInfo.Text = "邮件发送成功！"
         Catch ex As Exception
             '捕获到异常
             Beep()
             ReturnInfo.ForeColor = FailColor
-            ReturnInfo.Text = "Failed! Error: " & Err.Number
+            ReturnInfo.Text = "发送失败： " & Err.Number
         End Try
 
         Btn_Send.Enabled = True

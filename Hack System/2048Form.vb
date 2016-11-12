@@ -265,7 +265,7 @@
     ''' </summary>
     Private Sub GameOver()
         DrawForm()
-        TipsForm.PopupTips(SystemWorkStation, "Game Over !", UnityModule.TipsIconType.Infomation, "Score： " & Score)
+        TipsForm.PopupTips(SystemWorkStation, "游戏结束 !", UnityModule.TipsIconType.Infomation, "分数： " & Score)
         ScoreLabel.Text = "0"
         Score = 0
         ReDim CardData(3, 3)

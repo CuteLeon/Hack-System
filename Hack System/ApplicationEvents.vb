@@ -19,7 +19,7 @@ Namespace My
             '命令行参数为"reset"时重置存档
             If InStr(e.CommandLine.First.ToLower, "reset") Then
                 My.Settings.Reset()
-                MsgBox("Config has been reset ! Please run me again.", MsgBoxStyle.Information, "Hack-System :")
+                MsgBox("配置已重置，请重新运行！", MsgBoxStyle.Information, "Hack-System :")
                 End
             End If
         End Sub

@@ -35,14 +35,14 @@ Partial Class CommandConsole
         '
         Me.CommandInputBox.BackColor = System.Drawing.Color.White
         Me.CommandInputBox.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.CommandInputBox.Font = New System.Drawing.Font("微软雅黑", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.CommandInputBox.Font = New System.Drawing.Font("微软雅黑", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.CommandInputBox.ForeColor = System.Drawing.Color.Gray
         Me.CommandInputBox.ImeMode = System.Windows.Forms.ImeMode.[On]
         Me.CommandInputBox.Location = New System.Drawing.Point(15, 331)
         Me.CommandInputBox.Name = "CommandInputBox"
-        Me.CommandInputBox.Size = New System.Drawing.Size(300, 20)
+        Me.CommandInputBox.Size = New System.Drawing.Size(300, 18)
         Me.CommandInputBox.TabIndex = 2
-        Me.CommandInputBox.Text = "Please input command..."
+        Me.CommandInputBox.Text = "请输入指令..."
         '
         'CommandTip
         '
@@ -54,7 +54,7 @@ Partial Class CommandConsole
         Me.CommandTip.Name = "CommandTip"
         Me.CommandTip.Size = New System.Drawing.Size(336, 40)
         Me.CommandTip.TabIndex = 3
-        Me.CommandTip.Text = "Hello,Welcome to Hack System !"
+        Me.CommandTip.Text = "欢迎使用 Hack System !"
         Me.CommandTip.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
         'CommandPast
@@ -112,9 +112,9 @@ Partial Class CommandConsole
         Me.ConsoleTitleLabel.ForeColor = System.Drawing.Color.Cyan
         Me.ConsoleTitleLabel.Location = New System.Drawing.Point(12, 13)
         Me.ConsoleTitleLabel.Name = "ConsoleTitleLabel"
-        Me.ConsoleTitleLabel.Size = New System.Drawing.Size(78, 19)
+        Me.ConsoleTitleLabel.Size = New System.Drawing.Size(65, 19)
         Me.ConsoleTitleLabel.TabIndex = 9
-        Me.ConsoleTitleLabel.Text = "Console："
+        Me.ConsoleTitleLabel.Text = "控制台："
         '
         'CommandConsole
         '

@@ -28,7 +28,7 @@ Partial Class MineSweeperForm
         '
         'MinefieldPanel
         '
-        Me.MinefieldPanel.Cursor = System.Windows.Forms.Cursors.Cross
+        Me.MinefieldPanel.Cursor = System.Windows.Forms.Cursors.Default
         Me.MinefieldPanel.Location = New System.Drawing.Point(10, 27)
         Me.MinefieldPanel.Name = "MinefieldPanel"
         Me.MinefieldPanel.Size = New System.Drawing.Size(320, 320)

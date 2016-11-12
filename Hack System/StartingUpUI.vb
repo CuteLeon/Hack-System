@@ -34,6 +34,7 @@ Public Class StartingUpUI
         XYMail.Cursor = SystemCursor
         LoginAndLockUI.Cursor = SystemCursor
         MineSweeperForm.Cursor = SystemCursor
+        MineSweeperForm.MinefieldPanel.Cursor = SystemCursor
         Game1010Form.Cursor = SystemCursor
         Game2048Form.Cursor = SystemCursor
         ShutdownTips.Cursor = SystemCursor

@@ -130,7 +130,7 @@ Partial Class XYMail
         Me.ReturnInfo.Name = "ReturnInfo"
         Me.ReturnInfo.Size = New System.Drawing.Size(165, 24)
         Me.ReturnInfo.TabIndex = 23
-        Me.ReturnInfo.Text = "Mail function is ready."
+        Me.ReturnInfo.Text = "邮箱模块准备完毕！"
         Me.ReturnInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'XYMail

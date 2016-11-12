@@ -674,7 +674,7 @@ Public Class SystemWorkStation
             DesktopIconHandle = GetDesktopIconHandle()
             If DesktopIconHandle = IntPtr.Zero Then
                 '如果查找DesktopIconHandle句柄失败时，无法置后显示，需要弹窗提示并取消任务
-                TipsForm.PopupTips(Me, "Can't find", UnityModule.TipsIconType.Infomation, "the Physical-Desktop!")
+                TipsForm.PopupTips(Me, "置后失败！", UnityModule.TipsIconType.Infomation, "无法定位物理桌面句柄！")
                 MenuTopMost.Checked = True '不改变 MenuTopMost 的勾选状态，防止重复响应 Click 事件
             Else
                 Me.TopMost = False
@@ -691,11 +691,11 @@ Public Class SystemWorkStation
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         '启动自定义壁纸选取对话框
         If CustomImageDialog.ShowDialog() = DialogResult.OK Then
-            Try '我为了方便，给过滤器加了"*.*"，但是啊，有些用户，Ta贱！非得作死，比如故意选取一个txt文件。需要容错处理！
+            Try '为选取文件方便，给过滤器加了"*.*"，为防止故意选取非图像格式文件，需要容错处理！
                 CustomWallpaperBitmap = Bitmap.FromFile(CustomImageDialog.FileName)
                 Me.BackgroundImage = CustomWallpaperBitmap
                 '弹出提示浮窗
-                TipsForm.PopupTips(Me, "Successfully !", UnityModule.TipsIconType.Infomation, "Set wallpaper successfully")
+                TipsForm.PopupTips(Me, "设置壁纸：", UnityModule.TipsIconType.Infomation, "设置自定义壁纸成功！")
                 WallpaperIndex = -1
                 '保存壁纸标识和自定义壁纸的Base64编码到存档
                 My.Settings.DesktopWallpaperIndex = WallpaperIndex
@@ -703,7 +703,7 @@ Public Class SystemWorkStation
                 My.Settings.Save()
             Catch ex As Exception
                 '出错时弹出提示浮窗
-                TipsForm.PopupTips(Me, "Error reading image", UnityModule.TipsIconType.Critical, "Please select again.")
+                TipsForm.PopupTips(Me, "设置壁纸：", UnityModule.TipsIconType.Critical, "无法读取文件为图像格式！")
             End Try
         Else
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
@@ -738,10 +738,10 @@ Public Class SystemWorkStation
                 My.Settings.UserHead = UnityModule.UserHeadString
                 My.Settings.Save()
                 '弹出提示浮窗
-                TipsForm.PopupTips(Me, "Successfully !", UnityModule.TipsIconType.Infomation, "Set user head successfully")
+                TipsForm.PopupTips(Me, "设置头像：", UnityModule.TipsIconType.Infomation, "设置用户头像成功！")
             Catch ex As Exception
                 '出错时弹出提示浮窗
-                TipsForm.PopupTips(Me, "Error reading image", UnityModule.TipsIconType.Critical, "Please select again.")
+                TipsForm.PopupTips(Me, "设置头像：", UnityModule.TipsIconType.Critical, "无法读取文件为图像格式！")
             End Try
         Else
             My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
@@ -769,7 +769,7 @@ Public Class SystemWorkStation
             LoginAndLockUI.UserNameControl.Text = vbNullString
             LoginAndLockUI.UserNameControl.Size = New Size(300, LoginAndLockUI.UserNameControl.Image.Height)
             '处理完毕弹出提示浮窗
-            TipsForm.PopupTips(Me, "Successfully !", UnityModule.TipsIconType.Infomation, "Set user name successfully")
+            TipsForm.PopupTips(Me, "设置用户名：", UnityModule.TipsIconType.Critical, "设置用户名成功！")
             '将用户名图像转换为Base64编码存进存档
             UnityModule.UserNameString = BitmapToString(UnityModule.UserNameBitmap)
             My.Settings.UserName = UnityModule.UserName
@@ -816,18 +816,18 @@ Public Class SystemWorkStation
                 SpeechRecognitionMode = False
                 SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_Off
                 '关闭成功弹出提示浮窗
-                TipsForm.PopupTips(Me, "Shuted the", UnityModule.TipsIconType.Exclamation, "RecognitionEngine off.")
+                TipsForm.PopupTips(Me, "语音识别：", UnityModule.TipsIconType.Exclamation, "语音识别引擎已经关闭！")
             Else
                 '开启语音识别
                 MySpeechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple)
                 SpeechRecognitionMode = True
                 SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_On
                 '开启成功弹出提示浮窗
-                TipsForm.PopupTips(Me, "Started the", UnityModule.TipsIconType.Infomation, "SpeechRecognitionEngine.")
+                TipsForm.PopupTips(Me, "语音识别：", UnityModule.TipsIconType.Exclamation, "语音识别引擎已经开启！")
             End If
         Catch ex As Exception
             '操作失败，弹出提示浮窗
-            TipsForm.PopupTips(Me, "Failed to control the", UnityModule.TipsIconType.Critical, "SpeechRecognitionEngine")
+            TipsForm.PopupTips(Me, "语音识别：", UnityModule.TipsIconType.Exclamation, "无法调用语音识别引擎！")
         End Try
     End Sub
 
@@ -986,7 +986,7 @@ Public Class SystemWorkStation
                 IPWebClient.Dispose()
                 '首次获取时(即程序启动时)不弹出提示浮窗
                 If ShowTipsForm Then
-                    TipsForm.PopupTips(Me, "Successfully :", UnityModule.TipsIconType.Exclamation, "Get IP and address !")
+                    TipsForm.PopupTips(Me, "获取IP定位 :", UnityModule.TipsIconType.Exclamation, "获取IP和位置成功！")
                 End If
                 '成功读取IP和地址，跳出过程
                 Exit Sub
@@ -998,7 +998,7 @@ Public Class SystemWorkStation
         IPLabel.Text = "LocalHost" : AddressLabel.Text = "Click to get."
         '首次获取时(即程序启动时)不弹出提示浮窗
         If ShowTipsForm Then
-            TipsForm.PopupTips(Me, "Error :", UnityModule.TipsIconType.Exclamation, "Can't get IP and Address.")
+            TipsForm.PopupTips(Me, "获取IP定位 :", UnityModule.TipsIconType.Exclamation, "无法获取IP和位置！")
         End If
     End Sub
 

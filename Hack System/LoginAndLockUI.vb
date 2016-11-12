@@ -376,7 +376,7 @@ Public Class LoginAndLockUI
         My.Settings.Save()
 
         '弹出提示浮窗
-        TipsForm.PopupTips(Me, "Successfully !", UnityModule.TipsIconType.Infomation, "Reset head successfully")
+        TipsForm.PopupTips(Me, "重置用户信息 !", UnityModule.TipsIconType.Infomation, "用户名和头像已恢复默认")
 
         Me.Activate()
     End Sub

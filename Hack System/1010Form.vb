@@ -413,7 +413,7 @@
     ''' </summary>
     Private Sub GameOver()
         '游戏结束的自定义过程，用以重置游戏
-        TipsForm.PopupTips(SystemWorkStation, "Game Over !", UnityModule.TipsIconType.Infomation, "Score： " & Score)
+        TipsForm.PopupTips(SystemWorkStation, "游戏结束 !", UnityModule.TipsIconType.Infomation, "分数： " & Score)
         '分数清零
         Score = 0
         ScoreLabel.Text = "0"

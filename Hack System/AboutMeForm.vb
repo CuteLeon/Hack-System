@@ -85,7 +85,10 @@
         End If
 
         Try
-            If Not (My.Computer.Network.Ping("raw.githubusercontent.com")) Then Exit Sub
+            If Not (My.Computer.Network.Ping("raw.githubusercontent.com")) Then
+                TipsForm.PopupTips(SystemWorkStation, "更新错误：", UnityModule.TipsIconType.Critical, "无法连接到更新服务器！")
+                Exit Sub
+            End If
             Dim VersionFileAdress As String = "https://raw.githubusercontent.com/CuteLeon/FileRepository/master/HackSystem-Execute/Version.txt"
             Dim WebStream As IO.Stream = Net.WebRequest.Create(VersionFileAdress).GetResponse().GetResponseStream()
             Dim WebStreamReader As IO.StreamReader = New IO.StreamReader(WebStream, System.Text.Encoding.UTF8)
