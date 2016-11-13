@@ -423,7 +423,7 @@ Public Class CommandConsole
                 '输出基本天气信息
                 CommandPast.AppendText("         今天：————————————" & vbCrLf)
                 '设置颜色为 Yellow
-                LineIndex = CommandPast.GetLineFromCharIndex(CommandPast.TextLength)
+                LineIndex = CommandPast.GetLineFromCharIndex(CommandPast.TextLength) - 1
                 CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex)
                 CommandPast.SelectionLength = CommandPast.Lines(LineIndex).Length
                 CommandPast.SelectionColor = Color.Yellow
@@ -445,7 +445,7 @@ Public Class CommandConsole
                 Dim DayBlock As String, NightBlock, HighTemperature, LowTemperature As String
                 CommandPast.AppendText("         今天和未来天气：———————" & vbCrLf)
                 '设置颜色为 Yellow
-                LineIndex = CommandPast.GetLineFromCharIndex(CommandPast.TextLength)
+                LineIndex = CommandPast.GetLineFromCharIndex(CommandPast.TextLength) - 1
                 CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex)
                 CommandPast.SelectionLength = CommandPast.Lines(LineIndex).Length
                 CommandPast.SelectionColor = Color.Yellow
@@ -466,9 +466,9 @@ Public Class CommandConsole
                     HighTemperature = Strings.Mid(HighTemperature, 4, HighTemperature.Length - 3)
                     LowTemperature = GetValue(WeatherBlock(Index), "low")
                     LowTemperature = Strings.Mid(LowTemperature, 4, LowTemperature.Length - 3)
-                    CommandPast.AppendText("            温度：" & LowTemperature & " ~ " & HighTemperature & vbCrLf)
-                    CommandPast.AppendText("               日间：" & GetValue(DayBlock, "type") & " (" & GetValue(DayBlock, "fengli") & "  " & GetValue(DayBlock, "fengxiang") & ")" & vbCrLf)
-                    CommandPast.AppendText("            夜间：" & GetValue(NightBlock, "type") & " (" & GetValue(NightBlock, "fengli") & "  " & GetValue(NightBlock, "fengxiang") & ")" & vbCrLf)
+                    CommandPast.AppendText("              温度：" & LowTemperature & " ~ " & HighTemperature & vbCrLf)
+                    CommandPast.AppendText("              日间：" & GetValue(DayBlock, "type") & " (" & GetValue(DayBlock, "fengli") & "  " & GetValue(DayBlock, "fengxiang") & ")" & vbCrLf)
+                    CommandPast.AppendText("              夜间：" & GetValue(NightBlock, "type") & " (" & GetValue(NightBlock, "fengli") & "  " & GetValue(NightBlock, "fengxiang") & ")" & vbCrLf)
                     '设置颜色为 PaleGreen
                     CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex + 1)
                     CommandPast.SelectionLength = CommandPast.TextLength - CommandPast.SelectionStart
@@ -481,13 +481,13 @@ Public Class CommandConsole
                 EnvironmentBlock = GetValue(WebPage, "environment")
                 CommandPast.AppendText("         环境参数：————————" & vbCrLf)
                 '设置颜色为 Yellow
-                LineIndex = CommandPast.GetLineFromCharIndex(CommandPast.TextLength)
+                LineIndex = CommandPast.GetLineFromCharIndex(CommandPast.TextLength) - 1
                 CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex)
                 CommandPast.SelectionLength = CommandPast.Lines(LineIndex).Length
                 CommandPast.SelectionColor = Color.Yellow
                 '输出空气质量信息
-                CommandPast.AppendText(“             AQI：” & GetValue(EnvironmentBlock, "aqi") & vbCrLf)
-                CommandPast.AppendText("         PM2.5：" & GetValue(EnvironmentBlock, "pm25") & vbCrLf)
+                CommandPast.AppendText(“              AQI：” & GetValue(EnvironmentBlock, "aqi") & vbCrLf)
+                CommandPast.AppendText("          PM2.5：" & GetValue(EnvironmentBlock, "pm25") & vbCrLf)
                 CommandPast.AppendText("      空气质量：" & GetValue(EnvironmentBlock, "quality") & vbCrLf)
                 ''设置颜色为 PaleGreen
                 CommandPast.SelectionStart = CommandPast.GetFirstCharIndexFromLine(LineIndex + 1)
