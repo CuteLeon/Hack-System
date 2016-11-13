@@ -212,7 +212,7 @@ Partial Class SystemWorkStation
         Me.SettingButtonControl.BackColor = System.Drawing.Color.Transparent
         Me.SettingButtonControl.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.SettingButtonControl.ForeColor = System.Drawing.Color.Aqua
-        Me.SettingButtonControl.Image = CType(resources.GetObject("SettingButtonControl.Image"), System.Drawing.Image)
+        Me.SettingButtonControl.Image = Global.HackSystem.My.Resources.SystemAssets.SettingButton_0
         Me.SettingButtonControl.ImageAlign = System.Drawing.ContentAlignment.TopCenter
         Me.SettingButtonControl.Location = New System.Drawing.Point(643, 411)
         Me.SettingButtonControl.Name = "SettingButtonControl"
