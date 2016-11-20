@@ -124,14 +124,14 @@ Public Class XYMail
             Smtp.Credentials = New System.Net.NetworkCredential("HackSystem", "HackSystem123") '"I'mHackSystem")
             Mail.From = New System.Net.Mail.MailAddress("HackSystem@yeah.net")
             Mail.To.Add(Txt_ToAddress.Text)
-            Mail.SubjectEncoding = System.Text.Encoding.GetEncoding("GB2312")
-            Mail.BodyEncoding = System.Text.Encoding.GetEncoding("GB2312")
+            Mail.SubjectEncoding = System.Text.Encoding.GetEncoding("UTF-8")
+            Mail.BodyEncoding = System.Text.Encoding.GetEncoding("UTF-8")
             Mail.Priority = System.Net.Mail.MailPriority.Normal
             Mail.Subject = Txt_MailTitle.Text
             '邮件内容支持HTML格式
             Mail.IsBodyHtml = True
             'HTML格式需要改变换行符vbCrLf为<br>
-            Mail.Body = Replace(Txt_MailBody.Text, vbCrLf, "<br>") & "<br><br><i><small>    ——Form：Hack System (V " & Application.ProductVersion & ")</small></i>"
+            Mail.Body = Replace(Txt_MailBody.Text, vbCrLf, "<br>") & "<br><br><i><small>    ——Form：Hack System (V " & Application.ProductVersion & ")</small></i>" & "<br><br><i><small>       Send by: " & Environment.UserName & " On " & My.Computer.Info.OSFullName & "</small></i>"
             '发送邮件
             Smtp.Send(Mail)
             Mail.Dispose()
