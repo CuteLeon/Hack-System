@@ -55,7 +55,7 @@ Partial Class LoginAndLockUI
         Me.PasswordTextBox.Location = New System.Drawing.Point(376, 260)
         Me.PasswordTextBox.MaxLength = 10
         Me.PasswordTextBox.Name = "PasswordTextBox"
-        Me.PasswordTextBox.PasswordChar = Global.Microsoft.VisualBasic.ChrW(1422)
+        Me.PasswordTextBox.PasswordChar = Global.Microsoft.VisualBasic.ChrW(12292)
         Me.PasswordTextBox.Size = New System.Drawing.Size(0, 24)
         Me.PasswordTextBox.TabIndex = 4
         Me.PasswordTextBox.Text = "Leon.ID"
@@ -95,14 +95,14 @@ Partial Class LoginAndLockUI
         'PasswordLabel
         '
         Me.PasswordLabel.BackColor = System.Drawing.Color.Transparent
-        Me.PasswordLabel.Font = New System.Drawing.Font("微软雅黑", 13.5!, System.Drawing.FontStyle.Bold)
+        Me.PasswordLabel.Font = New System.Drawing.Font("微软雅黑", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.PasswordLabel.ForeColor = System.Drawing.Color.White
         Me.PasswordLabel.Image = Global.HackSystem.My.Resources.SystemAssets.PasswordInputBox_Normal
         Me.PasswordLabel.Location = New System.Drawing.Point(367, 253)
         Me.PasswordLabel.Name = "PasswordLabel"
         Me.PasswordLabel.Size = New System.Drawing.Size(220, 40)
         Me.PasswordLabel.TabIndex = 9
-        Me.PasswordLabel.Text = "֎֎֎֎֎֎֎"
+        Me.PasswordLabel.Text = "〄〄〄〄〄〄〄"
         Me.PasswordLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'LastWallpaperButton
