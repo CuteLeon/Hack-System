@@ -75,7 +75,7 @@ Public Class DownloaderForm
 
     Private Sub CloseButton_Click(sender As Object, e As EventArgs) Handles CloseButton.Click
         If IsDownloading Then
-            DownloadLabel.Text = "正在下载更新，确定要取消下载吗？"
+            DownloadLabel.Text = "有更新正在下载，确定要取消更新吗？"
             ButtonState = ClickToDo.CancelUpdate
             DLOKButton.Show()
             DLCancelButton.Show()
@@ -180,16 +180,16 @@ Public Class DownloaderForm
     ''' </summary>
     Private Sub DownloadFileCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.AsyncCompletedEventArgs)
         'e.Cancelled 成立时表示是取消了异步下载任务，不做完成处理
-        If e.Cancelled = True Then Exit Sub
         IsDownloading = False
+        If e.Cancelled = True Then Exit Sub
         If e.Error Is Nothing Then
             My.Computer.Audio.Play(My.Resources.TipsRes.TipsAlarm, AudioPlayMode.Background)
-            DownloadLabel.Text = "更新成功，请运行新版程序。" & vbCrLf & "确定要立即退出当前版本吗？"
+            DownloadLabel.Text = "更新成功，请运行新版程序。" & vbCrLf & "要立即退出当前版本吗？"
             ButtonState = ClickToDo.Updated
         Else
             My.Computer.Audio.Play(My.Resources.SystemAssets.ShowConsole, AudioPlayMode.Background)
             IO.File.Delete(DLFilePath)
-            DownloadLabel.Text = "更新失败，请检查网络或更换路径。" & vbCrLf & "确定要重试吗？"
+            DownloadLabel.Text = "更新失败，请检查网络或更换路径。" & vbCrLf & "需要重试吗？"
             ButtonState = ClickToDo.RetryToUpdate
         End If
 

@@ -1,4 +1,5 @@
 Imports System.ComponentModel
+Imports System.Net
 Imports System.Speech.Recognition
 Imports Microsoft.VisualBasic.Devices
 
@@ -142,6 +143,10 @@ Public Class SystemWorkStation
     ''' 总下载速度；总上传速度
     ''' </summary>
     Dim DownloadSpeedCount As ULong, UploadSpeedCount As ULong
+    ''' <summary>
+    ''' 用于获取IP和城市定位
+    ''' </summary>
+    Dim IPAndAddressClient As WebClient
 #End Region
 
 #Region "窗体"
@@ -969,38 +974,55 @@ Public Class SystemWorkStation
     End Sub
 
     ''' <summary>
-    ''' 获取IP并从第三方网站获取物理地址
+    ''' 获取IP并异步从第三方网站获取物理地址
     ''' </summary>
     ''' <param name="ShowTipsForm">是否使用TipsForm弹出查询结果</param>
     Public Sub GetIPAndAddress(ByVal ShowTipsForm As Boolean)
+        If IPAndAddressClient IsNot Nothing AndAlso IPAndAddressClient.IsBusy Then Exit Sub
         Try
-            '网络未连接时程序会陷入等待假死，需要事先ping一下目标网站用于连接测试
-            If (My.Computer.Network.Ping("ip.chinaz.com")) Then
-                Dim IPWebClient As Net.WebClient = New Net.WebClient
-                Dim WebString As String = vbNullString
-                Dim RegIP As System.Text.RegularExpressions.Regex = New System.Text.RegularExpressions.Regex("\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}")
-                IPWebClient.Encoding = System.Text.Encoding.UTF8
-                WebString = IPWebClient.DownloadString(New Uri("http://ip.chinaz.com/getip.aspx"))
-                IPLabel.Text = RegIP.Match(WebString).ToString
-                AddressLabel.Text = Replace(Strings.Mid(WebString, IPLabel.Text.Length + 17, WebString.Length - IPLabel.Text.Length - 18), Chr(32), vbCrLf)
-                IPWebClient.Dispose()
-                '首次获取时(即程序启动时)不弹出提示浮窗
+            IPLabel.Text = "正在获取..." : AddressLabel.Text = "正在获取..."
+            Me.Refresh()
+            '需要事先ping一下目标网站用于连接测试，避免无法连接时浪费等待时间
+            If Not My.Computer.Network.Ping("ip.chinaz.com") Then
+                IPLabel.Text = "LocalHost" : AddressLabel.Text = "Click to get."
                 If ShowTipsForm Then
-                    TipsForm.PopupTips(Me, "获取IP定位 :", UnityModule.TipsIconType.Exclamation, "获取IP和位置成功！")
+                    TipsForm.PopupTips(Me, "获取IP定位 :", UnityModule.TipsIconType.Exclamation, "无法获取IP和位置！")
                 End If
-                '成功读取IP和地址，跳出过程
                 Exit Sub
             End If
+            IPAndAddressClient = New WebClient With {.Encoding = System.Text.Encoding.UTF8}
+            AddHandler IPAndAddressClient.DownloadStringCompleted, AddressOf DownloadStringCompleted
+            IPAndAddressClient.DownloadStringAsync(New Uri("http://ip.chinaz.com/getip.aspx"), ShowTipsForm)
         Catch ex As Exception
+            '出错或网络未连接时显示错误信息
+            IPLabel.Text = "LocalHost" : AddressLabel.Text = "Click to get."
+            If ShowTipsForm Then
+                TipsForm.PopupTips(Me, "获取IP定位 :", UnityModule.TipsIconType.Exclamation, "无法获取IP和位置！")
+            End If
         End Try
-
-        '出错或网络未连接时显示错误信息
-        IPLabel.Text = "LocalHost" : AddressLabel.Text = "Click to get."
-        '首次获取时(即程序启动时)不弹出提示浮窗
-        If ShowTipsForm Then
-            TipsForm.PopupTips(Me, "获取IP定位 :", UnityModule.TipsIconType.Exclamation, "无法获取IP和位置！")
-        End If
     End Sub
+
+    ''' <summary>
+    ''' 获取IP和地址完毕
+    ''' </summary>
+    Private Sub DownloadStringCompleted(ender As Object, e As System.Net.DownloadStringCompletedEventArgs)
+        'e.Cancelled 成立时表示是取消了异步任务，不做完成处理
+        If e.Cancelled = False Then
+            If e.Error Is Nothing Then
+                Dim RegIP As System.Text.RegularExpressions.Regex = New System.Text.RegularExpressions.Regex("\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}")
+                IPLabel.Text = RegIP.Match(e.Result).ToString
+                AddressLabel.Text = Replace(Strings.Mid(e.Result, IPLabel.Text.Length + 17, e.Result.Length - IPLabel.Text.Length - 18), Chr(32), vbCrLf)
+                Exit Sub
+            Else
+                If CType(e.UserState, Boolean) Then
+                    TipsForm.PopupTips(Me, "获取IP定位 :", UnityModule.TipsIconType.Exclamation, "无法获取IP和位置！")
+                End If
+            End If
+        End If
+        IPLabel.Text = "LocalHost" : AddressLabel.Text = "Click to get."
+        IPAndAddressClient.Dispose()
+    End Sub
+
 
     ''' <summary>
     ''' 格式化速度文本并添加单位
