@@ -108,6 +108,7 @@ Partial Class DownloaderForm
         Me.Name = "DownloaderForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "下载更新"
+        Me.TopMost = True
         Me.TransparencyKey = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         CType(Me.DLProgressBar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

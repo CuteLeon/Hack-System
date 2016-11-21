@@ -113,7 +113,6 @@ Partial Class AboutMeForm
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.TopMost = True
         CType(Me.AboutMeWallpaperControl, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.AboutMeControl, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
