@@ -323,11 +323,9 @@ Public Class CommandConsole
                     ScreenMelt.StopMelt()
                     CommandTip.Text = "停止 屏幕融化"
                     SystemWorkStation.Refresh()
-                    TipsForm.PopupTips(SystemWorkStation, "Tips", UnityModule.TipsIconType.Infomation, "停止 屏幕融化")
                 Else
                     ScreenMelt.StartMelt()
                     CommandTip.Text = "开始 屏幕融化"
-                    TipsForm.PopupTips(SystemWorkStation, "Tips", UnityModule.TipsIconType.Infomation, "开始 屏幕融化")
                 End If
                 '显示消息并设置颜色
                 CommandPast.AppendText("————————————————————" & vbCrLf & Now.ToString & vbCrLf & "       | " & CommandTip.Text & vbCrLf)
