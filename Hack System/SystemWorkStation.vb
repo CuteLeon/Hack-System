@@ -774,7 +774,7 @@ Public Class SystemWorkStation
             LoginAndLockUI.UserNameControl.Text = vbNullString
             LoginAndLockUI.UserNameControl.Size = New Size(300, LoginAndLockUI.UserNameControl.Image.Height)
             '处理完毕弹出提示浮窗
-            TipsForm.PopupTips(Me, "设置用户名：", UnityModule.TipsIconType.Critical, "设置用户名成功！")
+            TipsForm.PopupTips(Me, "设置用户名：", UnityModule.TipsIconType.Infomation, "设置用户名成功！")
             '将用户名图像转换为Base64编码存进存档
             UnityModule.UserNameString = BitmapToString(UnityModule.UserNameBitmap)
             My.Settings.UserName = UnityModule.UserName
