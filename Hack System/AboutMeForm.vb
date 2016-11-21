@@ -26,10 +26,6 @@ Public Class AboutMeForm
 
     Private Sub OKButtonControl_Click(sender As Object, e As EventArgs) Handles OKButtonControl.Click
         '点击按钮隐藏
-        If CheckClient IsNot Nothing Then
-            If CheckClient.IsBusy Then CheckClient.CancelAsync()
-            CheckClient.Dispose()
-        End If
         CloseMe()
     End Sub
 

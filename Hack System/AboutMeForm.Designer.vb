@@ -6,6 +6,10 @@ Partial Class AboutMeForm
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
+            If CheckClient IsNot Nothing Then
+                If CheckClient.IsBusy Then CheckClient.CancelAsync()
+                CheckClient.Dispose()
+            End If
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
             End If

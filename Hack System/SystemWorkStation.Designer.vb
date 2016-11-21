@@ -8,6 +8,10 @@ Partial Class SystemWorkStation
         Try
             If UserNameFont IsNot Nothing Then UserNameFont.Dispose()
             If MySpeechRecognitionEngine IsNot Nothing Then MySpeechRecognitionEngine.Dispose()
+            If IPAndAddressClient IsNot Nothing Then
+                If IPAndAddressClient.IsBusy Then IPAndAddressClient.CancelAsync()
+                IPAndAddressClient.Dispose()
+            End If
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
             End If
