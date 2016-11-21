@@ -69,10 +69,12 @@ Partial Class AboutMeForm
         '
         'WebLink
         '
+        Me.WebLink.ActiveLinkColor = System.Drawing.Color.DarkRed
         Me.WebLink.AutoSize = True
         Me.WebLink.BackColor = System.Drawing.Color.Transparent
         Me.WebLink.Cursor = System.Windows.Forms.Cursors.Hand
         Me.WebLink.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.WebLink.ForeColor = System.Drawing.Color.White
         Me.WebLink.LinkArea = New System.Windows.Forms.LinkArea(3, 33)
         Me.WebLink.LinkColor = System.Drawing.Color.Red
         Me.WebLink.Location = New System.Drawing.Point(113, 150)
@@ -82,6 +84,7 @@ Partial Class AboutMeForm
         Me.WebLink.TabStop = True
         Me.WebLink.Text = "访问：http://www.HackSystem.icoc.in/"
         Me.WebLink.UseCompatibleTextRendering = True
+        Me.WebLink.VisitedLinkColor = System.Drawing.Color.Red
         '
         'CheckUpdateLabel
         '

@@ -1,6 +1,9 @@
-﻿Public Class AboutMeForm
+﻿Imports System.Net
+
+Public Class AboutMeForm
 
 #Region "窗体和控件"
+    Dim CheckClient As WebClient
 
     Private Sub AboutMeForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         '设置控件的父容器
@@ -18,6 +21,10 @@
 
     Private Sub OKButtonControl_Click(sender As Object, e As EventArgs) Handles OKButtonControl.Click
         '点击按钮隐藏
+        If CheckClient IsNot Nothing Then
+            If CheckClient.IsBusy Then CheckClient.CancelAsync()
+            CheckClient.Dispose()
+        End If
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         Me.Hide()
         UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
@@ -85,24 +92,37 @@
         End If
 
         Try
+            If CheckClient IsNot Nothing AndAlso CheckClient.IsBusy Then Exit Sub
             If Not (My.Computer.Network.Ping("raw.githubusercontent.com")) Then
                 TipsForm.PopupTips(SystemWorkStation, "更新错误：", UnityModule.TipsIconType.Critical, "无法连接到更新服务器！")
                 Exit Sub
             End If
-            Dim VersionFileAdress As String = "https://raw.githubusercontent.com/CuteLeon/FileRepository/master/HackSystem-Execute/Version.txt"
-            Dim WebStream As IO.Stream = Net.WebRequest.Create(VersionFileAdress).GetResponse().GetResponseStream()
-            Dim WebStreamReader As IO.StreamReader = New IO.StreamReader(WebStream, System.Text.Encoding.UTF8)
-            Dim NewestVersion As String = WebStreamReader.ReadToEnd
-            WebStreamReader.Dispose()
+            CheckClient = New WebClient
+            AddHandler CheckClient.DownloadStringCompleted, AddressOf DownloadStringCompleted
+            CheckClient.DownloadStringAsync(New Uri("https://raw.githubusercontent.com/CuteLeon/FileRepository/master/HackSystem-Execute/Version.txt"))
+        Catch ex As Exception
+            TipsForm.PopupTips(SystemWorkStation, "更新错误：", UnityModule.TipsIconType.Critical, ex.Message)
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' 版本号文本下载结束
+    ''' </summary>
+    Private Sub DownloadStringCompleted(ender As Object, e As System.Net.DownloadStringCompletedEventArgs)
+        'e.Cancelled 成立时表示是取消了异步下载任务，不做完成处理
+        If e.Cancelled = True Then Exit Sub
+        If e.Error Is Nothing Then
+            Dim NewestVersion As String = e.Result
             If Application.ProductVersion = NewestVersion Then
                 TipsForm.PopupTips(SystemWorkStation, "无需更新：", UnityModule.TipsIconType.Infomation, "当前已经是最新版本！")
             Else
                 DownloaderForm.DownloadLabel.Text = "发现新版本（" & NewestVersion & "），是否更新？"
                 DownloaderForm.Show(SystemWorkStation)
             End If
-        Catch ex As Exception
-            TipsForm.PopupTips(SystemWorkStation, "更新错误：", UnityModule.TipsIconType.Critical, ex.Message)
-        End Try
+        Else
+            TipsForm.PopupTips(SystemWorkStation, "更新错误：", UnityModule.TipsIconType.Critical, e.Error.Message)
+        End If
+        CheckClient.Dispose()
     End Sub
 #End Region
 

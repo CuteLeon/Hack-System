@@ -39,6 +39,10 @@ Public Class DownloaderForm
         e.Cancel = True
         CloseButton_Click(sender, e)
     End Sub
+
+    Private Sub DownloaderForm_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+        Me.TopMost = True
+    End Sub
 #End Region
 
 #Region "按钮动态效果"
@@ -218,6 +222,7 @@ Public Class DownloaderForm
             Thread.Sleep(50)
         Loop
     End Sub
+
 #End Region
 
 End Class
