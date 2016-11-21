@@ -179,6 +179,8 @@ Public Class DownloaderForm
     ''' 文件下载结束
     ''' </summary>
     Private Sub DownloadFileCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.AsyncCompletedEventArgs)
+        '容错处理，防止删除时DLFilePath会出错，另辟线程循环删除又容易在重试下载时冲突
+        On Error Resume Next
         'e.Cancelled 成立时表示是取消了异步下载任务，不做完成处理
         IsDownloading = False
         If e.Cancelled = True Then Exit Sub
