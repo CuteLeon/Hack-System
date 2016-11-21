@@ -147,13 +147,15 @@ Public Class DownloaderForm
             .AddExtension = True,
             .CheckPathExists = True,
             .InitialDirectory = Application.StartupPath,
-            .FileName = "HackSystem_New",
+            .FileName = "Hack System_New",
             .Filter = "EXE 可执行程序|*.exe",
             .Title = "请选择新版本 Hack-System 保存位置：",
             .ValidateNames = True
         }
         If SaveDialog.ShowDialog = DialogResult.OK Then
+            LastProgressPercentage = 0
             DownloadLabel.Text = "正在下载更新...(0%)"
+            DLProgressBar.Image = Nothing
             IsDownloading = True
             DLOKButton.Hide()
             DLCancelButton.Hide()
@@ -201,8 +203,8 @@ Public Class DownloaderForm
         If e.ProgressPercentage = LastProgressPercentage Then Exit Sub
         LastProgressPercentage = e.ProgressPercentage
         If DLProgressBar.Visible = False Then Exit Sub
-        Dim ProgressBarWidth As Integer = 8 + (e.ProgressPercentage * 234) \ 100
-        DownloadLabel.Text = "正在下载更新...(" & e.ProgressPercentage & "%)"
+        Dim ProgressBarWidth As Integer = 8 + (LastProgressPercentage * 234) \ 100
+        DownloadLabel.Text = "正在下载更新...(" & LastProgressPercentage & "%)"
         DLProgressBar.Image = My.Resources.SystemAssets.DownloadProgress.Clone(New Rectangle(0, 0, ProgressBarWidth, 19), Imaging.PixelFormat.Format32bppArgb)
     End Sub
 

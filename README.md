@@ -41,9 +41,12 @@
 ![image](./Screenshot/thumb/CuteLeon.Hack-System.S10.jpg)
 ***
 * HackSystem 内附带的1010和2048小游戏(上图的扫雷也是内置的)。
-![image](./Screenshot/thumb/CuteLeon.Hack-System.S12.jpg)
+![image](./Screenshot/thumb/CuteLeon.Hack-System.S11.jpg)
 ***
 * HackSystem 关闭。
-![image](./Screenshot/thumb/CuteLeon.Hack-System.S11.jpg)
+![image](./Screenshot/thumb/CuteLeon.Hack-System.S12.jpg)
+***
+* HackSystem 检查更新。
+![image](./Screenshot/thumb/CuteLeon.Hack-System.S13.jpg)
 
 > __BY: Leon.ID@QQ.COM__
