@@ -82,7 +82,6 @@ Public Class AboutMeForm
     ''' </summary>
     Private Sub CloseMe(Optional CancelClose As Boolean = False)
         CheckUpdateLabel.Text = "检查更新"
-        Me.Refresh()
         My.Computer.Audio.Play(My.Resources.SystemAssets.ResourceManager.GetStream("MouseClick"), AudioPlayMode.Background)
         UnityModule.SetForegroundWindow(SystemWorkStation.Handle)
         If Not CancelClose Then Me.Close()
@@ -101,6 +100,7 @@ Public Class AboutMeForm
 
         Try
             CheckUpdateLabel.Text = "正在检查..."
+            Me.Refresh()
             If CheckClient IsNot Nothing AndAlso CheckClient.IsBusy Then Exit Sub
             If Not (My.Computer.Network.Ping("raw.githubusercontent.com")) Then
                 CheckUpdateLabel.Text = "检查更新"
