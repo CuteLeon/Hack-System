@@ -149,9 +149,9 @@ Public Class VMMainForm
         ProcessListComboBox.Width = ControlPanel.Width - 30
 
         SegmentPageLabel.Parent = ControlPanel
-        DispathComboBox.Parent = ControlPanel
-        DispathComboBox.Width = ControlPanel.Width - 30
-        DispathComboBox.SelectedIndex = 0
+        DispatchComboBox.Parent = ControlPanel
+        DispatchComboBox.Width = ControlPanel.Width - 30
+        DispatchComboBox.SelectedIndex = 0
 
         MemoryRectangle = New Rectangle(15, 35, MemoryManagerPanel.Width - 30, MemoryManagerPanel.Height - 50)
         MemoryCellHeight = MemoryRectangle.Height / Max_MemorySize
@@ -227,7 +227,7 @@ Public Class VMMainForm
         NextPID = 0
         LastCFFIndex = 0
         SegmentPageButton.Enabled = True
-        If DispathComboBox.Visible Then
+        If DispatchComboBox.Visible Then
             MemoryManagerPanel.Image = CreateMemoryBitmapUnSegmant()
             CreateFreeMemoryBitmap(False) '重置系统
         Else
@@ -239,8 +239,8 @@ Public Class VMMainForm
     End Sub
 
     Private Sub SegmentPageButton_Click(sender As Object, e As EventArgs) Handles SegmentPageButton.Click
-        DispathComboBox.Visible = Not DispathComboBox.Visible
-        Select Case DispathComboBox.Visible
+        DispatchComboBox.Visible = Not DispatchComboBox.Visible
+        Select Case DispatchComboBox.Visible
             Case True
                 SegmentPageLabel.Text = "请选择空闲内存选择算法："
                 SegmentPageButton.Text = "     禁止分页"
@@ -259,14 +259,14 @@ Public Class VMMainForm
         End Select
         MemoryBackUpPanel.Image = MemoryManagerPanel.Image
 
-        'LogLabel.TextBox.Text &= "切换分页模式：" & IIf(DispathComboBox.Visible, "不", vbNullString) & "分页" & vbCrLf
+        'LogLabel.TextBox.Text &= "切换分页模式：" & IIf(DispatchComboBox.Visible, "不", vbNullString) & "分页" & vbCrLf
         GC.Collect()
     End Sub
 
     Private Sub AddProcessButton_Click(sender As Object, e As EventArgs) Handles AddProcessButton.Click
         If SegmentPageButton.Enabled Then SegmentPageButton.Enabled = False
 
-        Select Case DispathComboBox.Visible
+        Select Case DispatchComboBox.Visible
             Case True '不分页
                 AddProcessUnSegment()
             Case False '分页
@@ -280,7 +280,7 @@ Public Class VMMainForm
     Private Sub DisposeProcessButton_Click(sender As Object, e As EventArgs) Handles DisposeProcessButton.Click
         If ProcessListComboBox.SelectedIndex = -1 Then Exit Sub
 
-        Select Case DispathComboBox.Visible
+        Select Case DispatchComboBox.Visible
             Case True '不分页
                 DisposeProcessUnSegment()
             Case False '分页
@@ -364,7 +364,7 @@ Public Class VMMainForm
             Exit Sub
         End If
 
-        Dim NextFreeMemoryNode As MemoryNodeClass = NextFreeMemoryNodes(DispathComboBox.SelectedIndex)
+        Dim NextFreeMemoryNode As MemoryNodeClass = NextFreeMemoryNodes(DispatchComboBox.SelectedIndex)
         Dim InsProcess As ProcessClass = New ProcessClass(NextPID, "进程-" & NextPID, ProcessMemorySizeNumeric.Value, Color.FromArgb(UnityRandom.Next(256), UnityRandom.Next(256), UnityRandom.Next(256)))
 
         If IsNothing(NextFreeMemoryNode) Then

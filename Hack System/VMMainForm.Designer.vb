@@ -39,7 +39,7 @@ Partial Class VMMainForm
         Me.DisposeProcessLabel = New System.Windows.Forms.Label()
         Me.SegmentPageButton = New System.Windows.Forms.Label()
         Me.SegmentPageLabel = New System.Windows.Forms.Label()
-        Me.DispathComboBox = New System.Windows.Forms.ComboBox()
+        Me.DispatchComboBox = New System.Windows.Forms.ComboBox()
         Me.LogLabel = New HackSystem.LeonTextBox()
         CType(Me.ProcessMemorySizeNumeric, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -277,18 +277,18 @@ Partial Class VMMainForm
         Me.SegmentPageLabel.TabIndex = 36
         Me.SegmentPageLabel.Text = "设置分页大小："
         '
-        'DispathComboBox
+        'DispatchComboBox
         '
-        Me.DispathComboBox.BackColor = System.Drawing.Color.White
-        Me.DispathComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.DispathComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.DispathComboBox.Font = New System.Drawing.Font("微软雅黑", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.DispathComboBox.FormattingEnabled = True
-        Me.DispathComboBox.Items.AddRange(New Object() {"首次适应算法", "循环首次适应算法", "最佳适应算法", "最坏适应算法"})
-        Me.DispathComboBox.Location = New System.Drawing.Point(15, 378)
-        Me.DispathComboBox.Name = "DispathComboBox"
-        Me.DispathComboBox.Size = New System.Drawing.Size(157, 28)
-        Me.DispathComboBox.TabIndex = 37
+        Me.DispatchComboBox.BackColor = System.Drawing.Color.White
+        Me.DispatchComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.DispatchComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.DispatchComboBox.Font = New System.Drawing.Font("微软雅黑", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.DispatchComboBox.FormattingEnabled = True
+        Me.DispatchComboBox.Items.AddRange(New Object() {"首次适应算法", "循环首次适应算法", "最佳适应算法", "最坏适应算法"})
+        Me.DispatchComboBox.Location = New System.Drawing.Point(15, 378)
+        Me.DispatchComboBox.Name = "DispatchComboBox"
+        Me.DispatchComboBox.Size = New System.Drawing.Size(157, 28)
+        Me.DispatchComboBox.TabIndex = 37
         '
         'LogLabel
         '
@@ -322,7 +322,7 @@ Partial Class VMMainForm
         Me.Controls.Add(Me.LogoLabel)
         Me.Controls.Add(Me.CloseButton)
         Me.Controls.Add(Me.ControlPanel)
-        Me.Controls.Add(Me.DispathComboBox)
+        Me.Controls.Add(Me.DispatchComboBox)
         Me.Controls.Add(Me.SegmentPageButton)
         Me.Controls.Add(Me.FreeMemorySortByAddressPanel)
         Me.DoubleBuffered = True
@@ -356,5 +356,5 @@ Partial Class VMMainForm
     Friend WithEvents DisposeProcessLabel As Label
     Friend WithEvents SegmentPageButton As Label
     Friend WithEvents SegmentPageLabel As Label
-    Friend WithEvents DispathComboBox As ComboBox
+    Friend WithEvents DispatchComboBox As ComboBox
 End Class

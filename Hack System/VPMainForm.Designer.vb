@@ -27,7 +27,7 @@ Partial Class VPMainForm
         Me.CreateJobListButton = New System.Windows.Forms.Label()
         Me.LogoLabel = New System.Windows.Forms.Label()
         Me.TimeLinePanel = New System.Windows.Forms.Label()
-        Me.DispathPanel = New System.Windows.Forms.Label()
+        Me.DispatchPanel = New System.Windows.Forms.Label()
         Me.PlayPauseButton = New System.Windows.Forms.Label()
         Me.SystemClockTitle = New System.Windows.Forms.Label()
         Me.SystemClockLabel = New System.Windows.Forms.Label()
@@ -38,7 +38,7 @@ Partial Class VPMainForm
         Me.WaitLabel = New System.Windows.Forms.Label()
         Me.ExecuteLabel = New System.Windows.Forms.Label()
         Me.NextJobTipLabel = New System.Windows.Forms.Label()
-        Me.DispathComboBox = New System.Windows.Forms.ComboBox()
+        Me.DispatchComboBox = New System.Windows.Forms.ComboBox()
         Me.SettingButton = New System.Windows.Forms.Label()
         Me.RecordPanel = New System.Windows.Forms.Label()
         Me.ReplayCheckBox = New System.Windows.Forms.CheckBox()
@@ -100,18 +100,18 @@ Partial Class VPMainForm
         Me.TimeLinePanel.Text = "时间线："
         Me.TimeLinePanel.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
-        'DispathPanel
+        'DispatchPanel
         '
-        Me.DispathPanel.BackColor = System.Drawing.Color.Transparent
-        Me.DispathPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.DispathPanel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.DispathPanel.ForeColor = System.Drawing.Color.Transparent
-        Me.DispathPanel.Location = New System.Drawing.Point(30, 222)
-        Me.DispathPanel.Name = "DispathPanel"
-        Me.DispathPanel.Size = New System.Drawing.Size(474, 100)
-        Me.DispathPanel.TabIndex = 7
-        Me.DispathPanel.Text = "调度区："
-        Me.DispathPanel.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.DispatchPanel.BackColor = System.Drawing.Color.Transparent
+        Me.DispatchPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.DispatchPanel.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.DispatchPanel.ForeColor = System.Drawing.Color.Transparent
+        Me.DispatchPanel.Location = New System.Drawing.Point(30, 222)
+        Me.DispatchPanel.Name = "DispatchPanel"
+        Me.DispatchPanel.Size = New System.Drawing.Size(474, 100)
+        Me.DispatchPanel.TabIndex = 7
+        Me.DispatchPanel.Text = "调度区："
+        Me.DispatchPanel.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'PlayPauseButton
         '
@@ -239,19 +239,19 @@ Partial Class VPMainForm
         Me.NextJobTipLabel.Text = "下次应执行作业 ▶"
         Me.NextJobTipLabel.Visible = False
         '
-        'DispathComboBox
+        'DispatchComboBox
         '
-        Me.DispathComboBox.BackColor = System.Drawing.Color.Black
-        Me.DispathComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.DispathComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.DispathComboBox.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.DispathComboBox.ForeColor = System.Drawing.Color.White
-        Me.DispathComboBox.FormattingEnabled = True
-        Me.DispathComboBox.Items.AddRange(New Object() {"先来先服务-FCFS", "短作业优先-SJF", "最高响应比优先-HRN", "优先数调度-HPF", "时间片轮转-RR", "多级反馈队列-MFQ"})
-        Me.DispathComboBox.Location = New System.Drawing.Point(481, 46)
-        Me.DispathComboBox.Name = "DispathComboBox"
-        Me.DispathComboBox.Size = New System.Drawing.Size(160, 28)
-        Me.DispathComboBox.TabIndex = 19
+        Me.DispatchComboBox.BackColor = System.Drawing.Color.Black
+        Me.DispatchComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.DispatchComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.DispatchComboBox.Font = New System.Drawing.Font("微软雅黑", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.DispatchComboBox.ForeColor = System.Drawing.Color.White
+        Me.DispatchComboBox.FormattingEnabled = True
+        Me.DispatchComboBox.Items.AddRange(New Object() {"先来先服务-FCFS", "短作业优先-SJF", "最高响应比优先-HRN", "优先数调度-HPF", "时间片轮转-RR", "多级反馈队列-MFQ"})
+        Me.DispatchComboBox.Location = New System.Drawing.Point(481, 46)
+        Me.DispatchComboBox.Name = "DispatchComboBox"
+        Me.DispatchComboBox.Size = New System.Drawing.Size(160, 28)
+        Me.DispatchComboBox.TabIndex = 19
         '
         'SettingButton
         '
@@ -340,7 +340,7 @@ Partial Class VPMainForm
         Me.Controls.Add(Me.ReplayCheckBox)
         Me.Controls.Add(Me.RecordPanel)
         Me.Controls.Add(Me.SettingButton)
-        Me.Controls.Add(Me.DispathComboBox)
+        Me.Controls.Add(Me.DispatchComboBox)
         Me.Controls.Add(Me.NextJobTipLabel)
         Me.Controls.Add(Me.ExecuteLabel)
         Me.Controls.Add(Me.WaitLabel)
@@ -349,7 +349,7 @@ Partial Class VPMainForm
         Me.Controls.Add(Me.SpeedDownButton)
         Me.Controls.Add(Me.SystemClockTitle)
         Me.Controls.Add(Me.PlayPauseButton)
-        Me.Controls.Add(Me.DispathPanel)
+        Me.Controls.Add(Me.DispatchPanel)
         Me.Controls.Add(Me.TimeLinePanel)
         Me.Controls.Add(Me.LogoLabel)
         Me.Controls.Add(Me.CreateJobListButton)
@@ -372,7 +372,7 @@ Partial Class VPMainForm
     Friend WithEvents CreateJobListButton As Label
     Friend WithEvents LogoLabel As Label
     Friend WithEvents TimeLinePanel As Label
-    Friend WithEvents DispathPanel As Label
+    Friend WithEvents DispatchPanel As Label
     Friend WithEvents PlayPauseButton As Label
     Friend WithEvents SystemClockTitle As Label
     Friend WithEvents SystemClockLabel As Label
@@ -383,7 +383,7 @@ Partial Class VPMainForm
     Friend WithEvents WaitLabel As Label
     Friend WithEvents ExecuteLabel As Label
     Friend WithEvents NextJobTipLabel As Label
-    Friend WithEvents DispathComboBox As ComboBox
+    Friend WithEvents DispatchComboBox As ComboBox
     Friend WithEvents SettingButton As Label
     Friend WithEvents RecordPanel As Label
     Friend WithEvents ReplayCheckBox As CheckBox
