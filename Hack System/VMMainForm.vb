@@ -291,7 +291,6 @@ Public Class VMMainForm
     End Sub
 
     Private Sub RelocateButton_Click(sender As Object, e As EventArgs) Handles RelocateButton.Click
-        If FreeMemoryListByAddr.Count <= 1 Then Exit Sub
         Dim InsMemoryNode As MemoryNodeClass = FirstMemoryNode
         Do While True
             If IsNothing(InsMemoryNode.Process) Then
