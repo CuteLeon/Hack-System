@@ -20,10 +20,6 @@
     ''' </summary>
     Dim ScoreList() As Integer = {0, 10, 30, 60, 100, 150, 210}
     ''' <summary>
-    ''' 在 ObjectModel 里代表不存在的坐标（区别于 Point.Empty）
-    ''' </summary>
-    Dim EmptyPoint As Point = New Point(-1, -1)
-    ''' <summary>
     ''' 鼠标拖动标签时鼠标坐标与标签起点差值
     ''' </summary>
     Dim MousePointInLabel As Point
@@ -87,26 +83,26 @@
     ''' <summary>
     ''' 物体模型
     ''' </summary>
-    Dim ObjectModel(,) As Point = {
-        {New Point(0, 0), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'单个方格
-        {New Point(0, 0), New Point(1, 0), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'垂直排列的两个方格
-        {New Point(0, 0), New Point(0, 1), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'水平排量的两个方格
-        {New Point(1, 0), New Point(0, 1), New Point(1, 1), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'缺少第二象限的三个方格
-        {New Point(0, 0), New Point(1, 0), New Point(1, 1), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'缺少第一象限的三个方格
-        {New Point(0, 0), New Point(0, 1), New Point(1, 1), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'缺少第三象限的三个方格
-        {New Point(0, 0), New Point(1, 0), New Point(0, 1), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'缺少第四象限的三个方格
-        {New Point(0, 0), New Point(1, 0), New Point(2, 0), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'垂直的三个方格
-        {New Point(0, 0), New Point(0, 1), New Point(0, 2), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'水平的三个方格
-        {New Point(0, 0), New Point(1, 0), New Point(0, 1), New Point(1, 1), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'四个紧凑的方格
-        {New Point(0, 0), New Point(1, 0), New Point(2, 0), New Point(3, 0), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'垂直的四个方格
-        {New Point(0, 0), New Point(0, 1), New Point(0, 2), New Point(0, 3), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'水平的四个方格
-        {New Point(0, 2), New Point(1, 2), New Point(2, 2), New Point(2, 1), New Point(2, 0), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'缺少第二象限的五个方格
-        {New Point(0, 0), New Point(1, 0), New Point(2, 0), New Point(2, 1), New Point(2, 2), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'缺少第一象限的五个方格
-        {New Point(0, 0), New Point(0, 1), New Point(0, 2), New Point(1, 2), New Point(2, 2), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'缺少第三象限的五个方格
-        {New Point(0, 0), New Point(0, 1), New Point(0, 2), New Point(1, 0), New Point(2, 0), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'缺少第四象限的五个方格
-        {New Point(0, 0), New Point(1, 0), New Point(2, 0), New Point(3, 0), New Point(4, 0), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'垂直的五个方格
-        {New Point(0, 0), New Point(0, 1), New Point(0, 2), New Point(0, 3), New Point(0, 4), EmptyPoint, EmptyPoint, EmptyPoint, EmptyPoint},'水平的五个方格
-        {New Point(0, 0), New Point(0, 1), New Point(0, 2), New Point(1, 0), New Point(1, 1), New Point(1, 2), New Point(2, 0), New Point(2, 1), New Point(2, 2)}'九个方格组成的超大正方形
+    Dim ObjectModel As Point()() = {
+        New Point() {New Point(0, 0)},'单个方格
+        New Point() {New Point(0, 0), New Point(1, 0)},'垂直排列的两个方格
+        New Point() {New Point(0, 0), New Point(0, 1)},'水平排量的两个方格
+        New Point() {New Point(1, 0), New Point(0, 1), New Point(1, 1)},'缺少第二象限的三个方格
+        New Point() {New Point(0, 0), New Point(1, 0), New Point(1, 1)},'缺少第一象限的三个方格
+        New Point() {New Point(0, 0), New Point(0, 1), New Point(1, 1)},'缺少第三象限的三个方格
+        New Point() {New Point(0, 0), New Point(1, 0), New Point(0, 1)},'缺少第四象限的三个方格
+        New Point() {New Point(0, 0), New Point(1, 0), New Point(2, 0)},'垂直的三个方格
+        New Point() {New Point(0, 0), New Point(0, 1), New Point(0, 2)},'水平的三个方格
+        New Point() {New Point(0, 0), New Point(1, 0), New Point(0, 1), New Point(1, 1)},'四个紧凑的方格
+        New Point() {New Point(0, 0), New Point(1, 0), New Point(2, 0), New Point(3, 0)},'垂直的四个方格
+        New Point() {New Point(0, 0), New Point(0, 1), New Point(0, 2), New Point(0, 3)},'水平的四个方格
+        New Point() {New Point(0, 2), New Point(1, 2), New Point(2, 2), New Point(2, 1), New Point(2, 0)},'缺少第二象限的五个方格
+        New Point() {New Point(0, 0), New Point(1, 0), New Point(2, 0), New Point(2, 1), New Point(2, 2)},'缺少第一象限的五个方格
+        New Point() {New Point(0, 0), New Point(0, 1), New Point(0, 2), New Point(1, 2), New Point(2, 2)},'缺少第三象限的五个方格
+        New Point() {New Point(0, 0), New Point(0, 1), New Point(0, 2), New Point(1, 0), New Point(2, 0)},'缺少第四象限的五个方格
+        New Point() {New Point(0, 0), New Point(1, 0), New Point(2, 0), New Point(3, 0), New Point(4, 0)},'垂直的五个方格
+        New Point() {New Point(0, 0), New Point(0, 1), New Point(0, 2), New Point(0, 3), New Point(0, 4)},'水平的五个方格
+        New Point() {New Point(0, 0), New Point(0, 1), New Point(0, 2), New Point(1, 0), New Point(1, 1), New Point(1, 2), New Point(2, 0), New Point(2, 1), New Point(2, 2)}'九个方格组成的超大正方形
     }
 
     Private Sub GameForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -180,11 +176,10 @@
             ObjectLabelLocation(Index) = ObjectLabels(Index).Location
             Using CardGraphics As Graphics = Graphics.FromImage(ObjectImage(Index))
                 '绘制物体模型和颜色对应的物体图像
-                For PointIndex As Integer = 0 To 8
-                    If ObjectModel(ObjectType(Index), PointIndex).Equals(EmptyPoint) Then Exit For '遍历到空坐标结束循环
+                For Each ObjectCell As Point In ObjectModel(ObjectType(Index))
                     CardGraphics.FillRectangle(New SolidBrush(ObjectColor(Index)), New Rectangle(
-                        ObjectModel(ObjectType(Index), PointIndex).Y * CardSize + (ObjectModel(ObjectType(Index), PointIndex).Y) * MarginSize,
-                        ObjectModel(ObjectType(Index), PointIndex).X * CardSize + (ObjectModel(ObjectType(Index), PointIndex).X) * MarginSize,
+                        ObjectCell.Y * CardSize + (ObjectCell.Y) * MarginSize,
+                        ObjectCell.X * CardSize + (ObjectCell.X) * MarginSize,
                         CardSize, CardSize))
                 Next
             End Using
@@ -250,7 +245,6 @@
     Private Function MoveToGameAera(ByVal Index As Integer) As Boolean
         Dim IndexX, IndexY As Integer '当前鼠标位置对应的 CardData 坐标
         Dim PointsInGameAera(0) As Point '记录拖入的物体在游戏区对应的坐标组，方便拖入成功时赋值
-        Dim PointInObjectModel As Point '用作物体模型里坐标
         Dim PointInGameAera As Point '用作游戏区里坐标
         '根据鼠标在游戏区的坐标判断在 CardData 数组所对应的坐标
         IndexY = Math.Round((MousePosition.X - PaddingSize - MousePointInLabel.X - Me.Left) / (CardSize + MarginSize))
@@ -258,11 +252,10 @@
         '防止数组越界
         If IndexX < 0 OrElse IndexX > 9 OrElse IndexY < 0 OrElse IndexY > 9 Then Return False
         '检测当前位置是否放得下物体
-        For PointIndex As Integer = 0 To 8
-            PointInObjectModel = ObjectModel(ObjectType(Index), PointIndex)
-            If PointInObjectModel.Equals(EmptyPoint) Then Exit For
-            PointInGameAera.X = IndexX + PointInObjectModel.X
-            PointInGameAera.Y = IndexY + PointInObjectModel.Y
+        For Each ObjectCell As Point In ObjectModel(ObjectType(Index))
+            PointInGameAera.X = IndexX + ObjectCell.X
+            PointInGameAera.Y = IndexY + ObjectCell.Y
+
             '物体超出到游戏区边缘，当前坐标放不下物体，返回假
             If PointInGameAera.X < 0 OrElse PointInGameAera.X > 9 OrElse PointInGameAera.Y < 0 OrElse PointInGameAera.Y > 9 Then Return False
             If CardData(PointInGameAera.X, PointInGameAera.Y) Then
@@ -389,16 +382,12 @@
     ''' <param name="ObjectType"></param>
     ''' <returns>能否放置</returns>
     Private Function CanPutItIn(ByVal PointX As Integer, ByVal PointY As Integer, ByVal ObjectType As Integer) As Boolean
-        Dim PointInObjectModel As Point '在物体模型内的坐标
         Dim PointInGameAera As Point '在游戏区对应的坐标
         '遍历物体模型的坐标组
-        For PointIndex As Integer = 0 To 8
-            PointInObjectModel = ObjectModel(ObjectType, PointIndex)
-            '遇到模型内空坐标时跳出循环
-            If PointInObjectModel.Equals(EmptyPoint) Then Exit For
+        For Each ObjectCell As Point In ObjectModel(ObjectType)
             '计算物体在游戏区内对应的坐标
-            PointInGameAera.X = PointX + PointInObjectModel.X
-            PointInGameAera.Y = PointY + PointInObjectModel.Y
+            PointInGameAera.X = PointX + ObjectCell.X
+            PointInGameAera.Y = PointY + ObjectCell.Y
             '物体超出到游戏区边缘，当前坐标放不下物体，返回假
             If PointInGameAera.X < 0 OrElse PointInGameAera.X > 9 OrElse PointInGameAera.Y < 0 OrElse PointInGameAera.Y > 9 Then Return False
             '游戏区目标坐标已经放入了物体，无法重复放入，返回假

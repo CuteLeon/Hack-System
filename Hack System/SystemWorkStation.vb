@@ -352,7 +352,7 @@ Public Class SystemWorkStation
             AddHandler MySpeechRecognitionEngine.SpeechRecognized, AddressOf SpeechRecognitionEngine_SpeechRecognized
             'AddHandler MySpeechRecognitionEngine.AudioStateChanged, AddressOf SpeechRecognitionEngine_AudioStateChanged
         Catch ex As Exception
-            '开启语音室备引擎失败，善后处理
+            '开启语音引擎失败，善后处理
             VoiceLevelBar.Value = 0
             SpeechButtonControl.Image = My.Resources.SystemAssets.MicroPhone_Off
             MySpeechRecognitionEngine.Dispose()
