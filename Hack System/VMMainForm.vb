@@ -302,10 +302,12 @@ Public Class VMMainForm
                     InsMemoryNode = InsMemoryNode.NextNode
                 Else
                     '首节点为空
-                    InsMemoryNode.NextNode.StartPoint = 0
-                    InsMemoryNode = InsMemoryNode.NextNode
-                    FirstMemoryNode = InsMemoryNode
-                    InsMemoryNode.LastNode = Nothing
+                    If Not IsNothing(InsMemoryNode.NextNode) Then
+                        InsMemoryNode.NextNode.StartPoint = 0
+                        InsMemoryNode = InsMemoryNode.NextNode
+                        FirstMemoryNode = InsMemoryNode
+                        InsMemoryNode.LastNode = Nothing
+                    End If
                 End If
             Else
                 '重定位非空节点的地址
