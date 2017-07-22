@@ -1123,11 +1123,11 @@ Public Class VPMainForm
             If SystemClock = 0 Then
                 Select Case DispatchComboBox.SelectedIndex
                     Case < 4
-                        NextJobTipLabel.Text = "正在执行作业 ▶"
+                        NextJobTipLabel.Text = "下次应执行作业 ▶"
                         DispatchComboBox.Items.RemoveAt(4)
                         DispatchComboBox.Items.RemoveAt(4)
                     Case 4
-                        NextJobTipLabel.Text = "下次应执行作业 ▶"
+                        NextJobTipLabel.Text = "正在执行作业 ▶"
                         DispatchComboBox.Enabled = False
                     Case 5
                         Dim TempDouble As Double
