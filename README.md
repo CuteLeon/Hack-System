@@ -1,3 +1,8 @@
+> # 此项目停更！全新设计的 HackSystem 已经开始开发。
+> ## 新项目将采用插件化系统架构设计，将允许深度定制，更灵活、更强大、更有趣。
+> ## 开源仓库移驾 => [<u>CuteLeon/HackSystem<u>](https://github.com/CuteLeon/HackSystem)
+***
+  
 # Hack-System
 
 #### An interesting and cool simulation operating system.
